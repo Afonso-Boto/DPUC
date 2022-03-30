@@ -1,5 +1,12 @@
 **/.DS_Store
 
+.vpprefdata/
+**/*.vpp~*
+**/*.vpp.working
+**/*.vpp.working-journal
+**/*.lock
+tmp/*
+
 *#
 *.iml
 *.ipr
