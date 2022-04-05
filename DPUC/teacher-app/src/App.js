@@ -1,12 +1,24 @@
-import { Section, SectionHeader } from "@uaveiro/ui";
+import { BrowserRouter as Router , Route, Switch} from 'react-router-dom';
+import CreateDPUC from './CreateDPUC';
+import NotFound from './NotFound';
+
 
 function App() {
   return (
-    <div className="App">
-      <Section backgroundColor="#e0e0e0">
-        <SectionHeader hasLink={true} hasLine={true} title="Teacher App" textColor="#000" />
-      </Section>
-    </div>
+      <Router>
+        <div className="App">
+          <div className="content">
+            <Switch>
+              <Route exact path="/">
+                <CreateDPUC />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </div>
+        </div>
+      </Router>
   );
 }
 

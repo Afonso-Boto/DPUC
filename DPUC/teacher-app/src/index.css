@@ -3,3 +3,10 @@
   font-family: "Roboto";
   color: #333;
 }
+
+hr{
+  border: none;
+  height: 2px;
+  color: #000;
+  background-color: #000;
+}
