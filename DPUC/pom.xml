@@ -11,9 +11,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>student_app</module>
-        <module>teacher_app</module>
-        <module>fetcher</module>
+        <module>fetcher-criacao</module>
+        <module>fetcher-edicao</module>
+        <module>fetcher-search</module>
     </modules>
 
     <properties>
