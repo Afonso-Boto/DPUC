@@ -14,6 +14,14 @@ const CreateDPUC = () => {
     const [ucDuracao, setDuracao] = useState(-1);
     const [ucSemestre, setSemestre] = useState(-1);
     const [ucGrau, setGrau] = useState(-1);
+    const [ucHorasTP, setHorasTP] = useState(0);
+    const [ucHorasT, setHorasT] = useState(0);
+    const [ucHorasP, setHorasP] = useState(0);
+    const [ucHorasOT, setHorasOT] = useState(0);
+    const [ucIdioma, setIdioma] = useState([]);
+    const [ucRegente, setRegente] = useState();
+    const [ucDocentes, setDocentes] = useState([]);
+
 
     const areas = [
         {value: 1, label: "Informática"},
@@ -43,7 +51,17 @@ const CreateDPUC = () => {
     const graus = [
         {value: 1, label: "Licenciatura (1º ciclo)"},
         {value: 2, label: "Mestrado (2º ciclo)"},
-        {value: 2, label: "Doutoramento (3º ciclo)"}
+        {value: 3, label: "Doutoramento (3º ciclo)"}
+    ]
+    const idiomas = [
+        {value: 1, label: "Português"},
+        {value: 2, label: "Inglês"},
+        {value: 3, label: "Espanhol"}
+    ]
+    const docentes = [
+        {value: 1, label: "15777 - Luís Carlos Almeida da Cunha"},
+        {value: 2, label: "10244 - Cristiano Ronaldo dos Santos Aveiro"},
+        {value: 3, label: "9525 - Luís Filipe Madeira Caeiro Figo"}
     ]
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -60,17 +78,15 @@ const CreateDPUC = () => {
                     <hr/>
                 </div>
             </div>
+            Nota para devs: Campos assinalados com * são opcionais
             <form onSubmit={handleSubmit}>
+                {/* Nome e Área da UC */}
                 <div className="row" style={{paddingTop: "10px"}}>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Nome da Unidade Curricular
                         </Text>
-                        <Input 
-                            placeholder="Nome da UC..." 
-                            border="1px solid #424242" 
-                            color="#424242"
-                            required
+                        <Input placeholder="Nome da UC..." border="1px solid #424242" color="#424242" required 
                             value={ucName}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -79,60 +95,41 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Área Científica
                         </Text>
-                        <Select 
-                            variant="black" 
-                            placeholder="Selecione a área da UC..."
+                        <Select placeholder="Selecione a área da UC..." variant="black" 
                             options={areas}
                             onChange={(e) => setArea(e.value)}
                         />
                     </div>
                 </div>
+                {/* Unidade(s) Orgânica e Curso(s) de lecionacionação */}
                 <div className="row" style={{paddingTop: "10px"}}>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade(s) Orgânica(s)
                         </Text>
-                        <Select 
-                            isMulti
-                            variant="black" 
-                            placeholder="Indique a(s) Unidade(s) Orgânica(s) a que a UC está alocada..."
+                        <Select isMulti placeholder="Indique a(s) Unidade(s) Orgânica(s) a que a UC está alocada..." variant="black" 
                             options={unidadesOrganicas}
-                            onChange={(e) => setUO(Array.from(
-                                    e,
-                                    (v => v.value)
-                                ))
-                            }
+                            onChange={(e) => setUO(Array.from(e, (v => v.value)))}
                         />
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Curso(s) de lecionação
                         </Text>
-                        <Select 
-                            isMulti
-                            variant="black" 
-                            placeholder="Selecione o(s) curso(s) de lecionação da UC..."
+                        <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
                             options={cursos}
-                            onChange={(e) => setCurso(Array.from(
-                                e,
-                                (v => v.value)
-                            ))
-                        }
+                            onChange={(e) => setCurso(Array.from(e, (v => v.value)))}
                         />
                     </div>
                 </div>
+                {/* ECTS, Duração, Semestre e Grau do Ciclo de Estudos */}
                 <div className="row" style={{paddingTop: "10px"}}>
                     <div className="col-lg-1">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
                         </Text>
-                        <Input 
-                            border="1px solid #424242" 
-                            color="#424242"
-                            required
-                            type="number"
-                            min={4}
-                            max={30}
+                        <Input border="1px solid #424242" color="#424242" required type="number"
+                            min={4} max={30}
                             value={ucECTS}
                             onChange={(e) => setECTS(e.target.value)}
                         />
@@ -149,9 +146,7 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Duração
                         </Text>
-                        <Select 
-                            variant="black" 
-                            placeholder="Duração da UC"
+                        <Select placeholder="Duração da UC" variant="black" 
                             options={duracoes}
                             onChange={(e) => setDuracao(e.value)}
                         />
@@ -159,11 +154,9 @@ const CreateDPUC = () => {
                     {
                         <div className="col-lg-2" style={{visibility: ucDuracao == 1 ? 'visible' : 'hidden' }}>
                             <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                                Semestre
+                                Semestre*
                             </Text>
-                            <Select 
-                                variant="black" 
-                                placeholder="Semestre da UC"
+                            <Select placeholder="Semestre da UC" variant="black" 
                                 options={semestre}
                                 onChange={(e) => setSemestre(e.value)}
                             />
@@ -173,16 +166,95 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Grau do Ciclo de estudos
                         </Text>
-                        <Select 
-                            variant="black" 
-                            placeholder="Selecione o ciclo de estudos da UC"
+                        <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
                             options={graus}
                             onChange={(e) => setGrau(e.value)}
                         />
                     </div>
                 </div>
-
-
+                {/* Carga Letiva Semanal */}
+                <div className="row" style={{paddingTop: "10px"}}>
+                    <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Carga Letiva Semanal (em Horas)
+                        </Text>
+                        <div className="row" style={{paddingTop: "10px"}}>
+                            <div className="col-lg-2">
+                                <Text size="large" color="#424242" fontWeight="300">
+                                    TP
+                                </Text>
+                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                    min={0} max={12}
+                                    value={ucHorasT}
+                                    onChange={(e) => setHorasT(e.target.value)}
+                                />
+                            </div>
+                            <div className="col-lg-2">
+                                <Text size="large" color="#424242" fontWeight="300">
+                                    T
+                                </Text>
+                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                    min={0} max={12}
+                                    value={ucHorasTP}
+                                    onChange={(e) => setHorasTP(e.target.value)}
+                                />
+                            </div>
+                            <div className="col-lg-2">
+                                <Text size="large" color="#424242" fontWeight="300">
+                                    P
+                                </Text>
+                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                    min={0} max={12}
+                                    value={ucHorasP}
+                                    onChange={(e) => setHorasP(e.target.value)}
+                                />
+                            </div>
+                            <div className="col-lg-2">
+                                <Text size="large" color="#424242" fontWeight="300">
+                                    OT
+                                </Text>
+                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                    min={0} max={12}
+                                    value={ucHorasOT}
+                                    onChange={(e) => setHorasOT(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Idioma(s) de lecionação
+                        </Text>
+                        <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
+                            options={idiomas}
+                            onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
+                        />
+                    </div>
+                </div>
+                {/* Docente Responsável / Regente */}
+                <div className="row" style={{paddingTop: "10px"}}>
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Docente Responsável (Regente)
+                        </Text>
+                        <Select placeholder="Selecione o docente responsável pela UC..." variant="black" 
+                            options={docentes}
+                            onChange={(e) => setRegente(e.value)}
+                        />
+                    </div>
+                </div>
+                {/* Docente Responsável / Regente */}
+                <div className="row" style={{paddingTop: "10px"}}>
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Docentes Associados à UC
+                        </Text>
+                        <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
+                            options={docentes}
+                            onChange={(e) => setDocentes(Array.from(e, (v => v.value)))}
+                        />
+                    </div>
+                </div>
 
 
                 {/*
@@ -202,9 +274,6 @@ const CreateDPUC = () => {
 }
  
 /* 
-Nome do docente responsável
-Outros docentes
-
 Carga horária do docentes responsável
 Carga horária dos docentes
 
