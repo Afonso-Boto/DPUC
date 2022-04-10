@@ -10,3 +10,11 @@ hr{
   color: #000;
   background-color: #000;
 }
+
+.row-pad{
+  padding-top: 10px;
+}
+.textarea-custom{
+  resize:vertical;  
+  min-height:100px;
+}

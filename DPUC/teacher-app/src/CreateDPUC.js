@@ -13,6 +13,7 @@ const CreateDPUC = () => {
     const [ucECTS, setECTS] = useState(6);
     const [ucDuracao, setDuracao] = useState(-1);
     const [ucSemestre, setSemestre] = useState(-1);
+    const [ucModalidade, setModalidade] = useState(-1);
     const [ucGrau, setGrau] = useState(-1);
     const [ucHorasTP, setHorasTP] = useState(0);
     const [ucHorasT, setHorasT] = useState(0);
@@ -21,6 +22,25 @@ const CreateDPUC = () => {
     const [ucIdioma, setIdioma] = useState([]);
     const [ucRegente, setRegente] = useState();
     const [ucDocentes, setDocentes] = useState([]);
+    const [ucObjetivos, setObjetivos] = useState();
+    const [ucWebpage, setWebpage] = useState();
+    const [ucRequisitos, setRequisitos] = useState();
+    const [ucConteudos, setConteudos] = useState();
+    const [ucCoerenciaConteudos, setCoerenciaConteudos] = useState();
+    const [ucMetodologias, setMetodologias] = useState();
+    const [ucCoerenciaMetodologias, setCoerenciaMetodologias] = useState();
+    const [ucRegFaltas, setRegFaltas] = useState();
+    const [ucFuncPratica, setFuncPratica] = useState();
+
+    const [ucAprendizagemAtiva, setAprendizagemAtiva] = useState();
+
+    const [ucTipoAvaliacao, setTipoAvaliacao] = useState();
+
+    const [ucBibliografia, setBibliografia] = useState();
+
+    const [ucFicheiros, setFicheiros] = useState();
+
+    const [ucObservacoes, setObservacoes] = useState();
 
 
     const areas = [
@@ -47,6 +67,11 @@ const CreateDPUC = () => {
     const semestre = [
         {value: 1, label: "Primeiro"},
         {value: 2, label: "Segundo"}
+    ]
+    const modalidades = [
+        {value: 1, label: "Presencial"},
+        {value: 2, label: "À distância"},
+        {value: 3, label: "Ambos"}
     ]
     const graus = [
         {value: 1, label: "Licenciatura (1º ciclo)"},
@@ -81,7 +106,7 @@ const CreateDPUC = () => {
             Nota para devs: Campos assinalados com * são opcionais
             <form onSubmit={handleSubmit}>
                 {/* Nome e Área da UC */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Nome da Unidade Curricular
@@ -102,7 +127,7 @@ const CreateDPUC = () => {
                     </div>
                 </div>
                 {/* Unidade(s) Orgânica e Curso(s) de lecionacionação */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade(s) Orgânica(s)
@@ -122,8 +147,30 @@ const CreateDPUC = () => {
                         />
                     </div>
                 </div>
-                {/* ECTS, Duração, Semestre e Grau do Ciclo de Estudos */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                {/* Idiomas de lecionação e Grau do Ciclo de Estudos */}
+                <div className="row row-pad">
+                    
+                    <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Idioma(s) de lecionação
+                        </Text>
+                        <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
+                            options={idiomas}
+                            onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
+                        />
+                    </div>
+                    <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Grau do Ciclo de estudos
+                        </Text>
+                        <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
+                            options={graus}
+                            onChange={(e) => setGrau(e.value)}
+                        />
+                    </div>
+                </div>
+                {/* ECTS, Duração, Semestre e Modalidade de Lecionação */}
+                <div className="row row-pad">
                     <div className="col-lg-1">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
@@ -134,8 +181,8 @@ const CreateDPUC = () => {
                             onChange={(e) => setECTS(e.target.value)}
                         />
                     </div>
-                    <div className="col-lg-1">
-                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                    <div className="col-lg-1 row-pad">
+                        <Text as="h3" size="medium" color="#0EB4BD" fontWeight="400">
                             Horas
                         </Text>
                         <Text size="large" color="#424242" fontWeight="300">
@@ -152,7 +199,7 @@ const CreateDPUC = () => {
                         />
                     </div>
                     {
-                        <div className="col-lg-2" style={{visibility: ucDuracao == 1 ? 'visible' : 'hidden' }}>
+                        <div className="col-lg-2" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
                             <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                                 Semestre*
                             </Text>
@@ -164,25 +211,26 @@ const CreateDPUC = () => {
                     }
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Grau do Ciclo de estudos
+                            Modalidade de Lecionação
                         </Text>
-                        <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
-                            options={graus}
-                            onChange={(e) => setGrau(e.value)}
+                        <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
+                            options={modalidades}
+                            onChange={(e) => setModalidade(e.value)}
                         />
                     </div>
                 </div>
-                {/* Carga Letiva Semanal */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                {/* Carga Letiva Semanal e website UC*/}
+                <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Carga Letiva Semanal (em Horas)
                         </Text>
-                        <div className="row" style={{paddingTop: "10px"}}>
+                        <div className="row">
                             <div className="col-lg-2">
                                 <Text size="large" color="#424242" fontWeight="300">
                                     TP
                                 </Text>
+                                
                                 <Input border="1px solid #424242" color="#424242" required type="number"
                                     min={0} max={12}
                                     value={ucHorasT}
@@ -223,16 +271,16 @@ const CreateDPUC = () => {
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Idioma(s) de lecionação
+                            Página Pública da UC*
                         </Text>
-                        <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
-                            options={idiomas}
-                            onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
+                        <Input placeholder="Insira o URL da página da UC..." border="1px solid #424242" color="#424242" 
+                            value={ucWebpage}
+                            onChange={(e) => setWebpage(e.target.value)}
                         />
                     </div>
                 </div>
                 {/* Docente Responsável / Regente */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
@@ -243,8 +291,8 @@ const CreateDPUC = () => {
                         />
                     </div>
                 </div>
-                {/* Docente Responsável / Regente */}
-                <div className="row" style={{paddingTop: "10px"}}>
+                {/* Docentes da UC */}
+                <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docentes Associados à UC
@@ -255,8 +303,175 @@ const CreateDPUC = () => {
                         />
                     </div>
                 </div>
-
-
+                {/* Objetivos de aprendizagem */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Objetivos de aprendizagem
+                        </Text>
+                        <Input placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucObjetivos}
+                            onChange={(e) => setObjetivos(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {/* Pré-requisitos */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Pré-requisitos da UC
+                        </Text>
+                        <Input placeholder="Especifique os requisitos da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucRequisitos}
+                            onChange={(e) => setRequisitos(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {/* Conteúdos programáticos */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Conteúdos programáticos
+                        </Text>
+                        <Input placeholder="Especifique os conteúdos programáticos da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucConteudos}
+                            onChange={(e) => setConteudos(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {/* Demonstração da coerência dos conteúdos programáticos com os objectivos da unidade curricular. */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Coerência dos Conteúdos programáticos
+                        </Text>
+                        <Input placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucCoerenciaConteudos}
+                            onChange={(e) => setCoerenciaConteudos(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {/* Metodologias de ensino */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Metodologias de ensino
+                        </Text>
+                        <Input placeholder="Especifique as metodologias de ensino da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucMetodologias}
+                            onChange={(e) => setMetodologias(e.target.value)}
+                        />
+                    </div>
+                </div>
+                {/* Demonstração da coerência das metodologias de ensino com os objectivos de aprendizagem da unidade */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Coerência dos Conteúdos programáticos
+                        </Text>
+                        <Input placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucCoerenciaMetodologias}
+                            onChange={(e) => setCoerenciaMetodologias(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Regime de Faltas */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Regime de Faltas*
+                        </Text>
+                        <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucRegFaltas}
+                            onChange={(e) => setRegFaltas(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Funcionamento da Componente Prática */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Funcionamento da Componente Prática*
+                        </Text>
+                        <Input placeholder="Indique o funcionamento da componente prática da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucFuncPratica}
+                            onChange={(e) => setFuncPratica(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Aprendizagem ativa */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Aprendizagem ativa*
+                        </Text>
+                        <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucAprendizagemAtiva}
+                            onChange={(e) => setAprendizagemAtiva(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Tipo de avaliação */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Tipo de avaliação
+                        </Text>
+                        <Input placeholder="Indique o(s) tipo(s) de avaliação da UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucTipoAvaliacao}
+                            onChange={(e) => setTipoAvaliacao(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Bibliografia de consulta */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Bibliografia de consulta
+                        </Text>
+                        <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucBibliografia}
+                            onChange={(e) => setBibliografia(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Ficheiros */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Ficheiros*
+                        </Text>
+                        <Input placeholder="URL de ficheiros extras úteis à UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucFicheiros}
+                            onChange={(e) => setFicheiros(e.target.value)}
+                        />
+                    </div>
+                </div>
+                { /* Observações */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                        Observações
+                        </Text>
+                        <Input placeholder="Indique informação relevante e variada sobre a UC" border="1px solid #424242" color="#424242" required 
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucObservacoes}
+                            onChange={(e) => setObservacoes(e.target.value)}
+                        />
+                    </div>
+                </div>
                 {/*
                 Exemplos para mostrar campos selecionados
                     {ucName}
@@ -267,41 +482,15 @@ const CreateDPUC = () => {
                     <br/>
                     {ucCurso.map((uo) => <li>{uo}</li>)}
                 */}
-                    
             </form>
         </ContentContainer>
      );
 }
  
 /* 
+Como implementar ???????????????
 Carga horária do docentes responsável
 Carga horária dos docentes
-
-Horas de contacto
-
-Línguas de Lecionação
-Página Pública?
-
-
-Objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)
-Pré-requisitos (no dpuc = requisitos)
-
-
-Conteúdos programáticos
-Demonstração da coerência dos conteúdos programáticos com os objectivos da unidade curricular.
-Metodologias de ensino (avaliação incluída)
-Demonstração da coerência das metodologias de ensino com os objectivos de aprendizagem da unidade
-Regime de Faltas?
-Modalidade de Lecionação
-Funcionamento da Componente Prática?
-Aprendizagem ativa ?
-Tipo de avaliação ?
-Bibliografia de consulta / Existência obrigatória (dpuc = bibliografia principal)
-Ficheiros?
-Observações
-
-=== Automático === 
-Código Interno?
-Data da última alteração?
+Horas de contacto (OT)
 */
 export default CreateDPUC;
