@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pi.g6</groupId>
-    <artifactId>fetcher_edicao</artifactId>
+    <artifactId>fetcher-edicao</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>fetcher_edicao</name>
-    <description>fetcher_edicao</description>
+    <name>fetcher-edicao</name>
+    <description>fetcher-edicao</description>
     <properties>
         <java.version>17</java.version>
     </properties>
