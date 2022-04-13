@@ -1,3 +1,10 @@
+## Database - MySQL
+
+Run MySQL container
+```
+docker exec -it dpuc-mysqldb-1 mysql -h localhost -P 3306 -u root -p123456
+```
+
 ## Front-end
 
 ### student-app
