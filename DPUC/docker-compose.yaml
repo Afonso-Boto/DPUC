@@ -80,7 +80,7 @@ services:
       - fetcher-search
     build: ./teacher-app
     ports:
-      - $SPRING_TEACHER_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - $SPRING_TEACHER_LOCAL_PORT:3000
     volumes:
       - ./volumes/teacher-app/:/root/.m2
     stdin_open: true
