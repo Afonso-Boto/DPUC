@@ -1,11 +1,11 @@
 **/.DS_Store
 
 # Docker volumes
-/App/volumes/mysql/db
-/App/volumes/fetcher-criacao
-/App/volumes/fetcher-edicao
-/App/volumes/fetcher-search
-/App/volumes/teacher-app
+/DPUC/volumes/mysql/db
+/DPUC/volumes/fetcher-criacao
+/DPUC/volumes/fetcher-edicao
+/DPUC/volumes/fetcher-search
+/DPUC/volumes/teacher-app
 
 *#
 *.iml
