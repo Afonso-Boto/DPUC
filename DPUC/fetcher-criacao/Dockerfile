@@ -1,9 +1,6 @@
-FROM openjdk:17-alpine
-WORKDIR /app
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} /app/app.jar
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+FROM maven:3.8.4-openjdk-17
 
-## Needs to mvn clean package -DskipTests before docker build
+WORKDIR /docker
+COPY . .
 
-
+CMD mvn spring-boot:run
