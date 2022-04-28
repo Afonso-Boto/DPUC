@@ -103,7 +103,7 @@ const CreateDPUC = () => {
         <ContentContainer padding="40px" >
             <div className="row">
                 <div className="col-lg">
-                    <Text as="h1" size="xxxLarge" fontWeight="400"> 
+                    <Text as="h3" size="xLarge" fontWeight="400"> 
                         Criar UC e Dossier Pedagógico
                     </Text>
                     <hr/>
