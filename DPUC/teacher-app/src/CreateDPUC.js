@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Row, Col } from 'react-bootstrap';
 
-import { ContentContainer, Input, Select, Text } from "@uaveiro/ui";
+import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
 
 
 
 const CreateDPUC = () => {
+
+    const navigate = useNavigate();
+
     const [ucName, setName] = useState("Introdução à Programação");
     const [ucArea, setArea] = useState(-1);
     const [ucUO, setUO] = useState([]);
@@ -91,7 +95,9 @@ const CreateDPUC = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
-
+    const handleBack = () => {
+        navigate("/");
+    }
 
     return ( 
         <ContentContainer padding="40px" >
@@ -103,8 +109,24 @@ const CreateDPUC = () => {
                     <hr/>
                 </div>
             </div>
-            Nota para devs: Campos assinalados com * são opcionais
+            <br/>
             <form onSubmit={handleSubmit}>
+                <Row style={{paddingTop:"10px"}}>
+                    <Col>
+                        <Button variant="default" onClick={handleBack} >Voltar</Button>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="primary" onClick={handleSubmit}>Guardar</Button>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="primary">Criar</Button>
+                    </Col>
+                </Row>
+                <div className="row" style={{paddingTop:"10px"}}>
+                    <div className="col">
+                        <i>Nota: Campos assinalados com * são opcionais</i>
+                    </div>
+                </div>
                 {/* Nome e Área da UC */}
                 <div className="row row-pad">
                     <div className="col-lg-6">
