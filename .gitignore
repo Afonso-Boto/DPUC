@@ -1,12 +1,5 @@
 **/.DS_Store
 
-# Docker volumes
-/DPUC/volumes/mysql/db
-/DPUC/volumes/fetcher-criacao
-/DPUC/volumes/fetcher-edicao
-/DPUC/volumes/fetcher-search
-/DPUC/volumes/teacher-app
-
 *#
 *.iml
 *.ipr
