@@ -79,12 +79,87 @@ const ViewDPUC = () => {
                     Objetivos
                 </Text>
                 <Text as="article" size="medium">
-                    {/* Para usar uma variável: */}
                     { dpuc.objetivos }
                 </Text>
             </Row>
             <br/>
 
+            
+            {
+                /* Exemplo de algo que vai mostrar */
+                dpuc.observacoes.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Observações
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.observacoes }
+                    </Text>
+                    <br/>
+                </Row>
+            }
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Unidade orgânica
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.unidadeOrganica }
+                </Text>
+            </Row>
+            <br/>
+            {
+                dpuc.aprendizagem.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Aprendizagem
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.aprendizagem }
+                    </Text>
+                    <br/>
+                </Row>
+            }
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Duração
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.duracao }
+                </Text>
+            </Row>
+            <br/>
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Docentes
+                </Text>
+            </Row>
+            {
+                dpuc.docentes.map((docente) =>(
+                    <Text as="article" size="medium">
+                        <li>{ docente }</li>
+                    </Text>
+                ))
+            }
+            <br/>
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Horas de contacto em OT
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.horasContacto }
+                </Text>
+            </Row>
+            
+            <br/>
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Horas de trabalho semestral esperadas
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.horasTrabalho }
+                </Text>
+            </Row>
+            <br/>
             {/* 
             ======================================
             Verificar condição e mostrar conteúdo
@@ -103,18 +178,107 @@ const ViewDPUC = () => {
                     <Text as="article" size="medium">
                         { dpuc.regimeFaltas }
                     </Text>
-                </Row>
+                    <br/>
+                </Row>  
             }
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Modalidade
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.modalidade }
+                </Text>
+            </Row>
+            <br/>
             {
-                /* Exemplo de algo que vai mostrar */
-                dpuc.observacoes.length !== 0 &&
+                dpuc.grau.length !== 0 &&
                 <Row>
                     <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Observações
+                        Grau
                     </Text>
                     <Text as="article" size="medium">
-                        { dpuc.observacoes }
+                        { dpuc.grau }
                     </Text>
+                </Row>
+            }
+            <br/>
+            {
+                dpuc.periodo.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Período
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.periodo }
+                    </Text>
+                </Row>
+            }
+            <br/>
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Requisitos
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.requisitos }
+                </Text>
+            </Row>
+            <br/>
+            {
+                dpuc.avaliacao.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Avaliação
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.avaliacao }
+                    </Text>
+                </Row>
+            }
+            <br/>
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Metodologias
+                </Text>
+                <Text as="article" size="medium">
+                    { dpuc.metodologias }
+                </Text>
+            </Row>
+            <br/>
+            {
+                dpuc.coerenciaMetodologias.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Coerência das Metodologias
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.coerenciaMetodologias }
+                    </Text>
+                    <br/>
+                </Row>
+            }
+            <Row>
+                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                    Conteúdos
+                </Text>
+            </Row>
+            {
+                dpuc.conteudos.map((conteudo) =>(
+                    <Text as="article" size="medium">
+                        <li>{ conteudo }</li>
+                    </Text>
+                ))
+            }
+            <br/>
+            {
+                dpuc.coerenciaConteudos.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Coerência dos Conteúdos
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.coerenciaConteudos }
+                    </Text>
+                    <br/>
                 </Row>
             }
             {/* 
@@ -122,7 +286,6 @@ const ViewDPUC = () => {
             Percorrer conteúdo de uma lista/array
             ======================================
             */}
-            <br/>
             <Row>
                 <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
                     Bibliografia
@@ -134,6 +297,31 @@ const ViewDPUC = () => {
                         <li>{ livro }</li>
                     </Text>
                 ))
+            }
+            <br/>
+            {
+                /* Exemplo de algo que vai mostrar */
+                dpuc.ficheiros.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Ficheiros
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.ficheiros }
+                    </Text>
+                </Row>
+            }
+            {
+                /* Exemplo de algo que vai mostrar */
+                dpuc.estado.length !== 0 &&
+                <Row>
+                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                        Estado
+                    </Text>
+                    <Text as="article" size="medium">
+                        { dpuc.estado }
+                    </Text>
+                </Row>
             }
         </ContentContainer>
      );
