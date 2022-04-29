@@ -3,6 +3,7 @@ import { BrowserRouter as Router , Route, Routes as Switch} from 'react-router-d
 import CreateDPUC from './CreateDPUC';
 import NotFound from './NotFound';
 import Home from './Home';
+import ViewDPUC from './ViewDPUC';
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
             <Switch>
               <Route exact path="/" element={<Home />}/>
               <Route exact path="/create" element={<CreateDPUC/>}/>
-              <Route exact path="/dpuc/:id" element={<CreateDPUC/>}/>
+              <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
               <Route path="*" element= {<NotFound />}/>
             </Switch>
             </Container>
