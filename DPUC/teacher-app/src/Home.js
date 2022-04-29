@@ -1,7 +1,7 @@
 import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink} from "react-router-dom";
 
 const Home = () => {
 
@@ -44,7 +44,9 @@ const Home = () => {
                 <Row style={{paddingTop:"5px"}}>
                     <Col>
                         <Card >
+                            <RouterLink to={"/dpuc/" + uc.id} style={{textDecoration:"none"}}>
                             <Card.Header as="h5">{uc.uc}</Card.Header>
+                            </RouterLink>
                             <Card.Body>
                                 <Card.Title>{/*uc.uc*/}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">
@@ -76,8 +78,11 @@ const Home = () => {
                                         </Col>
                                         <Col md={3} style={{textAlign:"right"}}>
                                             {
-                                                (uc.status == 1 || uc.status == 2) && 
-                                                    <Button variant="primary"> Editar DPUC </Button>
+                                                (uc.status == 1 || uc.status == 2) &&
+                                                    <RouterLink to={"/edit/" + uc.id}>
+                                                        <Button variant="primary" > Editar DPUC </Button>
+                                                    
+                                                    </RouterLink> 
                                                 ||
                                                 uc.status == 3 && 
                                                 <Button variant="primary"> Lançar novo DPUC </Button>
