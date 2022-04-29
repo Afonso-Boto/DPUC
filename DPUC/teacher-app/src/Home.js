@@ -36,7 +36,7 @@ const Home = () => {
             </Row>
             <br/>
             { loading && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
-            { error && <Text as="i" size="medium">{error.toString()}</Text> }
+            { error && <Text as="i" size="medium" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
             { dpuc &&
             dpuc.map((uc) => (
                 <Row style={{paddingTop:"5px"}}>
@@ -84,7 +84,6 @@ const Home = () => {
                         </Card>
                     </Col>
                 </Row>
-                
             ))
             }
         </ContentContainer>

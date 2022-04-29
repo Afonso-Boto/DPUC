@@ -1,43 +1,59 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
-
-import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
+import { ContentContainer, Input, Select, SelectLoading, Text, Button } from "@uaveiro/ui";
+import useFetch from "./useFetch";
+import axios from "axios";
 
 
 
 const CreateDPUC = () => {
 
+    const URL_UO = "http://localhost:8000/uos";
+    const URL_DOCENTE = "http://localhost:8000/docentes";
+    const URL_DPUC = "http://localhost:8000/dpuc";
+
+
     const navigate = useNavigate();
     const [error, setError] = useState(false);
-    const [ucName, setName] = useState("Introdução à Programação");
-    const [ucUO, setUO] = useState();
+    const [errorPOST, setErrorPOST] = useState(null);
+
+    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UO);
+    const { data: docentes , loading: loadDoce, error: errorDoce } = useFetch(URL_DOCENTE);
+
+    const [ucName, setName] = useState("");
+    const [ucUO, setUO] = useState(null);
     const [ucECTS, setECTS] = useState(6);
-    const [ucRegente, setRegente] = useState();
-    const unidadesOrganicas = [
-        {value: 1, label: "Departamento de Electrónica, Telecomunicações e Informática"},
-        {value: 2, label: "Departamento de Biologia"},
-        {value: 3, label: "Departamento de Física"},
-        {value: 4, label: "Departamento de Matemática"}
-    ]
-    const docentes = [
-        {value: 1, label: "15777 - Luís Carlos Almeida da Cunha"},
-        {value: 2, label: "10244 - Cristiano Ronaldo dos Santos Aveiro"},
-        {value: 3, label: "9525 - Luís Filipe Madeira Caeiro Figo"}
-    ]
+    const [ucRegente, setRegente] = useState(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setError(false);
-        if(!ucUO || !ucRegente)
+        if(!ucUO || !ucRegente ){
             setError(true);
-        else
-            navigate("/");
+            return;
+        }
+        //const uc = { ucName: designacao, ucUO: unidadeOrganical, ucRegente: responsavel, ucECTS: ects}
+        const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
+                }
+        console.log(uc);
+
+        axios
+            .post(URL_DPUC, uc)
+            .then(() => {
+                navigate("/");
+            })
+            .catch((error) => {
+                setError(error)
+            })
+
     }
     const handleBack = () => {
         navigate("/");
         
     }
+
 
     return ( 
         <ContentContainer padding="40px" >
@@ -64,6 +80,9 @@ const CreateDPUC = () => {
                 { error &&
                     <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
                 }
+                { !loadUOS && !loadDoce && (errorUOS || errorDoce) &&
+                    <Text as="i" size="medium" color="red"> Não foi possível obter alguns dados. Por favor tente novamente mais tarde. </Text>
+                }
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -79,11 +98,17 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade Orgânica
                         </Text>
-                        <Select placeholder="Indique a Unidade Orgânica em que a UC está alocada..." variant="black" 
-                            options={unidadesOrganicas}
-                            onChange={(e) => setUO(e.value)}
-                            required
-                        />
+                        { loadUOS && <SelectLoading />}
+                        { errorUOS && !loadUOS && <Select disabled placeholder="Não foi possível obter as Unidades Orgânicas" variant="black" options={[]}/>}
+                        { uos && !loadUOS &&
+                            <Select placeholder="Indique a Unidade Orgânica em que a UC está alocada..." variant="black" 
+                                options={uos}
+                                onChange={(e) => setUO(e.id)}
+                                getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                                
+                            />
+                        }
                     </Col>
                 </Row>
                 {/* ECTS*/}
@@ -107,11 +132,18 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
                         </Text>
-                        <Select placeholder="Selecione o docente responsável pela UC..." variant="black" 
+                        { loadDoce && <SelectLoading />}
+                        { errorDoce && !loadDoce && <Select disabled placeholder="Não foi possível obter os Docentes" variant="black" options={[]}/>}
+                        { docentes && !loadDoce &&
+                            <Select placeholder="Selecione o docente responsável pela UC..." variant="black" 
                             options={docentes}
-                            onChange={(e) => setRegente(e.value)}
+                            onChange={(e) => setRegente(e.cod_int)}
+                            getOptionLabel ={(option)=>option.nome_completo}
+                            getOptionValue ={(option)=>option.cod_int}
                             required
-                        />
+                            />
+                        }
+                        
                     </Col>
                 </Row>
             </form>
