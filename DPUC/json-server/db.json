@@ -75,7 +75,7 @@
       "nome": "Anual"
     }
   ],
-  "semestre": [
+  "semestres": [
     {
       "id": 1,
       "nome": "Primeiro"
@@ -236,6 +236,15 @@
       "responsavel": 10244,
       "ects": 6,
       "id": 4
+    },
+    {
+      "designacao": "BBB",
+      "unidadeOrganica": 2,
+      "responsavel": 10244,
+      "ects": 6,
+      "estado": "Em Criação",
+      "dataAlteracao": "",
+      "id": 5
     }
   ]
 }

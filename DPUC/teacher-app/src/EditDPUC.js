@@ -1,20 +1,34 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
-
-import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
+import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, SelectLoading } from "@uaveiro/ui";
+import useFetch from "./useFetch";
+import axios from "axios";
 
 
 
 const EditDPUC = () => {
 
+    const { id } = useParams();
+
+    const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+
+    const URL_UOS = "http://localhost:8000/uos";
+
+    const URL_AREAS = "http://localhost:8000/areas";
+    const URL_CURSOS = "http://localhost:8000/cursos";
+    const URL_DURACOES = "http://localhost:8000/duracoes";
+    const URL_SEMESTRE = "http://localhost:8000/semestres";
+    const URL_MODALIDADES = "http://localhost:8000/modalidades";
+    const URL_GRAUS = "http://localhost:8000/graus";
+    const URL_IDIOMAS = "http://localhost:8000/idiomas";
+    const URL_DOCENTES = "http://localhost:8000/docentes";
+
     const navigate = useNavigate();
 
-    const [ucName, setName] = useState("Introdução à Programação");
+    
     const [ucArea, setArea] = useState(-1);
-    const [ucUO, setUO] = useState([]);
     const [ucCurso, setCurso] = useState([]);
-    const [ucECTS, setECTS] = useState(6);
     const [ucDuracao, setDuracao] = useState(-1);
     const [ucSemestre, setSemestre] = useState(-1);
     const [ucModalidade, setModalidade] = useState(-1);
@@ -24,7 +38,6 @@ const EditDPUC = () => {
     const [ucHorasP, setHorasP] = useState(0);
     const [ucHorasOT, setHorasOT] = useState(0);
     const [ucIdioma, setIdioma] = useState([]);
-    const [ucRegente, setRegente] = useState();
     const [ucDocentes, setDocentes] = useState([]);
     const [ucObjetivos, setObjetivos] = useState();
     const [ucWebpage, setWebpage] = useState();
@@ -35,63 +48,23 @@ const EditDPUC = () => {
     const [ucCoerenciaMetodologias, setCoerenciaMetodologias] = useState();
     const [ucRegFaltas, setRegFaltas] = useState();
     const [ucFuncPratica, setFuncPratica] = useState();
-
     const [ucAprendizagemAtiva, setAprendizagemAtiva] = useState();
-
     const [ucTipoAvaliacao, setTipoAvaliacao] = useState();
-
     const [ucBibliografia, setBibliografia] = useState();
-
     const [ucFicheiros, setFicheiros] = useState();
-
     const [ucObservacoes, setObservacoes] = useState();
 
+    const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
+    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UOS);
+    const { data: cursos , loading: loadCursos, error: errorCursos } = useFetch(URL_CURSOS);
+    const { data: graus , loading: loadGraus, error: errorGraus } = useFetch(URL_GRAUS);
+    const { data: areas , loading: loadAreas, error: errorAreas } = useFetch(URL_AREAS);
+    const { data: idiomas , loading: loadIdiomas, error: errorIdiomas } = useFetch(URL_IDIOMAS);
+    const { data: duracoes , loading: loadDuracoes, error: errorDuracoes } = useFetch(URL_DURACOES);
+    const { data: semestre , loading: loadSemestre, error: errorSemestre } = useFetch(URL_SEMESTRE);
+    const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
+    const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
 
-    const areas = [
-        {value: 1, label: "Informática"},
-        {value: 2, label: "Matemática"},
-        {value: 3, label: "Física"},
-        {value: 4, label: "Psicologia"}
-    ]
-    const unidadesOrganicas = [
-        {value: 1, label: "Departamento de Electrónica, Telecomunicações e Informática"},
-        {value: 2, label: "Departamento de Biologia"},
-        {value: 3, label: "Departamento de Física"},
-        {value: 4, label: "Departamento de Matemática"}
-    ]
-    const cursos = [
-        {value: 1, label: "Engenharia Informática"},
-        {value: 2, label: "Engenharia de Computadores e Informática"},
-        {value: 3, label: "Biologia"}
-    ]
-    const duracoes = [
-        {value: 1, label: "Semestral"},
-        {value: 2, label: "Anual"}
-    ]
-    const semestre = [
-        {value: 1, label: "Primeiro"},
-        {value: 2, label: "Segundo"}
-    ]
-    const modalidades = [
-        {value: 1, label: "Presencial"},
-        {value: 2, label: "À distância"},
-        {value: 3, label: "Ambos"}
-    ]
-    const graus = [
-        {value: 1, label: "Licenciatura (1º ciclo)"},
-        {value: 2, label: "Mestrado (2º ciclo)"},
-        {value: 3, label: "Doutoramento (3º ciclo)"}
-    ]
-    const idiomas = [
-        {value: 1, label: "Português"},
-        {value: 2, label: "Inglês"},
-        {value: 3, label: "Espanhol"}
-    ]
-    const docentes = [
-        {value: 1, label: "15777 - Luís Carlos Almeida da Cunha"},
-        {value: 2, label: "10244 - Cristiano Ronaldo dos Santos Aveiro"},
-        {value: 3, label: "9525 - Luís Filipe Madeira Caeiro Figo"}
-    ]
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -110,6 +83,8 @@ const EditDPUC = () => {
                 </div>
             </div>
             <br/>
+            { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { dpuc && !loadDPUC &&
             <form onSubmit={handleSubmit}>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
@@ -117,9 +92,6 @@ const EditDPUC = () => {
                     </Col>
                     <Col md="auto">
                         <Button variant="primary" onClick={handleSubmit}>Guardar</Button>
-                    </Col>
-                    <Col md="auto">
-                        <Button variant="primary">Criar</Button>
                     </Col>
                 </Row>
                 <div className="row" style={{paddingTop:"10px"}}>
@@ -134,34 +106,40 @@ const EditDPUC = () => {
                             Nome da Unidade Curricular
                         </Text>
                         <Text as="h4" size="medium" fontWeight="400">
-                            {ucName}
+                            { dpuc.designacao}
                         </Text>
                     </Col>
                     <Col lg={6}>
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade Orgânica
                         </Text>
-                        <Text as="h4" size="medium" fontWeight="400">
-                            {ucUO}
-                        </Text>
+                        { loadUOS && <AnimatedBackground height="20px" width="40%"></AnimatedBackground> }
+                        { uos && !loadUOS &&
+                            <Text as="h4" size="medium" fontWeight="400">
+                                { uos.filter((uo) => uo.id === dpuc.unidadeOrganica)[0].nome}
+                            </Text>
+                        }
                     </Col>
                 </Row>
-                {/* ECTS*/}
+                {/* Regente e ECTS*/}
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={"auto"}>
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
                         </Text>
-                        <Text as="h4" size="medium" fontWeight="400">
-                            {ucRegente}
-                        </Text>
+                        { loadDocentes && <AnimatedBackground height="20px" width="40%"></AnimatedBackground> }
+                        { docentes && !loadDocentes &&
+                            <Text as="h4" size="medium" fontWeight="400">
+                                {docentes.filter((docente) => docente.cod_int === dpuc.responsavel)[0].nome_completo}
+                            </Text>
+                        }
                     </Col>
                     <Col>
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
                         </Text>
                         <Text as="h4" size="medium" fontWeight="400">
-                            {ucECTS}
+                            { dpuc && dpuc.ects}
                         </Text>
                     </Col>
                 </Row>
@@ -171,19 +149,31 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Curso(s) de lecionação
                         </Text>
-                        <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
-                            options={cursos}
-                            onChange={(e) => setCurso(Array.from(e, (v => v.value)))}
-                        />
+                        { loadCursos && <SelectLoading />}
+                        { errorCursos && !loadCursos && <Select disabled placeholder="Não foi possível obter os cursos" variant="black" options={[]}/>}
+                        { cursos && !loadCursos &&
+                            <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
+                                options={cursos}
+                                onChange={(e) => setCurso(Array.from(e, (v => v.value)))}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Grau do Ciclo de estudos
                         </Text>
-                        <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
-                            options={graus}
-                            onChange={(e) => setGrau(e.value)}
-                        />
+                        { loadGraus && <SelectLoading />}
+                        { errorGraus && !loadGraus && <Select disabled placeholder="Não foi possível obter os graus de ciclo de estudo" variant="black" options={[]}/>}
+                        { graus && !loadAreas &&
+                            <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
+                                options={graus}
+                                onChange={(e) => setGrau(e.value)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
                 </div>
                 {/* Idiomas de lecionação e Modalidade de Lecionação */}
@@ -192,21 +182,32 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Área Científica
                         </Text>
-                        <Select placeholder="Selecione a área da UC..." variant="black" 
-                            options={areas}
-                            onChange={(e) => setArea(e.value)}
-                        />
+                        { loadAreas && <SelectLoading />}
+                        { errorAreas && !loadAreas && <Select disabled placeholder="Não foi possível obter as Áreas Científicas" variant="black" options={[]}/>}
+                        { areas && !loadAreas &&
+                            <Select placeholder="Selecione a área da UC..." variant="black" 
+                                options={areas}
+                                onChange={(e) => setArea(e.value)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Idioma(s) de lecionação
                         </Text>
-                        <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
-                            options={idiomas}
-                            onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
-                        />
+                        { loadIdiomas && <SelectLoading />}
+                        { errorIdiomas && !loadIdiomas && <Select disabled placeholder="Não foi possível obter os Idiomas de lecionação" variant="black" options={[]}/>}
+                        { idiomas && !loadIdiomas &&
+                            <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
+                                options={idiomas}
+                                onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
-                    
                 </div>
                 {/* Duração, Semestre e Página Pública*/}
                 <div className="row row-pad">
@@ -214,23 +215,32 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Duração
                         </Text>
-                        <Select placeholder="Duração da UC" variant="black" 
-                            options={duracoes}
-                            onChange={(e) => setDuracao(e.value)}
-                        />
+                        { loadDuracoes && <SelectLoading />}
+                        { errorDuracoes && !loadDuracoes && <Select disabled placeholder="Não foi possível obter as Durações de lecionação" variant="black" options={[]}/>}
+                        { duracoes && !loadDuracoes &&
+                            <Select placeholder="Duração da UC" variant="black" 
+                                options={duracoes}
+                                onChange={(e) => setDuracao(e.id)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
-                    {
-                        <div className="col-lg-2" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
-                            <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                                Semestre*
-                            </Text>
+                    <div className="col-lg-2" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Semestre*
+                        </Text>
+                        { loadSemestre && <SelectLoading />}
+                        { errorSemestre && !loadSemestre && <Select disabled placeholder="Não foi possível obter os Semestres de lecionação" variant="black" options={[]}/>}
+                        { semestre && !loadSemestre &&
                             <Select placeholder="Semestre da UC" variant="black" 
                                 options={semestre}
                                 onChange={(e) => setSemestre(e.value)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
                             />
-                        </div>
-                    }
-                    
+                        }
+                    </div>
                     <div className="col-lg-8">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Página Pública da UC*
@@ -241,7 +251,7 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
-                {/* Carga Letiva Semanal*/}
+                {/* Carga Letiva Semanal e Modalidade*/}
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
@@ -296,10 +306,16 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Modalidade de Lecionação
                         </Text>
-                        <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
-                            options={modalidades}
-                            onChange={(e) => setModalidade(e.value)}
-                        />
+                        { loadModalidades && <SelectLoading />}
+                        { errorModalidades && !loadModalidades && <Select disabled placeholder="Não foi possível obter as Modalidades de lecionação" variant="black" options={[]}/>}
+                        { modalidades && !loadModalidades &&
+                            <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
+                                options={modalidades}
+                                onChange={(e) => setModalidade(e.value)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
                     </div>
                 </div>
                 {/* Docentes da UC */}
@@ -308,10 +324,16 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docentes Associados à UC
                         </Text>
-                        <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
+                        { loadDocentes && <SelectLoading />}
+                        { errorDocentes && !loadDocentes && <Select disabled placeholder="Não foi possível obter os Docentes" variant="black" options={[]}/>}
+                        { docentes && !loadDocentes &&
+                            <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
                             options={docentes}
                             onChange={(e) => setDocentes(Array.from(e, (v => v.value)))}
-                        />
+                            getOptionLabel ={(option)=>(option.nome_completo)}
+                            getOptionValue ={(option)=>option.cod_int}
+                            />
+                        }
                     </div>
                 </div>
                 {/* Objetivos de aprendizagem */}
@@ -483,17 +505,8 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
-                {/*
-                Exemplos para mostrar campos selecionados
-                    {ucName}
-                    <br/>
-                    {areas.filter(area => area.value === ucArea).length > 0 && areas.filter(area => area.value === ucArea)[0].label}
-                    <br/>
-                    {ucUO.map((uo) => <li>{uo}</li>)}
-                    <br/>
-                    {ucCurso.map((uo) => <li>{uo}</li>)}
-                */}
             </form>
+            }
         </ContentContainer>
      );
 }
