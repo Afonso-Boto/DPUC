@@ -1,27 +1,23 @@
-import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
+import { ContentContainer, Input, Text, Button, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink} from "react-router-dom";
+import useFetch from "./useFetch";
 
 const Home = () => {
 
     const navigate = useNavigate();
 
+    const URL_DPUC = "http://localhost:8000/dpuc";
+
     const goToCreate = () => {
         navigate("/create");
     }
 
-    const dpuc = [
-        {id: 1, uc: "Introdução à Programação", code: 40000, status: 1, periodo:"2021/2022"},
-        {id: 2, uc: "Inteligência Artificial", code: 40000, status: 2, periodo:"2021/2022"},
-        {id: 4, uc: "Programação I", code: 40000, status: 4, periodo:"2021/2022"},
-        {id: 3, uc: "Introdução à Engenharia de Software", code: 40000, status: 3, periodo:"2020/2021"},
-    ]
+    const { data: dpuc , loading, error } = useFetch(URL_DPUC);
 
     return ( 
-        
         <ContentContainer padding="40px" >
-            
             <Row>
                 <Col>
                     <Text as="h3" size="xLarge" fontWeight="400"> 
@@ -39,50 +35,46 @@ const Home = () => {
                 </Col>
             </Row>
             <br/>
-            {
+            { loading && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { error && <Text as="i" size="medium" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
+            { dpuc &&
             dpuc.map((uc) => (
                 <Row style={{paddingTop:"5px"}}>
                     <Col>
                         <Card >
-                            <Card.Header as="h5">{uc.uc}</Card.Header>
+                            <RouterLink to={"/dpuc/" + uc.id} style={{textDecoration:"none"}}>
+                            <Card.Header as="h5">{uc.designacao}</Card.Header>
+                            </RouterLink>
                             <Card.Body>
-                                <Card.Title>{/*uc.uc*/}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">
-                                    {uc.periodo} - 
-                                    {
-                                        uc.status == 1 && " Aberta"
-                                        ||
-                                        uc.status == 2 && " Por Finalizar"
-                                        ||
-                                        uc.status == 3 && " Fechada"
-                                        ||
-                                        uc.status == 4 && " Por Aprovar"
-                                    }
+                                    Ultima alteração: {uc.dataAlteracao} - {uc.estado}
                                 </Card.Subtitle>
                                 <Card.Text>
                                     <Row>
                                         <Col>
                                         <i>
                                             {
-                                                uc.status == 1 && "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos."
+                                                uc.estado == "Em Criação" && "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos."
                                                 ||
-                                                uc.status == 2 && "DPUC com campos por preencher."
+                                                uc.estado == "Em Edição" && "DPUC com campos por preencher."
                                                 ||
-                                                uc.status == 3 && "DPUC fechada, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão."
+                                                uc.estado == "3" && "DPUC fechada, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão."
                                                 ||
-                                                uc.status == 4 && "DPUC necessita de aprovação para ser publicada."
+                                                uc.estado == "4" && "DPUC necessita de aprovação para ser publicada."
                                             }
                                         </i>
                                         </Col>
                                         <Col md={3} style={{textAlign:"right"}}>
                                             {
-                                                (uc.status == 1 || uc.status == 2) && 
-                                                    <Button variant="primary"> Editar DPUC </Button>
+                                                (uc.estado == "Em Criação" || uc.estado == "Em Edição") &&
+                                                    <RouterLink to={"/edit/" + uc.id}>
+                                                        <Button variant="primary" > Editar DPUC </Button>
+                                                    </RouterLink> 
                                                 ||
-                                                uc.status == 3 && 
+                                                uc.estado == "3" && 
                                                 <Button variant="primary"> Lançar novo DPUC </Button>
                                                 ||
-                                                uc.status == 4 && 
+                                                uc.estado == "4" && 
                                                 <Button variant="primary"> Aprovar DPUC </Button>
                                             }
                                         </Col>
@@ -92,7 +84,6 @@ const Home = () => {
                         </Card>
                     </Col>
                 </Row>
-                
             ))
             }
         </ContentContainer>
