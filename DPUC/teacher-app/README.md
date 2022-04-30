@@ -1,5 +1,34 @@
 ## 
 
+Requirements
+
+- NodeJS
+
+
+## Setup 
+
+### Run ReactJS Web app
+
+In /teacher-app directory
+
+```
+npm install
+
+npm start
+```
+
+### Run json-server
+
+In /json-server directory
+
+```
+npx json-server --watch .\db.json --port 8000
+```
+
+
+
+
+
 Through docker-compose
 ```
 $ docker-compose -f docker.compose.yml build
