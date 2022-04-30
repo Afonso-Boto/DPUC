@@ -46,23 +46,28 @@
   "areas": [
     {
       "id": 1,
-      "nome": "Informática"
+      "nome": "Informática",
+      "sigla": "INF"
     },
     {
       "id": 2,
-      "nome": "Arquitetura de Computadores"
+      "nome": "Arquitetura de Computadores",
+      "sigla": "AC"
     },
     {
       "id": 3,
-      "nome": "Matemática"
+      "nome": "Matemática",
+      "sigla": "MAT"
     },
     {
       "id": 4,
-      "nome": "Física"
+      "nome": "Física",
+      "sigla": "FIS"
     },
     {
       "id": 5,
-      "nome": "Biologia"
+      "nome": "Biologia",
+      "sigla": "BIO"
     }
   ],
   "duracoes": [
@@ -102,15 +107,18 @@
   "graus": [
     {
       "id": 1,
-      "nome": "Licenciatura (1º ciclo)"
+      "nome": "Licenciatura",
+      "ciclo": 1
     },
     {
       "id": 2,
-      "nome": "Mestrado (2º ciclo)"
+      "nome": "Mestrado",
+      "ciclo": 2
     },
     {
       "id": 3,
-      "nome": "Doutoramento (3º ciclo)"
+      "nome": "Doutoramento",
+      "ciclo": 3
     }
   ],
   "idiomas": [
@@ -161,16 +169,14 @@
   ],
   "dpuc": [
     {
-      "id": 1,
       "designacao": "Introdução à Programação",
       "areaCientifica": "Informática",
-      "duracao": "Semestral",
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
-      "docentes": "15777$9525",
-      "docentesHoras": "TP:2H$P:2H",
-      "horasTrabalho": "162",
+      "docentes": "15777$9525$",
+      "docentesHoras": "TP:4H$P:2H$",
+      "horasTrabalo": 162,
       "ects": "6",
       "objetivos": "Pretende-se dotar os alunos da capacidade para resolver problemas de pequena e média dimensão recorrendo à linguagem de programação Python e a algumas suas bibliotecas/módulos (p.ex., matplotlib, numpy, etc.).",
       "conteudos": "- Sintaxe e semântica básicas de uma linguagem de alto nível (Python).\n- Valores e tipos de dados primitivos. Variáveis, operadores e expressões.\n- Funções, parâmetros e variáveis locais.\n- Instruções de decisão.\n- Instruções de repetição.\n- Sequências: strings, listas, tuplos (e operações/métodos úteis).\n- Conjuntos e dicionários (e operações/métodos úteis).\n- Compreensões e expressões geradoras em listas e dicionários.\n- Ficheiros de texto.\n- Classes e Objetos.\n- Utilização de módulos para cálculo científico e gráficos, etc. (numpy, matplotlib, ...).",
@@ -186,14 +192,15 @@
       "modalidade": "Presencial",
       "requisitos": "Nenhum",
       "ficheiros": null,
-      "dataAlteracao": "22-09-2021",
       "paginaPublica": null,
       "funcionamento": null,
       "aprendizagem": null,
-      "grau": "Licenciatura",
+      "grau": "Mestrado",
       "avaliacao": "Discreta",
       "periodo": "Primeiro",
-      "estado": "Em Edição"
+      "dataAlteracao": "2022-04-30",
+      "estado": "Em Edição",
+      "id": 1
     },
     {
       "id": 2,
@@ -229,13 +236,6 @@
       "avaliacao": null,
       "periodo": null,
       "estado": "Em Criação"
-    },
-    {
-      "designacao": "Bio",
-      "unidadeOrganica": 2,
-      "responsavel": 10244,
-      "ects": 6,
-      "id": 4
     },
     {
       "designacao": "BBB",

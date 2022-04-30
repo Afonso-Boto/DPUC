@@ -4,6 +4,8 @@ import { Row, Col } from 'react-bootstrap';
 import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, SelectLoading } from "@uaveiro/ui";
 import useFetch from "./useFetch";
 import axios from "axios";
+import useParseDPUCData from "./Utils/useParseDPUCData";
+import getFormattedDPUC from "./Utils/getFormattedDPUC";
 
 
 
@@ -27,32 +29,33 @@ const EditDPUC = () => {
     const navigate = useNavigate();
 
     
-    const [ucArea, setArea] = useState(-1);
-    const [ucCurso, setCurso] = useState([]);
+    const [ucArea, setArea] = useState("");
     const [ucDuracao, setDuracao] = useState(-1);
     const [ucSemestre, setSemestre] = useState(-1);
     const [ucModalidade, setModalidade] = useState(-1);
     const [ucGrau, setGrau] = useState(-1);
+    const [ucCurso, setCurso] = useState([]);
+    const [ucIdioma, setIdioma] = useState([]);
+    const [ucDocentes, setDocentes] = useState([]);
     const [ucHorasTP, setHorasTP] = useState(0);
     const [ucHorasT, setHorasT] = useState(0);
     const [ucHorasP, setHorasP] = useState(0);
     const [ucHorasOT, setHorasOT] = useState(0);
-    const [ucIdioma, setIdioma] = useState([]);
-    const [ucDocentes, setDocentes] = useState([]);
-    const [ucObjetivos, setObjetivos] = useState();
-    const [ucWebpage, setWebpage] = useState();
-    const [ucRequisitos, setRequisitos] = useState();
-    const [ucConteudos, setConteudos] = useState();
-    const [ucCoerenciaConteudos, setCoerenciaConteudos] = useState();
-    const [ucMetodologias, setMetodologias] = useState();
-    const [ucCoerenciaMetodologias, setCoerenciaMetodologias] = useState();
-    const [ucRegFaltas, setRegFaltas] = useState();
-    const [ucFuncPratica, setFuncPratica] = useState();
-    const [ucAprendizagemAtiva, setAprendizagemAtiva] = useState();
-    const [ucTipoAvaliacao, setTipoAvaliacao] = useState();
-    const [ucBibliografia, setBibliografia] = useState();
-    const [ucFicheiros, setFicheiros] = useState();
-    const [ucObservacoes, setObservacoes] = useState();
+    const [ucObjetivos, setObjetivos] = useState("");
+    const [ucWebpage, setWebpage] = useState("");
+    const [ucRequisitos, setRequisitos] = useState("");
+    const [ucConteudos, setConteudos] = useState("");
+    const [ucCoerenciaConteudos, setCoerenciaConteudos] = useState("");
+    const [ucMetodologias, setMetodologias] = useState("");
+    const [ucCoerenciaMetodologias, setCoerenciaMetodologias] = useState("");
+    const [ucRegFaltas, setRegFaltas] = useState("");
+    const [ucFuncPratica, setFuncPratica] = useState("");
+    const [ucAprendizagemAtiva, setAprendizagemAtiva] = useState("");
+    const [ucTipoAvaliacao, setTipoAvaliacao] = useState("");
+    const [ucBibliografia, setBibliografia] = useState("");
+    const [ucFicheiros, setFicheiros] = useState("");
+    const [ucObservacoes, setObservacoes] = useState("");
+    const [ucDataAlter, setDataAlter] = useState("");
 
     const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UOS);
@@ -65,33 +68,53 @@ const EditDPUC = () => {
     const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
     const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
 
+    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
+    const [ error, setError ] = useState(false);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        setError(false);
+/*
+        const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
+            estado: "Em Criação", dataAlteracao: ""};
+*/
+        
+
+        axios
+            .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição", ucArea, ucDuracao, ucSemestre, ucModalidade, ucGrau, ucCurso, ucIdioma, ucDocentes, ucHorasTP, ucHorasT, ucHorasP, ucHorasOT, ucObjetivos, ucWebpage, ucRequisitos, ucConteudos, ucCoerenciaConteudos, ucMetodologias, ucCoerenciaMetodologias, ucRegFaltas, ucFuncPratica, ucAprendizagemAtiva, ucTipoAvaliacao, ucBibliografia, ucFicheiros, ucObservacoes))
+            .then(() => {
+                navigate("/");
+            })
+            .catch((error) => {
+                setError(true);
+            });
     }
     const handleBack = () => {
         navigate("/");
     }
 
+
     return ( 
         <ContentContainer padding="40px" >
-            <div className="row">
-                <div className="col-lg">
+            <Row>
+                <Col>
                     <Text as="h3" size="xLarge" fontWeight="400"> 
                         Editar Dossier Pedagógico
                     </Text>
                     <hr/>
-                </div>
-            </div>
+                </Col>
+            </Row>
             <br/>
-            { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
-            { dpuc && !loadDPUC &&
+            { (loadDPUC || loadParse) && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { dpuc && !loadDPUC && !loadParse &&
             <form onSubmit={handleSubmit}>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
-                        <Button variant="default" onClick={handleBack} >Voltar</Button>
+                        <Button variant="default" onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" onClick={handleSubmit}>Guardar</Button>
+                        <Button variant="primary" style={{fontSize:"100%"}}>Guardar</Button>
                     </Col>
                 </Row>
                 <div className="row" style={{paddingTop:"10px"}}>
@@ -134,7 +157,7 @@ const EditDPUC = () => {
                             </Text>
                         }
                     </Col>
-                    <Col>
+                    <Col lg={"auto"}>
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
                         </Text>
@@ -154,7 +177,7 @@ const EditDPUC = () => {
                         { cursos && !loadCursos &&
                             <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
                                 options={cursos}
-                                onChange={(e) => setCurso(Array.from(e, (v => v.value)))}
+                                onChange={(e) => setCurso(Array.from(e, (v => v.id)))}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -169,14 +192,14 @@ const EditDPUC = () => {
                         { graus && !loadAreas &&
                             <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
                                 options={graus}
-                                onChange={(e) => setGrau(e.value)}
-                                getOptionLabel ={(option)=>(option.nome)}
+                                onChange={(e) => setGrau(e.nome)}
+                                getOptionLabel ={(option)=>(option.nome + " (" + option.ciclo + "º ciclo)" )}
                                 getOptionValue ={(option)=>option.id}
                             />
                         }
                     </div>
                 </div>
-                {/* Idiomas de lecionação e Modalidade de Lecionação */}
+                {/* Área Científica e Idiomas de lecionação */}
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
@@ -187,9 +210,9 @@ const EditDPUC = () => {
                         { areas && !loadAreas &&
                             <Select placeholder="Selecione a área da UC..." variant="black" 
                                 options={areas}
-                                onChange={(e) => setArea(e.value)}
+                                onChange={(e) => setArea(e.sigla)}
                                 getOptionLabel ={(option)=>(option.nome)}
-                                getOptionValue ={(option)=>option.id}
+                                getOptionValue ={(option)=>(option.id)}
                             />
                         }
                     </div>
@@ -202,7 +225,7 @@ const EditDPUC = () => {
                         { idiomas && !loadIdiomas &&
                             <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
                                 options={idiomas}
-                                onChange={(e) => setIdioma(Array.from(e, (v => v.value)))}
+                                onChange={(e) => setIdioma(Array.from(e, (v => v.nome)))}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -220,7 +243,7 @@ const EditDPUC = () => {
                         { duracoes && !loadDuracoes &&
                             <Select placeholder="Duração da UC" variant="black" 
                                 options={duracoes}
-                                onChange={(e) => setDuracao(e.id)}
+                                onChange={(e) => setDuracao(e.nome)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -235,7 +258,7 @@ const EditDPUC = () => {
                         { semestre && !loadSemestre &&
                             <Select placeholder="Semestre da UC" variant="black" 
                                 options={semestre}
-                                onChange={(e) => setSemestre(e.value)}
+                                onChange={(e) => setSemestre(e.nome)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -264,7 +287,7 @@ const EditDPUC = () => {
                                     TP
                                 </Text>
                                 
-                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                <Input border="1px solid #424242" color="#424242"  type="number"
                                     min={0} max={12}
                                     value={ucHorasT}
                                     onChange={(e) => setHorasT(e.target.value)}
@@ -274,7 +297,7 @@ const EditDPUC = () => {
                                 <Text size="large" color="#424242" fontWeight="300">
                                     T
                                 </Text>
-                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                <Input border="1px solid #424242" color="#424242"  type="number"
                                     min={0} max={12}
                                     value={ucHorasTP}
                                     onChange={(e) => setHorasTP(e.target.value)}
@@ -284,7 +307,7 @@ const EditDPUC = () => {
                                 <Text size="large" color="#424242" fontWeight="300">
                                     P
                                 </Text>
-                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                <Input border="1px solid #424242" color="#424242"  type="number"
                                     min={0} max={12}
                                     value={ucHorasP}
                                     onChange={(e) => setHorasP(e.target.value)}
@@ -294,7 +317,7 @@ const EditDPUC = () => {
                                 <Text size="large" color="#424242" fontWeight="300">
                                     OT
                                 </Text>
-                                <Input border="1px solid #424242" color="#424242" required type="number"
+                                <Input border="1px solid #424242" color="#424242"  type="number"
                                     min={0} max={12}
                                     value={ucHorasOT}
                                     onChange={(e) => setHorasOT(e.target.value)}
@@ -311,7 +334,7 @@ const EditDPUC = () => {
                         { modalidades && !loadModalidades &&
                             <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
                                 options={modalidades}
-                                onChange={(e) => setModalidade(e.value)}
+                                onChange={(e) => setModalidade(e.nome)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -329,7 +352,7 @@ const EditDPUC = () => {
                         { docentes && !loadDocentes &&
                             <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
                             options={docentes}
-                            onChange={(e) => setDocentes(Array.from(e, (v => v.value)))}
+                            onChange={(e) => setDocentes(Array.from(e, (v => v.cod_int)))}
                             getOptionLabel ={(option)=>(option.nome_completo)}
                             getOptionValue ={(option)=>option.cod_int}
                             />
@@ -342,7 +365,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Objetivos de aprendizagem
                         </Text>
-                        <Input placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucObjetivos}
                             onChange={(e) => setObjetivos(e.target.value)}
@@ -355,7 +378,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Pré-requisitos da UC
                         </Text>
-                        <Input placeholder="Especifique os requisitos da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Especifique os requisitos da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucRequisitos}
                             onChange={(e) => setRequisitos(e.target.value)}
@@ -368,7 +391,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Conteúdos programáticos
                         </Text>
-                        <Input placeholder="Especifique os conteúdos programáticos da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Especifique os conteúdos programáticos da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucConteudos}
                             onChange={(e) => setConteudos(e.target.value)}
@@ -381,7 +404,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Coerência dos Conteúdos programáticos
                         </Text>
-                        <Input placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucCoerenciaConteudos}
                             onChange={(e) => setCoerenciaConteudos(e.target.value)}
@@ -394,7 +417,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Metodologias de ensino
                         </Text>
-                        <Input placeholder="Especifique as metodologias de ensino da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Especifique as metodologias de ensino da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucMetodologias}
                             onChange={(e) => setMetodologias(e.target.value)}
@@ -407,7 +430,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Coerência dos Conteúdos programáticos
                         </Text>
-                        <Input placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucCoerenciaMetodologias}
                             onChange={(e) => setCoerenciaMetodologias(e.target.value)}
@@ -420,7 +443,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Regime de Faltas*
                         </Text>
-                        <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucRegFaltas}
                             onChange={(e) => setRegFaltas(e.target.value)}
@@ -433,7 +456,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Funcionamento da Componente Prática*
                         </Text>
-                        <Input placeholder="Indique o funcionamento da componente prática da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Indique o funcionamento da componente prática da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucFuncPratica}
                             onChange={(e) => setFuncPratica(e.target.value)}
@@ -446,7 +469,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Aprendizagem ativa*
                         </Text>
-                        <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucAprendizagemAtiva}
                             onChange={(e) => setAprendizagemAtiva(e.target.value)}
@@ -459,7 +482,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Tipo de avaliação
                         </Text>
-                        <Input placeholder="Indique o(s) tipo(s) de avaliação da UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Indique o(s) tipo(s) de avaliação da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucTipoAvaliacao}
                             onChange={(e) => setTipoAvaliacao(e.target.value)}
@@ -472,7 +495,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Bibliografia de consulta
                         </Text>
-                        <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucBibliografia}
                             onChange={(e) => setBibliografia(e.target.value)}
@@ -485,7 +508,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Ficheiros*
                         </Text>
-                        <Input placeholder="URL de ficheiros extras úteis à UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="URL de ficheiros extras úteis à UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucFicheiros}
                             onChange={(e) => setFicheiros(e.target.value)}
@@ -498,7 +521,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                         Observações
                         </Text>
-                        <Input placeholder="Indique informação relevante e variada sobre a UC" border="1px solid #424242" color="#424242" required 
+                        <Input placeholder="Indique informação relevante e variada sobre a UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
                             value={ucObservacoes}
                             onChange={(e) => setObservacoes(e.target.value)}

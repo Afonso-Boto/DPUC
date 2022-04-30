@@ -37,7 +37,6 @@ const CreateDPUC = () => {
         //const uc = { ucName: designacao, ucUO: unidadeOrganical, ucRegente: responsavel, ucECTS: ects}
         const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
                 estado: "Em Criação", dataAlteracao: ""}
-        console.log(uc);
 
         axios
             .post(URL_DPUC, uc)
@@ -46,7 +45,7 @@ const CreateDPUC = () => {
             })
             .catch((error) => {
                 setError(error)
-            })
+            });
 
     }
     const handleBack = () => {
@@ -66,7 +65,6 @@ const CreateDPUC = () => {
                 </Col>
             </Row>
             <br/>
-            
             <form onSubmit={handleSubmit}>
                 <Row>
                     <Col>
@@ -106,7 +104,6 @@ const CreateDPUC = () => {
                                 onChange={(e) => setUO(e.id)}
                                 getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
                                 getOptionValue ={(option)=>option.id}
-                                
                             />
                         }
                     </Col>
