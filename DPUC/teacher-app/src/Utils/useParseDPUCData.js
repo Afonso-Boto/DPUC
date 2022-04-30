@@ -66,7 +66,6 @@ const useParseDPUCData = (data,
             if(data.docentesHoras){
                 var parsedString = data.docentesHoras.split("$");
                 for(var i = 0; i < parsedString.length; i++){
-                    console.log(parsedString[i]);
                     if((parsedString[i]).includes("TP"))
                         setHorasTP(parsedString[i].substring(3,4));
                     else{
