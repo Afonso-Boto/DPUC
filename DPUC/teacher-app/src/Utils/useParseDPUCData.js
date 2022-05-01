@@ -37,7 +37,7 @@ const useParseDPUCData = (data,
         if(data){
             setArea(data.areaCientifica);
             setObjetivos(data.objetivos);
-            setDuracao(data.setDuracao);
+            setDuracao(data.duracao);
             setHorasOT(data.horasContacto);
             setConteudos(data.conteudos);
             setCoerenciaConteudos(data.coerenciaConteudos);

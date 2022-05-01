@@ -1,4 +1,4 @@
-import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
+import { ContentContainer, Input, Select, Text, Button, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -47,6 +47,7 @@ const ViewDPUC = () => {
     const [ ucHorasOT, setHorasOT ] = useState(0);
     const [ ucCursos, setCursos ] = useState([]);
     const [ ucLinguas, setLinguas ] = useState([]);
+    const [ detailedView, setDetailedView ] = useState(false);
 
     useEffect(() => {
         if(dpuc && uos && areas && docentes){
@@ -88,12 +89,16 @@ const ViewDPUC = () => {
         }
     }, [dpuc, uos, areas, docentes]);
 
+    const changeView = () => {
+        setDetailedView(!detailedView);
+    }
     return ( 
         <ContentContainer padding="40px" >
 
             <Row>
                 <Col>
-                    { dpuc && 
+                    { (loadDPUC || loadUOS || loadAreas || loadDocentes) && <AnimatedBackground height="30px" width="50%"></AnimatedBackground> }
+                    { dpuc && !loadDPUC && !loadUOS && !loadAreas && !loadDocentes && 
                         <Text as="h3" size="xLarge" fontWeight="400"> 
                             {dpuc.designacao}
                         </Text>
@@ -102,247 +107,190 @@ const ViewDPUC = () => {
                 </Col>
             </Row>
             <br/>
-            { dpuc && 
+            { (loadDPUC || loadUOS || loadAreas || loadDocentes) && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
+            { dpuc && !loadDPUC && !loadUOS && !loadAreas && !loadDocentes &&
             <ContentContainer> 
-                { dpuc.objetivos &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Objetivos
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.objetivos }
-                        </Text>
-                    </Row>
-                }
-                
-                <br/>
-                {
-                    dpuc.observacoes && dpuc.observacoes.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Observações
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.observacoes }
-                        </Text>
-                        <br/>
-                    </Row>
-                }
                 <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Unidade orgânica
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.unidadeOrganica }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    dpuc.aprendizagem && dpuc.aprendizagem.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Aprendizagem
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.aprendizagem }
-                        </Text>
-                        <br/>
-                    </Row>
-                }
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Duração
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.duracao }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    ucDocentes.length > 0 && 
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Docentes
-                        </Text>
+                    <Col>
+                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao}</Text>
+                    </Col>
 
-                        {
-                        ucDocentes.map((docente) =>(
-                            <Text as="article" size="medium">
-                                <li>{ docente.nome_completo }</li>
-                            </Text>
-                        ))
+                    <Col md="auto">
+                        <Button variant="primary" style={{fontSize:"100%"}} onClick={changeView}>
+                            { detailedView && "Vista Normal" }
+                            { !detailedView && "Vista Detalhada" }
+                            
+                        </Button>
+                    </Col>
+                </Row>
+                <br/>
+                <Row className="flex-column-reverse flex-md-row">
+                    <Col sm={8}>
+                        { dpuc.objetivos &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Objetivos
+                                </Text>
+                                {dpuc.objetivos.split("\n").map((objetivo) =>(
+                                    <Text as="article" size="medium">
+                                        { objetivo }
+                                    </Text>
+                                ))}
+                            </Row>
                         }
-                    </Row>
-                }
-                <br/>
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Horas de contacto em OT
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.horasContacto }
-                    </Text>
+                        { dpuc.conteudos &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Conteúdos
+                                </Text>
+                                {dpuc.conteudos.split("\n").map((conteudo) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ conteudo }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.coerenciaConteudos && detailedView &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Coerência de Conteúdos
+                                </Text>
+                                {dpuc.coerenciaConteudos.split("\n").map((conteudo) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ conteudo }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.requisitos &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Requisitos
+                                </Text>
+                                {dpuc.requisitos.split("\n").map((requisito) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ requisito }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.metodologias &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Metodologias de Ensino
+                                </Text>
+                                {dpuc.metodologias.split("\n").map((metodo) =>(
+                                    <Text as="article" size="medium">
+                                        { metodo }
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.coerenciaMetodologias && detailedView &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Coerência de Conteúdos
+                                </Text>
+                                {dpuc.coerenciaMetodologias.split("\n").map((metodo) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ metodo }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.funcionamento &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Funcionamento da Componente Prática
+                                </Text>
+                                {dpuc.funcionamento.split("\n").map((func) =>(
+                                    <Text as="article" size="medium">
+                                        { func }
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.aprendizagem &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Aprendizagem Ativa
+                                </Text>
+                                {dpuc.aprendizagem.split("\n").map((apre) =>(
+                                    <Text as="article" size="medium">
+                                        { apre }
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.avaliacao &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Avaliação
+                                </Text>
+                                {dpuc.avaliacao.split("\n").map((aval) =>(
+                                    <Text as="article" size="medium">
+                                        { aval }
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.regimeFaltas &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Regime de Faltas
+                                </Text>
+                                {dpuc.regimeFaltas.split("\n").map((faltas) =>(
+                                    <Text as="article" size="medium">
+                                        { faltas }
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.ficheiros &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Ficheiros
+                                </Text>
+                                {dpuc.ficheiros.split("\n").map((ficheiro) =>(
+                                    <Text as="article" size="medium">
+                                        <li><a href={ficheiro} target="_blank">{ ficheiro }</a></li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.bibliografia &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Bibliografia
+                                </Text>
+                                {dpuc.bibliografia.split("\n").map((livro) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ livro }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                        { dpuc.observacoes && detailedView &&
+                            <Row className="viewUC-row">
+                                <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                                    Observações
+                                </Text>
+                                {dpuc.observacoes.split("\n").map((obs) =>(
+                                    <Text as="article" size="medium">
+                                        <li>{ obs }</li>
+                                    </Text>
+                                ))}
+                            </Row>
+                        }
+                    </Col>
+                    <Col sm={4} >
+                        <Row>
+                        AAAAAAAAAA
+
+                        </Row>
+                    </Col>
                 </Row>
-                
-                <br/>
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Horas de trabalho semestral esperadas
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.horasTrabalho }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    dpuc.regimeFaltas && dpuc.regimeFaltas.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Regime de Faltas
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.regimeFaltas }
-                        </Text>
-                        <br/>
-                    </Row>  
-                }
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Modalidade
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.modalidade }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    dpuc.grau && dpuc.grau.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Grau
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.grau }
-                        </Text>
-                    </Row>
-                }
-                <br/>
-                {
-                    dpuc.periodo && dpuc.periodo.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Período
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.periodo }
-                        </Text>
-                    </Row>
-                }
-                <br/>
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Requisitos
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.requisitos }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    dpuc.avaliacao && dpuc.avaliacao.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Avaliação
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.avaliacao }
-                        </Text>
-                    </Row>
-                }
-                <br/>
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Metodologias
-                    </Text>
-                    <Text as="article" size="medium">
-                        { dpuc.metodologias }
-                    </Text>
-                </Row>
-                <br/>
-                {
-                    dpuc.coerenciaMetodologias && dpuc.coerenciaMetodologias.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Coerência das Metodologias
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.coerenciaMetodologias }
-                        </Text>
-                        <br/>
-                    </Row>
-                }
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Conteúdos
-                    </Text>
-                </Row>
-                { dpuc.conteudos &&
-                    dpuc.conteudos.split("\n").map((conteudo) =>(
-                        <Text as="article" size="medium">
-                            <li>{ conteudo }</li>
-                        </Text>
-                    ))
-                }
-                <br/>
-                {
-                    dpuc.coerenciaConteudos && dpuc.coerenciaConteudos.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Coerência dos Conteúdos
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.coerenciaConteudos }
-                        </Text>
-                        <br/>
-                    </Row>
-                }
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Bibliografia
-                    </Text>
-                </Row>
-                { dpuc.bibliografia && 
-                    dpuc.bibliografia.split("\n").map((livro) =>(
-                        <Text as="article" size="medium">
-                            <li>{ livro }</li>
-                        </Text>
-                    ))
-                }
-                <br/>
-                {
-                    /* Exemplo de algo que vai mostrar */
-                    dpuc.ficheiros && dpuc.ficheiros.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Ficheiros
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.ficheiros }
-                        </Text>
-                    </Row>
-                }
-                {
-                    /* Exemplo de algo que vai mostrar */
-                    dpuc.estado && dpuc.estado.length !== 0 &&
-                    <Row>
-                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                            Estado
-                        </Text>
-                        <Text as="article" size="medium">
-                            { dpuc.estado }
-                        </Text>
-                    </Row>
-                }
             </ContentContainer>
             }
         </ContentContainer>

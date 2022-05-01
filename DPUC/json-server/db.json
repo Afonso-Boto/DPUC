@@ -171,6 +171,7 @@
     {
       "designacao": "Introdução à Programação",
       "areaCientifica": "INF",
+      "duracao": "Semestral",
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
@@ -179,7 +180,7 @@
       "horasTrabalo": 162,
       "ects": "6",
       "objetivos": "Pretende-se dotar os alunos da capacidade para resolver problemas de pequena e média dimensão recorrendo à linguagem de programação Python e a algumas suas bibliotecas/módulos (p.ex., matplotlib, numpy, etc.).",
-      "conteudos": "- Sintaxe e semântica básicas de uma linguagem de alto nível (Python).\n- Valores e tipos de dados primitivos. Variáveis, operadores e expressões.\n- Funções, parâmetros e variáveis locais.\n- Instruções de decisão.\n- Instruções de repetição.\n- Sequências: strings, listas, tuplos (e operações/métodos úteis).\n- Conjuntos e dicionários (e operações/métodos úteis).\n- Compreensões e expressões geradoras em listas e dicionários.\n- Ficheiros de texto.\n- Classes e Objetos.\n- Utilização de módulos para cálculo científico e gráficos, etc. (numpy, matplotlib, ...).",
+      "conteudos": "Sintaxe e semântica básicas de uma linguagem de alto nível (Python).\nValores e tipos de dados primitivos. Variáveis, operadores e expressões.\nFunções, parâmetros e variáveis locais.\nInstruções de decisão.\nInstruções de repetição.\nSequências: strings, listas, tuplos (e operações/métodos úteis).\nConjuntos e dicionários (e operações/métodos úteis).\nCompreensões e expressões geradoras em listas e dicionários.\nFicheiros de texto.\nClasses e Objetos.\nUtilização de módulos para cálculo científico e gráficos, etc. (numpy, matplotlib, ...).",
       "coerenciaConteudos": null,
       "metodologias": "As aulas teórico-práticas servem para apresentar, discutir e demonstrar a aplicação dos tópicos da matéria da unidade curricular.\nA abordagem seguida pressupõe a participação dos estudantes na discussão, procurando-se desenvolver competências que visam o raciocínio abstracto, a manipulação simbólica e a aprendizagem de técnicas gerais de resolução de problemas.\n A componente prática é composta por um conjunto de exercícios de programação que obrigam o estudante a aplicar e consolidar os conceitos apresentados nas aulas teórico-práticas.",
       "coerenciaMetodologias": null,

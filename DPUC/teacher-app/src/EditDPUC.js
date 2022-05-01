@@ -117,11 +117,8 @@ const EditDPUC = () => {
                         <Button variant="primary" style={{fontSize:"100%"}}>Guardar</Button>
                     </Col>
                 </Row>
-                <div className="row" style={{paddingTop:"10px"}}>
-                    <div className="col">
-                        <i>Nota: Campos assinalados com * são opcionais</i>
-                    </div>
-                </div>
+                <hr className="custom-hr"/>
+                
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -168,6 +165,11 @@ const EditDPUC = () => {
                 </Row>
                 <hr className="custom-hr"/>
                 {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
+                <div className="row" style={{paddingTop:"10px"}}>
+                    <div className="col">
+                        <i>Nota: Campos assinalados com * são opcionais</i>
+                    </div>
+                </div>
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
@@ -325,21 +327,23 @@ const EditDPUC = () => {
                             />
                         }
                     </div>
-                    <div className="col-lg-3" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
-                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Semestre*
-                        </Text>
-                        { loadSemestre && <SelectLoading />}
-                        { errorSemestre && !loadSemestre && <Select disabled placeholder="Não foi possível obter os Semestres de lecionação" variant="black" options={[]}/>}
-                        { semestre && !loadSemestre &&
-                            <Select placeholder="Semestre da UC" variant="black" 
-                                options={semestre}
-                                onChange={(e) => setSemestre(e.nome)}
-                                getOptionLabel ={(option)=>(option.nome)}
-                                getOptionValue ={(option)=>option.id}
-                            />
-                        }
-                    </div>
+                    { ucDuracao === "Semestral" &&
+                        <div className="col-lg-3">
+                            <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                                Semestre*
+                            </Text>
+                            { loadSemestre && <SelectLoading />}
+                            { errorSemestre && !loadSemestre && <Select disabled placeholder="Não foi possível obter os Semestres de lecionação" variant="black" options={[]}/>}
+                            { semestre && !loadSemestre &&
+                                <Select placeholder="Semestre da UC" variant="black" 
+                                    options={semestre}
+                                    onChange={(e) => setSemestre(e.nome)}
+                                    getOptionLabel ={(option)=>(option.nome)}
+                                    getOptionValue ={(option)=>option.id}
+                                />
+                            }
+                        </div>
+                    }
                 </div>
                 {/* Modalidade e Página Pública*/}
                 <div className="row row-pad">
