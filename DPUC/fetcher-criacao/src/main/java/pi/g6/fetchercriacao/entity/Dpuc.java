@@ -14,6 +14,9 @@ public class Dpuc {
     @Column(name = "criacao_edicao")
     private String criacao_edicao;
 
+    @Column(name = "cod")
+    private String cod;
+
     @Column(name = "designacao")
     private String designacao;
 
@@ -114,9 +117,10 @@ public class Dpuc {
     public Dpuc() {
     }
 
-    public Dpuc(int utilizador, String criacao_edicao, String designacao, String sigla_ac, String duracao, String responsavel, String carga_horaria, String horas_contacto, String docentes, String docentes_horas, String horas_trabalho, String ects, String objetivos, String conteudos, String coerencia_conteudos, String metodologias, String coerencia_metodologias, String bibliografia, String observacoes, int id_uo, String cursos, String regime_faltas, String linguas, String modalidade, String requisitos, byte[] ficheiros, String data_alteracao, String pagina_publica, String funcionamento, String aprendizagem, String grau, String avaliacao, String periodo, String estado) {
+    public Dpuc(int utilizador, String criacao_edicao, String cod, String designacao, String sigla_ac, String duracao, String responsavel, String carga_horaria, String horas_contacto, String docentes, String docentes_horas, String horas_trabalho, String ects, String objetivos, String conteudos, String coerencia_conteudos, String metodologias, String coerencia_metodologias, String bibliografia, String observacoes, int id_uo, String cursos, String regime_faltas, String linguas, String modalidade, String requisitos, byte[] ficheiros, String data_alteracao, String pagina_publica, String funcionamento, String aprendizagem, String grau, String avaliacao, String periodo, String estado) {
         this.utilizador = utilizador;
         this.criacao_edicao = criacao_edicao;
+        this.cod = cod;
         this.designacao = designacao;
         this.sigla_ac = sigla_ac;
         this.duracao = duracao;
@@ -166,6 +170,14 @@ public class Dpuc {
 
     public void setCriacao_edicao(String criacao_edicao) {
         this.criacao_edicao = criacao_edicao;
+    }
+
+    public String getCod() {
+        return cod;
+    }
+
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
     public String getDesignacao() {
