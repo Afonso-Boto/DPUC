@@ -166,6 +166,7 @@ const EditDPUC = () => {
                         </Text>
                     </Col>
                 </Row>
+                <hr className="custom-hr"/>
                 {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
                 <div className="row row-pad">
                     <div className="col-lg-6">
@@ -232,9 +233,84 @@ const EditDPUC = () => {
                         }
                     </div>
                 </div>
-                {/* Duração, Semestre e Página Pública*/}
+                {/* Carga Letiva, Duração, Semestre */}
                 <div className="row row-pad">
-                    <div className="col-lg-2">
+                <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Carga Letiva Semanal (em Horas)
+                        </Text>
+                        <Row>
+                            <Col lg={"auto"}>
+                                <Row>
+                                    <Col lg={"auto"}>
+                                        <Text as="h3" size="large" fontWeight="400">
+                                            TP
+                                        </Text>
+                                    </Col>
+                                    <Col lg={"auto"}>
+                                        <Input border="1px solid #424242" color="#424242"  type="number"
+                                            min={0} max={12}
+                                            value={ucHorasT}
+                                            onChange={(e) => setHorasT(e.target.value)}
+                                            style={{width:"50px"}}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col lg={"auto"}>
+                                <Row>
+                                    <Col lg={"auto"}>
+                                    <Text as="h3" size="large" fontWeight="400">
+                                    T
+                                </Text>
+                                    </Col>
+                                    <Col lg={"auto"}>
+                                        <Input border="1px solid #424242" color="#424242"  type="number"
+                                        min={0} max={12}
+                                        value={ucHorasTP}
+                                        onChange={(e) => setHorasTP(e.target.value)}
+                                        style={{width:"50px"}}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col lg={"auto"}>
+                                <Row>
+                                    <Col lg={"auto"}>
+                                        <Text as="h3" size="large" fontWeight="400">
+                                            P
+                                        </Text>
+                                    </Col>
+                                    <Col lg={"auto"}>
+                                        <Input border="1px solid #424242" color="#424242"  type="number"
+                                        min={0} max={12}
+                                        value={ucHorasP}
+                                        onChange={(e) => setHorasP(e.target.value)}
+                                        style={{width:"50px"}}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col lg={"auto"}>
+                                <Row>
+                                    <Col lg={"auto"}>
+                                        <Text as="h3" size="large" fontWeight="400">
+                                            OT
+                                        </Text>
+                                    </Col>
+                                    <Col lg={"auto"}>
+                                        <Input border="1px solid #424242" color="#424242"  type="number"
+                                        min={0} max={12}
+                                        value={ucHorasOT}
+                                        onChange={(e) => setHorasOT(e.target.value)}
+                                        style={{width:"50px"}}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className="col-lg-3">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Duração
                         </Text>
@@ -249,7 +325,7 @@ const EditDPUC = () => {
                             />
                         }
                     </div>
-                    <div className="col-lg-2" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
+                    <div className="col-lg-3" style={{visibility: ucDuracao === 1 ? 'visible' : 'hidden' }}>
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Semestre*
                         </Text>
@@ -264,67 +340,9 @@ const EditDPUC = () => {
                             />
                         }
                     </div>
-                    <div className="col-lg-8">
-                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Página Pública da UC*
-                        </Text>
-                        <Input placeholder="Insira o URL da página da UC..." border="1px solid #424242" color="#424242" 
-                            value={ucWebpage}
-                            onChange={(e) => setWebpage(e.target.value)}
-                        />
-                    </div>
                 </div>
-                {/* Carga Letiva Semanal e Modalidade*/}
+                {/* Modalidade e Página Pública*/}
                 <div className="row row-pad">
-                    <div className="col-lg-6">
-                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Carga Letiva Semanal (em Horas) - ver como fiz no create para os campos
-                            nao ficarem enormes
-                        </Text>
-                        <div className="row">
-                            <div className="col-lg-2">
-                                <Text size="large" color="#424242" fontWeight="300">
-                                    TP
-                                </Text>
-                                
-                                <Input border="1px solid #424242" color="#424242"  type="number"
-                                    min={0} max={12}
-                                    value={ucHorasT}
-                                    onChange={(e) => setHorasT(e.target.value)}
-                                />
-                            </div>
-                            <div className="col-lg-2">
-                                <Text size="large" color="#424242" fontWeight="300">
-                                    T
-                                </Text>
-                                <Input border="1px solid #424242" color="#424242"  type="number"
-                                    min={0} max={12}
-                                    value={ucHorasTP}
-                                    onChange={(e) => setHorasTP(e.target.value)}
-                                />
-                            </div>
-                            <div className="col-lg-2">
-                                <Text size="large" color="#424242" fontWeight="300">
-                                    P
-                                </Text>
-                                <Input border="1px solid #424242" color="#424242"  type="number"
-                                    min={0} max={12}
-                                    value={ucHorasP}
-                                    onChange={(e) => setHorasP(e.target.value)}
-                                />
-                            </div>
-                            <div className="col-lg-2">
-                                <Text size="large" color="#424242" fontWeight="300">
-                                    OT
-                                </Text>
-                                <Input border="1px solid #424242" color="#424242"  type="number"
-                                    min={0} max={12}
-                                    value={ucHorasOT}
-                                    onChange={(e) => setHorasOT(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                    </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Modalidade de Lecionação
@@ -339,6 +357,15 @@ const EditDPUC = () => {
                                 getOptionValue ={(option)=>option.id}
                             />
                         }
+                    </div>
+                    <div className="col-lg-6">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Página Pública da UC*
+                        </Text>
+                        <Input placeholder="Insira o URL da página da UC..." border="1px solid #424242" color="#424242" 
+                            value={ucWebpage}
+                            onChange={(e) => setWebpage(e.target.value)}
+                        />
                     </div>
                 </div>
                 {/* Docentes da UC */}
@@ -359,6 +386,7 @@ const EditDPUC = () => {
                         }
                     </div>
                 </div>
+                <hr className="custom-hr"/>
                 {/* Objetivos de aprendizagem */}
                 <div className="row row-pad">
                     <div className="col-lg-12">
@@ -385,6 +413,7 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
+                <hr className="custom-hr"/>
                 {/* Conteúdos programáticos */}
                 <div className="row row-pad">
                     <div className="col-lg-12">
@@ -411,6 +440,7 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
+                <hr className="custom-hr"/>
                 {/* Metodologias de ensino */}
                 <div className="row row-pad">
                     <div className="col-lg-12">
@@ -437,19 +467,6 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
-                { /* Regime de Faltas */}
-                <div className="row row-pad">
-                    <div className="col-lg-12">
-                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Regime de Faltas*
-                        </Text>
-                        <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242"  
-                            as="textarea" fontSize="120%" className="textarea-custom"
-                            value={ucRegFaltas}
-                            onChange={(e) => setRegFaltas(e.target.value)}
-                        />
-                    </div>
-                </div>
                 { /* Funcionamento da Componente Prática */}
                 <div className="row row-pad">
                     <div className="col-lg-12">
@@ -463,6 +480,8 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
+                <hr className="custom-hr"/>
+                
                 { /* Aprendizagem ativa */}
                 <div className="row row-pad">
                     <div className="col-lg-12">
@@ -489,6 +508,20 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
+                { /* Regime de Faltas */}
+                <div className="row row-pad">
+                    <div className="col-lg-12">
+                        <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
+                            Regime de Faltas*
+                        </Text>
+                        <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242"  
+                            as="textarea" fontSize="120%" className="textarea-custom"
+                            value={ucRegFaltas}
+                            onChange={(e) => setRegFaltas(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <hr className="custom-hr"/>
                 { /* Bibliografia de consulta */}
                 <div className="row row-pad">
                     <div className="col-lg-12">

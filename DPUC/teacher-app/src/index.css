@@ -18,3 +18,8 @@ hr{
   resize:vertical;  
   min-height:100px;
 }
+
+.custom-hr{
+  color: #0EB4BD;
+  background-color: #0EB4BD;
+}
