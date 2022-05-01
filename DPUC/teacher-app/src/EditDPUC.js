@@ -212,7 +212,7 @@ const EditDPUC = () => {
                                 options={areas}
                                 onChange={(e) => setArea(e.sigla)}
                                 getOptionLabel ={(option)=>(option.nome)}
-                                getOptionValue ={(option)=>(option.id)}
+                                getOptionValue ={(option)=>(option.sigla)}
                             />
                         }
                     </div>

@@ -170,7 +170,7 @@
   "dpuc": [
     {
       "designacao": "Introdução à Programação",
-      "areaCientifica": "Informática",
+      "areaCientifica": "INF",
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
@@ -198,7 +198,7 @@
       "grau": "Mestrado",
       "avaliacao": "Discreta",
       "periodo": "Primeiro",
-      "dataAlteracao": "2022-04-30",
+      "dataAlteracao": "2022-05-01",
       "estado": "Em Edição",
       "id": 1
     },

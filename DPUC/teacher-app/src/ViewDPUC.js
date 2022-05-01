@@ -1,6 +1,6 @@
 import { ContentContainer, Input, Select, Text, Button } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 
@@ -29,15 +29,64 @@ const ViewDPUC = () => {
 
     const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UOS);
-    const { data: cursos , loading: loadCursos, error: errorCursos } = useFetch(URL_CURSOS);
-    const { data: graus , loading: loadGraus, error: errorGraus } = useFetch(URL_GRAUS);
     const { data: areas , loading: loadAreas, error: errorAreas } = useFetch(URL_AREAS);
-    const { data: idiomas , loading: loadIdiomas, error: errorIdiomas } = useFetch(URL_IDIOMAS);
-    const { data: duracoes , loading: loadDuracoes, error: errorDuracoes } = useFetch(URL_DURACOES);
-    const { data: semestre , loading: loadSemestre, error: errorSemestre } = useFetch(URL_SEMESTRE);
-    const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
     const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
+    //const { data: cursos , loading: loadCursos, error: errorCursos } = useFetch(URL_CURSOS);
+    // const { data: graus , loading: loadGraus, error: errorGraus } = useFetch(URL_GRAUS);
+    // const { data: idiomas , loading: loadIdiomas, error: errorIdiomas } = useFetch(URL_IDIOMAS);
+    // const { data: duracoes , loading: loadDuracoes, error: errorDuracoes } = useFetch(URL_DURACOES);
+    // const { data: semestre , loading: loadSemestre, error: errorSemestre } = useFetch(URL_SEMESTRE);
+    // const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
 
+    const [ ucDocentes, setDocentes ] = useState([]);
+    const [ ucUO, setUO ] = useState("");
+    const [ ucArea, setArea ] = useState("");
+    const [ ucHorasTP, setHorasTP ] = useState(0);
+    const [ ucHorasT, setHorasT ] = useState(0);
+    const [ ucHorasP, setHorasP ] = useState(0);
+    const [ ucHorasOT, setHorasOT ] = useState(0);
+    const [ ucCursos, setCursos ] = useState([]);
+    const [ ucLinguas, setLinguas ] = useState([]);
+
+    useEffect(() => {
+        if(dpuc && uos && areas && docentes){
+            if(dpuc.linguas)
+                setLinguas(dpuc.linguas.split("$").filter((l) => l.length > 0));
+            if(dpuc.cursos)
+                setCursos(dpuc.cursos.split("$").filter((l) => l.length > 0));
+
+            if(dpuc.docentes){
+                var doces = [];
+                var docentesNum = dpuc.docentes.split("$").filter((l) => l.length > 0);
+                for(var i = 0; i < docentesNum.length; i++)
+                    doces.push(docentes.find((docente) => docente.cod_int.toString() === docentesNum[i]));
+                setDocentes(doces);
+            }
+
+            if(dpuc.uo)
+                setUO(uos.find((uo) => uo.id === dpuc.unidadeOrganica));
+            
+            if(dpuc.areaCientifica)
+                setArea(areas.find((area) => area.sigla === dpuc.areaCientifica));
+
+            if(dpuc.horasContacto)
+                setHorasOT(dpuc.horasContacto);
+
+            if(dpuc.docenteHoras){
+                var parsedString = dpuc.docentesHoras.split("$").filter((l) => l.length > 0);
+                for(var i = 0; i < parsedString.length; i++){
+                    if((parsedString[i]).includes("TP"))
+                        setHorasTP(parsedString[i].substring(3,4));
+                    else{
+                        if((parsedString[i]).includes("T"))
+                            setHorasT(parsedString[i].substring(2,3));
+                        if((parsedString[i]).includes("P"))
+                            setHorasP(parsedString[i].substring(2,3));
+                    }
+                }
+            }
+        }
+    }, [dpuc, uos, areas, docentes]);
 
     return ( 
         <ContentContainer padding="40px" >
@@ -109,17 +158,21 @@ const ViewDPUC = () => {
                     </Text>
                 </Row>
                 <br/>
-                <Row>
-                    <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
-                        Docentes
-                    </Text>
-                </Row>
                 {
-                    dpuc.docentes.split("$").map((docente) =>(
-                        <Text as="article" size="medium">
-                            <li>{ docente }</li>
+                    ucDocentes.length > 0 && 
+                    <Row>
+                        <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
+                            Docentes
                         </Text>
-                    ))
+
+                        {
+                        ucDocentes.map((docente) =>(
+                            <Text as="article" size="medium">
+                                <li>{ docente.nome_completo }</li>
+                            </Text>
+                        ))
+                        }
+                    </Row>
                 }
                 <br/>
                 <Row>
@@ -141,16 +194,7 @@ const ViewDPUC = () => {
                     </Text>
                 </Row>
                 <br/>
-                {/* 
-                ======================================
-                Verificar condição e mostrar conteúdo
-                ======================================
-
-                    Em geral basta fazer uma condução, como se fosse um if e
-                    mostrar o conteúdo após &&
-                */}
                 {
-                    /* Exemplo de algo que não vai mostrar */
                     dpuc.regimeFaltas && dpuc.regimeFaltas.length !== 0 &&
                     <Row>
                         <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
@@ -243,7 +287,7 @@ const ViewDPUC = () => {
                     </Text>
                 </Row>
                 { dpuc.conteudos &&
-                    dpuc.conteudos.split("$").map((conteudo) =>(
+                    dpuc.conteudos.split("\n").map((conteudo) =>(
                         <Text as="article" size="medium">
                             <li>{ conteudo }</li>
                         </Text>
@@ -262,11 +306,6 @@ const ViewDPUC = () => {
                         <br/>
                     </Row>
                 }
-                {/* 
-                ======================================
-                Percorrer conteúdo de uma lista/array
-                ======================================
-                */}
                 <Row>
                     <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
                         Bibliografia
