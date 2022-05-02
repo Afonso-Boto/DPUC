@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   mysqldb:
+    platform: linux/x86_64
     image: mysql:5.7
     env_file: ./.env
     command: --explicit_defaults_for_timestamp
