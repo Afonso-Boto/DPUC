@@ -1,4 +1,4 @@
-import { ContentContainer, Input, Text, Button, AnimatedBackground } from "@uaveiro/ui";
+import { ContentContainer, Input, Text, Button, AnimatedBackground, Link } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate, Link as RouterLink} from "react-router-dom";
@@ -43,7 +43,7 @@ const Home = () => {
                     <Col>
                         <Card >
                             <RouterLink to={"/dpuc/" + uc.id} style={{textDecoration:"none"}}>
-                            <Card.Header as="h5">{uc.designacao}</Card.Header>
+                            <Card.Header as="h5"><Link lighten textDecoration="underline" size="mediumlarge">{uc.designacao}</Link></Card.Header>
                             </RouterLink>
                             <Card.Body>
                                 <Card.Subtitle className="mb-2 text-muted">

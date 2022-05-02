@@ -252,8 +252,8 @@ const EditDPUC = () => {
                                     <Col lg={"auto"}>
                                         <Input border="1px solid #424242" color="#424242"  type="number"
                                             min={0} max={12}
-                                            value={ucHorasT}
-                                            onChange={(e) => setHorasT(e.target.value)}
+                                            value={ucHorasTP}
+                                            onChange={(e) => setHorasTP(e.target.value)}
                                             style={{width:"50px"}}
                                         />
                                     </Col>
@@ -269,8 +269,8 @@ const EditDPUC = () => {
                                     <Col lg={"auto"}>
                                         <Input border="1px solid #424242" color="#424242"  type="number"
                                         min={0} max={12}
-                                        value={ucHorasTP}
-                                        onChange={(e) => setHorasTP(e.target.value)}
+                                        value={ucHorasT}
+                                        onChange={(e) => setHorasT(e.target.value)}
                                         style={{width:"50px"}}
                                         />
                                     </Col>

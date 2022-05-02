@@ -34,9 +34,15 @@ const CreateDPUC = () => {
             setError(true);
             return;
         }
+
+        const date = new Date();
+        var dataAlt = "" + date.getFullYear() + "-";
+        dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
+        dataAlt += "-";
+        dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
         //const uc = { ucName: designacao, ucUO: unidadeOrganical, ucRegente: responsavel, ucECTS: ects}
         const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
-                estado: "Em Criação", dataAlteracao: ""}
+                estado: "Em Criação", dataAlteracao: dataAlt}
 
         axios
             .post(URL_DPUC, uc)

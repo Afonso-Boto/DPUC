@@ -48,10 +48,11 @@ const getFormattedDPUC = (data,
     dataAlt += "-";
     dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
 
-    return { designacao: data.designacao, areaCientifica: ucArea, duracao: ucDuracao,
+    const codigoUC = 10000 + Math.floor(Math.random() * 90000);
+    return { designacao: data.designacao, areaCientifica: ucArea, duracao: ucDuracao, codigo: codigoUC,
         responsavel: data.responsavel, cargaHoraria: null, horasContacto: ucHorasOT,
         docentes: formattedDocentes, docentesHoras: formattedDocentesHoras,
-        horasTrabalo: data.ects*27, ects: data.ects, objetivos: ucObjetivos,
+        horasTrabalho: data.ects*27, ects: data.ects, objetivos: ucObjetivos,
         conteudos: ucConteudos, coerenciaConteudos: ucCoerenciaConteudos, metodologias: ucMetodologias,
         coerenciaMetodologias: ucCoerenciaMetodologias, bibliografia: ucBibliografia, observacoes: ucObservacoes,
         unidadeOrganica: data.unidadeOrganica,  cursos: formattedCursos, regimeFaltas: ucRegFaltas, 

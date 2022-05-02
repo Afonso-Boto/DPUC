@@ -172,12 +172,13 @@
       "designacao": "Introdução à Programação",
       "areaCientifica": "INF",
       "duracao": "Semestral",
+      "codigo": 17164,
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
       "docentes": "15777$9525$",
-      "docentesHoras": "TP:4H$P:2H$",
-      "horasTrabalo": 162,
+      "docentesHoras": "TP:2H$P:2H$",
+      "horasTrabalho": 162,
       "ects": "6",
       "objetivos": "Pretende-se dotar os alunos da capacidade para resolver problemas de pequena e média dimensão recorrendo à linguagem de programação Python e a algumas suas bibliotecas/módulos (p.ex., matplotlib, numpy, etc.).",
       "conteudos": "Sintaxe e semântica básicas de uma linguagem de alto nível (Python).\nValores e tipos de dados primitivos. Variáveis, operadores e expressões.\nFunções, parâmetros e variáveis locais.\nInstruções de decisão.\nInstruções de repetição.\nSequências: strings, listas, tuplos (e operações/métodos úteis).\nConjuntos e dicionários (e operações/métodos úteis).\nCompreensões e expressões geradoras em listas e dicionários.\nFicheiros de texto.\nClasses e Objetos.\nUtilização de módulos para cálculo científico e gráficos, etc. (numpy, matplotlib, ...).",
@@ -189,7 +190,7 @@
       "unidadeOrganica": 4,
       "cursos": "Engenharia Informática$",
       "regimeFaltas": null,
-      "linguas": "Português$",
+      "linguas": "Português$Inglês$",
       "modalidade": "Presencial",
       "requisitos": "Nenhum",
       "ficheiros": null,
@@ -199,7 +200,7 @@
       "grau": "Mestrado",
       "avaliacao": "Discreta",
       "periodo": "Primeiro",
-      "dataAlteracao": "2022-05-01",
+      "dataAlteracao": "2022-05-02",
       "estado": "Em Edição",
       "id": 1
     },
@@ -246,6 +247,15 @@
       "estado": "Em Criação",
       "dataAlteracao": "",
       "id": 5
+    },
+    {
+      "designacao": "Nova UC",
+      "unidadeOrganica": 2,
+      "responsavel": 10244,
+      "ects": 6,
+      "estado": "Em Criação",
+      "dataAlteracao": "2022-05-02",
+      "id": 6
     }
   ]
 }
