@@ -1,9 +1,7 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "utilizadores")
@@ -16,20 +14,15 @@ public class Curso {
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
-    @Column(name = "id_uo", nullable = false)
-    private int id_uo;
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private UnidadeOrganica unidadeOrganica;
+
+    @ManyToMany(mappedBy = "cursos")
+    Set<Dpuc> dpucs;
 
     public Curso() {
     }
-
-    public Curso(int id, String nome, int id_uo) {
-        this.id = id;
-        this.nome = nome;
-        this.id_uo = id_uo;
-    }
-
-
-    // Getters and Setters
 
     public int getId() {
         return id;
@@ -47,20 +40,19 @@ public class Curso {
         this.nome = nome;
     }
 
-    public int getId_uo() {
-        return id_uo;
+    public UnidadeOrganica getUnidadeOrganica() {
+        return unidadeOrganica;
     }
 
-    public void setId_uo(int id_uo) {
-        this.id_uo = id_uo;
+    public void setUnidadeOrganica(UnidadeOrganica unidadeOrganica) {
+        this.unidadeOrganica = unidadeOrganica;
     }
 
-    @Override
-    public String toString() {
-        return "Utilizador{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", id_uo=" + id_uo +
-                '}';
+    public Set<Dpuc> getDpucs() {
+        return dpucs;
+    }
+
+    public void setDpucs(Set<Dpuc> dpucs) {
+        this.dpucs = dpucs;
     }
 }

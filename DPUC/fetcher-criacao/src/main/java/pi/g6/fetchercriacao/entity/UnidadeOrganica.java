@@ -1,17 +1,15 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "unidade_organica")
 public class UnidadeOrganica {
 
     @Id
-    @Column(name = "cod_int", nullable = false)
-    private int cod_int;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Column(name = "nome", nullable = false)
     private String nome;
@@ -19,23 +17,22 @@ public class UnidadeOrganica {
     @Column(name = "sigla", nullable = false)
     private String sigla;
 
-    public UnidadeOrganica() {
-    }
+    // FK para utilizadores
+    @OneToMany(mappedBy = "unidade_organica")
+    private Set<Curso> cursos;
 
-    public UnidadeOrganica(int cod_int, String nome, String sigla) {
-        this.cod_int = cod_int;
-        this.nome = nome;
-        this.sigla = sigla;
+    public UnidadeOrganica() {
     }
 
     //Getters and Setters
 
-    public int getCod_int() {
-        return cod_int;
+
+    public int getId() {
+        return id;
     }
 
-    public void setCod_int(int cod_int) {
-        this.cod_int = cod_int;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -54,12 +51,4 @@ public class UnidadeOrganica {
         this.sigla = sigla;
     }
 
-    @Override
-    public String toString() {
-        return "UnidadeOrganica{" +
-                "cod_int='" + cod_int + '\'' +
-                ", nome='" + nome + '\'' +
-                ", sigla='" + sigla + '\'' +
-                '}';
-    }
 }

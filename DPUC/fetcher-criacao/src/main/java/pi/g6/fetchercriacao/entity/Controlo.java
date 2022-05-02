@@ -1,17 +1,17 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "controlo")
 public class Controlo {
 
     @Id
-    @Column(name = "utilizador", nullable = false)
-    private int utilizador;
+    @Column(name = "id", nullable = false)
+    private int id;
+
+    @Column(name = "codigo", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean codigo;
 
     @Column(name = "criacao_edicao", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean criacao_edicao;
@@ -33,12 +33,6 @@ public class Controlo {
 
     @Column(name = "horas_contacto", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean horas_contacto;
-
-    @Column(name = "docentes", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean docentes;
-
-    @Column(name = "docentes_horas", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean docentes_horas;
 
     @Column(name = "horas_trabalho", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean horas_trabalho;
@@ -67,12 +61,6 @@ public class Controlo {
     @Column(name = "observacoes", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean observacoes;
 
-    @Column(name = "id_uo", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean id_uo;
-
-    @Column(name = "cursos", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean cursos;
-
     @Column(name = "regime_faltas", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean regime_faltas;
 
@@ -100,68 +88,25 @@ public class Controlo {
     @Column(name = "aprendizagem", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean aprendizagem;
 
-    @Column(name = "grau", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean grau;
+    // FK id do tipo_utilizador
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tipo_utilizadorid", referencedColumnName = "id")
+    private TipoUtilizador tipoUtilizador;
 
-    @Column(name = "avaliacao", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean avaliacao;
-
-    @Column(name = "periodo", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean periodo;
-
-    @Column(name = "estado", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean estado;
-
-
-    public Controlo() {
+    public int getId() {
+        return id;
     }
 
-    public Controlo(int utilizador, boolean criacao_edicao, boolean designacao, boolean sigla_ac, boolean duracao, boolean responsavel, boolean carga_horaria, boolean horas_contacto, boolean docentes, boolean docentes_horas, boolean horas_trabalho, boolean ects, boolean objetivos, boolean conteudos, boolean coerencia_conteudos, boolean metodologias, boolean coerencia_metodologias, boolean bibliografia, boolean observacoes, boolean id_uo, boolean cursos, boolean regime_faltas, boolean linguas, boolean modalidade, boolean requisitos, boolean ficheiros, boolean data_alteracao, boolean pagina_publica, boolean funcionamento, boolean aprendizagem, boolean grau, boolean avaliacao, boolean periodo, boolean estado) {
-        this.utilizador = utilizador;
-        this.criacao_edicao = criacao_edicao;
-        this.designacao = designacao;
-        this.sigla_ac = sigla_ac;
-        this.duracao = duracao;
-        this.responsavel = responsavel;
-        this.carga_horaria = carga_horaria;
-        this.horas_contacto = horas_contacto;
-        this.docentes = docentes;
-        this.docentes_horas = docentes_horas;
-        this.horas_trabalho = horas_trabalho;
-        this.ects = ects;
-        this.objetivos = objetivos;
-        this.conteudos = conteudos;
-        this.coerencia_conteudos = coerencia_conteudos;
-        this.metodologias = metodologias;
-        this.coerencia_metodologias = coerencia_metodologias;
-        this.bibliografia = bibliografia;
-        this.observacoes = observacoes;
-        this.id_uo = id_uo;
-        this.cursos = cursos;
-        this.regime_faltas = regime_faltas;
-        this.linguas = linguas;
-        this.modalidade = modalidade;
-        this.requisitos = requisitos;
-        this.ficheiros = ficheiros;
-        this.data_alteracao = data_alteracao;
-        this.pagina_publica = pagina_publica;
-        this.funcionamento = funcionamento;
-        this.aprendizagem = aprendizagem;
-        this.grau = grau;
-        this.avaliacao = avaliacao;
-        this.periodo = periodo;
-        this.estado = estado;
+    public void setId(int id) {
+        this.id = id;
     }
 
-
-    //Getters and Setters
-
-    public int getUtilizador() {
-        return utilizador;
+    public boolean isCodigo() {
+        return codigo;
     }
 
-    public void setUtilizador(int utilizador) {
-        this.utilizador = utilizador;
+    public void setCodigo(boolean codigo) {
+        this.codigo = codigo;
     }
 
     public boolean isCriacao_edicao() {
@@ -218,22 +163,6 @@ public class Controlo {
 
     public void setHoras_contacto(boolean horas_contacto) {
         this.horas_contacto = horas_contacto;
-    }
-
-    public boolean isDocentes() {
-        return docentes;
-    }
-
-    public void setDocentes(boolean docentes) {
-        this.docentes = docentes;
-    }
-
-    public boolean isDocentes_horas() {
-        return docentes_horas;
-    }
-
-    public void setDocentes_horas(boolean docentes_horas) {
-        this.docentes_horas = docentes_horas;
     }
 
     public boolean isHoras_trabalho() {
@@ -308,22 +237,6 @@ public class Controlo {
         this.observacoes = observacoes;
     }
 
-    public boolean isId_uo() {
-        return id_uo;
-    }
-
-    public void setId_uo(boolean id_uo) {
-        this.id_uo = id_uo;
-    }
-
-    public boolean isCursos() {
-        return cursos;
-    }
-
-    public void setCursos(boolean cursos) {
-        this.cursos = cursos;
-    }
-
     public boolean isRegime_faltas() {
         return regime_faltas;
     }
@@ -396,75 +309,11 @@ public class Controlo {
         this.aprendizagem = aprendizagem;
     }
 
-    public boolean isGrau() {
-        return grau;
+    public TipoUtilizador getTipoUtilizador() {
+        return tipoUtilizador;
     }
 
-    public void setGrau(boolean grau) {
-        this.grau = grau;
-    }
-
-    public boolean isAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(boolean avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
-    public boolean isPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(boolean periodo) {
-        this.periodo = periodo;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    @Override
-    public String toString() {
-        return "Controlo{" +
-                "utilizador=" + utilizador +
-                ", criacao_edicao=" + criacao_edicao +
-                ", designacao=" + designacao +
-                ", sigla_ac=" + sigla_ac +
-                ", duracao=" + duracao +
-                ", responsavel=" + responsavel +
-                ", carga_horaria=" + carga_horaria +
-                ", horas_contacto=" + horas_contacto +
-                ", docentes=" + docentes +
-                ", docentes_horas=" + docentes_horas +
-                ", horas_trabalho=" + horas_trabalho +
-                ", ects=" + ects +
-                ", objetivos=" + objetivos +
-                ", conteudos=" + conteudos +
-                ", coerencia_conteudos=" + coerencia_conteudos +
-                ", metodologias=" + metodologias +
-                ", coerencia_metodologias=" + coerencia_metodologias +
-                ", bibliografia=" + bibliografia +
-                ", observacoes=" + observacoes +
-                ", id_uo=" + id_uo +
-                ", cursos=" + cursos +
-                ", regime_faltas=" + regime_faltas +
-                ", linguas=" + linguas +
-                ", modalidade=" + modalidade +
-                ", requisitos=" + requisitos +
-                ", ficheiros=" + ficheiros +
-                ", data_alteracao=" + data_alteracao +
-                ", pagina_publica=" + pagina_publica +
-                ", funcionamento=" + funcionamento +
-                ", aprendizagem=" + aprendizagem +
-                ", grau=" + grau +
-                ", avaliacao=" + avaliacao +
-                ", periodo=" + periodo +
-                ", estado=" + estado +
-                '}';
+    public void setTipoUtilizador(TipoUtilizador tipoUtilizador) {
+        this.tipoUtilizador = tipoUtilizador;
     }
 }

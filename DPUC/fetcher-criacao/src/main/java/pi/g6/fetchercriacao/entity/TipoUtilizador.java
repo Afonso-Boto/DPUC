@@ -1,9 +1,7 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tipo_utilizador")
@@ -11,28 +9,43 @@ public class TipoUtilizador {
 
     @Id
     @Column(name = "id", nullable = false)
-    private String tipo;
+    private int id;
+
+    @Column(name = "codigo")
+    private String codigo;
+
+    // FK para o controlo
+    @OneToOne(mappedBy = "tipo_utilizador")
+    private Controlo controlo;
+
+    // FK para utilizadores
+    @OneToMany(mappedBy = "tipo_utilizador")
+    private Set<Utilizadores> utilizadores;
 
     public TipoUtilizador() {
     }
 
-    public TipoUtilizador(String tipo) {
-        this.tipo = tipo;
+    public int getId() {
+        return id;
     }
 
-    //Getters and Setters
-    public String getTipo() {
-        return tipo;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public String getCodigo() {
+        return codigo;
     }
 
-    @Override
-    public String toString() {
-        return "TipoUtilizador{" +
-                "tipo='" + tipo + '\'' +
-                '}';
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Controlo getControlo() {
+        return controlo;
+    }
+
+    public void setControlo(Controlo controlo) {
+        this.controlo = controlo;
     }
 }

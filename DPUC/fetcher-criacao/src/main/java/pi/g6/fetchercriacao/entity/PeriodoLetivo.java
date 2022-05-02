@@ -1,27 +1,33 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "periodo_letivo")
 public class PeriodoLetivo {
 
     @Id
-    @Column(name = "periodo", nullable = false)
+    @Column(name = "id", nullable = false)
+    private int id;
+
+    @Column(name = "periodo")
     private String periodo;
+
+    @OneToMany(mappedBy = "periodo_letivo")
+    private Set<Dpuc> dpucs;
 
     public PeriodoLetivo() {
     }
 
-    public PeriodoLetivo(String periodo) {
-        this.periodo = periodo;
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    //Getters and Setters
     public String getPeriodo() {
         return periodo;
     }
@@ -30,10 +36,11 @@ public class PeriodoLetivo {
         this.periodo = periodo;
     }
 
-    @Override
-    public String toString() {
-        return "PeriodoLetivo{" +
-                "periodo='" + periodo + '\'' +
-                '}';
+    public Set<Dpuc> getDpucs() {
+        return dpucs;
+    }
+
+    public void setDpucs(Set<Dpuc> dpucs) {
+        this.dpucs = dpucs;
     }
 }

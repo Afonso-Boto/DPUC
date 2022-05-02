@@ -2,20 +2,21 @@ package pi.g6.fetchercriacao.entity;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Set;
 
 @Entity
 @Table(name = "dpuc")
 public class Dpuc {
 
     @Id
-    @Column(name = "utilizador", nullable = false)
-    private int utilizador;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "criacao_edicao")
-    private String criacao_edicao;
+    @Column(name = "criacao_edicao", columnDefinition = "TINYINT(1)")
+    private boolean criacao_edicao;
 
-    @Column(name = "cod")
-    private String cod;
+    @Column(name = "codigo")
+    private String codigo;
 
     @Column(name = "designacao")
     private String designacao;
@@ -34,12 +35,6 @@ public class Dpuc {
 
     @Column(name = "horas_contacto")
     private String horas_contacto;
-
-    @Column(name = "docentes")
-    private String docentes;
-
-    @Column(name = "docentes_horas")
-    private String docentes_horas;
 
     @Column(name = "horas_trabalho")
     private String horas_trabalho;
@@ -67,12 +62,6 @@ public class Dpuc {
 
     @Column(name = "observacoes")
     private String observacoes;
-
-    @Column(name = "id_uo")
-    private int id_uo;
-
-    @Column(name = "cursos")
-    private String cursos;
 
     @Column(name = "regime_faltas")
     private String regime_faltas;
@@ -102,82 +91,46 @@ public class Dpuc {
     @Column(name = "aprendizagem")
     private String aprendizagem;
 
-    @Column(name = "grau")
-    private String grau;
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Estado estado;
 
-    @Column(name = "avaliacao")
-    private String avaliacao;
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private PeriodoLetivo periodoLetivo;
 
-    @Column(name = "periodo")
-    private String periodo;
-
-    @Column(name = "estado")
-    private String estado;
+    @ManyToMany
+    @JoinTable(
+            name = "curso_dpuc",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
+    Set<Curso> cursos;
 
     public Dpuc() {
     }
 
-    public Dpuc(int utilizador, String criacao_edicao, String cod, String designacao, String sigla_ac, String duracao, String responsavel, String carga_horaria, String horas_contacto, String docentes, String docentes_horas, String horas_trabalho, String ects, String objetivos, String conteudos, String coerencia_conteudos, String metodologias, String coerencia_metodologias, String bibliografia, String observacoes, int id_uo, String cursos, String regime_faltas, String linguas, String modalidade, String requisitos, byte[] ficheiros, String data_alteracao, String pagina_publica, String funcionamento, String aprendizagem, String grau, String avaliacao, String periodo, String estado) {
-        this.utilizador = utilizador;
-        this.criacao_edicao = criacao_edicao;
-        this.cod = cod;
-        this.designacao = designacao;
-        this.sigla_ac = sigla_ac;
-        this.duracao = duracao;
-        this.responsavel = responsavel;
-        this.carga_horaria = carga_horaria;
-        this.horas_contacto = horas_contacto;
-        this.docentes = docentes;
-        this.docentes_horas = docentes_horas;
-        this.horas_trabalho = horas_trabalho;
-        this.ects = ects;
-        this.objetivos = objetivos;
-        this.conteudos = conteudos;
-        this.coerencia_conteudos = coerencia_conteudos;
-        this.metodologias = metodologias;
-        this.coerencia_metodologias = coerencia_metodologias;
-        this.bibliografia = bibliografia;
-        this.observacoes = observacoes;
-        this.id_uo = id_uo;
-        this.cursos = cursos;
-        this.regime_faltas = regime_faltas;
-        this.linguas = linguas;
-        this.modalidade = modalidade;
-        this.requisitos = requisitos;
-        this.ficheiros = ficheiros;
-        this.data_alteracao = data_alteracao;
-        this.pagina_publica = pagina_publica;
-        this.funcionamento = funcionamento;
-        this.aprendizagem = aprendizagem;
-        this.grau = grau;
-        this.avaliacao = avaliacao;
-        this.periodo = periodo;
-        this.estado = estado;
+    public int getId() {
+        return id;
     }
 
-    //Getters and Setters
-    public int getUtilizador() {
-        return utilizador;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setUtilizador(int utilizador) {
-        this.utilizador = utilizador;
-    }
-
-    public String getCriacao_edicao() {
+    public boolean isCriacao_edicao() {
         return criacao_edicao;
     }
 
-    public void setCriacao_edicao(String criacao_edicao) {
+    public void setCriacao_edicao(boolean criacao_edicao) {
         this.criacao_edicao = criacao_edicao;
     }
 
-    public String getCod() {
-        return cod;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCod(String cod) {
-        this.cod = cod;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getDesignacao() {
@@ -226,22 +179,6 @@ public class Dpuc {
 
     public void setHoras_contacto(String horas_contacto) {
         this.horas_contacto = horas_contacto;
-    }
-
-    public String getDocentes() {
-        return docentes;
-    }
-
-    public void setDocentes(String docentes) {
-        this.docentes = docentes;
-    }
-
-    public String getDocentes_horas() {
-        return docentes_horas;
-    }
-
-    public void setDocentes_horas(String docentes_horas) {
-        this.docentes_horas = docentes_horas;
     }
 
     public String getHoras_trabalho() {
@@ -316,22 +253,6 @@ public class Dpuc {
         this.observacoes = observacoes;
     }
 
-    public int getId_uo() {
-        return id_uo;
-    }
-
-    public void setId_uo(int id_uo) {
-        this.id_uo = id_uo;
-    }
-
-    public String getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(String cursos) {
-        this.cursos = cursos;
-    }
-
     public String getRegime_faltas() {
         return regime_faltas;
     }
@@ -404,75 +325,27 @@ public class Dpuc {
         this.aprendizagem = aprendizagem;
     }
 
-    public String getGrau() {
-        return grau;
-    }
-
-    public void setGrau(String grau) {
-        this.grau = grau;
-    }
-
-    public String getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(String avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
-    public String getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
-    }
-
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    @Override
-    public String toString() {
-        return "Dpuc{" +
-                "utilizador=" + utilizador +
-                ", criacao_edicao='" + criacao_edicao + '\'' +
-                ", designacao='" + designacao + '\'' +
-                ", sigla_ac='" + sigla_ac + '\'' +
-                ", duracao='" + duracao + '\'' +
-                ", responsavel='" + responsavel + '\'' +
-                ", carga_horaria='" + carga_horaria + '\'' +
-                ", horas_contacto='" + horas_contacto + '\'' +
-                ", docentes='" + docentes + '\'' +
-                ", docentes_horas='" + docentes_horas + '\'' +
-                ", horas_trabalho='" + horas_trabalho + '\'' +
-                ", ects='" + ects + '\'' +
-                ", objetivos='" + objetivos + '\'' +
-                ", conteudos='" + conteudos + '\'' +
-                ", coerencia_conteudos='" + coerencia_conteudos + '\'' +
-                ", metodologias='" + metodologias + '\'' +
-                ", coerencia_metodologias='" + coerencia_metodologias + '\'' +
-                ", bibliografia='" + bibliografia + '\'' +
-                ", observacoes='" + observacoes + '\'' +
-                ", id_uo=" + id_uo +
-                ", cursos='" + cursos + '\'' +
-                ", regime_faltas='" + regime_faltas + '\'' +
-                ", linguas='" + linguas + '\'' +
-                ", modalidade='" + modalidade + '\'' +
-                ", requisitos='" + requisitos + '\'' +
-                ", ficheiros=" + Arrays.toString(ficheiros) +
-                ", data_alteracao='" + data_alteracao + '\'' +
-                ", pagina_publica='" + pagina_publica + '\'' +
-                ", funcionamento='" + funcionamento + '\'' +
-                ", aprendizagem='" + aprendizagem + '\'' +
-                ", grau='" + grau + '\'' +
-                ", avaliacao='" + avaliacao + '\'' +
-                ", periodo='" + periodo + '\'' +
-                ", estado='" + estado + '\'' +
-                '}';
+    public PeriodoLetivo getPeriodoLetivo() {
+        return periodoLetivo;
+    }
+
+    public void setPeriodoLetivo(PeriodoLetivo periodoLetivo) {
+        this.periodoLetivo = periodoLetivo;
+    }
+
+    public Set<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(Set<Curso> cursos) {
+        this.cursos = cursos;
     }
 }
