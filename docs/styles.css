@@ -17,9 +17,22 @@
     background-color:gray;
 }
 
-img {
+.small-img {
     height:256px;
     width:256px;
     object-fit: cover;
 }
   
+.large-img {
+    max-height:1024px;
+    max-width:1024px;
+    object-fit: cover;
+}
+  
+hr{
+    color: #2196f3;
+    border-color: #2196f3;
+    height:5px;
+    margin: auto;
+    border-width:0;
+}
