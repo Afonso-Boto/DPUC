@@ -238,24 +238,6 @@
       "avaliacao": null,
       "periodo": null,
       "estado": "Em Criação"
-    },
-    {
-      "designacao": "BBB",
-      "unidadeOrganica": 2,
-      "responsavel": 10244,
-      "ects": 6,
-      "estado": "Em Criação",
-      "dataAlteracao": "",
-      "id": 5
-    },
-    {
-      "designacao": "Nova UC",
-      "unidadeOrganica": 2,
-      "responsavel": 10244,
-      "ects": 6,
-      "estado": "Em Criação",
-      "dataAlteracao": "2022-05-02",
-      "id": 6
     }
   ]
 }
