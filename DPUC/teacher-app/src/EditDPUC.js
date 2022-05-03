@@ -68,7 +68,7 @@ const EditDPUC = () => {
     const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
     const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
 
-    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
+    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, areas, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
     const [ error, setError ] = useState(false);
 
     const handleSubmit = (e) => {
@@ -213,6 +213,7 @@ const EditDPUC = () => {
                         { areas && !loadAreas &&
                             <Select placeholder="Selecione a área da UC..." variant="black" 
                                 options={areas}
+                                value={ucArea}
                                 onChange={(e) => setArea(e.sigla)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>(option.sigla)}

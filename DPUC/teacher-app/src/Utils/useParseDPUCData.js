@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useParseDPUCData = (data, 
+    areas,
     setArea,
     setDuracao,
     setSemestre,
@@ -35,7 +36,9 @@ const useParseDPUCData = (data,
         setParsing(true);
         setError(false);
         if(data){
-            setArea(data.areaCientifica);
+            if(areas)
+                setArea(areas.find((a) => (a.sigla === data.areaCientifica)));
+
             setObjetivos(data.objetivos);
             setDuracao(data.duracao);
             setHorasOT(data.horasContacto);
