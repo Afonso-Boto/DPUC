@@ -68,7 +68,7 @@ const EditDPUC = () => {
     const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
     const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
 
-    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, areas, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
+    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, areas, cursos, graus, idiomas, duracoes, semestre, modalidades, docentes, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
     const [ error, setError ] = useState(false);
 
     const handleSubmit = (e) => {
@@ -180,7 +180,9 @@ const EditDPUC = () => {
                         { cursos && !loadCursos &&
                             <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
                                 options={cursos}
-                                onChange={(e) => setCurso(Array.from(e, (v => v.id)))}
+                                value={ucCurso}
+                                //onChange={(e) => setCurso(Array.from(e, (v => v.id)))}
+                                onChange={(e) => setCurso(Array.from(e, (v => v)))}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -195,7 +197,8 @@ const EditDPUC = () => {
                         { graus && !loadAreas &&
                             <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
                                 options={graus}
-                                onChange={(e) => setGrau(e.nome)}
+                                value={ucGrau}
+                                onChange={(e) => setGrau(e)}
                                 getOptionLabel ={(option)=>(option.nome + " (" + option.ciclo + "º ciclo)" )}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -214,7 +217,7 @@ const EditDPUC = () => {
                             <Select placeholder="Selecione a área da UC..." variant="black" 
                                 options={areas}
                                 value={ucArea}
-                                onChange={(e) => setArea(e.sigla)}
+                                onChange={(e) => setArea(e)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>(option.sigla)}
                             />
@@ -229,7 +232,8 @@ const EditDPUC = () => {
                         { idiomas && !loadIdiomas &&
                             <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
                                 options={idiomas}
-                                onChange={(e) => setIdioma(Array.from(e, (v => v.nome)))}
+                                value={ucIdioma}
+                                onChange={(e) => setIdioma(Array.from(e, (v => v)))}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -322,13 +326,14 @@ const EditDPUC = () => {
                         { duracoes && !loadDuracoes &&
                             <Select placeholder="Duração da UC" variant="black" 
                                 options={duracoes}
-                                onChange={(e) => setDuracao(e.nome)}
+                                value={ucDuracao}
+                                onChange={(e) => setDuracao(e)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
                         }
                     </div>
-                    { ucDuracao === "Semestral" &&
+                    { ucDuracao.nome === "Semestral" &&
                         <div className="col-lg-3">
                             <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                                 Semestre*
@@ -338,7 +343,8 @@ const EditDPUC = () => {
                             { semestre && !loadSemestre &&
                                 <Select placeholder="Semestre da UC" variant="black" 
                                     options={semestre}
-                                    onChange={(e) => setSemestre(e.nome)}
+                                    value={ucSemestre}
+                                    onChange={(e) => setSemestre(e)}
                                     getOptionLabel ={(option)=>(option.nome)}
                                     getOptionValue ={(option)=>option.id}
                                 />
@@ -357,7 +363,8 @@ const EditDPUC = () => {
                         { modalidades && !loadModalidades &&
                             <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
                                 options={modalidades}
-                                onChange={(e) => setModalidade(e.nome)}
+                                value={ucModalidade}
+                                onChange={(e) => setModalidade(e)}
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
@@ -384,7 +391,8 @@ const EditDPUC = () => {
                         { docentes && !loadDocentes &&
                             <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
                             options={docentes}
-                            onChange={(e) => setDocentes(Array.from(e, (v => v.cod_int)))}
+                            value={ucDocentes}
+                            onChange={(e) => setDocentes(Array.from(e, (v => v)))}
                             getOptionLabel ={(option)=>(option.nome_completo)}
                             getOptionValue ={(option)=>option.cod_int}
                             />
