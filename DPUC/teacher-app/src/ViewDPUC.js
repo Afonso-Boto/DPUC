@@ -1,7 +1,8 @@
 import { ContentContainer, Input, Select, Text, Button, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { EntitiesContext } from "./Helper/Context";
 import useFetch from "./useFetch";
 
 const ViewDPUC = () => {
@@ -10,34 +11,16 @@ const ViewDPUC = () => {
 
     const URL_DPUC = "http://localhost:8000/dpuc/" + id;
 
-    const URL_UOS = "http://localhost:8000/uos";
-
-    const URL_AREAS = "http://localhost:8000/areas";
-    const URL_CURSOS = "http://localhost:8000/cursos";
-    const URL_DURACOES = "http://localhost:8000/duracoes";
-    const URL_SEMESTRE = "http://localhost:8000/semestres";
-    const URL_MODALIDADES = "http://localhost:8000/modalidades";
-    const URL_GRAUS = "http://localhost:8000/graus";
-    const URL_IDIOMAS = "http://localhost:8000/idiomas";
-    const URL_DOCENTES = "http://localhost:8000/docentes";
-
     const navigate = useNavigate();
 
     const handleBack = () => {
         navigate("/");
     }
 
-    const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
-    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UOS);
-    const { data: areas , loading: loadAreas, error: errorAreas } = useFetch(URL_AREAS);
-    const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
-    //const { data: cursos , loading: loadCursos, error: errorCursos } = useFetch(URL_CURSOS);
-    // const { data: graus , loading: loadGraus, error: errorGraus } = useFetch(URL_GRAUS);
-    // const { data: idiomas , loading: loadIdiomas, error: errorIdiomas } = useFetch(URL_IDIOMAS);
-    // const { data: duracoes , loading: loadDuracoes, error: errorDuracoes } = useFetch(URL_DURACOES);
-    // const { data: semestre , loading: loadSemestre, error: errorSemestre } = useFetch(URL_SEMESTRE);
-    // const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
+    const {uos, areas, docentes} = useContext(EntitiesContext);
 
+    const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
+    
     const [ ucRegente, setRegente ] = useState("");
     const [ ucDocentes, setDocentes ] = useState([]);
     const [ ucUO, setUO ] = useState({});
@@ -102,8 +85,8 @@ const ViewDPUC = () => {
 
             <Row>
                 <Col>
-                    { (loadDPUC || loadUOS || loadAreas || loadDocentes) && <AnimatedBackground height="30px" width="50%"></AnimatedBackground> }
-                    { dpuc && !loadDPUC && !loadUOS && !loadAreas && !loadDocentes && 
+                    { loadDPUC && <AnimatedBackground height="30px" width="50%"></AnimatedBackground> }
+                    { dpuc && !loadDPUC && 
                         <Text as="h3" size="xLarge" fontWeight="400"> 
                             {dpuc.designacao}
                         </Text>
@@ -112,9 +95,9 @@ const ViewDPUC = () => {
                 </Col>
             </Row>
             <br/>
-            { (loadDPUC || loadUOS || loadAreas || loadDocentes) && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
             { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
-            { dpuc && !loadDPUC && !loadUOS && !loadAreas && !loadDocentes &&
+            { dpuc && !loadDPUC &&
             <ContentContainer> 
                 <Row>
                     <Col>

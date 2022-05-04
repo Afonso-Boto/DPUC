@@ -1,14 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { EntitiesContext } from "../Helper/Context";
 
 const useParseDPUCData = (data, 
-    areas, 
-    cursos, 
-    graus, 
-    idiomas, 
-    duracoes, 
-    semestre, 
-    modalidades, 
-    docentes,
     setArea,
     setDuracao,
     setSemestre,
@@ -34,10 +27,12 @@ const useParseDPUCData = (data,
     setTipoAvaliacao,
     setBibliografia,
     setFicheiros,
-    setObservacoes, 
+    setObservacoes,
     setDataAlter) => {
-    const [error, setError] = useState(false);
-    const [parsing, setParsing] = useState(false);
+        
+        const [error, setError] = useState(false);
+        const [parsing, setParsing] = useState(false);
+        const {cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes} = useContext(EntitiesContext);
 
     useEffect(() => {
         setParsing(true);
@@ -54,21 +49,38 @@ const useParseDPUCData = (data,
             if(modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
             
-            setObjetivos(data.objetivos);
-            setHorasOT(data.horasContacto);
-            setConteudos(data.conteudos);
-            setCoerenciaConteudos(data.coerenciaConteudos);
-            setMetodologias(data.metodologias);
-            setCoerenciaMetodologias(data.coerenciaMetodologias);
-            setBibliografia(data.bibliografia);
-            setObservacoes(data.observacoes);
-            setRegFaltas(data.regimeFaltas);
-            setRequisitos(data.requisitos);
-            setFicheiros(data.ficheiros);
-            setWebpage(data.paginaPublica);
-            setFuncPratica(data.funcionamento);
-            setAprendizagemAtiva(data.aprendizagem);
-            setTipoAvaliacao(data.avaliacao);
+            if(data.objetivos)
+                setObjetivos(data.objetivos);
+            if(data.horasContacto)
+                setHorasOT(data.horasContacto);
+            if(data.conteudos)
+                setConteudos(data.conteudos);
+            if(data.coerenciaConteudos)
+                setCoerenciaConteudos(data.coerenciaConteudos);
+            if(data.metodologias)
+                setMetodologias(data.metodologias);
+            if(data.coerenciaMetodologias)
+                setCoerenciaMetodologias(data.coerenciaMetodologias);
+            if(data.bibliografia)
+                setBibliografia(data.bibliografia);
+            if(data.observacoes)
+                setObservacoes(data.observacoes);
+            if(data.regimeFaltas)
+                setRegFaltas(data.regimeFaltas);
+            if(data.requisitos)
+                setRequisitos(data.requisitos);
+            if(data.ficheiros)
+                setFicheiros(data.ficheiros);
+            if(data.paginaPublica)
+                setWebpage(data.paginaPublica);
+            if(data.funcionamento)
+                setFuncPratica(data.funcionamento);
+            if(data.aprendizagem)
+                setAprendizagemAtiva(data.aprendizagem);
+            if(data.avaliacao)
+                setTipoAvaliacao(data.avaliacao);
+            if(data.dataAlteracao)
+                setDataAlter(data.dataAlteracao);
 
             if(data.cursos && cursos){
                 const c = data.cursos.split("$").filter((e) => e.length > 0);
@@ -77,6 +89,7 @@ const useParseDPUCData = (data,
                     cList.push(cursos.find((curso) => curso.nome === c[ci]));
                 setCurso(cList);
             }
+
             if(data.linguas && idiomas){
                 const l = data.linguas.split("$").filter((e) => e.length > 0);
                 let lList = [];
@@ -85,8 +98,7 @@ const useParseDPUCData = (data,
                 setIdioma(lList);
             }
 
-
-            if(data.docentes){
+            if(data.docentes && docentes){
                 const d = data.docentes.split("$").filter((e) => e.length > 0);
                 let dList = [];
                 for(var di = 0; di < d.length; di++)

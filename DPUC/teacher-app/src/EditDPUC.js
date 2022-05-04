@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, SelectLoading } from "@uaveiro/ui";
 import useFetch from "./useFetch";
 import axios from "axios";
-import useParseDPUCData from "./Utils/useParseDPUCData";
-import getFormattedDPUC from "./Utils/getFormattedDPUC";
+import useParseDPUCData from "./Helper/useParseDPUCData";
+import getFormattedDPUC from "./Helper/getFormattedDPUC";
+import { EntitiesContext } from "./Helper/Context";
 
 
 
@@ -14,17 +15,6 @@ const EditDPUC = () => {
     const { id } = useParams();
 
     const URL_DPUC = "http://localhost:8000/dpuc/" + id;
-
-    const URL_UOS = "http://localhost:8000/uos";
-
-    const URL_AREAS = "http://localhost:8000/areas";
-    const URL_CURSOS = "http://localhost:8000/cursos";
-    const URL_DURACOES = "http://localhost:8000/duracoes";
-    const URL_SEMESTRE = "http://localhost:8000/semestres";
-    const URL_MODALIDADES = "http://localhost:8000/modalidades";
-    const URL_GRAUS = "http://localhost:8000/graus";
-    const URL_IDIOMAS = "http://localhost:8000/idiomas";
-    const URL_DOCENTES = "http://localhost:8000/docentes";
 
     const navigate = useNavigate();
 
@@ -58,28 +48,16 @@ const EditDPUC = () => {
     const [ucDataAlter, setDataAlter] = useState("");
 
     const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
-    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UOS);
-    const { data: cursos , loading: loadCursos, error: errorCursos } = useFetch(URL_CURSOS);
-    const { data: graus , loading: loadGraus, error: errorGraus } = useFetch(URL_GRAUS);
-    const { data: areas , loading: loadAreas, error: errorAreas } = useFetch(URL_AREAS);
-    const { data: idiomas , loading: loadIdiomas, error: errorIdiomas } = useFetch(URL_IDIOMAS);
-    const { data: duracoes , loading: loadDuracoes, error: errorDuracoes } = useFetch(URL_DURACOES);
-    const { data: semestre , loading: loadSemestre, error: errorSemestre } = useFetch(URL_SEMESTRE);
-    const { data: modalidades , loading: loadModalidades, error: errorModalidades } = useFetch(URL_MODALIDADES);
-    const { data: docentes , loading: loadDocentes, error: errorDocentes } = useFetch(URL_DOCENTES);
+    
+    const { uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes } = useContext(EntitiesContext);
 
-    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, areas, cursos, graus, idiomas, duracoes, semestre, modalidades, docentes, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
+    const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
     const [ error, setError ] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setError(false);
-/*
-        const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
-            estado: "Em Criação", dataAlteracao: ""};
-*/
-        
 
         axios
             .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição", ucArea, ucDuracao, ucSemestre, ucModalidade, ucGrau, ucCurso, ucIdioma, ucDocentes, ucHorasTP, ucHorasT, ucHorasP, ucHorasOT, ucObjetivos, ucWebpage, ucRequisitos, ucConteudos, ucCoerenciaConteudos, ucMetodologias, ucCoerenciaMetodologias, ucRegFaltas, ucFuncPratica, ucAprendizagemAtiva, ucTipoAvaliacao, ucBibliografia, ucFicheiros, ucObservacoes))
@@ -133,8 +111,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade Orgânica
                         </Text>
-                        { loadUOS && <AnimatedBackground height="20px" width="40%"></AnimatedBackground> }
-                        { uos && !loadUOS &&
+                        { uos && 
                             <Text as="h4" size="medium" fontWeight="400">
                                 { uos.filter((uo) => uo.id === dpuc.unidadeOrganica)[0].nome}
                             </Text>
@@ -147,8 +124,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
                         </Text>
-                        { loadDocentes && <AnimatedBackground height="20px" width="40%"></AnimatedBackground> }
-                        { docentes && !loadDocentes &&
+                        { docentes &&
                             <Text as="h4" size="medium" fontWeight="400">
                                 {docentes.filter((docente) => docente.cod_int === dpuc.responsavel)[0].nome_completo}
                             </Text>
@@ -164,20 +140,21 @@ const EditDPUC = () => {
                     </Col>
                 </Row>
                 <hr className="custom-hr"/>
-                {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
-                <div className="row" style={{paddingTop:"10px"}}>
+                <div className="row">
                     <div className="col">
-                        <i>Nota: Campos assinalados com * são opcionais</i>
+                        <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
+                        <Text as="span" size="medium">{ucDataAlter}</Text>
+                        <br/>
+                        <Text as="i" size="medium">Campos assinalados com * são obrigatórios</Text>
                     </div>
                 </div>
+                {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Curso(s) de lecionação
                         </Text>
-                        { loadCursos && <SelectLoading />}
-                        { errorCursos && !loadCursos && <Select disabled placeholder="Não foi possível obter os cursos" variant="black" options={[]}/>}
-                        { cursos && !loadCursos &&
+                        { cursos &&
                             <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
                                 options={cursos}
                                 value={ucCurso}
@@ -192,9 +169,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Grau do Ciclo de estudos
                         </Text>
-                        { loadGraus && <SelectLoading />}
-                        { errorGraus && !loadGraus && <Select disabled placeholder="Não foi possível obter os graus de ciclo de estudo" variant="black" options={[]}/>}
-                        { graus && !loadAreas &&
+                        { graus && 
                             <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
                                 options={graus}
                                 value={ucGrau}
@@ -211,9 +186,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Área Científica
                         </Text>
-                        { loadAreas && <SelectLoading />}
-                        { errorAreas && !loadAreas && <Select disabled placeholder="Não foi possível obter as Áreas Científicas" variant="black" options={[]}/>}
-                        { areas && !loadAreas &&
+                        { areas && 
                             <Select placeholder="Selecione a área da UC..." variant="black" 
                                 options={areas}
                                 value={ucArea}
@@ -227,9 +200,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Idioma(s) de lecionação
                         </Text>
-                        { loadIdiomas && <SelectLoading />}
-                        { errorIdiomas && !loadIdiomas && <Select disabled placeholder="Não foi possível obter os Idiomas de lecionação" variant="black" options={[]}/>}
-                        { idiomas && !loadIdiomas &&
+                        { idiomas && 
                             <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
                                 options={idiomas}
                                 value={ucIdioma}
@@ -321,9 +292,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Duração
                         </Text>
-                        { loadDuracoes && <SelectLoading />}
-                        { errorDuracoes && !loadDuracoes && <Select disabled placeholder="Não foi possível obter as Durações de lecionação" variant="black" options={[]}/>}
-                        { duracoes && !loadDuracoes &&
+                        { duracoes &&
                             <Select placeholder="Duração da UC" variant="black" 
                                 options={duracoes}
                                 value={ucDuracao}
@@ -338,9 +307,7 @@ const EditDPUC = () => {
                             <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                                 Semestre*
                             </Text>
-                            { loadSemestre && <SelectLoading />}
-                            { errorSemestre && !loadSemestre && <Select disabled placeholder="Não foi possível obter os Semestres de lecionação" variant="black" options={[]}/>}
-                            { semestre && !loadSemestre &&
+                            { semestre &&
                                 <Select placeholder="Semestre da UC" variant="black" 
                                     options={semestre}
                                     value={ucSemestre}
@@ -358,9 +325,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Modalidade de Lecionação
                         </Text>
-                        { loadModalidades && <SelectLoading />}
-                        { errorModalidades && !loadModalidades && <Select disabled placeholder="Não foi possível obter as Modalidades de lecionação" variant="black" options={[]}/>}
-                        { modalidades && !loadModalidades &&
+                        { modalidades &&
                             <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
                                 options={modalidades}
                                 value={ucModalidade}
@@ -386,9 +351,7 @@ const EditDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docentes Associados à UC
                         </Text>
-                        { loadDocentes && <SelectLoading />}
-                        { errorDocentes && !loadDocentes && <Select disabled placeholder="Não foi possível obter os Docentes" variant="black" options={[]}/>}
-                        { docentes && !loadDocentes &&
+                        { docentes &&
                             <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
                             options={docentes}
                             value={ucDocentes}

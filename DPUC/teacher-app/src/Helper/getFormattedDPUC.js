@@ -29,9 +29,19 @@ const getFormattedDPUC = (data,
                 ucFicheiros,
                 ucObservacoes) => {
 
-    var formattedCursos = ucCurso.join("$") + "$";
-    var formattedLinguas = ucIdioma.join("$") + "$";
-    var formattedDocentes = ucDocentes.join("$") + "$";
+    var formattedCursos = "";
+    for(var i = 0; i < ucCurso.length; i++){
+        formattedCursos += ucCurso[i].nome + "$";
+    }
+    var formattedLinguas = "";
+    for(i = 0; i < ucIdioma.length; i++){
+        formattedLinguas += ucIdioma[i].nome + "$";
+    }
+    var formattedDocentes = "";
+    for(i = 0; i < ucDocentes.length; i++){
+        formattedDocentes += ucDocentes[i].cod_int + "$";
+    }
+
     var formattedDocentesHoras = "";
     if(ucHorasTP > 0)
         formattedDocentesHoras += "TP:" + ucHorasTP + "H$";
@@ -41,24 +51,39 @@ const getFormattedDPUC = (data,
         formattedDocentesHoras += "P:" + ucHorasP + "H$";
 
     const date = new Date();
-
-
     var dataAlt = "" + date.getFullYear() + "-";
     dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
     dataAlt += "-";
     dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
 
+    let formattedArea = null;
+    let formattedDuracao = null;
+    let formattedModalidade = null;
+    let formattedGrau = null;
+    let formattedPeriodo = null;
+    if(ucArea)
+        formattedArea = ucArea.sigla;
+    if(ucDuracao)
+        formattedDuracao = ucDuracao.nome;
+    if(ucModalidade)
+        formattedModalidade = ucModalidade.nome;
+    if(ucGrau)
+        formattedGrau = ucGrau.nome;
+    if(ucSemestre)
+        formattedPeriodo = ucSemestre.nome;
+
     const codigoUC = 10000 + Math.floor(Math.random() * 90000);
-    return { designacao: data.designacao, areaCientifica: ucArea, duracao: ucDuracao, codigo: codigoUC,
+
+    return { designacao: data.designacao, areaCientifica: formattedArea, duracao: formattedDuracao, codigo: codigoUC,
         responsavel: data.responsavel, cargaHoraria: null, horasContacto: ucHorasOT,
         docentes: formattedDocentes, docentesHoras: formattedDocentesHoras,
         horasTrabalho: data.ects*27, ects: data.ects, objetivos: ucObjetivos,
         conteudos: ucConteudos, coerenciaConteudos: ucCoerenciaConteudos, metodologias: ucMetodologias,
         coerenciaMetodologias: ucCoerenciaMetodologias, bibliografia: ucBibliografia, observacoes: ucObservacoes,
         unidadeOrganica: data.unidadeOrganica,  cursos: formattedCursos, regimeFaltas: ucRegFaltas, 
-        linguas: formattedLinguas, modalidade: ucModalidade, requisitos: ucRequisitos, ficheiros: ucFicheiros,
+        linguas: formattedLinguas, modalidade: formattedModalidade, requisitos: ucRequisitos, ficheiros: ucFicheiros,
         paginaPublica: ucWebpage, funcionamento: ucFuncPratica, aprendizagem: ucAprendizagemAtiva,
-        grau: ucGrau, avaliacao: ucTipoAvaliacao, periodo: ucSemestre,  
+        grau: formattedGrau, avaliacao: ucTipoAvaliacao, periodo: formattedPeriodo,  
         dataAlteracao: dataAlt,  estado: status };
 }
  

@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 import { ContentContainer, Input, Select, SelectLoading, Text, Button } from "@uaveiro/ui";
 import useFetch from "./useFetch";
 import axios from "axios";
-
+import { EntitiesContext } from "./Helper/Context";
 
 
 const CreateDPUC = () => {
 
-    const URL_UO = "http://localhost:8000/uos";
-    const URL_DOCENTE = "http://localhost:8000/docentes";
     const URL_DPUC = "http://localhost:8000/dpuc";
 
 
@@ -18,8 +16,8 @@ const CreateDPUC = () => {
     const [error, setError] = useState(false);
     const [errorPOST, setErrorPOST] = useState(null);
 
-    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UO);
-    const { data: docentes , loading: loadDoce, error: errorDoce } = useFetch(URL_DOCENTE);
+
+    const { uos, docentes } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
     const [ucUO, setUO] = useState(null);
@@ -84,9 +82,9 @@ const CreateDPUC = () => {
                 { error &&
                     <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
                 }
-                { !loadUOS && !loadDoce && (errorUOS || errorDoce) &&
+                { /*!loadUOS && !loadDoce && (errorUOS || errorDoce) &&
                     <Text as="i" size="medium" color="red"> Não foi possível obter alguns dados. Por favor tente novamente mais tarde. </Text>
-                }
+                */}
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -102,9 +100,7 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade Orgânica
                         </Text>
-                        { loadUOS && <SelectLoading />}
-                        { errorUOS && !loadUOS && <Select disabled placeholder="Não foi possível obter as Unidades Orgânicas" variant="black" options={[]}/>}
-                        { uos && !loadUOS &&
+                        { uos && 
                             <Select placeholder="Indique a Unidade Orgânica em que a UC está alocada..." variant="black" 
                                 options={uos}
                                 onChange={(e) => setUO(e.id)}
@@ -135,9 +131,7 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
                         </Text>
-                        { loadDoce && <SelectLoading />}
-                        { errorDoce && !loadDoce && <Select disabled placeholder="Não foi possível obter os Docentes" variant="black" options={[]}/>}
-                        { docentes && !loadDoce &&
+                        { docentes &&
                             <Select placeholder="Selecione o docente responsável pela UC..." variant="black" 
                             options={docentes}
                             onChange={(e) => setRegente(e.cod_int)}
