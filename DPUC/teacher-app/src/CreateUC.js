@@ -1,46 +1,50 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 import { ContentContainer, Input, Select, SelectLoading, Text, Button } from "@uaveiro/ui";
 import useFetch from "./useFetch";
 import axios from "axios";
-
+import { EntitiesContext } from "./Helper/Context";
 
 
 const CreateDPUC = () => {
 
-    const URL_UO = "http://localhost:8000/uos";
-    const URL_DOCENTE = "http://localhost:8000/docentes";
     const URL_DPUC = "http://localhost:8000/dpuc";
 
 
     const navigate = useNavigate();
     const [error, setError] = useState(false);
-    const [errorPOST, setErrorPOST] = useState(null);
+    const [errorPOST, setErrorPOST] = useState(false);
+    const [loadingPOST, setLoadingPOST] = useState(false);
 
-    const { data: uos , loading: loadUOS, error: errorUOS } = useFetch(URL_UO);
-    const { data: docentes , loading: loadDoce, error: errorDoce } = useFetch(URL_DOCENTE);
+
+    const { retryFetch, setRetry, uos, docentes } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
     const [ucUO, setUO] = useState(null);
     const [ucECTS, setECTS] = useState(6);
     const [ucRegente, setRegente] = useState(null);
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setError(false);
+        setErrorPOST(false);
+        
         if(!ucUO || !ucRegente ){
             setError(true);
             return;
         }
+        
+        setLoadingPOST(true);
+
 
         const date = new Date();
         var dataAlt = "" + date.getFullYear() + "-";
         dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
         dataAlt += "-";
         dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
-        //const uc = { ucName: designacao, ucUO: unidadeOrganical, ucRegente: responsavel, ucECTS: ects}
         const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
                 estado: "Em Criação", dataAlteracao: dataAlt}
 
@@ -50,15 +54,19 @@ const CreateDPUC = () => {
                 navigate("/");
             })
             .catch((error) => {
-                setError(error)
+                setErrorPOST(true);
+            })
+            .finally( () => {
+                setLoadingPOST(false);
             });
 
     }
     const handleBack = () => {
         navigate("/");
-        
     }
-
+    const reloadEntities = () => {
+        setRetry(retryFetch + 1);
+    }
 
     return ( 
         <ContentContainer padding="40px" >
@@ -71,22 +79,35 @@ const CreateDPUC = () => {
                 </Col>
             </Row>
             <br/>
+            { (!uos || !docentes) &&
+                <Row style={{paddingTop:"10px"}}>
+                    <Col>
+                        <Text as="i" size="large" color="red"> Não foi possível carregar o formulário de criação de DPUC. </Text>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                    </Col>
+                </Row>
+            }
+            { errorPOST &&
+                    <Text as="i" size="medium" color="red"> Não foi possível criar a UC. Por favor tente novamente mais tarde. </Text>
+            }
             <form onSubmit={handleSubmit}>
                 <Row>
                     <Col>
                         <Button variant="default" onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" style={{fontSize:"100%"}}>Criar</Button>
+                        <Button variant="primary" style={{fontSize:"100%"}}>
+                            { loadingPOST ? "A Criar UC..." : "Criar UC"}
+                        </Button>
                     </Col>
                 </Row>
                 <br/>
                 { error &&
                     <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
                 }
-                { !loadUOS && !loadDoce && (errorUOS || errorDoce) &&
-                    <Text as="i" size="medium" color="red"> Não foi possível obter alguns dados. Por favor tente novamente mais tarde. </Text>
-                }
+                
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -102,9 +123,7 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Unidade Orgânica
                         </Text>
-                        { loadUOS && <SelectLoading />}
-                        { errorUOS && !loadUOS && <Select disabled placeholder="Não foi possível obter as Unidades Orgânicas" variant="black" options={[]}/>}
-                        { uos && !loadUOS &&
+                        { uos && 
                             <Select placeholder="Indique a Unidade Orgânica em que a UC está alocada..." variant="black" 
                                 options={uos}
                                 onChange={(e) => setUO(e.id)}
@@ -135,9 +154,7 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             Docente Responsável (Regente)
                         </Text>
-                        { loadDoce && <SelectLoading />}
-                        { errorDoce && !loadDoce && <Select disabled placeholder="Não foi possível obter os Docentes" variant="black" options={[]}/>}
-                        { docentes && !loadDoce &&
+                        { docentes &&
                             <Select placeholder="Selecione o docente responsável pela UC..." variant="black" 
                             options={docentes}
                             onChange={(e) => setRegente(e.cod_int)}

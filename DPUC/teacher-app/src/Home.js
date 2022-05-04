@@ -1,10 +1,12 @@
 import { ContentContainer, Input, Text, Button, AnimatedBackground, Link } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useState } from "react";
 import { useNavigate, Link as RouterLink} from "react-router-dom";
 import useFetch from "./useFetch";
 
 const Home = () => {
+
+
+    
 
     const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ const Home = () => {
             </Row>
             <br/>
             <Row>
+                
                 <Col style={{textAlign:"right"}}>
                     <Button variant="primary" onClick={goToCreate} style={{fontSize:"100%"}}>
                         Criar UC
