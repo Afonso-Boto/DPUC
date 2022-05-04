@@ -79,8 +79,10 @@ const useParseDPUCData = (data,
                 setAprendizagemAtiva(data.aprendizagem);
             if(data.avaliacao)
                 setTipoAvaliacao(data.avaliacao);
-            if(data.dataAlteracao)
-                setDataAlter(data.dataAlteracao);
+            if(data.dataAlteracao){
+                const dataDPUC = data.dataAlteracao.split("-");
+                setDataAlter(new Date(dataDPUC[0], dataDPUC[1]-1, dataDPUC[2]));
+            }
 
             if(data.cursos && cursos){
                 const c = data.cursos.split("$").filter((e) => e.length > 0);

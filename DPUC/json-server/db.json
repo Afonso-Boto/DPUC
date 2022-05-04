@@ -172,7 +172,7 @@
       "designacao": "Introdução à Programação",
       "areaCientifica": "INF",
       "duracao": "Semestral",
-      "codigo": 64476,
+      "codigo": 19370,
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
@@ -238,6 +238,15 @@
       "avaliacao": null,
       "periodo": null,
       "estado": "Em Criação"
+    },
+    {
+      "designacao": "ABV",
+      "unidadeOrganica": 2,
+      "responsavel": 15777,
+      "ects": 6,
+      "estado": "Em Criação",
+      "dataAlteracao": "2022-05-04",
+      "id": 3
     }
   ]
 }

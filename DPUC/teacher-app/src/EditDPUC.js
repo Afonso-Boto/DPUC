@@ -20,7 +20,7 @@ const EditDPUC = () => {
 
     
     const [ucArea, setArea] = useState("");
-    const [ucDuracao, setDuracao] = useState(-1);
+    const [ucDuracao, setDuracao] = useState(null);
     const [ucSemestre, setSemestre] = useState(-1);
     const [ucModalidade, setModalidade] = useState(-1);
     const [ucGrau, setGrau] = useState(-1);
@@ -49,15 +49,19 @@ const EditDPUC = () => {
 
     const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
-    const { uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes } = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes } = useContext(EntitiesContext);
 
     const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
-    const [ error, setError ] = useState(false);
+    const [errorPUT, setErrorPUT] = useState(false);
+    const [loadingPUT, setLoadingPUT] = useState(false);
+    
+    const dataDpuc = new Date();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        setError(false);
+        setErrorPUT(false);
+        setLoadingPUT(true);
 
         axios
             .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição", ucArea, ucDuracao, ucSemestre, ucModalidade, ucGrau, ucCurso, ucIdioma, ucDocentes, ucHorasTP, ucHorasT, ucHorasP, ucHorasOT, ucObjetivos, ucWebpage, ucRequisitos, ucConteudos, ucCoerenciaConteudos, ucMetodologias, ucCoerenciaMetodologias, ucRegFaltas, ucFuncPratica, ucAprendizagemAtiva, ucTipoAvaliacao, ucBibliografia, ucFicheiros, ucObservacoes))
@@ -65,11 +69,17 @@ const EditDPUC = () => {
                 navigate("/");
             })
             .catch((error) => {
-                setError(true);
+                setErrorPUT(true);
+            })
+            .finally( () => {
+                setLoadingPUT(false);
             });
     }
     const handleBack = () => {
         navigate("/");
+    }
+    const reloadEntities = () => {
+        setRetry(retryFetch + 1);
     }
 
 
@@ -84,7 +94,23 @@ const EditDPUC = () => {
                 </Col>
             </Row>
             <br/>
+            { (!uos || !cursos || !graus || !areas || !idiomas || !duracoes || !semestre || !modalidades || !docentes) &&
+                !loadDPUC && !loadParse && !dpuc &&
+                <Row style={{paddingTop:"10px"}}>
+                    <Col>
+                        <Text as="i" size="large" color="red"> Não foi carregar o formulário de edição de DPUC. </Text>
+                        <br/>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                    </Col>
+                </Row>
+            }
+            { errorPUT &&
+                    <Text as="i" size="medium" color="red"> Não foi possível guardar o DPUC. Por favor tente novamente mais tarde. </Text>
+            }
             { (loadDPUC || loadParse) && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
+            { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter detalhes sobre este DPUC. </Text> }
             { dpuc && !loadDPUC && !loadParse &&
             <form onSubmit={handleSubmit}>
                 <Row style={{paddingTop:"10px"}}>
@@ -92,7 +118,9 @@ const EditDPUC = () => {
                         <Button variant="default" onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" style={{fontSize:"100%"}}>Guardar</Button>
+                        <Button variant="primary" style={{fontSize:"100%"}}>
+                            { loadingPUT ? "A Guardar DPUC..." : "Guardar"}
+                        </Button>
                     </Col>
                 </Row>
                 <hr className="custom-hr"/>
@@ -140,19 +168,22 @@ const EditDPUC = () => {
                     </Col>
                 </Row>
                 <hr className="custom-hr"/>
-                <div className="row">
-                    <div className="col">
+                <Row>
+                    <Col>
                         <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
-                        <Text as="span" size="medium">{ucDataAlter}</Text>
-                        <br/>
+                        { ucDataAlter &&
+                            <Text as="span" size="medium">{ucDataAlter.toLocaleDateString()}</Text>
+                        }
+                    </Col>
+                    <Col>
                         <Text as="i" size="medium">Campos assinalados com * são obrigatórios</Text>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Curso(s) de lecionação
+                            Curso(s) de lecionação*
                         </Text>
                         { cursos &&
                             <Select isMulti placeholder="Selecione o(s) curso(s) de lecionação da UC..." variant="black" 
@@ -167,7 +198,7 @@ const EditDPUC = () => {
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Grau do Ciclo de estudos
+                            Grau do Ciclo de estudos*
                         </Text>
                         { graus && 
                             <Select placeholder="Selecione o ciclo de estudos da UC" variant="black" 
@@ -184,7 +215,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Área Científica
+                            Área Científica*
                         </Text>
                         { areas && 
                             <Select placeholder="Selecione a área da UC..." variant="black" 
@@ -198,7 +229,7 @@ const EditDPUC = () => {
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Idioma(s) de lecionação
+                            Idioma(s) de lecionação*
                         </Text>
                         { idiomas && 
                             <Select isMulti placeholder="Selecione o(s) idioma(s) de lecionação da UC..." variant="black" 
@@ -215,7 +246,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                 <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Carga Letiva Semanal (em Horas)
+                            Carga Letiva Semanal (em Horas)*
                         </Text>
                         <Row>
                             <Col lg={"auto"}>
@@ -290,9 +321,9 @@ const EditDPUC = () => {
                     </div>
                     <div className="col-lg-3">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Duração
+                            Duração*
                         </Text>
-                        { duracoes &&
+                        { duracoes && ucDuracao &&
                             <Select placeholder="Duração da UC" variant="black" 
                                 options={duracoes}
                                 value={ucDuracao}
@@ -302,10 +333,10 @@ const EditDPUC = () => {
                             />
                         }
                     </div>
-                    { ucDuracao.nome === "Semestral" &&
+                    { ucDuracao && ucDuracao.nome === "Semestral" &&
                         <div className="col-lg-3">
                             <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                                Semestre*
+                                Semestre
                             </Text>
                             { semestre &&
                                 <Select placeholder="Semestre da UC" variant="black" 
@@ -323,7 +354,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Modalidade de Lecionação
+                            Modalidade de Lecionação*
                         </Text>
                         { modalidades &&
                             <Select placeholder="Selecione a modalidade de lecionação da UC" variant="black" 
@@ -337,7 +368,7 @@ const EditDPUC = () => {
                     </div>
                     <div className="col-lg-6">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Página Pública da UC*
+                            Página Pública da UC
                         </Text>
                         <Input placeholder="Insira o URL da página da UC..." border="1px solid #424242" color="#424242" 
                             value={ucWebpage}
@@ -349,7 +380,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Docentes Associados à UC
+                            Docentes Associados à UC*
                         </Text>
                         { docentes &&
                             <Select isMulti placeholder="Selecione docentes associados à UC..." variant="black"
@@ -367,7 +398,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Objetivos de aprendizagem
+                            Objetivos de aprendizagem*
                         </Text>
                         <Input placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -380,7 +411,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Pré-requisitos da UC
+                            Pré-requisitos da UC*
                         </Text>
                         <Input placeholder="Especifique os requisitos da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -394,7 +425,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Conteúdos programáticos
+                        Conteúdos programáticos*
                         </Text>
                         <Input placeholder="Especifique os conteúdos programáticos da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -407,7 +438,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Coerência dos Conteúdos programáticos
+                            Coerência dos Conteúdos programáticos*
                         </Text>
                         <Input placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -421,7 +452,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Metodologias de ensino
+                        Metodologias de ensino*
                         </Text>
                         <Input placeholder="Especifique as metodologias de ensino da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -434,7 +465,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Coerência dos Conteúdos programáticos
+                            Coerência dos Conteúdos programáticos*
                         </Text>
                         <Input placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -447,7 +478,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Funcionamento da Componente Prática*
+                        Funcionamento da Componente Prática
                         </Text>
                         <Input placeholder="Indique o funcionamento da componente prática da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -462,7 +493,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Aprendizagem ativa*
+                        Aprendizagem ativa
                         </Text>
                         <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -475,7 +506,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Tipo de avaliação
+                        Tipo de avaliação*
                         </Text>
                         <Input placeholder="Indique o(s) tipo(s) de avaliação da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -488,7 +519,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                            Regime de Faltas*
+                            Regime de Faltas
                         </Text>
                         <Input placeholder="Indique o regime de faltas da UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -502,7 +533,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Bibliografia de consulta
+                        Bibliografia de consulta*
                         </Text>
                         <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -515,7 +546,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Ficheiros*
+                        Ficheiros
                         </Text>
                         <Input placeholder="URL de ficheiros extras úteis à UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"
@@ -528,7 +559,7 @@ const EditDPUC = () => {
                 <div className="row row-pad">
                     <div className="col-lg-12">
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
-                        Observações
+                        Observações*
                         </Text>
                         <Input placeholder="Indique informação relevante e variada sobre a UC" border="1px solid #424242" color="#424242"  
                             as="textarea" fontSize="120%" className="textarea-custom"

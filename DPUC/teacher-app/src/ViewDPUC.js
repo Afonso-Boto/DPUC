@@ -17,7 +17,7 @@ const ViewDPUC = () => {
         navigate("/");
     }
 
-    const {uos, areas, docentes} = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, areas, docentes} = useContext(EntitiesContext);
 
     const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
@@ -80,6 +80,10 @@ const ViewDPUC = () => {
     const changeView = () => {
         setDetailedView(!detailedView);
     }
+    const reloadEntities = () => {
+        setRetry(retryFetch + 1);
+    }
+
     return ( 
         <ContentContainer padding="40px" >
 
@@ -95,6 +99,17 @@ const ViewDPUC = () => {
                 </Col>
             </Row>
             <br/>
+            { (!uos || !areas || !docentes) &&
+                !loadDPUC && !dpuc &&
+                <Row style={{paddingTop:"10px"}}>
+                    <Col>
+                        <Text as="i" size="large" color="red"> Não possível obter informações sobre esta UC.</Text>
+                    </Col>
+                    <Col md="auto">
+                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                    </Col>
+                </Row>
+            }
             { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
             { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
             { dpuc && !loadDPUC &&
