@@ -23,7 +23,7 @@ public class Utilizadores {
 
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private TipoUtilizador tipoUtilizador;
 
     public Utilizadores() {

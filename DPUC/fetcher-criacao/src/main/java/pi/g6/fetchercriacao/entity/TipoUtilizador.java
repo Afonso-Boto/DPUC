@@ -15,11 +15,11 @@ public class TipoUtilizador {
     private String codigo;
 
     // FK para o controlo
-    @OneToOne(mappedBy = "tipo_utilizador")
+    @OneToOne(mappedBy = "tipoUtilizador")
     private Controlo controlo;
 
     // FK para utilizadores
-    @OneToMany(mappedBy = "tipo_utilizador")
+    @OneToMany(mappedBy = "tipoUtilizador")
     private Set<Utilizadores> utilizadores;
 
     public TipoUtilizador() {

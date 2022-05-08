@@ -18,7 +18,7 @@ public class UnidadeOrganica {
     private String sigla;
 
     // FK para utilizadores
-    @OneToMany(mappedBy = "unidade_organica")
+    @OneToMany(mappedBy = "unidadeOrganica")
     private Set<Curso> cursos;
 
     public UnidadeOrganica() {

@@ -14,7 +14,7 @@ public class PeriodoLetivo {
     @Column(name = "periodo")
     private String periodo;
 
-    @OneToMany(mappedBy = "periodo_letivo")
+    @OneToMany(mappedBy = "periodoLetivo")
     private Set<Dpuc> dpucs;
 
     public PeriodoLetivo() {

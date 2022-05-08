@@ -90,7 +90,7 @@ public class Controlo {
 
     // FK id do tipo_utilizador
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tipo_utilizadorid", referencedColumnName = "id")
+    @JoinColumn(name = "tipo_utilizadorid", referencedColumnName = "id", insertable = false, updatable = false)
     private TipoUtilizador tipoUtilizador;
 
     public int getId() {

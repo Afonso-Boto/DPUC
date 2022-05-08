@@ -9,6 +9,7 @@ import java.util.Set;
 public class Dpuc {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -92,18 +93,18 @@ public class Dpuc {
     private String aprendizagem;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private Estado estado;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private PeriodoLetivo periodoLetivo;
 
     @ManyToMany
     @JoinTable(
             name = "curso_dpuc",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+            joinColumns = @JoinColumn(name = "id", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "id", insertable = false, updatable = false))
     Set<Curso> cursos;
 
     public Dpuc() {

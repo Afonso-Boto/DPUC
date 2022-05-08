@@ -15,7 +15,7 @@ public class Curso {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private UnidadeOrganica unidadeOrganica;
 
     @ManyToMany(mappedBy = "cursos")
