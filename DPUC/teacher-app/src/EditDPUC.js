@@ -4,7 +4,6 @@ import { Row, Col } from 'react-bootstrap';
 import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, SelectLoading } from "@uaveiro/ui";
 import useFetch from "./useFetch";
 import axios from "axios";
-import useParseDPUCData from "./Helper/useParseDPUCData";
 import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";

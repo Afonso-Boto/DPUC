@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext } from "./Helper/Context";
 import useFetch from "./useFetch";
+import useGetDPUC from "./Helper/useGetDPUC";
+
 
 const ViewDPUC = () => {
 
@@ -19,63 +21,11 @@ const ViewDPUC = () => {
 
     const { retryFetch, setRetry, uos, areas, docentes} = useContext(EntitiesContext);
 
-    const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
+    const { data , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
-    const [ ucRegente, setRegente ] = useState("");
-    const [ ucDocentes, setDocentes ] = useState([]);
-    const [ ucUO, setUO ] = useState({});
-    const [ ucArea, setArea ] = useState("");
-    const [ ucHorasTP, setHorasTP ] = useState(0);
-    const [ ucHorasT, setHorasT ] = useState(0);
-    const [ ucHorasP, setHorasP ] = useState(0);
-    const [ ucHorasOT, setHorasOT ] = useState(0);
-    const [ ucCursos, setCursos ] = useState([]);
-    const [ ucLinguas, setLinguas ] = useState([]);
+    const { parsing: loadParse, error: errorParse, dpuc} = useGetDPUC(data);
+
     const [ detailedView, setDetailedView ] = useState(false);
-
-    useEffect(() => {
-        if(dpuc && uos && areas && docentes){
-            if(dpuc.linguas)
-                setLinguas(dpuc.linguas.split("$").filter((l) => l.length > 0).join(", "));
-            if(dpuc.cursos)
-                setCursos(dpuc.cursos.split("$").filter((l) => l.length > 0));
-
-            if(dpuc.responsavel)
-                setRegente(docentes.find((docente) => docente.cod_int === dpuc.responsavel))
-
-            if(dpuc.docentes){
-                var doces = [];
-                var docentesNum = dpuc.docentes.split("$").filter((l) => l.length > 0);
-                for(var i = 0; i < docentesNum.length; i++)
-                    doces.push(docentes.find((docente) => docente.cod_int.toString() === docentesNum[i]));
-                setDocentes(doces);
-            }
-
-            if(dpuc.unidadeOrganica)
-                setUO(uos.find((uo) => uo.id === dpuc.unidadeOrganica));
-            
-            if(dpuc.areaCientifica)
-                setArea(areas.find((area) => area.sigla === dpuc.areaCientifica));
-
-            if(dpuc.horasContacto)
-                setHorasOT(dpuc.horasContacto);
-
-            if(dpuc.docentesHoras){
-                var parsedString = dpuc.docentesHoras.split("$").filter((l) => l.length > 0);
-                for(var i = 0; i < parsedString.length; i++){
-                    console.log(parsedString[i]);
-                    if((parsedString[i]).includes("TP"))
-                        setHorasTP(parsedString[i].substring(3,4));
-                    else{
-                        if((parsedString[i]).includes("T"))
-                            setHorasT(parsedString[i].substring(2,3));
-                        if((parsedString[i]).includes("P"))
-                            setHorasP(parsedString[i].substring(2,3));
-                    }
-                }
-            }
-        }
-    }, [dpuc, uos, areas, docentes]);
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -116,7 +66,7 @@ const ViewDPUC = () => {
             <ContentContainer> 
                 <Row>
                     <Col>
-                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao}</Text>
+                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
                     </Col>
                     {   detailedView &&
                         <Col sm={"auto"}>
@@ -324,41 +274,45 @@ const ViewDPUC = () => {
                                 </Col>
                                 <Col sm={"auto"}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Grau</Text>
-                                    <Text as="p" size="mediumSmall">{dpuc.grau}</Text>
+                                    <Text as="p" size="mediumSmall">{dpuc.grau.nome}</Text>
                                 </Col>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall" fontWeight="500"> Unidade Orgânica</Text>
-                                <Text as="span" size="mediumSmall">{ucUO.nome}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.unidadeOrganica.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall" fontWeight="500"> Área Científica</Text>
-                                <Text as="span" size="mediumSmall">{ucArea.nome}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.areaCientifica.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Docente Responsável</Text>
-                                <Text as="span" size="mediumSmall">{ucRegente.nome_completo}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.responsavel.nome_completo}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Idioma(s) de lecionação</Text>
-                                <Text as="span" size="mediumSmall">{ucLinguas}</Text>
+                                {
+                                 dpuc.linguas.map((l) => (
+                                    <Text as="span" size="mediumSmall">{l.nome}</Text>
+                                 ))
+                                }
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Modalidade</Text>
-                                <Text as="span" size="mediumSmall">{dpuc.modalidade}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.modalidade.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Carga letiva semanal</Text>
-                                {ucHorasT > 0 && <Text as="span" size="mediumSmall">T: {ucHorasT}H</Text>}
-                                {ucHorasTP > 0 && <Text as="span" size="mediumSmall">TP: {ucHorasTP}H</Text>}
-                                {ucHorasP > 0 && <Text as="span" size="mediumSmall">PL: {ucHorasP}H</Text>}
-                                {ucHorasOT > 0 && <Text as="span"size="mediumSmall">OT: {ucHorasOT}H</Text>}
+                                {dpuc.horasT > 0 && <Text as="span" size="mediumSmall">T: {dpuc.horasT}H</Text>}
+                                {dpuc.horasTP > 0 && <Text as="span" size="mediumSmall">TP: {dpuc.horasTP}H</Text>}
+                                {dpuc.horasP > 0 && <Text as="span" size="mediumSmall">PL: {dpuc.horasP}H</Text>}
+                                {dpuc.horasOT > 0 && <Text as="span"size="mediumSmall">OT: {dpuc.horasOT}H</Text>}
                                 <hr className="uc_details_hr"/>
                             </Row>
                             { dpuc.paginaPublica &&
@@ -371,8 +325,8 @@ const ViewDPUC = () => {
                             <Row style={{paddingBottom:"10px"}}>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Cursos</Text>
                                 {
-                                 ucCursos.map((curso) => (
-                                    <Text as="li" size="mediumSmall">{curso}</Text>
+                                 dpuc.cursos.map((curso) => (
+                                    <Text as="li" size="mediumSmall">{curso.nome}</Text>
                                  ))   
                                 }
                             </Row>
@@ -382,7 +336,7 @@ const ViewDPUC = () => {
                             <Container className="uc_details_extra">
                                 <Row style={{paddingTop:"10px"}}>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Carga Horária</Text>
-                                    <Text as="span" size="mediumSmall">{ucArea.cargaHoraria}</Text>
+                                    <Text as="span" size="mediumSmall">{dpuc.cargaHoraria}</Text>
                                     <hr className="uc_details_hr"/>
                                 </Row>
                                 <Row>
@@ -392,13 +346,13 @@ const ViewDPUC = () => {
                                 </Row>
                                 <Row>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Período</Text>
-                                    <Text as="span" size="mediumSmall">{dpuc.periodo}</Text>
+                                    <Text as="span" size="mediumSmall">{dpuc.periodo.nome}</Text>
                                     <hr className="uc_details_hr"/>
                                 </Row>
                                 <Row style={{paddingBottom:"10px"}}>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Docentes</Text>
                                     {
-                                        ucDocentes.map((docente) => (
+                                        dpuc.docentes.map((docente) => (
                                             <Text as="span" size="mediumSmall">{docente.nome_completo}</Text>
                                             ))   
                                     }
