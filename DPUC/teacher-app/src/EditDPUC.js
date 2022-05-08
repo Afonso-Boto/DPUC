@@ -5,6 +5,7 @@ import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, Sele
 import useFetch from "./useFetch";
 import axios from "axios";
 import useParseDPUCData from "./Helper/useParseDPUCData";
+import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
 
@@ -52,10 +53,14 @@ const EditDPUC = () => {
     const { retryFetch, setRetry, uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes } = useContext(EntitiesContext);
 
     const { parsing: loadParse, error: errorParse } = useParseDPUCData(dpuc, setArea, setDuracao, setSemestre, setModalidade, setGrau, setCurso, setIdioma, setDocentes, setHorasTP, setHorasT, setHorasP, setHorasOT, setObjetivos, setWebpage, setRequisitos, setConteudos, setCoerenciaConteudos, setMetodologias, setCoerenciaMetodologias, setRegFaltas, setFuncPratica, setAprendizagemAtiva, setTipoAvaliacao, setBibliografia, setFicheiros, setObservacoes, setDataAlter);
+    const { parsing: dpucParse, error: dpucError, dpuc: ttt, dpucSet} = useGetDPUC(dpuc);
     const [errorPUT, setErrorPUT] = useState(false);
     const [loadingPUT, setLoadingPUT] = useState(false);
     
     const dataDpuc = new Date();
+
+    if(ttt)
+        console.log(ttt);
 
     const handleSubmit = (e) => {
         e.preventDefault();
