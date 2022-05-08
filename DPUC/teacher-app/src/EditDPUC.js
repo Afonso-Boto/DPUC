@@ -34,9 +34,9 @@ const EditDPUC = () => {
 
         setErrorPUT(false);
         setLoadingPUT(true);
-/*
+
         axios
-            .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição", ucArea, ucDuracao, ucSemestre, ucModalidade, ucGrau, ucCurso, ucIdioma, ucDocentes, ucHorasTP, ucHorasT, ucHorasP, ucHorasOT, ucObjetivos, ucWebpage, ucRequisitos, ucConteudos, ucCoerenciaConteudos, ucMetodologias, ucCoerenciaMetodologias, ucRegFaltas, ucFuncPratica, ucAprendizagemAtiva, ucTipoAvaliacao, ucBibliografia, ucFicheiros, ucObservacoes))
+            .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição"))
             .then(() => {
                 navigate("/");
             })
@@ -46,7 +46,7 @@ const EditDPUC = () => {
             .finally( () => {
                 setLoadingPUT(false);
             });
-            */
+            
     }
     const handleBack = () => {
         navigate("/");
