@@ -99,7 +99,7 @@ const useGetDPUC = (data) => {
             if(data.modalidade && modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
             if(data.unidadeOrganica && uos)
-                setUnidadeOrganica(uos.find((uo) => (uo.nome === data.unidadeOrganica)));
+                setUnidadeOrganica(uos.find((uo) => (uo.id === data.unidadeOrganica)));
             
             if(data.dataAlteracao){
                 const dataDPUC = data.dataAlteracao.split("-");
@@ -123,7 +123,7 @@ const useGetDPUC = (data) => {
             }
 
             if(data.responsavel && entDocentes){
-                setResponsavel(entDocentes.find((docente) => docente.cod_int.toString() === data.responsavel));
+                setResponsavel(entDocentes.find((docente) => docente.cod_int === data.responsavel));
             }
 
             if(data.docentes && entDocentes){
