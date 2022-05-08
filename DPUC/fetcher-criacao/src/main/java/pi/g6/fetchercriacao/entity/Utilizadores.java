@@ -8,7 +8,7 @@ public class Utilizadores {
 
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "nome", nullable = false)
     private String nome;
@@ -29,7 +29,7 @@ public class Utilizadores {
     public Utilizadores() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

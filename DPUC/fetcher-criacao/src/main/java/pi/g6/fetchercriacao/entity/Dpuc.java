@@ -1,5 +1,7 @@
 package pi.g6.fetchercriacao.entity;
 
+import lombok.extern.log4j.Log4j2;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Set;
@@ -103,8 +105,8 @@ public class Dpuc {
     @ManyToMany
     @JoinTable(
             name = "curso_dpuc",
-            joinColumns = @JoinColumn(name = "id", insertable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "id", insertable = false, updatable = false))
+            joinColumns = @JoinColumn(name = "dpuc_id", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "curso_id", insertable = false, updatable = false))
     Set<Curso> cursos;
 
     public Dpuc() {

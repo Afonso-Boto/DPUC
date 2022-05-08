@@ -1,10 +1,13 @@
 package pi.g6.fetchercriacao.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "utilizadores")
+@DynamicUpdate
+@Table(name = "curso")
 public class Curso {
 
     @Id
