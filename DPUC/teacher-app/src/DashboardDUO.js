@@ -4,6 +4,10 @@ import { useNavigate, Link as RouterLink} from "react-router-dom";
 import useFetch from "./useFetch";
 import CardDPUC from "./CardDPUC";
 
+/*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
+            search bar com o template ua e passar a ser dinamica
+             */
+
 const DashboardDUO  = () => {
 
     const navigate = useNavigate();
@@ -28,11 +32,32 @@ const DashboardDUO  = () => {
             </Row>
             <br/>
             <Row>
-                
+                <Col style={{textAlign:"left"}}>
+                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                        DPUC em Edição
+                    </Button>
+                </Col>
+                <Col style={{textAlign:"left"}}>
+                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                        DPUC em Criação
+                    </Button>
+                </Col>
+                <Col style={{textAlign:"left"}}>
+                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                        DPUCs fechadas
+                    </Button>
+                </Col>
                 <Col style={{textAlign:"right"}}>
                     <Button variant="primary" onClick={goToCreate} style={{fontSize:"100%"}}>
                         Criar UC
                     </Button>
+                </Col>
+            </Row>
+            <br/>
+            <Row>
+                <Col style={{textAlign:"center"}}>
+                    <input type="text" placeholder="Nome da DPUC para pesquisar"/>
+                    <hr/>
                 </Col>
             </Row>
             <br/>
