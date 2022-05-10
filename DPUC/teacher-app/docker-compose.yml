@@ -1,9 +1,0 @@
-version: "3.7"
-
-services:
-  app:
-    container_name: teacherapp
-    image: teacherapp
-    build:
-      context: .
-      target: production
