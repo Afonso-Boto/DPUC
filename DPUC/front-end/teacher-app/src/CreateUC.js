@@ -1,10 +1,18 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Col } from 'react-bootstrap';
-import { ContentContainer, Input, Select, SelectLoading, Text, Button } from "@paco_ua/pacoui";
+import { Row, Col, Container } from 'react-bootstrap';
+import { Button, FormInput, DropdownSelector, Dropdown } from "@paco_ua/pacoui";
+import { Select, Input, Text } from "@uaveiro/ui";
+
 import useFetch from "./Helper/useFetch";
 import axios from "axios";
 import { EntitiesContext } from "./Helper/Context";
+
+
+import {
+    ThemeProvider as ThemeProviderPortal,
+    Theme as ThemePortal
+  } from "@uaveiro/ui";
 
 
 const CreateDPUC = () => {
@@ -69,12 +77,14 @@ const CreateDPUC = () => {
     }
 
     return ( 
-        <ContentContainer padding="40px" >
+        <Container>
             <Row>
                 <Col>
-                    <Text as="h3" size="xLarge" fontWeight="400"> 
-                        Criar UC
-                    </Text>
+                    <ThemeProviderPortal theme={ThemePortal}>
+                        <Text as="h3" size="xLarge" fontWeight="400"> 
+                            Criar UC
+                        </Text>
+                    </ThemeProviderPortal>
                     <hr/>
                 </Col>
             </Row>
@@ -82,10 +92,12 @@ const CreateDPUC = () => {
             { (!uos || !docentes) &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
+                    <ThemeProviderPortal theme={ThemePortal}>
                         <Text as="i" size="large" color="red"> Não foi possível carregar o formulário de criação de DPUC. </Text>
+                    </ThemeProviderPortal>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                        <Button primary onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
                     </Col>
                 </Row>
             }
@@ -93,12 +105,13 @@ const CreateDPUC = () => {
                     <Text as="i" size="medium" color="red"> Não foi possível criar a UC. Por favor tente novamente mais tarde. </Text>
             }
             <form onSubmit={handleSubmit}>
+            <ThemeProviderPortal theme={ThemePortal}>
                 <Row>
                     <Col>
-                        <Button variant="default" onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
+                        <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" style={{fontSize:"100%"}}>
+                        <Button primary style={{fontSize:"100%"}}>
                             { loadingPOST ? "A Criar UC..." : "Criar UC"}
                         </Button>
                     </Col>
@@ -129,7 +142,7 @@ const CreateDPUC = () => {
                                 onChange={(e) => setUO(e.id)}
                                 getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
                                 getOptionValue ={(option)=>option.id}
-                            />
+                                />
                         }
                     </Col>
                 </Row>
@@ -166,8 +179,9 @@ const CreateDPUC = () => {
                         
                     </Col>
                 </Row>
+                </ThemeProviderPortal>
             </form>
-        </ContentContainer>
+        </Container>
      );
 }
  

@@ -1,4 +1,4 @@
-import { Button, Link } from "@paco_ua/pacoui";
+import { Button, Text } from "@paco_ua/pacoui";
 import { Row, Col, Card } from "react-bootstrap";
 import { Link as RouterLink} from "react-router-dom";
 
@@ -8,7 +8,7 @@ const CardDPUC = ({dpuc}) => {
             <Col>
                 <Card >
                     <RouterLink to={"/dpuc/" + dpuc.id} style={{textDecoration:"none"}}>
-                    <Card.Header as="h5"><Link lighten textDecoration="underline" size="mediumlarge">{dpuc.designacao}</Link></Card.Header>
+                    <Card.Header as="h5"><Text as="a" lighten textDecoration="underline" size="mediumlarge">{dpuc.designacao}</Text></Card.Header>
                     </RouterLink>
                     <Card.Body>
                         <Card.Subtitle className="mb-2 text-muted">
@@ -32,15 +32,15 @@ const CardDPUC = ({dpuc}) => {
                                 <Col md={3} style={{textAlign:"right"}}>
                                     {
                                         (dpuc.estado == "Em Criação" || dpuc.estado == "Em Edição") &&
-                                            <RouterLink to={"/edit/" + dpuc.id}>
-                                                <Button variant="primary" > Editar DPUC </Button>
+                                            <RouterLink to={"/edit/" + dpuc.id} style={{textDecoration:"none"}}>
+                                                <Button content="Action Button" primary style={{fontSize:"100%"}}> Editar DPUC </Button>
                                             </RouterLink> 
                                         ||
                                         dpuc.estado == "3" && 
-                                        <Button variant="primary"> Lançar novo DPUC </Button>
+                                        <Button content="Action Button" primary> Lançar novo DPUC </Button>
                                         ||
                                         dpuc.estado == "4" && 
-                                        <Button variant="primary"> Aprovar DPUC </Button>
+                                        <Button content="Action Button" primary> Aprovar DPUC </Button>
                                     }
                                 </Col>
                             </Row>

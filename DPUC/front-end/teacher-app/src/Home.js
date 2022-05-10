@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DashboardDUO from "./DashboardDUO";
 
-import { Button, Link } from "@paco_ua/pacoui";
+import { Button, Link, Text } from "@paco_ua/pacoui";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -14,7 +14,7 @@ const Home = () => {
     const URL_DPUC = "http://localhost:8000/dpuc/" + 1;
 
     const [userType, setUserType] = useState("DR");
-
+    
     return ( 
         <>
         {

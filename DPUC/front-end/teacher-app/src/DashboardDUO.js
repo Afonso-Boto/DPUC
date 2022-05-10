@@ -1,5 +1,5 @@
-import { ContentContainer, FormInput , Text, Button, AnimatedBackground } from "@paco_ua/pacoui";
-import { Row, Col } from "react-bootstrap";
+import { FormInput, Text, Button, AnimatedBackground } from "@paco_ua/pacoui";
+import { Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useFetch from './Helper/useFetch';
 import CardDPUC from "./CardDPUC";
@@ -21,7 +21,7 @@ const DashboardDUO  = () => {
     const { data: dpuc , loading, error } = useFetch(URL_DPUC);
 
     return ( 
-        <ContentContainer padding="40px" >
+        <Container padding="40px" >
             <Row>
                 <Col>
                     <Text as="h3" size="xLarge" fontWeight="400"> 
@@ -33,22 +33,22 @@ const DashboardDUO  = () => {
             <br/>
             <Row>
                 <Col style={{textAlign:"left"}}>
-                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                    <Button action style={{fontSize:"100%"}}>
                         DPUC em Edição
                     </Button>
                 </Col>
                 <Col style={{textAlign:"left"}}>
-                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                    <Button action style={{fontSize:"100%"}}>
                         DPUC em Criação
                     </Button>
                 </Col>
                 <Col style={{textAlign:"left"}}>
-                    <Button variant="primary"  style={{fontSize:"100%"}}>
+                    <Button action style={{fontSize:"100%"}}>
                         DPUCs fechadas
                     </Button>
                 </Col>
                 <Col style={{textAlign:"right"}}>
-                    <Button variant="primary" onClick={goToCreate} style={{fontSize:"100%"}}>
+                    <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
                         Criar UC
                     </Button>
                 </Col>
@@ -67,7 +67,7 @@ const DashboardDUO  = () => {
                 <CardDPUC key={uc.id} dpuc={uc}/>
             ))
             }
-        </ContentContainer>
+        </Container>
      );
 }
  

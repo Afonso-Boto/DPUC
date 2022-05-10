@@ -36,7 +36,7 @@ function App() {
     <EntitiesContext.Provider value={{retryFetch, setRetry, uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes}}>
       <Router>
         <div className="App">
-          <div className="content">
+          <div className="content" style={{paddingTop:"40px"}}>
             <Container>
             <Switch>
               <Route exact path="/" element={<Home/>}/>

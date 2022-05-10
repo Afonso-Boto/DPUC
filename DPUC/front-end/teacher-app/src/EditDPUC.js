@@ -1,14 +1,20 @@
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Row, Col } from 'react-bootstrap';
-import { ContentContainer, Input, Select, Text, Button, AnimatedBackground, SelectLoading } from "@paco_ua/pacoui";
+import { Row, Col, Container } from 'react-bootstrap';
+import { Button} from "@paco_ua/pacoui";
+import { ContentContainer, Input, Select, Text, AnimatedBackground, SelectLoading } from "@uaveiro/ui";
 import useFetch from "./Helper/useFetch";
 import axios from "axios";
 import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
 
+import {
+    ThemeProvider as ThemeProviderPortal,
+    Theme as ThemePortal
+  } from "@uaveiro/ui";
 
+import { Theme, ThemeProvider } from "@paco_ua/pacoui"
 
 const EditDPUC = () => {
 
@@ -58,13 +64,15 @@ const EditDPUC = () => {
         console.log(dpuc);
 
     return ( 
-        <ContentContainer padding="40px" >
+        <Container>
             <Row>
                 <Col>
+                    <ThemeProviderPortal theme={ThemePortal}>
                     <Text as="h3" size="xLarge" fontWeight="400"> 
                         Editar Dossier Pedagógico
                     </Text>
                     <hr/>
+                    </ThemeProviderPortal>
                 </Col>
             </Row>
             <br/>
@@ -72,33 +80,44 @@ const EditDPUC = () => {
                 !loadDPUC && !loadParse && !dpuc &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
+                        <ThemeProviderPortal theme={ThemePortal}>
                         <Text as="i" size="large" color="red"> Não foi carregar o formulário de edição de DPUC. </Text>
                         <br/>
+                        </ThemeProviderPortal>
                     </Col>
                     <Col md="auto">
                         <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
                     </Col>
                 </Row>
             }
+            
+            <ThemeProviderPortal theme={ThemePortal}>
             { errorPUT &&
                     <Text as="i" size="medium" color="red"> Não foi possível guardar o DPUC. Por favor tente novamente mais tarde. </Text>
             }
-            { (loadDPUC || loadParse) && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
-            { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter detalhes sobre este DPUC. </Text> }
+            { (loadDPUC || loadParse) &&
+             <AnimatedBackground height="100px" width="50%"></AnimatedBackground> 
+            }
+            { errorDPUC && 
+                <Text as="i" size="large" color="red"> Não foi possível obter detalhes sobre este DPUC. </Text>
+            }
+            </ThemeProviderPortal>
             { dpuc && !loadDPUC && !loadParse &&
             <form onSubmit={handleSubmit}>
+                <ThemeProvider theme={Theme}>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
-                        <Button variant="default" onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
+                        <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" style={{fontSize:"100%"}}>
+                        <Button primary style={{fontSize:"100%"}}>
                             { loadingPUT ? "A Guardar DPUC..." : "Guardar"}
                         </Button>
                     </Col>
                 </Row>
+                </ThemeProvider>
                 <hr className="custom-hr"/>
-                
+                <ThemeProviderPortal theme={ThemePortal}>
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -541,9 +560,11 @@ const EditDPUC = () => {
                         />
                     </div>
                 </div>
+                </ThemeProviderPortal>
+
             </form>
             }
-        </ContentContainer>
+        </Container>
      );
 }
  

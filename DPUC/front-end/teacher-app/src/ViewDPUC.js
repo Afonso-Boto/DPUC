@@ -1,10 +1,16 @@
-import { ContentContainer, Input, Select, Text, Button, AnimatedBackground } from "@paco_ua/pacoui";
+import { Button } from "@paco_ua/pacoui";
+import { Input, Select, Text, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
+
+import {
+    ThemeProvider as ThemeProviderPortal,
+    Theme as ThemePortal
+  } from "@uaveiro/ui";
 
 
 const ViewDPUC = () => {
@@ -35,18 +41,18 @@ const ViewDPUC = () => {
     }
 
     return ( 
-        <ContentContainer padding="40px" >
-
+        <Container>
             <Row>
                 <Col>
+                <ThemeProviderPortal theme={ThemePortal}>
                     { loadDPUC && <AnimatedBackground height="30px" width="50%"></AnimatedBackground> }
                     { dpuc && !loadDPUC && 
                         <Text as="h3" size="xLarge" fontWeight="400"> 
                             {dpuc.designacao}
                         </Text>
-                        
                     }
                     <hr/>
+                </ThemeProviderPortal>
                 </Col>
             </Row>
             <br/>
@@ -54,55 +60,52 @@ const ViewDPUC = () => {
                 !loadDPUC && !dpuc &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
+                    <ThemeProviderPortal theme={ThemePortal}>
                         <Text as="i" size="large" color="red"> Não possível obter informações sobre esta UC.</Text>
+                    </ThemeProviderPortal>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                        <Button primary onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
                     </Col>
                 </Row>
             }
+            <ThemeProviderPortal theme={ThemePortal}>
             { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
             { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
+            </ThemeProviderPortal>
             { dpuc && !loadDPUC &&
-            <ContentContainer> 
-                <Row>
-                    <Col>
-                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
-                    </Col>
-                    {   detailedView &&
-                        <Col sm={"auto"}>
-                            <Text as="i" size="medium" color="#F3B21B" fontWeight="500"> Estado: {dpuc.estado}</Text>
-                        </Col>
-                    }
-                    
-                </Row>
-                <br/>
+            <Container> 
                 <Row>
                     <Col md="auto">
-                        <Button variant="default" style={{fontSize:"100%"}} onClick={handleBack}>
+                        <Button action style={{fontSize:"100%"}} onClick={handleBack}>
                             Voltar
                         </Button>
                     </Col>
                     <Col md="auto">
                         {detailedView && 
-                        <Button variant="primary" style={{fontSize:"100%"}} onClick={changeView}>
+                        <Button primary style={{fontSize:"100%"}} onClick={changeView}>
                             Vista Normal
                         </Button>
                         }
                         {!detailedView && 
-                            <Button variant="primary" style={{fontSize:"100%"}} onClick={changeView} 
-                                color="#F3B21B" 
-                                backgroundColor="#fff" 
-                                border="1px solid #F3B21B" 
-                                hoverColor="#fff" 
-                                hoverBackgroundColor="#F3B21B"
-                            >
+                            <Button success style={{fontSize:"100%"}} onClick={changeView}>
                                 Vista Detalhada
                             </Button>
                         }
                     </Col>
                 </Row>
                 <br/>
+                <ThemeProviderPortal theme={ThemePortal}>
+                <Row>
+                    <Col>
+                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
+                    </Col>
+                    {   detailedView &&
+                        <Col sm={"auto"}>
+                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500"> Estado: {dpuc.estado}</Text>
+                        </Col>
+                    }
+                </Row>
                 <Row className="flex-column-reverse flex-md-row">
                     <Col sm={8}>
                         { dpuc.objetivos &&
@@ -131,7 +134,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.coerenciaConteudos && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Coerência de Conteúdos
                                 </Text>
                                 {dpuc.coerenciaConteudos.split("\n").map((conteudo) =>(
@@ -167,7 +170,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.coerenciaMetodologias && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Coerência de Conteúdos
                                 </Text>
                                 {dpuc.coerenciaMetodologias.split("\n").map((metodo) =>(
@@ -251,7 +254,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.observacoes && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Observações
                                 </Text>
                                 {dpuc.observacoes.split("\n").map((obs) =>(
@@ -362,9 +365,10 @@ const ViewDPUC = () => {
                         }
                     </Col>
                 </Row>
-            </ContentContainer>
+                </ThemeProviderPortal>
+            </Container>
             }
-        </ContentContainer>
+        </Container>
      );
 }
  
