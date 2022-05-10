@@ -56,7 +56,7 @@ const DashboardDUO  = () => {
             <br/>
             <Row>
                 <Col style={{textAlign:"center"}}>
-                    <input type="text" placeholder="Nome da DPUC para pesquisar"/>
+                    <Input placeholder="Nome da DPUC para pesquisar..." border="1px solid #424242" color="#424242" />
                     <hr/>
                 </Col>
             </Row>
