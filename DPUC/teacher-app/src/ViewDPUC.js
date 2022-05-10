@@ -1,4 +1,5 @@
 import { ContentContainer, Input, Select, Text, Button, AnimatedBackground } from "@uaveiro/ui";
+import { Text as PacoText } from '@paco_ua/pacoui';
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -44,8 +45,12 @@ const ViewDPUC = () => {
                         <Text as="h3" size="xLarge" fontWeight="400"> 
                             {dpuc.designacao}
                         </Text>
+                        
                     }
                     <hr/>
+                    <PacoText as="h3" size="xLarge" fontWeight="400"> 
+                        {dpuc.designacao}
+                    </PacoText>
                 </Col>
             </Row>
             <br/>

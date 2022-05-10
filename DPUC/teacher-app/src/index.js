@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { IntlProvider } from "react-intl";
@@ -12,11 +11,7 @@ import {
   useFormatMessage
 } from "@uaveiro/ui";
 
-const container = document.getElementById('root');
-const root = createRoot(container);
-
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <>
       <IntlProvider locale='en'>
@@ -44,5 +39,7 @@ root.render(
       </IntlProvider>
     </>
   </React.StrictMode>
+  ,
+  document.getElementById('root')
 );
 

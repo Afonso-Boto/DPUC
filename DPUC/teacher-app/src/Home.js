@@ -11,15 +11,15 @@ const Home = () => {
     return ( 
         <>
         {
-            userType == "DUO" &&
+            userType === "DUO" &&
             <DashboardDUO/>
         }
         {
-            userType == "DR" &&
+            userType === "DR" &&
             <DashboardDUO/>
         }
         {
-            userType == "SGA" &&
+            userType === "SGA" &&
             <DashboardDUO/>
         }
         </>
