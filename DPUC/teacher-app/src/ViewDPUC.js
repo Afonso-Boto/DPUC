@@ -205,7 +205,7 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
                                     Avaliação
                                 </Text>
-                                {dpuc.avaliacao.split("\n").map((aval) =>(
+                                {dpuc.avaliacao.toString().split("\n").map((aval) =>(
                                     <Text as="article" size="medium">
                                         { aval }
                                     </Text>

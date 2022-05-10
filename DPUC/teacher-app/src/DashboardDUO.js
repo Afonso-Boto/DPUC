@@ -65,7 +65,7 @@ const DashboardDUO  = () => {
             { error && <Text as="i" size="medium" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
             { dpuc &&
             dpuc.map((uc) => (
-                <CardDPUC dpuc={uc}/>
+                <CardDPUC key={uc.id} dpuc={uc}/>
             ))
             }
         </ContentContainer>

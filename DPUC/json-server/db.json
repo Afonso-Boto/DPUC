@@ -238,15 +238,6 @@
       "avaliacao": null,
       "periodo": null,
       "estado": "Em Criação"
-    },
-    {
-      "designacao": "ABV",
-      "unidadeOrganica": 2,
-      "responsavel": 15777,
-      "ects": 6,
-      "estado": "Em Criação",
-      "dataAlteracao": "2022-05-04",
-      "id": 3
     }
   ]
 }
