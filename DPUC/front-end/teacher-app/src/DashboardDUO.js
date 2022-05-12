@@ -1,8 +1,8 @@
-import { FormInput, Text, Button, AnimatedBackground } from "@paco_ua/pacoui";
 import { Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useFetch from './Helper/useFetch';
 import CardDPUC from "./CardDPUC";
+import { LoadingBackgroundWrapper, Button as ButtonPaco, Theme as ThemePaco, ThemeProvider as ThemeProviderPaco, Text as TextPaco} from "@paco_ua/pacoui"
 
 /*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
             search bar com o template ua e passar a ser dinamica
@@ -22,51 +22,57 @@ const DashboardDUO  = () => {
 
     return ( 
         <Container padding="40px" >
-            <Row>
-                <Col>
-                    <Text as="h3" size="xLarge" fontWeight="400"> 
-                        Gestão de DPUCs
-                    </Text>
-                    <hr/>
-                </Col>
-            </Row>
+            <ThemeProviderPaco theme={ThemePaco}>
+                <Row>
+                    <Col>
+                        <TextPaco as="h3" size="xLarge" fontWeight="medium"> 
+                            Gestão de DPUCs
+                        </TextPaco>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <TextPaco as="h3" color="primary" size="large" fontWeight="400">
+                            Olá, docente x! 
+                        </TextPaco>
+                    </Col>
+                </Row>
+            </ThemeProviderPaco>
+            
             <br/>
             <Row>
                 <Col style={{textAlign:"left"}}>
-                    <Button action style={{fontSize:"100%"}}>
+                    <ButtonPaco primary onClick={goToCreate} style={{fontSize:"100%"}}>
+                        Criar nova UC
+                    </ButtonPaco>
+                </Col>
+                <Col md="auto" style={{textAlign:"left"}}>
+                    <ButtonPaco action style={{fontSize:"100%"}}>
                         DPUC em Edição
-                    </Button>
+                    </ButtonPaco>
                 </Col>
-                <Col style={{textAlign:"left"}}>
-                    <Button action style={{fontSize:"100%"}}>
+                <Col md="auto" style={{textAlign:"left"}}>
+                    <ButtonPaco action style={{fontSize:"100%"}}>
                         DPUC em Criação
-                    </Button>
+                    </ButtonPaco>
                 </Col>
-                <Col style={{textAlign:"center"}}>
-                    <Button action style={{fontSize:"100%"}}>
+                <Col md="auto" style={{textAlign:"center"}}>
+                    <ButtonPaco action style={{fontSize:"100%"}}>
                         DPUC aprovação
-                    </Button>
+                    </ButtonPaco>
                 </Col>
-                <Col style={{textAlign:"right"}}>
-                    <Button action style={{fontSize:"100%"}}>
+                <Col md="auto" style={{textAlign:"right"}}>
+                    <ButtonPaco action style={{fontSize:"100%"}}>
                         DPUCs fechadas
-                    </Button>
+                    </ButtonPaco>
                 </Col>
-                <Col style={{textAlign:"right"}}>
-                    <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
-                        Criar UC
-                    </Button>
-                </Col>
+                
             </Row>
             <br/>
-            <Row>
-                <Col style={{textAlign:"center"}}>
-                    <hr/>
-                </Col>
-            </Row>
             <br/>
-            { loading && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
-            { error && <Text as="i" size="medium" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
+            <br/>
+            { loading && <LoadingBackgroundWrapper loading length={4} /> }
+            { error && <TextPaco as="i" size="large" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</TextPaco> }
             { dpuc &&
             dpuc.map((uc) => (
                 <CardDPUC key={uc.id} dpuc={uc}/>
