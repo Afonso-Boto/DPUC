@@ -42,7 +42,12 @@ const DashboardDUO  = () => {
                         DPUC em Criação
                     </Button>
                 </Col>
-                <Col style={{textAlign:"left"}}>
+                <Col style={{textAlign:"center"}}>
+                    <Button action style={{fontSize:"100%"}}>
+                        DPUC aprovação
+                    </Button>
+                </Col>
+                <Col style={{textAlign:"right"}}>
                     <Button action style={{fontSize:"100%"}}>
                         DPUCs fechadas
                     </Button>

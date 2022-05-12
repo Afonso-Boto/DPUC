@@ -14,7 +14,7 @@ import {
     Theme as ThemePortal
   } from "@uaveiro/ui";
 
-import { Theme, ThemeProvider } from "@paco_ua/pacoui"
+import { DropdownSelector, Theme as ThemePaco, ThemeProvider as ThemeProviderPaco, Text as TextPaco} from "@paco_ua/pacoui"
 
 const EditDPUC = () => {
 
@@ -65,16 +65,22 @@ const EditDPUC = () => {
 
     return ( 
         <Container>
-            <Row>
-                <Col>
-                    <ThemeProviderPortal theme={ThemePortal}>
-                    <Text as="h3" size="xLarge" fontWeight="400"> 
-                        Editar Dossier Pedagógico
-                    </Text>
-                    <hr/>
-                    </ThemeProviderPortal>
-                </Col>
-            </Row>
+            <ThemeProviderPaco theme={ThemePaco}>
+                <Row>
+                    <Col>
+                        <TextPaco as="h3" size="xLarge" fontWeight="medium">
+                            Editar Dossier Pedagógico
+                        </TextPaco>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <TextPaco as="a" color="primary" size="large" fontWeight="400">
+                            As minhas edições
+                        </TextPaco>
+                    </Col>
+                </Row>
+            </ThemeProviderPaco>
             <br/>
             { (!uos || !cursos || !graus || !areas || !idiomas || !duracoes || !semestre || !modalidades || !docentes) &&
                 !loadDPUC && !loadParse && !dpuc &&
@@ -104,7 +110,7 @@ const EditDPUC = () => {
             </ThemeProviderPortal>
             { dpuc && !loadDPUC && !loadParse &&
             <form onSubmit={handleSubmit}>
-                <ThemeProvider theme={Theme}>
+                <ThemeProviderPaco theme={ThemePaco}>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
                         <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
@@ -115,7 +121,7 @@ const EditDPUC = () => {
                         </Button>
                     </Col>
                 </Row>
-                </ThemeProvider>
+                </ThemeProviderPaco>
                 <hr className="custom-hr"/>
                 <ThemeProviderPortal theme={ThemePortal}>
                 {/* Nome da UC e UO */}
@@ -186,6 +192,47 @@ const EditDPUC = () => {
                                 getOptionLabel ={(option)=>(option.nome)}
                                 getOptionValue ={(option)=>option.id}
                             />
+                        }
+                        { cursos &&
+                            <ThemeProviderPaco theme={ThemePaco}>
+                                <DropdownSelector
+                                    options={[
+                                        {
+                                          items: [
+                                            {
+                                              selected: false,
+                                              title: 'Item example 1'
+                                            },
+                                            {
+                                              selected: false,
+                                              title: 'Item example 2'
+                                            }
+                                          ],
+                                          title: 'Option 1'
+                                        },
+                                        {
+                                          items: [
+                                            {
+                                              selected: false,
+                                              title: 'Item example 3'
+                                            },
+                                            {
+                                              selected: true,
+                                              title: 'Item example 4'
+                                            },
+                                            {
+                                              selected: false,
+                                              title: 'Item example 5'
+                                            }
+                                          ],
+                                          title: 'Option 2'
+                                        }
+                                      ]}
+                                    tip="Opções"
+                                    title="Selecione o curso de lecionação"
+                                />
+                            </ThemeProviderPaco>
+
                         }
                     </div>
                     <div className="col-lg-6">
