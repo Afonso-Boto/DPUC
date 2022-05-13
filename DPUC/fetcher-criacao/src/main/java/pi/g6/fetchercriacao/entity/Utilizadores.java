@@ -1,30 +1,12 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "utilizadores")
 public class Utilizadores {
-
-    @Id
-    @Column(name = "id", nullable = false)
     private Integer id;
-
-    @Column(name = "nome", nullable = false)
     private String nome;
-
-
-    @Column(name = "email", nullable = false)
     private String email;
-
-
-    @Column(name = "password", nullable = false)
     private String password;
-
-
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
-    private TipoUtilizador tipoUtilizador;
+    private int tipo_utilizadorid;
 
     public Utilizadores() {
     }
@@ -61,11 +43,11 @@ public class Utilizadores {
         this.password = password;
     }
 
-    public TipoUtilizador getTipoUtilizador() {
-        return tipoUtilizador;
+    public int getTipo_utilizadorid() {
+        return tipo_utilizadorid;
     }
 
-    public void setTipoUtilizador(TipoUtilizador tipoUtilizador) {
-        this.tipoUtilizador = tipoUtilizador;
+    public void setTipo_utilizadorid(int tipo_utilizadorid) {
+        this.tipo_utilizadorid = tipo_utilizadorid;
     }
 }

@@ -1,116 +1,90 @@
 package pi.g6.fetchercriacao.entity;
 
-import lombok.extern.log4j.Log4j2;
-
-import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Set;
-
-@Entity
-@Table(name = "dpuc")
 public class Dpuc {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    
     private int id;
 
-    @Column(name = "criacao_edicao", columnDefinition = "TINYINT(1)")
+    
     private boolean criacao_edicao;
 
-    @Column(name = "codigo")
+    
     private String codigo;
 
-    @Column(name = "designacao")
+    
     private String designacao;
 
-    @Column(name = "sigla_ac")
+    
     private String sigla_ac;
 
-    @Column(name = "duracao")
+    
     private String duracao;
 
-    @Column(name = "responsavel")
+    
     private String responsavel;
 
-    @Column(name = "carga_horaria")
+    
     private String carga_horaria;
 
-    @Column(name = "horas_contacto")
+    
     private String horas_contacto;
 
-    @Column(name = "horas_trabalho")
+    
     private String horas_trabalho;
 
-    @Column(name = "ects")
+    
     private String ects;
 
-    @Column(name = "objetivos")
+    
     private String objetivos;
 
-    @Column(name = "conteudos")
+    
     private String conteudos;
 
-    @Column(name = "coerencia_conteudos")
+    
     private String coerencia_conteudos;
 
-    @Column(name = "metodologias")
+    
     private String metodologias;
 
-    @Column(name = "coerencia_metodologias")
+    
     private String coerencia_metodologias;
 
-    @Column(name = "bibliografia")
+    
     private String bibliografia;
 
-    @Column(name = "observacoes")
+    
     private String observacoes;
 
-    @Column(name = "regime_faltas")
+    
     private String regime_faltas;
 
-    @Column(name = "linguas")
+    
     private String linguas;
 
-    @Column(name = "modalidade")
+    
     private String modalidade;
 
-    @Column(name = "requisitos")
-    private String requisitos;
     
-    @Lob
-    @Column(name = "ficheiros")
+    private String requisitos;
+
+    
     private byte[] ficheiros;
 
-    @Column(name = "data_alteracao")
+    
     private String data_alteracao;
 
-    @Column(name = "pagina_publica")
+    
     private String pagina_publica;
 
-    @Column(name = "funcionamento")
+    
     private String funcionamento;
 
-    @Column(name = "aprendizagem")
+    
     private String aprendizagem;
 
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
-    private Estado estado;
+    private int estadoid;
 
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
-    private PeriodoLetivo periodoLetivo;
-
-    @ManyToMany
-    @JoinTable(
-            name = "curso_dpuc",
-            joinColumns = @JoinColumn(name = "dpuc_id", insertable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "curso_id", insertable = false, updatable = false))
-    Set<Curso> cursos;
-
-    public Dpuc() {
-    }
+    private int periodo_letivoid;
 
     public int getId() {
         return id;
@@ -328,27 +302,19 @@ public class Dpuc {
         this.aprendizagem = aprendizagem;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public int getEstadoid() {
+        return estadoid;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstadoid(int estadoid) {
+        this.estadoid = estadoid;
     }
 
-    public PeriodoLetivo getPeriodoLetivo() {
-        return periodoLetivo;
+    public int getPeriodo_letivoid() {
+        return periodo_letivoid;
     }
 
-    public void setPeriodoLetivo(PeriodoLetivo periodoLetivo) {
-        this.periodoLetivo = periodoLetivo;
-    }
-
-    public Set<Curso> getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(Set<Curso> cursos) {
-        this.cursos = cursos;
+    public void setPeriodo_letivoid(int periodo_letivoid) {
+        this.periodo_letivoid = periodo_letivoid;
     }
 }
