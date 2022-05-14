@@ -1,7 +1,7 @@
 import json
-
-import openpyxl
+from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch
+import openpyxl
 from pathlib import Path
 
 path = Path("DPUC_2021.xlsx")
@@ -10,35 +10,36 @@ sheet = xlsx_file.active
 
 dpucs = dict()
 
-print(f"num of rows: {sheet.max_row}")
-
 current_dpucid = None
 for row in sheet.iter_rows(min_row=1):
     id = row[0].value
     if id == "codUC":
         continue
     if current_dpucid is None or current_dpucid != id:
-
         current_dpucid = id
         dpucs[current_dpucid] = dict()
 
-        dpucs[current_dpucid]["nome"]           = row[1].value
-        dpucs[current_dpucid]["ano"]            = row[2].value
-        dpucs[current_dpucid]["semestre"]       = row[3].value
-        dpucs[current_dpucid]["ects"]           = row[4].value
+        dpucs[current_dpucid]["nome"] = row[1].value
+        dpucs[current_dpucid]["ano"] = row[2].value
+        dpucs[current_dpucid]["semestre"] = row[3].value
+        dpucs[current_dpucid]["ects"] = row[4].value
         dpucs[current_dpucid]["horas_trabalho"] = row[5].value
-        dpucs[current_dpucid]["regime_faltas"]  = row[6].value
+        dpucs[current_dpucid]["regime_faltas"] = row[6].value
 
-    if row[9].value:
+    campo = row[9].value
+    if campo:
         new_campo = row[7].value + "_" + row[8].value
-        dpucs[current_dpucid][new_campo] = row[9].value
+        campo = campo.replace("&nbsp;", " ")
+        campo = BeautifulSoup(campo, features="html.parser").get_text()
+        dpucs[current_dpucid][new_campo] = campo
 
-client = Elasticsearch(
-    "http://localhost:9200"
+es = Elasticsearch(['http://localhost:9200/'],
+                   verify_certs=True
 )
-response = client.info()
-print(response)
-client.close()
+
+
+if not es.ping():
+    print("Connection failed")
 
 lst = list()
 
@@ -48,4 +49,4 @@ for dpuc in dpucs:
     lst.append(dicio)
 
 with open("dpuc_2021.json", "w") as jsonfile:
-    json.dump(lst, jsonfile)
+    json.dump(lst, jsonfile, ensure_ascii=False)
