@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pi.g6.fetchercriacao.entity.Dpuc;
 import pi.g6.fetchercriacao.entity.Estado;
+import pi.g6.fetchercriacao.entity.PeriodoLetivo;
 import pi.g6.fetchercriacao.service.CreationService;
 
 import java.util.List;
@@ -36,4 +38,15 @@ public class MainController {
     public ResponseEntity<List<Estado>> allEstados(){
         return new ResponseEntity<>(service.allEstados(), HttpStatus.OK);
     }
+
+    @GetMapping("/periodos-letivos")
+    public ResponseEntity<List<PeriodoLetivo>> allPeriodos(){
+        return new ResponseEntity<>(service.allPeriodos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-dpucs")
+    public ResponseEntity<List<Dpuc>> allDpucs(){
+        return new ResponseEntity<>(service.allDpucs(), HttpStatus.OK);
+    }
+
 }
