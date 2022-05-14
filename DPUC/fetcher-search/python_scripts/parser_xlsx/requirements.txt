@@ -1,0 +1,3 @@
+openpyxl
+elasticsearch
+requests
