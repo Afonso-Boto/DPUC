@@ -215,8 +215,5 @@ services:
 volumes:
   db:
   certs:
-    driver: local
   esdata01:
-    driver: local
   kibanadata:
-    driver: local
