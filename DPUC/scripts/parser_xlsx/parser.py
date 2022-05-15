@@ -33,13 +33,21 @@ for row in sheet.iter_rows(min_row=1):
         campo = BeautifulSoup(campo, features="html.parser").get_text()
         dpucs[current_dpucid][new_campo] = campo
 
-es = Elasticsearch(['http://localhost:9200/'],
-                   verify_certs=True
+es = Elasticsearch(
+    'http://localhost:9200/',
 )
 
+index_name = "index_dpucs"
 
-if not es.ping():
-    print("Connection failed")
+if es.ping():
+    print("Connection successful")
+    if not es.indices.exists(index=index_name):
+        print(f"Create index {index_name}")
+        response = es.indices.create(index=index_name)
+        print(response)
+    for id in dpucs:
+        pass
+
 
 lst = list()
 
