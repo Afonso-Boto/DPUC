@@ -10,8 +10,11 @@ services:
     ports:
       - ${ES_PORT}:9200
     environment:
+      - node.name=${ES01_NAME}
+      - cluster.name=${CLUSTER_NAME}
       - xpack.security.enabled=false
       - discovery.type=single-node
+      - bootstrap.memory_lock=true
     ulimits:
       memlock:
         soft: -1
@@ -21,11 +24,12 @@ services:
         hard: 65536
     cap_add:
       - IPC_LOCK
+    mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl -fsSL http://localhost:9200/_cat/health?h=status | grep -q 'green'"
+          "curl -fsSL http://localhost:9200/_cat/health?h=status | grep -q 'green\\|yellow' "
         ]
       interval: 30s
       timeout: 10s
@@ -47,6 +51,7 @@ services:
       - ELASTICSEARCH_HOSTS=http://${ES01_NAME}:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+    mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
         [
@@ -149,4 +154,6 @@ services:
 volumes:
   db:
   esdata01:
+    driver: local
   kibanadata:
+    driver: local
