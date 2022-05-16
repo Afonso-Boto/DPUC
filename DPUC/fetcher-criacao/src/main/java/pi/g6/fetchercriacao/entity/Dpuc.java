@@ -26,13 +26,13 @@ public class Dpuc {
     private String carga_horaria;
 
     
-    private String horas_contacto;
+    private int horas_contacto;
 
     
-    private String horas_trabalho;
+    private int horas_trabalho;
 
     
-    private String ects;
+    private int ects;
 
     
     private String objetivos;
@@ -150,27 +150,27 @@ public class Dpuc {
         this.carga_horaria = carga_horaria;
     }
 
-    public String getHoras_contacto() {
+    public int getHoras_contacto() {
         return horas_contacto;
     }
 
-    public void setHoras_contacto(String horas_contacto) {
+    public void setHoras_contacto(int horas_contacto) {
         this.horas_contacto = horas_contacto;
     }
 
-    public String getHoras_trabalho() {
+    public int getHoras_trabalho() {
         return horas_trabalho;
     }
 
-    public void setHoras_trabalho(String horas_trabalho) {
+    public void setHoras_trabalho(int horas_trabalho) {
         this.horas_trabalho = horas_trabalho;
     }
 
-    public String getEcts() {
+    public int getEcts() {
         return ects;
     }
 
-    public void setEcts(String ects) {
+    public void setEcts(int ects) {
         this.ects = ects;
     }
 
