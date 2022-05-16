@@ -45,8 +45,10 @@ if es.ping():
         print(f"Create index {index_name}")
         response = es.indices.create(index=index_name)
         print(response)
+    print(f"index: {index_name}")
     for id in dpucs:
-        pass
+        print(f"create document in id {id}")
+        es.create(index=index_name, id=id, document=dpucs[id])
 
 
 lst = list()
