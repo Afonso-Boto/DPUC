@@ -43,3 +43,15 @@ hr{
   margin-bottom: 5px;
   margin-top: 5px;
 }
+
+.border-simple{
+  margin: 0px;  
+  padding: 4px;
+  border: 1px solid #424242;
+}
+
+.input-text{
+  margin: 0px;  
+  padding: 4px;
+  border: 1px solid #424242;
+}

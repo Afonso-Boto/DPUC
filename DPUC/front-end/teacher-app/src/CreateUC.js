@@ -70,6 +70,11 @@ const CreateDPUC = () => {
         setRetry(retryFetch + 1);
     }
 
+    const changeECTS = (e) => {
+        if(e >= 4 || e <= 30)
+            setECTS(e);
+    };
+
     return ( 
         <Container>
             <ThemeProviderPaco theme={ThemePaco}>
@@ -104,14 +109,13 @@ const CreateDPUC = () => {
             { errorPOST &&
                     <Text as="i" size="medium" color="red"> Não foi possível criar a UC. Por favor tente novamente mais tarde. </Text>
             }
-            <form onSubmit={handleSubmit}>
             <ThemeProviderPortal theme={ThemePortal}>
                 <Row>
                     <Col>
                         <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button primary style={{fontSize:"100%"}}>
+                        <Button primary onClick={(e) => handleSubmit(e)} style={{fontSize:"100%"}}>
                             { loadingPOST ? "A Criar UC..." : "Criar UC"}
                         </Button>
                     </Col>
@@ -154,17 +158,13 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
                         </Text>
-                        <Input border="1px solid #424242" color="#424242" required type="number"
-                            min={4} max={30}
-                            value={ucECTS}
-                            onChange={(e) => setECTS(e.target.value)}
-                            style={{width:"50px"}}
-                        />
                         <ThemeProviderPaco theme={ThemePaco}>
                             <Counter
                                 defaultValue={ucECTS} 
                                 name="counter"
-                                onChange={function noRefCheck(){}}
+                                onChange={(e) => {
+                                    changeECTS(e);
+                                }}
                             />
                         </ThemeProviderPaco>
                         
@@ -190,7 +190,6 @@ const CreateDPUC = () => {
                     </Col>
                 </Row>
                 </ThemeProviderPortal>
-            </form>
         </Container>
      );
 }
