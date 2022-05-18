@@ -35,7 +35,7 @@ const CreateDPUC = () => {
         setError(false);
         setErrorPOST(false);
         
-        if(!ucUO || !ucRegente ){
+        if(ucName.length < 3 || !ucUO || !ucRegente || ucECTS < 4 || ucECTS > 30){
             setError(true);
             return;
         }
@@ -72,8 +72,8 @@ const CreateDPUC = () => {
     }
 
     const changeECTS = (e) => {
+        setECTS(e);
         if(e >= 4 && e <= 30){
-            setECTS(e);
             setECTSError("");
         }else
             setECTSError("Valor de ECTS necessita de ser entre 4 e 30");
@@ -81,23 +81,14 @@ const CreateDPUC = () => {
 
     return ( 
         <Container>
-            <ThemeProviderPaco theme={ThemePaco}>
-                <Row>
-                    <Col>
-                        <TextPaco as="h3" size="xLarge" fontWeight="medium"> 
-                            Criar nova UC
-                        </TextPaco>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <TextPaco as="h3" color="primary" size="large" fontWeight="400">
-                            A criar nova unidade curricular!
-                        </TextPaco>
-                    </Col>
-                </Row>
-            </ThemeProviderPaco>
-            <br/>
+            <Row>
+                <Col>
+                    <TextPaco as="h3" size="xLarge" fontWeight="400"> 
+                        Criar nova UC
+                    </TextPaco>
+                </Col>
+            </Row>
+            <hr/>
             { (!uos || !docentes) &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
@@ -125,12 +116,9 @@ const CreateDPUC = () => {
                     </Col>
                 </Row>
                 <br/>
-                <br/>
-                <br/>
                 { error &&
                     <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
                 }
-                
                 {/* Nome da UC e UO */}
                 <Row>
                     <Col lg={6}>
@@ -162,17 +150,14 @@ const CreateDPUC = () => {
                         <Text as="h3" size="large" color="#0EB4BD" fontWeight="400">
                             ECTS
                         </Text>
-                        <ThemeProviderPaco theme={ThemePaco}>
-                            <Counter
-                                defaultValue={ucECTS} 
-                                name="counter"
-                                error={ectsError}
-                                onChange={(e) => {
-                                    changeECTS(e);
-                                }}
-                            />
-                        </ThemeProviderPaco>
-                        
+                        <Counter
+                            defaultValue={ucECTS} 
+                            name="counter"
+                            error={ectsError}
+                            onChange={(e) => {
+                                changeECTS(e);
+                            }}
+                        />
                     </Col>
                 </Row>
 
@@ -191,10 +176,54 @@ const CreateDPUC = () => {
                             required
                             />
                         }
-                        
                     </Col>
                 </Row>
                 </ThemeProviderPortal>
+                {/* Docente Responsável / Regente */}
+                <Row style={{paddingTop:"10px"}}>
+                    <Col lg={12}>
+                        <TextPaco as="h3" size="large" color="primary" fontWeight="400">
+                            Docente Responsável (Regente)
+                        </TextPaco>
+                        <Dropdown
+                            options={[
+                                {
+                                key: 'Jenny Hess',
+                                text: 'Jenny Hess',
+                                value: 'Jenny Hess'
+                                },
+                                {
+                                key: 'Elliot Fu',
+                                text: 'Elliot Fu',
+                                value: 'Elliot Fu'
+                                },
+                                {
+                                key: 'Stevie Feliciano',
+                                text: 'Stevie Feliciano',
+                                value: 'Stevie Feliciano'
+                                },
+                                {
+                                key: 'Christian',
+                                text: 'Christian',
+                                value: 'Christian'
+                                },
+                                {
+                                key: 'Matt',
+                                text: 'Matt',
+                                value: 'Matt'
+                                },
+                                {
+                                key: 'Justen Kitsune',
+                                text: 'Justen Kitsune',
+                                value: 1
+                                }
+                            ]}
+                            onChange={(e, data) => console.log(data.value)}
+                        />
+                    </Col>
+                </Row>
+                
+
         </Container>
      );
 }
