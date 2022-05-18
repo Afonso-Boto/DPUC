@@ -1,18 +1,12 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
-import { Button, FormInput, DropdownSelector, Dropdown } from "@paco_ua/pacoui";
-import { Select, Input, Text } from "@uaveiro/ui";
+import { Button, Counter, ThemeProvider as ThemeProviderPaco, Text as TextPaco, FormInput, DropdownSelector, Dropdown, Theme as ThemePaco} from "@paco_ua/pacoui"; //oq vai ser usado
+import { Select, Input, Text, ThemeProvider as ThemeProviderPortal, Theme as ThemePortal } from "@uaveiro/ui"; //para remover no final
 
 import useFetch from "./Helper/useFetch";
 import axios from "axios";
 import { EntitiesContext } from "./Helper/Context";
-
-
-import {
-    ThemeProvider as ThemeProviderPortal,
-    Theme as ThemePortal
-  } from "@uaveiro/ui";
 
 
 const CreateDPUC = () => {
@@ -78,16 +72,22 @@ const CreateDPUC = () => {
 
     return ( 
         <Container>
-            <Row>
-                <Col>
-                    <ThemeProviderPortal theme={ThemePortal}>
-                        <Text as="h3" size="xLarge" fontWeight="400"> 
-                            Criar UC
-                        </Text>
-                    </ThemeProviderPortal>
-                    <hr/>
-                </Col>
-            </Row>
+            <ThemeProviderPaco theme={ThemePaco}>
+                <Row>
+                    <Col>
+                        <TextPaco as="h3" size="xLarge" fontWeight="medium"> 
+                            Criar nova UC
+                        </TextPaco>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <TextPaco as="h3" color="primary" size="large" fontWeight="400">
+                            A criar nova unidade curricular!
+                        </TextPaco>
+                    </Col>
+                </Row>
+            </ThemeProviderPaco>
             <br/>
             { (!uos || !docentes) &&
                 <Row style={{paddingTop:"10px"}}>
@@ -116,6 +116,8 @@ const CreateDPUC = () => {
                         </Button>
                     </Col>
                 </Row>
+                <br/>
+                <br/>
                 <br/>
                 { error &&
                     <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
@@ -158,6 +160,14 @@ const CreateDPUC = () => {
                             onChange={(e) => setECTS(e.target.value)}
                             style={{width:"50px"}}
                         />
+                        <ThemeProviderPaco theme={ThemePaco}>
+                            <Counter
+                                defaultValue={ucECTS} 
+                                name="counter"
+                                onChange={function noRefCheck(){}}
+                            />
+                        </ThemeProviderPaco>
+                        
                     </Col>
                 </Row>
 
