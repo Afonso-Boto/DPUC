@@ -25,6 +25,7 @@ const CreateDPUC = () => {
     const [ucName, setName] = useState("");
     const [ucUO, setUO] = useState(null);
     const [ucECTS, setECTS] = useState(6);
+    const [ectsError, setECTSError]= useState("");
     const [ucRegente, setRegente] = useState(null);
 
     
@@ -71,8 +72,11 @@ const CreateDPUC = () => {
     }
 
     const changeECTS = (e) => {
-        if(e >= 4 || e <= 30)
+        if(e >= 4 && e <= 30){
             setECTS(e);
+            setECTSError("");
+        }else
+            setECTSError("Valor de ECTS necessita de ser entre 4 e 30");
     };
 
     return ( 
@@ -162,6 +166,7 @@ const CreateDPUC = () => {
                             <Counter
                                 defaultValue={ucECTS} 
                                 name="counter"
+                                error={ectsError}
                                 onChange={(e) => {
                                     changeECTS(e);
                                 }}
