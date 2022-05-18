@@ -215,10 +215,11 @@ const CreateDPUC = () => {
                                 {
                                 key: 'Justen Kitsune',
                                 text: 'Justen Kitsune',
-                                value: 1
+                                value: 'Justen Kitsune'
                                 }
                             ]}
                             onChange={(e, data) => console.log(data.value)}
+                            fitToContent
                         />
                     </Col>
                 </Row>

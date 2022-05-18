@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Theme, ThemeProvider } from "@paco_ua/pacoui"
+/*
 import {
   ThemeProvider as ThemeProviderPortal,
   Theme as ThemePortal,
@@ -11,7 +12,7 @@ import {
   InjectIntlContext,
   useFormatMessage
 } from "@uaveiro/ui";
-
+*/
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
