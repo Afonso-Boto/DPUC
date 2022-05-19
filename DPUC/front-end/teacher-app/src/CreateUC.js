@@ -48,7 +48,7 @@ const CreateDPUC = () => {
         dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
         dataAlt += "-";
         dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
-        const uc = { designacao: ucName, unidadeOrganica: ucUO, responsavel: ucRegente, ects: ucECTS,
+        const uc = { designacao: ucName, unidadeOrganica: ucUO.id, responsavel: ucRegente.cod_int, ects: ucECTS,
                 estado: "Em Criação", dataAlteracao: dataAlt}
 
         axios
