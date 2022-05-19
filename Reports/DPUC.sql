@@ -1,40 +1,57 @@
+drop database dpuc;
+create database dpuc;
+use dpuc;
+
 CREATE TABLE unidade_organica (
-  id    int(10) NOT NULL,
+  id    int NOT NULL,
   nome  text, 
   sigla text, 
   PRIMARY KEY (id));
+
+CREATE TABLE tipo_utilizador (
+  id     int NOT NULL,
+  codigo text,
+  PRIMARY KEY (id));
+
 CREATE TABLE utilizadores (
-  id                int(10) NOT NULL, 
-  nome              int(10), 
+  id                int NOT NULL AUTO_INCREMENT, 
+  nome              text,
   email             text, 
   password          text, 
-  tipo_utilizadorid int(10) NOT NULL, 
-  PRIMARY KEY (id));
+  tipo_utilizadorid int NOT NULL, 
+  PRIMARY KEY (id),
+  foreign key (tipo_utilizadorid) references tipo_utilizador(id));
+
+
 CREATE TABLE curso (
-  id                 int(10) NOT NULL,
+  id                 int NOT NULL AUTO_INCREMENT,
   nome               text, 
-  unidade_organicaid int(10) NOT NULL, 
-  PRIMARY KEY (id));
+  unidade_organicaid int NOT NULL, 
+  PRIMARY KEY (id),
+  foreign key (unidade_organicaid) references unidade_organica(id));
+
 CREATE TABLE estado (
-  id        int(10) NOT NULL,
+  id        int NOT NULL,
   nome      text, 
   descricao text, 
   PRIMARY KEY (id));
+
 CREATE TABLE periodo_letivo (
-  id      int(10) NOT NULL,
+  id      int NOT NULL AUTO_INCREMENT,
   periodo text, 
   PRIMARY KEY (id));
+
 CREATE TABLE dpuc (
-  id                    int(20) NOT NULL,
+  id                    int NOT NULL AUTO_INCREMENT,
   criacao_edicao        tinyint(1), 
-  codigo                varchar(20), 
+  codigo                text,
   designacao            text, 
   sigla_ac              text, 
   duracao               text, 
   carga_horaria         text, 
-  horas_contacto        text, 
-  horas_trabalho        int(10), 
-  ects                  int(2), 
+  horas_contacto        int,
+  horas_trabalho        int, 
+  ects                  int,
   objetivos             text, 
   conteudos             text, 
   coerencia_conteudos   text, 
@@ -45,22 +62,28 @@ CREATE TABLE dpuc (
   regime_faltas         text, 
   linguas               text, 
   modalidade            text, 
-  requisitos            int(10), 
+  requisitos            int, 
   ficheiros             longblob, 
   data_alteracao        datetime NULL, 
   pagina_publica        text, 
   funcionamento         text, 
   aprendizagem          text, 
-  estadoid              int(10) NOT NULL, 
-  periodo_letivoid      int(10) NOT NULL, 
-  PRIMARY KEY (id));
+  estadoid              int NOT NULL, 
+  periodo_letivoid      int NOT NULL, 
+  PRIMARY KEY (id),
+  foreign key (estadoid) references estado(id),
+  foreign key (periodo_letivoid) references periodo_letivo(id));
+
 CREATE TABLE curso_dpuc (
-  cursoid int(10) NOT NULL, 
-  dpucid  int(20) NOT NULL, 
-  PRIMARY KEY (cursoid, 
-  dpucid));
+  curso_id int NOT NULL,
+  dpuc_id  int(20) NOT NULL,
+  PRIMARY KEY (curso_id,
+  dpuc_id),
+  foreign key (curso_id) references curso(id),
+  foreign key (dpuc_id) references dpuc(id));
+
 CREATE TABLE controlo (
-  id                    int(10),
+  id                    int AUTO_INCREMENT,
   codigo                tinyint(1), 
   designacao            tinyint(1), 
   sigla_ac              tinyint(1), 
@@ -84,27 +107,15 @@ CREATE TABLE controlo (
   pagina_publica        tinyint(1),
   funcionamento         tinyint(1), 
   aprendizagem          tinyint(1), 
-  tipo_utilizadorid     int(10) NOT NULL,
-  PRIMARY KEY (id)
+  tipo_utilizadorid     int NOT NULL,
+  PRIMARY KEY (id),
+  foreign key (tipo_utilizadorid) references tipo_utilizador(id)
 );
-
-CREATE TABLE tipo_utilizador (
-  id     int(10) NOT NULL,
-  codigo text, 
-  PRIMARY KEY (id));
-
-ALTER TABLE curso ADD CONSTRAINT FKcurso389482 FOREIGN KEY (unidade_organicaid) REFERENCES unidade_organica (id);
-ALTER TABLE curso_dpuc ADD CONSTRAINT FKcurso_dpuc520279 FOREIGN KEY (cursoid) REFERENCES curso (id);
-ALTER TABLE curso_dpuc ADD CONSTRAINT FKcurso_dpuc432220 FOREIGN KEY (dpucid) REFERENCES dpuc (id);
-ALTER TABLE dpuc ADD CONSTRAINT FKdpuc973992 FOREIGN KEY (estadoid) REFERENCES estado (id);
-ALTER TABLE dpuc ADD CONSTRAINT FKdpuc311657 FOREIGN KEY (periodo_letivoid) REFERENCES periodo_letivo (id);
-ALTER TABLE utilizadores ADD CONSTRAINT FKutilizador624564 FOREIGN KEY (tipo_utilizadorid) REFERENCES tipo_utilizador (id);
-ALTER TABLE controlo ADD CONSTRAINT FKcontrolo81812 FOREIGN KEY (tipo_utilizadorid) REFERENCES tipo_utilizador (id);
 
 
 insert into unidade_organica(id, nome, sigla) values(1, 'Unidade Organica 1', 'UO1');
 
-insert into curso(id, nome, unidade_organicaid) values(1, 'Engenharia Informatica', 1);
+insert into curso(nome, unidade_organicaid) values('Engenharia Informatica', 1);
 
 insert into estado(id, nome, descricao) values (1, 'C1', 'Em criacão');
 insert into estado(id, nome, descricao) values (2, 'C2', 'Em edicao');
@@ -113,8 +124,8 @@ insert into estado(id, nome, descricao) values (4, 'C4', 'Em aprovacao');
 insert into estado(id, nome, descricao) values (5, 'C5', 'Aprovado');
 insert into estado(id, nome, descricao) values (6, 'C6', 'Desativado');
 
-insert into periodo_letivo(id, periodo) values (1, '1º Semestre');
-insert into periodo_letivo(id, periodo) values (2, '2º Semestre');
+insert into periodo_letivo(periodo) values ('1º Semestre');
+insert into periodo_letivo(periodo) values ('2º Semestre');
 
 insert into tipo_utilizador(id, codigo) values (0, 'SGA');
 insert into tipo_utilizador(id, codigo) values (1, 'DUO');
@@ -128,5 +139,5 @@ insert into utilizadores(id, nome, email, password, tipo_utilizadorid) values (3
 insert into utilizadores(id, nome, email, password, tipo_utilizadorid) values (4, 'DC', 'dc@ua.pt', '123', 3);
 insert into utilizadores(id, nome, email, password, tipo_utilizadorid) values (5, 'D', 'd@ua.pt', '123', 4);
 
-insert into controlo(id, codigo, designacao, sigla_ac, duracao, carga_horaria, horas_contacto, horas_trabalho, ects, objetivos, conteudos, coerencia_conteudos, metodologias, coerencia_metodologia, bibliografia, observacoes, regime_faltas, linguas, modalidade, requisitos, ficheiros, pagina_publica, funcionamento, aprendizagem, tipo_utilizadorid)
-values (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0);
+insert into controlo(codigo, designacao, sigla_ac, duracao, carga_horaria, horas_contacto, horas_trabalho, ects, objetivos, conteudos, coerencia_conteudos, metodologias, coerencia_metodologia, bibliografia, observacoes, regime_faltas, linguas, modalidade, requisitos, ficheiros, pagina_publica, funcionamento, aprendizagem, tipo_utilizadorid)
+values (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0);
