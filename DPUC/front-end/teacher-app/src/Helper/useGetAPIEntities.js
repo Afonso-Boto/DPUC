@@ -29,12 +29,12 @@ const useGetAPIEntities = () => {
     // formatted entities
     const [ uosOptions, setUOS ] = useState([]);
     const [ cursosOptions, setCursos ] = useState([]);
-    const [ grausOptions, setgraus ] = useState([]);
-    const [ areasOptions, setareas ] = useState([]);
-    const [ idiomasOptions, setidiomas ] = useState([]);
-    const [ duracoesOptions, setduracoes ] = useState([]);
-    const [ semestreOptions, setsemestre ] = useState([]);
-    const [ modalidadesOptions, setmodalidades ] = useState([]);
+    const [ grausOptions, setGraus ] = useState([]);
+    const [ areasOptions, setAreas ] = useState([]);
+    const [ idiomasOptions, setIdiomas ] = useState([]);
+    const [ duracoesOptions, setDuracoes ] = useState([]);
+    const [ semestreOptions, setSemestre ] = useState([]);
+    const [ modalidadesOptions, setModalidades ] = useState([]);
     const [ docentesOptions, setDocentes ] = useState([]);
     
     useEffect(() => {
@@ -49,6 +49,48 @@ const useGetAPIEntities = () => {
         setUOS([]);
         uos.map((uo) => setUOS(old => [...old, {key: uo.nome, text: uo.sigla + " - " + uo.nome, value: uo.id}]));
     }, [uos]);
+    useEffect(() => {
+        if(cursos === null)
+            return;
+        setCursos([]);
+        cursos.map((c) => setCursos(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [cursos]);
+    useEffect(() => {
+        if(areas === null)
+            return;
+        setAreas([]);
+        areas.map((c) => setAreas(old => [...old, {key: c.nome, text: c.sigla + " - " + c.nome, value: c.id}]));
+    }, [areas]);
+    useEffect(() => {
+        if(duracoes === null)
+            return;
+        setDuracoes([]);
+        duracoes.map((c) => setDuracoes(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [duracoes]);
+    useEffect(() => {
+        if(semestre === null)
+            return;
+        setSemestre([]);
+        semestre.map((c) => setSemestre(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [semestre]);
+    useEffect(() => {
+        if(modalidades === null)
+            return;
+        setModalidades([]);
+        modalidades.map((c) => setModalidades(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [modalidades]);
+    useEffect(() => {
+        if(graus === null)
+            return;
+        setGraus([]);
+        graus.map((c) => setGraus(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [graus]);
+    useEffect(() => {
+        if(idiomas === null)
+            return;
+        setIdiomas([]);
+        idiomas.map((c) => setIdiomas(old => [...old, {key: c.nome, text: c.nome, value: c.id}]));
+    }, [idiomas]);
 
     return {retryFetch, setRetry, 
         uos, cursos, graus, areas, idiomas, duracoes, semestre, modalidades, docentes,
