@@ -40,6 +40,7 @@ const ViewDPUC = () => {
         setRetry(retryFetch + 1);
     }
 
+    console.table(dpuc);
     return ( 
         <Container>
             <Row>
@@ -100,7 +101,7 @@ const ViewDPUC = () => {
                     <Col>
                         <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
                     </Col>
-                    {   detailedView &&
+                    {   detailedView && dpuc.estado &&
                         <Col sm={"auto"}>
                             <Text as="i" size="medium" color="#63CF7C" fontWeight="500"> Estado: {dpuc.estado}</Text>
                         </Col>

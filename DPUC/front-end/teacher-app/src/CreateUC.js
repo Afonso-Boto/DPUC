@@ -217,6 +217,22 @@ const CreateDPUC = () => {
                         />
                     </Col>
                 </Row>
+                {/* Docente Responsável / Regente */}
+                <Row style={{paddingTop:"10px"}}>
+                    <Col lg={12}>
+                        <h3>
+                            <Text size="large" color="primary" fontWeight="400">
+                                Docente Responsável (Regente)
+                            </Text>
+                        </h3>
+                        <Dropdown
+                            options={docentesOptions}
+                            fitToContent
+                            onChange={(e, data) => changeRegente(data.value)}
+                        />
+                    </Col>
+                    
+                </Row>
                 {/* ECTS*/}
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={2}>
@@ -234,21 +250,7 @@ const CreateDPUC = () => {
                         />
                     </Col>
                 </Row>
-                {/* Docente Responsável / Regente */}
-                <Row style={{paddingTop:"10px"}}>
-                    <Col>
-                        <h3>
-                            <Text size="large" color="primary" fontWeight="400">
-                                Docente Responsável (Regente)
-                            </Text>
-                        </h3>
-                        <Dropdown
-                            options={docentesOptions}
-                            fitToContent
-                            onChange={(e, data) => changeRegente(data.value)}
-                        />
-                    </Col>
-                </Row>
+                
                 
         </Container>
      );

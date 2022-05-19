@@ -4,6 +4,7 @@ import { EntitiesContext } from "./Context";
 const useGetDPUC = (data) => {
         
     const [designacao, setDesignacao] = useState("");
+    const [estado, setEstado] = useState("");
     const [areaCientifica, setAreaCientifica] = useState({});
     const [duracao, setDuracao] = useState({});
     const [codigo, setCodigo] = useState("");
@@ -49,6 +50,8 @@ const useGetDPUC = (data) => {
         if(data){
             if(data.objetivos)
                 setObjetivos(data.objetivos);
+            if(data.estado)
+                setEstado(data.estado);
             if(data.horasContacto)
                 setHorasOT(data.horasContacto);
             if(data.conteudos)
@@ -152,7 +155,8 @@ const useGetDPUC = (data) => {
     }, [data]);    
 
     const dpuc = {
-        designacao, 
+        designacao,
+        estado,
         areaCientifica,
         duracao,
         codigo,
@@ -190,6 +194,7 @@ const useGetDPUC = (data) => {
 
     const dpucSet = {
         setDesignacao,
+        setEstado,
         setAreaCientifica,
         setDuracao,
         setCodigo,

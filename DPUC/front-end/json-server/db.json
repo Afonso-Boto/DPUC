@@ -172,7 +172,7 @@
       "designacao": "Introdução à Programação",
       "areaCientifica": "INF",
       "duracao": "Semestral",
-      "codigo": 44249,
+      "codigo": 27602,
       "responsavel": 9525,
       "cargaHoraria": null,
       "horasContacto": "1",
@@ -200,7 +200,7 @@
       "grau": "Licenciatura",
       "avaliacao": "Discreta",
       "periodo": "Primeiro",
-      "dataAlteracao": "2022-05-10",
+      "dataAlteracao": "2022-05-19",
       "estado": "Em Edição",
       "id": 1
     },

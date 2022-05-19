@@ -50,7 +50,8 @@ const EditDPUC = () => {
             .finally( () => {
                 setLoadingPUT(false);
             });
-            
+
+        console.log(getFormattedDPUC(dpuc, "Em Edição"));     
     }
     const handleBack = () => {
         navigate("/");
