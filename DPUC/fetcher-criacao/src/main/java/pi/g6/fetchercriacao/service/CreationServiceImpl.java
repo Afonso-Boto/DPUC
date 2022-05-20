@@ -3,9 +3,7 @@ package pi.g6.fetchercriacao.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
-import pi.g6.fetchercriacao.entity.Dpuc;
-import pi.g6.fetchercriacao.entity.Estado;
-import pi.g6.fetchercriacao.entity.PeriodoLetivo;
+import pi.g6.fetchercriacao.entity.*;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -24,14 +22,9 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public boolean createUC(String designacao, String sigla_ac, String ects, String responsavel) {
-        return false;
-    }
-
-    @Override
-    public List<Estado> allEstados() {
-        String sql = "SELECT * FROM estado";
-        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+    public List<Estado> getEstados() {
+        String query = "SELECT * FROM estado";
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
         List<Estado> result = new ArrayList<Estado>();
         for (Map<String, Object> row : rows) {
@@ -47,7 +40,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public List<PeriodoLetivo> allPeriodos() {
+    public List<PeriodoLetivo> getPeriodos() {
         String query = "SELECT * FROM periodo_letivo";
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
@@ -65,7 +58,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public List<Dpuc> allDpucs() {
+    public List<Dpuc> getDPUCs() {
         String query = "SELECT * FROM dpuc";
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
@@ -106,5 +99,90 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
 
         }
         return result;
+    }
+
+    @Override
+    public List<UnidadeOrganica> getUOs() {
+        String query = "SELECT * FROM unidade_organica";
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+
+        List<UnidadeOrganica> result = new ArrayList<>();
+
+        for (Map<String, Object> row : rows) {
+            UnidadeOrganica uo = new UnidadeOrganica();
+            uo.setId((int) row.get("id"));
+            uo.setNome((String) row.get("nome"));
+            uo.setSigla((String) row.get("sigla"));
+
+            result.add(uo);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Curso> getCursos() {
+        String query = "SELECT * FROM curso";
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+
+        List<Curso> result = new ArrayList<>();
+
+        for (Map<String, Object> row : rows) {
+            Curso curso = new Curso();
+            curso.setId((int) row.get("id"));
+            curso.setNome((String) row.get("nome"));
+            curso.setUnidade_organicaid((int) row.get("unidade_organicaid"));
+
+            result.add(curso);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Curso> getCursos(String UO) {
+        String query = String.format("SELECT c.id, c.nome, c.unidade_organicaid from (unidade_organica JOIN curso c on unidade_organica.id = c.unidade_organicaid) where unidade_organica.sigla=\'%s\'", UO);
+
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+
+        List<Curso> result = new ArrayList<>();
+
+        for (Map<String, Object> row : rows) {
+
+            Curso curso = new Curso();
+            curso.setId((int) row.get("id"));
+            curso.setNome((String) row.get("nome"));
+            curso.setUnidade_organicaid((int) row.get("unidade_organicaid"));
+
+            result.add(curso);
+
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<String> getIdiomas() {
+        return null;
+    }
+
+    @Override
+    public List<Utilizadores> getDocente(String UO) {
+        return null;
+    }
+
+    @Override
+    public List<Dpuc> getUltimaVersao(int uc) {
+        return null;
+    }
+
+    @Override
+    public List<Dpuc> getUltimasVersoes() {
+        return null;
+    }
+
+    @Override
+    public List<Dpuc> getDpucEmAprovacao() {
+        return null;
     }
 }

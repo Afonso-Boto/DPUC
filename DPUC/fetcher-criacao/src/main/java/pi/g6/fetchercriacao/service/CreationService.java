@@ -1,14 +1,20 @@
 package pi.g6.fetchercriacao.service;
 
-import pi.g6.fetchercriacao.entity.Dpuc;
-import pi.g6.fetchercriacao.entity.Estado;
-import pi.g6.fetchercriacao.entity.PeriodoLetivo;
+import pi.g6.fetchercriacao.entity.*;
 
 import java.util.List;
 
 public interface CreationService {
-    boolean createUC(String designacao, String sigla_ac, String ects, String responsavel);
-    List<Estado> allEstados();
-    List<PeriodoLetivo> allPeriodos();
-    List<Dpuc> allDpucs();
+    List<Estado> getEstados();
+    List<PeriodoLetivo> getPeriodos();
+    List<Dpuc> getDPUCs();
+    List<UnidadeOrganica> getUOs();
+    List<Curso> getCursos();
+    List<Curso> getCursos(String UO);
+    List<String> getIdiomas();
+    List<Utilizadores> getDocente(String UO);
+    List<Dpuc> getUltimaVersao(int uc);
+    List<Dpuc> getUltimasVersoes();
+    List<Dpuc> getDpucEmAprovacao();
+
 }
