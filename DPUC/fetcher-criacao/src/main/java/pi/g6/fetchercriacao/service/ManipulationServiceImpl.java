@@ -1,16 +1,21 @@
 package pi.g6.fetchercriacao.service;
 
-import org.json.JSONArray;
+import lombok.extern.log4j.Log4j2;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import pi.g6.fetchercriacao.entity.Estado;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
+@Repository
+@Log4j2
 public class ManipulationServiceImpl extends JdbcDaoSupport implements ManipulationService{
     @Autowired
     DataSource dataSource;
@@ -23,18 +28,7 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
 
     @Override
     public void aprovarDpuc(int id) {
-        String sql = "SELECT * FROM estado";
-        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 
-        List<Estado> result = new ArrayList<Estado>();
-        for (Map<String, Object> row : rows) {
-            Estado estado = new Estado();
-            estado.setId((int) row.get("id"));
-            estado.setNome((String) row.get("nome"));
-            estado.setDescricao((String) row.get("descricao"));
-
-            result.add(estado);
-        }
     }
 
     @Override
@@ -43,17 +37,38 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
     }
 
     @Override
-    public void editarDpuc(JSONArray dpuc) {
+    public void editarDpuc(JSONObject dpuc) {
 
     }
 
     @Override
-    public void criarUc(JSONArray uc) {
+    public HttpStatus criarUc(JSONObject uc, int cursoid) {
+        log.info(uc.toString());
 
+        // INSERT UC
+        String sql = "INSERT INTO uc(codigo, designacao, sigla_ac, ects) VALUES(?, ?, ?, ?)";
+        assert getJdbcTemplate() != null;
+        getJdbcTemplate().update(sql, uc.getString("codigo"), uc.getString("designacao"), uc.getString("sigla_ac"), Integer.parseInt(uc.getString("ects")));
+
+        log.info("hey");
+
+        String sql2 = "SELECT id FROM uc WHERE codigo=\'%s\'".formatted(uc.getString("codigo"));
+        int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
+
+        log.info("hey");
+        // Ligar UC a um curso
+        String sql3 = "INSERT INTO curso_UC(curso_id, UCid) VALUES(?, ?)";
+        getJdbcTemplate().update(sql3, cursoid, UCid);
+        log.info("hey");
+        // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default)
+        String sql4 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, UCid) VALUES(?, ?, ?, ?)";
+        getJdbcTemplate().update(sql4, 0, 2, 1, UCid);
+
+        return HttpStatus.OK;
     }
 
     @Override
-    public void criarDpuc(JSONArray dpuc) {
+    public void criarDpuc(JSONObject dpuc) {
 
     }
 }
