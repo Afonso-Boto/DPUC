@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,20 +47,18 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
         log.info(uc.toString());
 
         // INSERT UC
-        String sql = "INSERT INTO uc(codigo, designacao, sigla_ac, ects) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO uc(designacao, sigla_ac, ects) VALUES(?, ?, ?)";
         assert getJdbcTemplate() != null;
-        getJdbcTemplate().update(sql, uc.getString("codigo"), uc.getString("designacao"), uc.getString("sigla_ac"), Integer.parseInt(uc.getString("ects")));
+        getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getString("sigla_ac"), Integer.parseInt(uc.getString("ects")));
 
-        log.info("hey");
-
-        String sql2 = "SELECT id FROM uc WHERE codigo=\'%s\'".formatted(uc.getString("codigo"));
+        // UC id
+        String sql2 = "SELECT id FROM uc WHERE designacao=\'%s\'".formatted(uc.getString("designacao"));
         int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
-        log.info("hey");
         // Ligar UC a um curso
         String sql3 = "INSERT INTO curso_UC(curso_id, UCid) VALUES(?, ?)";
         getJdbcTemplate().update(sql3, cursoid, UCid);
-        log.info("hey");
+
         // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default)
         String sql4 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, UCid) VALUES(?, ?, ?, ?)";
         getJdbcTemplate().update(sql4, 0, 2, 1, UCid);
@@ -68,7 +67,13 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
     }
 
     @Override
-    public void criarDpuc(JSONObject dpuc) {
+    public void criarDpuc(JSONObject dpuc, String designacao) {
+        // Dpuc id
+        String sql = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
+        int dpucid = (int) getJdbcTemplate().queryForList(sql).get(0).get("id");
 
+        // Update dpuc
+        String sql2 = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=? WHERE id=?";
+        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), Integer.parseInt(dpuc.getString("horas_contacto")), Integer.parseInt(dpuc.getString("horas_trabalho")), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
     }
 }

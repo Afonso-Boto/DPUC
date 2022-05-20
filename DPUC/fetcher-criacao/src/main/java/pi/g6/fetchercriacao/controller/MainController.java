@@ -30,10 +30,7 @@ public class MainController {
     }
 
     @PostMapping("/criarUC")
-    public HttpStatus criarUC(@RequestBody String uc,
-                                         @RequestParam("cursoid") int cursoid){
-        log.info("Requested DPUC!");
-
+    public HttpStatus criarUC(@RequestBody String uc, @RequestParam("cursoid") int cursoid){
         return manipulationService.criarUc(new JSONObject(uc), cursoid);
     }
 

@@ -8,15 +8,6 @@ public class Dpuc {
     private boolean criacao_edicao;
 
     
-    private String codigo;
-
-    
-    private String designacao;
-
-    
-    private String sigla_ac;
-
-    
     private String duracao;
 
     
@@ -30,9 +21,6 @@ public class Dpuc {
 
     
     private int horas_trabalho;
-
-    
-    private int ects;
 
     
     private String objetivos;
@@ -102,30 +90,6 @@ public class Dpuc {
         this.criacao_edicao = criacao_edicao;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getDesignacao() {
-        return designacao;
-    }
-
-    public void setDesignacao(String designacao) {
-        this.designacao = designacao;
-    }
-
-    public String getSigla_ac() {
-        return sigla_ac;
-    }
-
-    public void setSigla_ac(String sigla_ac) {
-        this.sigla_ac = sigla_ac;
-    }
-
     public String getDuracao() {
         return duracao;
     }
@@ -164,14 +128,6 @@ public class Dpuc {
 
     public void setHoras_trabalho(int horas_trabalho) {
         this.horas_trabalho = horas_trabalho;
-    }
-
-    public int getEcts() {
-        return ects;
-    }
-
-    public void setEcts(int ects) {
-        this.ects = ects;
     }
 
     public String getObjetivos() {
