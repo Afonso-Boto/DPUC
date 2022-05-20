@@ -66,6 +66,7 @@ services:
     depends_on:
       kibana:
         condition: service_healthy
+    container_name: ${MYSQLDB_HOST_NAME}
     platform: linux/x86_64
     image: mysql:5.7
     env_file: ./.env
@@ -120,22 +121,32 @@ services:
 
   fetcher-search:
     depends_on:
-      - mysqldb
-    build: ./fetcher-search
+      mysqldb:
+        condition: service_started
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    build: ./fetcher_search
+    command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
     env_file: ./.env
     ports:
-      - $SPRING_FETCHER_SEARCH_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
     environment:
-      SPRING_APPLICATION_JSON: '{
-            "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-            "spring.datasource.username" : "$MYSQLDB_USER",
-            "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-            "spring.jpa.hibernate.ddl-auto" : "update"}'
-    volumes:
-      - ./volumes/fetcher-search/:/root/.m2
-    stdin_open: true
-    tty: true
+      - DB_HOST=${MYSQLDB_HOST_NAME}
+      - DB_PORT=${MYSQLDB_DOCKER_PORT}
+      - DB_NAME=${MYSQLDB_DATABASE}
+      - DB_USER=${MYSQLDB_USER}
+      - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s http://0.0.0.0:8000/healthcheck || exit 1'
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   teacher-app:
     depends_on:
