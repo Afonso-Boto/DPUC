@@ -16,6 +16,7 @@ CREATE TABLE tipo_utilizador (
 CREATE TABLE utilizadores (
   id                int NOT NULL AUTO_INCREMENT, 
   nome              text,
+  nmec              int,
   email             text, 
   password          text,
   tipo_utilizadorid int NOT NULL, 
@@ -56,6 +57,7 @@ create table uc(
     designacao text,
     sigla_ac text,
     ects int,
+    uoid int,
     primary key (id)
 );
 
@@ -100,11 +102,11 @@ CREATE TABLE curso_UC (
 
 create table utilizadores_dpuc(
     utilizadoresid int NOT NULL,
-      dpucid  int NOT NULL,
-      PRIMARY KEY (utilizadoresid,
-      dpucid),
-      foreign key (utilizadoresid) references utilizadores(id),
-      foreign key (dpucid) references dpuc(id));
+    dpucid  int NOT NULL,
+    PRIMARY KEY (utilizadoresid,
+        dpucid),
+    foreign key (utilizadoresid) references utilizadores(id),
+    foreign key (dpucid) references dpuc(id));
 
 
 insert into unidade_organica(id, nome, sigla) values(1, 'Unidade Organica 1', 'UO1');

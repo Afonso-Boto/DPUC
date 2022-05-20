@@ -8,6 +8,6 @@ public interface ManipulationService {
     HttpStatus aprovarDpuc(String designacao, String codigo);
     HttpStatus desativarDpuc(String designacao);
     HttpStatus editarDpuc(JSONObject dpuc, String designacao);
-    HttpStatus criarUc(JSONObject uc, int cursoid);
+    HttpStatus criarUc(JSONObject uc, int regenteid);
     HttpStatus criarDpuc(JSONObject dpuc, String designacao);
 }

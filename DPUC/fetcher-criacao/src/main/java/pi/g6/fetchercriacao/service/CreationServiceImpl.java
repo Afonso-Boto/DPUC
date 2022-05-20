@@ -136,7 +136,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public List<Curso> getCursos(String UO) {
+    public List<Curso> getCursos(String UO) { // pode ser id
         String query = String.format("SELECT c.id, c.nome, c.unidade_organicaid from (unidade_organica JOIN curso c on unidade_organica.id = c.unidade_organicaid) where unidade_organica.sigla=\'%s\'", UO);
 
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
@@ -163,12 +163,12 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public List<Utilizadores> getDocente(String UO) {
+    public List<Utilizadores> getDocente(String UO) { // pode ser id uo
         return null;
     }
 
     @Override
-    public List<Dpuc> getUltimaVersao(int uc) {
+    public List<Dpuc> getUltimaVersao(int uc) { // int codigo
         return null;
     }
 
