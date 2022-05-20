@@ -34,6 +34,11 @@ public class MainController {
         return manipulationService.criarUc(new JSONObject(uc), cursoid);
     }
 
+    @PostMapping("/criarDpuc")
+    public HttpStatus criarUC(@RequestBody String dpuc, @RequestParam("designacao") String designacao){
+        return manipulationService.criarDpuc(new JSONObject(dpuc), designacao);
+    }
+
     @GetMapping("/estados")
     public ResponseEntity<List<Estado>> getEstados(){
         return new ResponseEntity<>(creationService.getEstados(), HttpStatus.OK);

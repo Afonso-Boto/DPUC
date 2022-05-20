@@ -67,13 +67,17 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
     }
 
     @Override
-    public void criarDpuc(JSONObject dpuc, String designacao) {
+    public HttpStatus criarDpuc(JSONObject dpuc, String designacao) {
+        log.info(dpuc.toString());
+
         // Dpuc id
         String sql = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
         int dpucid = (int) getJdbcTemplate().queryForList(sql).get(0).get("id");
-
+        log.info("hey");
         // Update dpuc
         String sql2 = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=? WHERE id=?";
-        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), Integer.parseInt(dpuc.getString("horas_contacto")), Integer.parseInt(dpuc.getString("horas_trabalho")), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
+        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
+
+        return HttpStatus.OK;
     }
 }

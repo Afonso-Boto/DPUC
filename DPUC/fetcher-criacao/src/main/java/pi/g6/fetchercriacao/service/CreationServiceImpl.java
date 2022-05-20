@@ -68,14 +68,10 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             Dpuc dpuc = new Dpuc();
             dpuc.setId((int) row.get("id"));
             dpuc.setCriacao_edicao((boolean) row.get("criacao_edicao"));
-            dpuc.setCodigo((String) row.get("codigo"));
-            dpuc.setDesignacao((String) row.get("designacao"));
-            dpuc.setSigla_ac((String) row.get("sigla_ac"));
             dpuc.setDuracao((String) row.get("duracao"));
             dpuc.setCarga_horaria((String) row.get("carga_horaria"));
             dpuc.setHoras_contacto((int) row.get("horas_contacto")); //deveria ser int como tambem na BD
             dpuc.setHoras_trabalho((int) row.get("horas_trabalho")); //deveria ser int como na BD
-            dpuc.setEcts((int) row.get("ects")); //deveria ser int como na BD
             dpuc.setObjetivos((String) row.get("objetivos"));
             dpuc.setConteudos((String) row.get("conteudos"));
             dpuc.setCoerencia_conteudos((String) row.get("coerencia_conteudos"));
