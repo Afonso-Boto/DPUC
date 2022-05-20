@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 
 public interface ManipulationService {
-    void aprovarDpuc(int id);
-    void desativarDpuc(int id);
-    void editarDpuc(JSONObject dpuc);
+    HttpStatus aprovarDpuc(String designacao, String codigo);
+    HttpStatus desativarDpuc(String designacao);
+    HttpStatus editarDpuc(JSONObject dpuc, String designacao);
     HttpStatus criarUc(JSONObject uc, int cursoid);
     HttpStatus criarDpuc(JSONObject dpuc, String designacao);
 }

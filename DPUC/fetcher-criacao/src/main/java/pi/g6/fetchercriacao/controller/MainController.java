@@ -35,8 +35,23 @@ public class MainController {
     }
 
     @PostMapping("/criarDpuc")
-    public HttpStatus criarUC(@RequestBody String dpuc, @RequestParam("designacao") String designacao){
+    public HttpStatus criarDpuc(@RequestBody String dpuc, @RequestParam("designacao") String designacao){
         return manipulationService.criarDpuc(new JSONObject(dpuc), designacao);
+    }
+
+    @PutMapping("/editarDpuc")
+    public HttpStatus editarDpuc(@RequestBody String dpuc, @RequestParam("designacao") String designacao){
+        return manipulationService.editarDpuc(new JSONObject(dpuc), designacao);
+    }
+
+    @PutMapping("/aprovarDpuc")
+    public HttpStatus aprovarDpuc(@RequestParam("designacao") String designacao, @RequestParam("codigo") String codigo){
+        return manipulationService.aprovarDpuc(designacao, codigo);
+    }
+
+    @PutMapping("/desativarDpuc")
+    public HttpStatus desativarDpuc(@RequestParam("designacao") String designacao){
+        return manipulationService.desativarDpuc(designacao);
     }
 
     @GetMapping("/estados")

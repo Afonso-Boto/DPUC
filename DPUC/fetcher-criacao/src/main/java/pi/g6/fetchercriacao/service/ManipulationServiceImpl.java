@@ -28,18 +28,45 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
 
 
     @Override
-    public void aprovarDpuc(int id) {
+    public HttpStatus aprovarDpuc(String designacao, String codigo) {
+        String sql = "UPDATE uc SET codigo=? where designacao=?";
+        getJdbcTemplate().update(sql, codigo, designacao);
 
+        // Dpuc id
+        String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
+        int dpucid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
+
+        // Update Dpuc estado para C4  "Em Aprovação"
+        String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
+        getJdbcTemplate().update(sql3, 4, dpucid);
+
+        return HttpStatus.OK;
     }
 
     @Override
-    public void desativarDpuc(int id) {
+    public HttpStatus desativarDpuc(String designacao) {
+        // Dpuc id
+        String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
+        int dpucid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
+        // Update Dpuc estado para C6 "Desativada"
+        String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
+        getJdbcTemplate().update(sql3, 6, dpucid);
+
+        return HttpStatus.OK;
     }
 
     @Override
-    public void editarDpuc(JSONObject dpuc) {
+    public HttpStatus editarDpuc(JSONObject dpuc, String designacao) {
+        // Dpuc id
+        String sql = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
+        int dpucid = (int) getJdbcTemplate().queryForList(sql).get(0).get("id");
 
+        // Update dpuc
+        String sql2 = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=? WHERE id=?";
+        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
+
+        return HttpStatus.OK;
     }
 
     @Override
@@ -73,10 +100,10 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
         // Dpuc id
         String sql = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.designacao = \'%s\'".formatted(designacao);
         int dpucid = (int) getJdbcTemplate().queryForList(sql).get(0).get("id");
-        log.info("hey");
+
         // Update dpuc
-        String sql2 = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=? WHERE id=?";
-        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
+        String sql2 = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=?, estadoid=? WHERE id=?";
+        getJdbcTemplate().update(sql2, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), 3, dpucid);
 
         return HttpStatus.OK;
     }
