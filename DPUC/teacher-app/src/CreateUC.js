@@ -42,14 +42,13 @@ const CreateDPUC = () => {
         
         setLoadingPOST(true);
 
-
         const date = new Date();
         var dataAlt = "" + date.getFullYear() + "-";
         dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
         dataAlt += "-";
         dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
         const uc = { designacao: ucName, unidadeOrganica: ucUO.id, responsavel: ucRegente.cod_int, ects: ucECTS,
-                estado: "Em Criação", dataAlteracao: dataAlt}
+                estado: "Em Criação", dataAlteracao: dataAlt }
 
         axios
             .post(URL_DPUC, uc)
@@ -221,7 +220,7 @@ const CreateDPUC = () => {
                 </Row>
                 */}
                 {/* Docente Responsável / Regente */}
-                
+
                 {/*
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={12}>

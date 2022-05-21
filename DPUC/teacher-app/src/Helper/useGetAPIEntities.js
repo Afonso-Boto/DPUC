@@ -4,10 +4,10 @@ import useFetch from "./useFetch";
 const useGetAPIEntities = () => {
 
     // Fetcher criação
-    const URL_UOS = "http://localhost:82/creation/uos";
+    //const URL_UOS = "http://localhost:82/creation/uos";
 
     // JSON SERVER
-    //const URL_UOS = "http://localhost:8000/uos";
+    const URL_UOS = "http://localhost:8000/uos";
     const URL_AREAS = "http://localhost:8000/areas";
     const URL_CURSOS = "http://localhost:8000/cursos";
     const URL_IDIOMAS = "http://localhost:8000/idiomas";
