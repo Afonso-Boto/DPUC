@@ -221,6 +221,7 @@ const CreateDPUC = () => {
                 </Row>
                 */}
                 {/* Docente Responsável / Regente */}
+                
                 {/*
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={12}>
@@ -235,7 +236,6 @@ const CreateDPUC = () => {
                             onChange={(e, data) => changeRegente(data.value)}
                         />
                     </Col>
-                    
                 </Row>
                 */}
 
