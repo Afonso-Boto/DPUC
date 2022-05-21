@@ -1,6 +1,5 @@
 import json
 from bs4 import BeautifulSoup
-from elasticsearch import Elasticsearch
 import openpyxl
 from pathlib import Path
 
@@ -28,28 +27,13 @@ for row in sheet.iter_rows(min_row=1):
 
     campo = row[9].value
     if campo:
-        new_campo = row[7].value + "_" + row[8].value
+        new_campo = row[7].value
+        lingua = row[8].value
+        if lingua == "en":
+            new_campo = new_campo + '_' + lingua
         campo = campo.replace("&nbsp;", " ")
         campo = BeautifulSoup(campo, features="html.parser").get_text()
         dpucs[current_dpucid][new_campo] = campo
-
-es = Elasticsearch(
-    'http://localhost:9200/',
-)
-
-index_name = "index_dpucs"
-
-if es.ping():
-    print("Connection successful")
-    if not es.indices.exists(index=index_name):
-        print(f"Create index {index_name}")
-        response = es.indices.create(index=index_name)
-        print(response)
-    print(f"index: {index_name}")
-    for id in dpucs:
-        print(f"create document in id {id}")
-        es.create(index=index_name, id=id, document=dpucs[id])
-
 
 lst = list()
 
