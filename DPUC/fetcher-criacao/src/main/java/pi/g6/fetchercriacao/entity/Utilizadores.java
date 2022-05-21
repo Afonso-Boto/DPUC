@@ -4,6 +4,7 @@ package pi.g6.fetchercriacao.entity;
 public class Utilizadores {
     private Integer id;
     private String nome;
+    private int nmec;
     private String email;
     private String password;
     private int tipo_utilizadorid;
@@ -25,6 +26,14 @@ public class Utilizadores {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getNmec() {
+        return nmec;
+    }
+
+    public void setNmec(int nmec) {
+        this.nmec = nmec;
     }
 
     public String getEmail() {

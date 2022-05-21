@@ -6,6 +6,7 @@ public class Uc {
     private int codigo;
     private String designacao;
     private String sigla_ac;
+    private int unidade_organicaid;
 
     public int getId() {
         return id;
@@ -37,5 +38,13 @@ public class Uc {
 
     public void setSigla_ac(String sigla_ac) {
         this.sigla_ac = sigla_ac;
+    }
+
+    public int getUnidade_organicaid() {
+        return unidade_organicaid;
+    }
+
+    public void setUnidade_organicaid(int unidade_organicaid) {
+        this.unidade_organicaid = unidade_organicaid;
     }
 }

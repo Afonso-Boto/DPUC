@@ -3,75 +3,28 @@ package pi.g6.fetchercriacao.entity;
 public class Dpuc {
     
     private int id;
-
-    
     private boolean criacao_edicao;
-
-    
     private String duracao;
-
-    
-    private String responsavel;
-
-    
     private String carga_horaria;
-
-    
     private int horas_contacto;
-
-    
     private int horas_trabalho;
-
-    
     private String objetivos;
-
-    
     private String conteudos;
-
-    
     private String coerencia_conteudos;
-
-    
     private String metodologias;
-
-    
     private String coerencia_metodologias;
-
-    
     private String bibliografia;
-
-    
     private String observacoes;
-
-    
     private String regime_faltas;
-
-    
     private String linguas;
-
-    
     private String modalidade;
-
-    
     private String requisitos;
-
-    
     private byte[] ficheiros;
-
-    
     private String data_alteracao;
-
-    
     private String pagina_publica;
-
-    
     private String funcionamento;
-
-    
     private String aprendizagem;
-
     private int estadoid;
-
     private int periodo_letivoid;
 
     public int getId() {
@@ -96,14 +49,6 @@ public class Dpuc {
 
     public void setDuracao(String duracao) {
         this.duracao = duracao;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
     }
 
     public String getCarga_horaria() {
