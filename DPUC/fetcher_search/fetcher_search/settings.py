@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import fetcher_search.env as env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 CURRENT_DIR = 'fetcher_search'
@@ -86,12 +85,8 @@ WSGI_APPLICATION = CURRENT_DIR + '.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env.DB_NAME,
-        'USER': env.DB_USER,
-        'PASSWORD': env.DB_PASSWORD,
-        'HOST': env.DB_HOST,
-        'PORT': env.DB_PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'sqlite3',
     }
 }
 
