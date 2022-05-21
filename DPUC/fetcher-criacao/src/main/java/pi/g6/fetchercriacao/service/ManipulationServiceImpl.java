@@ -36,7 +36,9 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             // Update Dpuc estado para C4  "Em Aprovação"
             String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
             getJdbcTemplate().update(sql3, 4, dpucid);
+
         }catch (Exception e){
+            log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
@@ -49,7 +51,9 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             // Update Dpuc estado para C6 "Desativada"
             String sql = "UPDATE dpuc SET estadoid=? WHERE id=?";
             getJdbcTemplate().update(sql, 6, dpucid);
+
         }catch (Exception e){
+            log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
@@ -64,6 +68,7 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             getJdbcTemplate().update(sql, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologia"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), LocalDate.parse(dpuc.getString("data_alteracao")), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
 
         }catch (Exception e){
+            log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
@@ -95,6 +100,7 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             String sql5 = "INSERT INTO utilizadores_dpuc(utilizadoresid, dpucid) VALUES(?, ?)";
             getJdbcTemplate().update(sql5, regenteid, dpucid);
         }catch (Exception e){
+            log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
