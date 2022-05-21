@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Error } from "@uaveiro/ui";
+import { Error } from "@paco_ua/pacoui";
 
 const NotFound = () => {
     return ( 
