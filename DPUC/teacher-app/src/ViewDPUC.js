@@ -1,9 +1,17 @@
-import { ContentContainer, Input, Select, Text, Button, AnimatedBackground } from "@uaveiro/ui";
+import { Button } from "@paco_ua/pacoui";
+import { Input, Select, Text, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext } from "./Helper/Context";
-import useFetch from "./useFetch";
+import useFetch from "./Helper/useFetch";
+import useGetDPUC from "./Helper/useGetDPUC";
+
+import {
+    ThemeProvider as ThemeProviderPortal,
+    Theme as ThemePortal
+  } from "@uaveiro/ui";
+
 
 const ViewDPUC = () => {
 
@@ -19,63 +27,11 @@ const ViewDPUC = () => {
 
     const { retryFetch, setRetry, uos, areas, docentes} = useContext(EntitiesContext);
 
-    const { data: dpuc , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
+    const { data , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
-    const [ ucRegente, setRegente ] = useState("");
-    const [ ucDocentes, setDocentes ] = useState([]);
-    const [ ucUO, setUO ] = useState({});
-    const [ ucArea, setArea ] = useState("");
-    const [ ucHorasTP, setHorasTP ] = useState(0);
-    const [ ucHorasT, setHorasT ] = useState(0);
-    const [ ucHorasP, setHorasP ] = useState(0);
-    const [ ucHorasOT, setHorasOT ] = useState(0);
-    const [ ucCursos, setCursos ] = useState([]);
-    const [ ucLinguas, setLinguas ] = useState([]);
+    const { parsing: loadParse, error: errorParse, dpuc} = useGetDPUC(data);
+
     const [ detailedView, setDetailedView ] = useState(false);
-
-    useEffect(() => {
-        if(dpuc && uos && areas && docentes){
-            if(dpuc.linguas)
-                setLinguas(dpuc.linguas.split("$").filter((l) => l.length > 0).join(", "));
-            if(dpuc.cursos)
-                setCursos(dpuc.cursos.split("$").filter((l) => l.length > 0));
-
-            if(dpuc.responsavel)
-                setRegente(docentes.find((docente) => docente.cod_int === dpuc.responsavel))
-
-            if(dpuc.docentes){
-                var doces = [];
-                var docentesNum = dpuc.docentes.split("$").filter((l) => l.length > 0);
-                for(var i = 0; i < docentesNum.length; i++)
-                    doces.push(docentes.find((docente) => docente.cod_int.toString() === docentesNum[i]));
-                setDocentes(doces);
-            }
-
-            if(dpuc.unidadeOrganica)
-                setUO(uos.find((uo) => uo.id === dpuc.unidadeOrganica));
-            
-            if(dpuc.areaCientifica)
-                setArea(areas.find((area) => area.sigla === dpuc.areaCientifica));
-
-            if(dpuc.horasContacto)
-                setHorasOT(dpuc.horasContacto);
-
-            if(dpuc.docentesHoras){
-                var parsedString = dpuc.docentesHoras.split("$").filter((l) => l.length > 0);
-                for(var i = 0; i < parsedString.length; i++){
-                    console.log(parsedString[i]);
-                    if((parsedString[i]).includes("TP"))
-                        setHorasTP(parsedString[i].substring(3,4));
-                    else{
-                        if((parsedString[i]).includes("T"))
-                            setHorasT(parsedString[i].substring(2,3));
-                        if((parsedString[i]).includes("P"))
-                            setHorasP(parsedString[i].substring(2,3));
-                    }
-                }
-            }
-        }
-    }, [dpuc, uos, areas, docentes]);
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -84,11 +40,12 @@ const ViewDPUC = () => {
         setRetry(retryFetch + 1);
     }
 
+    console.table(dpuc);
     return ( 
-        <ContentContainer padding="40px" >
-
+        <Container>
             <Row>
                 <Col>
+                <ThemeProviderPortal theme={ThemePortal}>
                     { loadDPUC && <AnimatedBackground height="30px" width="50%"></AnimatedBackground> }
                     { dpuc && !loadDPUC && 
                         <Text as="h3" size="xLarge" fontWeight="400"> 
@@ -96,6 +53,7 @@ const ViewDPUC = () => {
                         </Text>
                     }
                     <hr/>
+                </ThemeProviderPortal>
                 </Col>
             </Row>
             <br/>
@@ -103,55 +61,52 @@ const ViewDPUC = () => {
                 !loadDPUC && !dpuc &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
+                    <ThemeProviderPortal theme={ThemePortal}>
                         <Text as="i" size="large" color="red"> Não possível obter informações sobre esta UC.</Text>
+                    </ThemeProviderPortal>
                     </Col>
                     <Col md="auto">
-                        <Button variant="primary" onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
+                        <Button primary onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
                     </Col>
                 </Row>
             }
+            <ThemeProviderPortal theme={ThemePortal}>
             { loadDPUC && <AnimatedBackground height="100px" width="50%"></AnimatedBackground> }
             { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
+            </ThemeProviderPortal>
             { dpuc && !loadDPUC &&
-            <ContentContainer> 
-                <Row>
-                    <Col>
-                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao}</Text>
-                    </Col>
-                    {   detailedView &&
-                        <Col sm={"auto"}>
-                            <Text as="i" size="medium" color="#F3B21B" fontWeight="500"> Estado: {dpuc.estado}</Text>
-                        </Col>
-                    }
-                    
-                </Row>
-                <br/>
+            <Container> 
                 <Row>
                     <Col md="auto">
-                        <Button variant="default" style={{fontSize:"100%"}} onClick={handleBack}>
+                        <Button action style={{fontSize:"100%"}} onClick={handleBack}>
                             Voltar
                         </Button>
                     </Col>
                     <Col md="auto">
                         {detailedView && 
-                        <Button variant="primary" style={{fontSize:"100%"}} onClick={changeView}>
+                        <Button primary style={{fontSize:"100%"}} onClick={changeView}>
                             Vista Normal
                         </Button>
                         }
                         {!detailedView && 
-                            <Button variant="primary" style={{fontSize:"100%"}} onClick={changeView} 
-                                color="#F3B21B" 
-                                backgroundColor="#fff" 
-                                border="1px solid #F3B21B" 
-                                hoverColor="#fff" 
-                                hoverBackgroundColor="#F3B21B"
-                            >
+                            <Button success style={{fontSize:"100%"}} onClick={changeView}>
                                 Vista Detalhada
                             </Button>
                         }
                     </Col>
                 </Row>
                 <br/>
+                <ThemeProviderPortal theme={ThemePortal}>
+                <Row>
+                    <Col>
+                        <Text as="i" size="medium"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
+                    </Col>
+                    {   detailedView && dpuc.estado &&
+                        <Col sm={"auto"}>
+                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500"> Estado: {dpuc.estado}</Text>
+                        </Col>
+                    }
+                </Row>
                 <Row className="flex-column-reverse flex-md-row">
                     <Col sm={8}>
                         { dpuc.objetivos &&
@@ -180,7 +135,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.coerenciaConteudos && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Coerência de Conteúdos
                                 </Text>
                                 {dpuc.coerenciaConteudos.split("\n").map((conteudo) =>(
@@ -216,7 +171,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.coerenciaMetodologias && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Coerência de Conteúdos
                                 </Text>
                                 {dpuc.coerenciaMetodologias.split("\n").map((metodo) =>(
@@ -255,7 +210,7 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="#0EB4BD" fontWeight="400">
                                     Avaliação
                                 </Text>
-                                {dpuc.avaliacao.split("\n").map((aval) =>(
+                                {dpuc.avaliacao.toString().split("\n").map((aval) =>(
                                     <Text as="article" size="medium">
                                         { aval }
                                     </Text>
@@ -300,7 +255,7 @@ const ViewDPUC = () => {
                         }
                         { dpuc.observacoes && detailedView &&
                             <Row className="viewUC-row">
-                                <Text as="h3" size="xlarge" color="#F3B21B" fontWeight="400">
+                                <Text as="h3" size="xlarge" color="#63CF7C" fontWeight="400">
                                     Observações
                                 </Text>
                                 {dpuc.observacoes.split("\n").map((obs) =>(
@@ -324,41 +279,45 @@ const ViewDPUC = () => {
                                 </Col>
                                 <Col sm={"auto"}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Grau</Text>
-                                    <Text as="p" size="mediumSmall">{dpuc.grau}</Text>
+                                    <Text as="p" size="mediumSmall">{dpuc.grau.nome}</Text>
                                 </Col>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall" fontWeight="500"> Unidade Orgânica</Text>
-                                <Text as="span" size="mediumSmall">{ucUO.nome}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.unidadeOrganica.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall" fontWeight="500"> Área Científica</Text>
-                                <Text as="span" size="mediumSmall">{ucArea.nome}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.areaCientifica.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Docente Responsável</Text>
-                                <Text as="span" size="mediumSmall">{ucRegente.nome_completo}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.responsavel.nome_completo}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Idioma(s) de lecionação</Text>
-                                <Text as="span" size="mediumSmall">{ucLinguas}</Text>
+                                {
+                                 dpuc.linguas.map((l) => (
+                                    <Text as="span" size="mediumSmall">{l.nome}</Text>
+                                 ))
+                                }
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Modalidade</Text>
-                                <Text as="span" size="mediumSmall">{dpuc.modalidade}</Text>
+                                <Text as="span" size="mediumSmall">{dpuc.modalidade.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Carga letiva semanal</Text>
-                                {ucHorasT > 0 && <Text as="span" size="mediumSmall">T: {ucHorasT}H</Text>}
-                                {ucHorasTP > 0 && <Text as="span" size="mediumSmall">TP: {ucHorasTP}H</Text>}
-                                {ucHorasP > 0 && <Text as="span" size="mediumSmall">PL: {ucHorasP}H</Text>}
-                                {ucHorasOT > 0 && <Text as="span"size="mediumSmall">OT: {ucHorasOT}H</Text>}
+                                {dpuc.horasT > 0 && <Text as="span" size="mediumSmall">T: {dpuc.horasT}H</Text>}
+                                {dpuc.horasTP > 0 && <Text as="span" size="mediumSmall">TP: {dpuc.horasTP}H</Text>}
+                                {dpuc.horasP > 0 && <Text as="span" size="mediumSmall">PL: {dpuc.horasP}H</Text>}
+                                {dpuc.horasOT > 0 && <Text as="span"size="mediumSmall">OT: {dpuc.horasOT}H</Text>}
                                 <hr className="uc_details_hr"/>
                             </Row>
                             { dpuc.paginaPublica &&
@@ -371,8 +330,8 @@ const ViewDPUC = () => {
                             <Row style={{paddingBottom:"10px"}}>
                                 <Text as="span" size="mediumSmall"fontWeight="500"> Cursos</Text>
                                 {
-                                 ucCursos.map((curso) => (
-                                    <Text as="li" size="mediumSmall">{curso}</Text>
+                                 dpuc.cursos.map((curso) => (
+                                    <Text as="li" size="mediumSmall">{curso.nome}</Text>
                                  ))   
                                 }
                             </Row>
@@ -382,7 +341,7 @@ const ViewDPUC = () => {
                             <Container className="uc_details_extra">
                                 <Row style={{paddingTop:"10px"}}>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Carga Horária</Text>
-                                    <Text as="span" size="mediumSmall">{ucArea.cargaHoraria}</Text>
+                                    <Text as="span" size="mediumSmall">{dpuc.cargaHoraria}</Text>
                                     <hr className="uc_details_hr"/>
                                 </Row>
                                 <Row>
@@ -392,13 +351,13 @@ const ViewDPUC = () => {
                                 </Row>
                                 <Row>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Período</Text>
-                                    <Text as="span" size="mediumSmall">{dpuc.periodo}</Text>
+                                    <Text as="span" size="mediumSmall">{dpuc.periodo.nome}</Text>
                                     <hr className="uc_details_hr"/>
                                 </Row>
                                 <Row style={{paddingBottom:"10px"}}>
                                     <Text as="span" size="mediumSmall"fontWeight="500"> Docentes</Text>
                                     {
-                                        ucDocentes.map((docente) => (
+                                        dpuc.docentes.map((docente) => (
                                             <Text as="span" size="mediumSmall">{docente.nome_completo}</Text>
                                             ))   
                                     }
@@ -407,9 +366,10 @@ const ViewDPUC = () => {
                         }
                     </Col>
                 </Row>
-            </ContentContainer>
+                </ThemeProviderPortal>
+            </Container>
             }
-        </ContentContainer>
+        </Container>
      );
 }
  

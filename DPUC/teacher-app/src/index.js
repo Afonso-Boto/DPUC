@@ -1,48 +1,29 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { IntlProvider } from "react-intl";
+import reportWebVitals from './reportWebVitals';
+import { Theme, ThemeProvider } from "@paco_ua/pacoui"
+/*
 import {
-  ThemeProvider,
-  Theme,
+  ThemeProvider as ThemeProviderPortal,
+  Theme as ThemePortal,
   ConfigProvider,
   InjectIntlContext,
   useFormatMessage
 } from "@uaveiro/ui";
+*/
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const container = document.getElementById('root');
-const root = createRoot(container);
+ReactDOM.render(
+  <StrictMode>
+    <ThemeProvider theme={Theme}>
+        <App/>
+    </ThemeProvider>
+  </StrictMode>
+,document.getElementById('root'));
 
-
-root.render(
-  <React.StrictMode>
-    <>
-      <IntlProvider locale='en'>
-        <InjectIntlContext>
-          <ThemeProvider theme={Theme}>
-            <ConfigProvider
-              config={{
-                imageAPI: "https://api-assets.dev.ua.pt/v1",
-                portalWWW: "https://www.dev.ua.pt",
-                portalAPI: "https://api-portal.dev.ua.pt/api/v1"
-              }}
-              components={{
-                link: "YourLinkComponent",
-                formattedMessage: "FormattedMessage",
-                isIE: () => false
-              }}
-              hooks={{
-                useIntl: useFormatMessage
-              }}
-            >
-              <App />
-            </ConfigProvider>
-          </ThemeProvider>
-        </InjectIntlContext>
-      </IntlProvider>
-    </>
-  </React.StrictMode>
-);
-
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
