@@ -73,19 +73,19 @@ services:
 #    stdin_open: true
 #    tty: true
 
-  teacher-app:
-    depends_on:
-      - mysqldb
-      - fetcher-criacao
+#  teacher-app:
+#    depends_on:
+#      - mysqldb
+#      - fetcher-criacao
 #      - fetcher-edicao
 #      - fetcher-search
-    build: ./teacher-app
-    ports:
-      - $SPRING_TEACHER_LOCAL_PORT:3000
-    volumes:
-      - ./volumes/teacher-app/:/root/.m2
-    stdin_open: true
-    tty: true
+#    build: ./teacher-app
+#    ports:
+#      - $SPRING_TEACHER_LOCAL_PORT:3000
+#    volumes:
+#      - ./volumes/teacher-app/:/root/.m2
+#    stdin_open: true
+#    tty: true
 
 volumes:
   db:
