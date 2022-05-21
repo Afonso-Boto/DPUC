@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <StrictMode>
     <ThemeProvider theme={Theme}>
-        <App />
+        <App/>
     </ThemeProvider>
   </StrictMode>
 ,document.getElementById('root'));
