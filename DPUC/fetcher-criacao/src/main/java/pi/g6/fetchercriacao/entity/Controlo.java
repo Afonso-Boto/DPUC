@@ -1,97 +1,37 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "controlo")
 public class Controlo {
 
-    @Id
-    @Column(name = "id", nullable = false)
     private int id;
-
-    @Column(name = "codigo", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean codigo;
-
-    @Column(name = "criacao_edicao", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean criacao_edicao;
-
-    @Column(name = "designacao", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean designacao;
-
-    @Column(name = "sigla_ac", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean sigla_ac;
-
-    @Column(name = "duracao", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean duracao;
-
-    @Column(name = "responsavel", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean responsavel;
-
-    @Column(name = "carga_horaria", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean carga_horaria;
-
-    @Column(name = "horas_contacto", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean horas_contacto;
-
-    @Column(name = "horas_trabalho", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean horas_trabalho;
-
-    @Column(name = "ects", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean ects;
-
-    @Column(name = "objetivos", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean objetivos;
-
-    @Column(name = "conteudos", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean conteudos;
-
-    @Column(name = "coerencia_conteudos", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean coerencia_conteudos;
-
-    @Column(name = "metodologias", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean metodologias;
-
-    @Column(name = "coerencia_metodologias", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean coerencia_metodologias;
-
-    @Column(name = "bibliografia", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean bibliografia;
-
-    @Column(name = "observacoes", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean observacoes;
-
-    @Column(name = "regime_faltas", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean regime_faltas;
-
-    @Column(name = "linguas", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean linguas;
-
-    @Column(name = "modalidade", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean modalidade;
-
-    @Column(name = "requisitos", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean requisitos;
-
-    @Column(name = "ficheiros", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean ficheiros;
-
-    @Column(name = "data_alteracao", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean data_alteracao;
-
-    @Column(name = "pagina_publica", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean pagina_publica;
-
-    @Column(name = "funcionamento", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean funcionamento;
-
-    @Column(name = "aprendizagem", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean aprendizagem;
 
-    // FK id do tipo_utilizador
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tipo_utilizadorid", referencedColumnName = "id")
-    private TipoUtilizador tipoUtilizador;
+    private int tipo_utilizadorid;
 
     public int getId() {
         return id;
@@ -309,11 +249,11 @@ public class Controlo {
         this.aprendizagem = aprendizagem;
     }
 
-    public TipoUtilizador getTipoUtilizador() {
-        return tipoUtilizador;
+    public int getTipo_utilizadorid() {
+        return tipo_utilizadorid;
     }
 
-    public void setTipoUtilizador(TipoUtilizador tipoUtilizador) {
-        this.tipoUtilizador = tipoUtilizador;
+    public void setTipo_utilizadorid(int tipo_utilizadorid) {
+        this.tipo_utilizadorid = tipo_utilizadorid;
     }
 }
