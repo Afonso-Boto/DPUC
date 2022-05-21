@@ -1,5 +1,6 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import {useState, useEffect} from 'react';
 import useFetch from './Helper/useFetch';
 import CardDPUC from "./CardDPUC";
 import { LoadingBackgroundWrapper, Button as ButtonPaco, Text} from "@paco_ua/pacoui"
@@ -12,13 +13,24 @@ const DashboardDUO  = () => {
 
     const navigate = useNavigate();
 
+    const [dpucList, setDPUCList] = useState([]);
+
     const URL_DPUC = "http://localhost:8000/dpuc";
 
     const goToCreate = () => {
         navigate("/create");
     }
 
+    const filterDPUCList = (estado) => {
+        setDPUCList(dpuc.filter((d) => (d.estado === estado)));
+        console.log(dpuc.filter((d) => (d.estado === estado)));
+    }
+
     const { data: dpuc , loading, error } = useFetch(URL_DPUC);
+
+    useEffect(() => {
+        setDPUCList(dpuc);
+    }, [dpuc]);
 
     return ( 
         <Container padding="40px" >
@@ -47,22 +59,23 @@ const DashboardDUO  = () => {
                 <Col md="auto">
                     <Row>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action style={{fontSize:"100%"}}>
+                            <ButtonPaco action onClick={() => filterDPUCList("Em Edição")} style={{fontSize:"100%"}}>
                                 DPUC em Edição
                             </ButtonPaco>
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action style={{fontSize:"100%"}}>
+                            <ButtonPaco action onClick={() => filterDPUCList("Em Criação")} style={{fontSize:"100%"}}>
                                 DPUC em Criação
                             </ButtonPaco>
+                            
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action style={{fontSize:"100%"}}>
+                            <ButtonPaco action onClick={() => filterDPUCList("Em Aprovação")} style={{fontSize:"100%"}}>
                                 DPUC aprovação
                             </ButtonPaco>
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action style={{fontSize:"100%"}}>
+                            <ButtonPaco action onClick={() => filterDPUCList("Fechados")} style={{fontSize:"100%"}}>
                                 DPUCs fechadas
                             </ButtonPaco>
                         </Col>
@@ -74,8 +87,8 @@ const DashboardDUO  = () => {
             <br/>
             { loading && <LoadingBackgroundWrapper loading length={4} /> }
             { error && <Text as="i" size="large" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
-            { dpuc &&
-                dpuc.map((uc) => (
+            { dpucList &&
+                dpucList.map((uc) => (
                     <CardDPUC key={uc.id} dpuc={uc}/>
                 ))
             }
