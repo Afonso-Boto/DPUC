@@ -1,113 +1,78 @@
 package pi.g6.fetchercriacao.entity;
 
-import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Set;
-
-@Entity
-@Table(name = "dpuc")
 public class Dpuc {
-
-    @Id
-    @Column(name = "id", nullable = false)
+    
     private int id;
 
-    @Column(name = "criacao_edicao", columnDefinition = "TINYINT(1)")
+    
     private boolean criacao_edicao;
 
-    @Column(name = "codigo")
-    private String codigo;
-
-    @Column(name = "designacao")
-    private String designacao;
-
-    @Column(name = "sigla_ac")
-    private String sigla_ac;
-
-    @Column(name = "duracao")
+    
     private String duracao;
 
-    @Column(name = "responsavel")
+    
     private String responsavel;
 
-    @Column(name = "carga_horaria")
+    
     private String carga_horaria;
 
-    @Column(name = "horas_contacto")
-    private String horas_contacto;
+    
+    private int horas_contacto;
 
-    @Column(name = "horas_trabalho")
-    private String horas_trabalho;
+    
+    private int horas_trabalho;
 
-    @Column(name = "ects")
-    private String ects;
-
-    @Column(name = "objetivos")
+    
     private String objetivos;
 
-    @Column(name = "conteudos")
+    
     private String conteudos;
 
-    @Column(name = "coerencia_conteudos")
+    
     private String coerencia_conteudos;
 
-    @Column(name = "metodologias")
+    
     private String metodologias;
 
-    @Column(name = "coerencia_metodologias")
+    
     private String coerencia_metodologias;
 
-    @Column(name = "bibliografia")
+    
     private String bibliografia;
 
-    @Column(name = "observacoes")
+    
     private String observacoes;
 
-    @Column(name = "regime_faltas")
+    
     private String regime_faltas;
 
-    @Column(name = "linguas")
+    
     private String linguas;
 
-    @Column(name = "modalidade")
+    
     private String modalidade;
 
-    @Column(name = "requisitos")
-    private String requisitos;
     
-    @Lob
-    @Column(name = "ficheiros")
+    private String requisitos;
+
+    
     private byte[] ficheiros;
 
-    @Column(name = "data_alteracao")
+    
     private String data_alteracao;
 
-    @Column(name = "pagina_publica")
+    
     private String pagina_publica;
 
-    @Column(name = "funcionamento")
+    
     private String funcionamento;
 
-    @Column(name = "aprendizagem")
+    
     private String aprendizagem;
 
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    private Estado estado;
+    private int estadoid;
 
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    private PeriodoLetivo periodoLetivo;
-
-    @ManyToMany
-    @JoinTable(
-            name = "curso_dpuc",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
-    Set<Curso> cursos;
-
-    public Dpuc() {
-    }
+    private int periodo_letivoid;
 
     public int getId() {
         return id;
@@ -123,30 +88,6 @@ public class Dpuc {
 
     public void setCriacao_edicao(boolean criacao_edicao) {
         this.criacao_edicao = criacao_edicao;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getDesignacao() {
-        return designacao;
-    }
-
-    public void setDesignacao(String designacao) {
-        this.designacao = designacao;
-    }
-
-    public String getSigla_ac() {
-        return sigla_ac;
-    }
-
-    public void setSigla_ac(String sigla_ac) {
-        this.sigla_ac = sigla_ac;
     }
 
     public String getDuracao() {
@@ -173,28 +114,20 @@ public class Dpuc {
         this.carga_horaria = carga_horaria;
     }
 
-    public String getHoras_contacto() {
+    public int getHoras_contacto() {
         return horas_contacto;
     }
 
-    public void setHoras_contacto(String horas_contacto) {
+    public void setHoras_contacto(int horas_contacto) {
         this.horas_contacto = horas_contacto;
     }
 
-    public String getHoras_trabalho() {
+    public int getHoras_trabalho() {
         return horas_trabalho;
     }
 
-    public void setHoras_trabalho(String horas_trabalho) {
+    public void setHoras_trabalho(int horas_trabalho) {
         this.horas_trabalho = horas_trabalho;
-    }
-
-    public String getEcts() {
-        return ects;
-    }
-
-    public void setEcts(String ects) {
-        this.ects = ects;
     }
 
     public String getObjetivos() {
@@ -325,27 +258,19 @@ public class Dpuc {
         this.aprendizagem = aprendizagem;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public int getEstadoid() {
+        return estadoid;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstadoid(int estadoid) {
+        this.estadoid = estadoid;
     }
 
-    public PeriodoLetivo getPeriodoLetivo() {
-        return periodoLetivo;
+    public int getPeriodo_letivoid() {
+        return periodo_letivoid;
     }
 
-    public void setPeriodoLetivo(PeriodoLetivo periodoLetivo) {
-        this.periodoLetivo = periodoLetivo;
-    }
-
-    public Set<Curso> getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(Set<Curso> cursos) {
-        this.cursos = cursos;
+    public void setPeriodo_letivoid(int periodo_letivoid) {
+        this.periodo_letivoid = periodo_letivoid;
     }
 }
