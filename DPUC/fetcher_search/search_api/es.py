@@ -36,7 +36,12 @@ def connect():
 
 def get_relevant_search(conn: Elasticsearch) -> list:
     docs = conn.search(index=INDEX_NAME, size=2)['hits']['hits']
-    return docs
+    formated_docs = list()
+    for doc in docs:
+        new_doc = doc["_source"]
+        new_doc["id"] = doc["_id"]
+        formated_docs.append(new_doc)
+    return formated_docs
 
 
 def get_data() -> dict:
