@@ -80,6 +80,43 @@ services:
     volumes:
       - ./volumes/mysql/db:/var/lib/mysql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [
+        "CMD",
+        "mysqladmin" ,"ping", "-h", "localhost"
+      ]
+      timeout: 20s
+      retries: 10
+
+  fetcher-search:
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    container_name: ${FETCHER_SEARCH_HOST_NAME}
+    build: ./fetcher_search
+    command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
+    env_file: ./.env
+    ports:
+      - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
+    environment:
+      - DB_HOST=${MYSQLDB_HOST_NAME}
+      - DB_PORT=${MYSQLDB_DOCKER_PORT}
+      - DB_NAME=${MYSQLDB_DATABASE}
+      - DB_USER=${MYSQLDB_USER}
+      - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s http://localhost:8000/ || exit 1'
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 5
 
   fetcher-criacao:
     depends_on:
@@ -118,35 +155,6 @@ services:
       - ./volumes/fetcher-edicao/:/root/.m2
     stdin_open: true
     tty: true
-
-  fetcher-search:
-    depends_on:
-      mysqldb:
-        condition: service_started
-      es01:
-        condition: service_healthy
-      kibana:
-        condition: service_healthy
-    build: ./fetcher_search
-    command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
-    env_file: ./.env
-    ports:
-      - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
-    environment:
-      - DB_HOST=${MYSQLDB_HOST_NAME}
-      - DB_PORT=${MYSQLDB_DOCKER_PORT}
-      - DB_NAME=${MYSQLDB_DATABASE}
-      - DB_USER=${MYSQLDB_USER}
-      - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'curl -s http://0.0.0.0:8000/healthcheck || exit 1'
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   teacher-app:
     depends_on:
