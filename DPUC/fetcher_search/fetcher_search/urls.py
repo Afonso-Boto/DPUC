@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.http import HttpResponse
 
 urlpatterns = [
+    path('', lambda r: HttpResponse()),
     path('api/', include('search_api.urls')),
     path('admin/', admin.site.urls),
-    path(r'^healthcheck', lambda r: HttpResponse())
 ]

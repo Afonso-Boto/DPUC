@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import fetcher_search.env as env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 CURRENT_DIR = 'fetcher_search'
@@ -29,14 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Environment variables
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'search_api'
 ]
 
 MIDDLEWARE = [
@@ -94,11 +87,11 @@ WSGI_APPLICATION = CURRENT_DIR + '.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': env.DB_NAME,
+        'USER': env.DB_USER,
+        'PASSWORD': env.DB_PASSWORD,
+        'HOST': env.DB_HOST,
+        'PORT': env.DB_PORT,
     }
 }
 
@@ -143,3 +136,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
