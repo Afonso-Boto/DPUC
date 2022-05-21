@@ -36,8 +36,7 @@ def connect():
 
 def get_relevant_search(conn: Elasticsearch) -> list:
     docs = conn.search(index=INDEX_NAME, size=2)['hits']['hits']
-    
-    return conn
+    return docs
 
 
 def get_data() -> dict:
