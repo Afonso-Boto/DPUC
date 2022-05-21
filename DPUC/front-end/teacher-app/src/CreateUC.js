@@ -191,6 +191,8 @@ const CreateDPUC = () => {
                 </ThemeProviderPortal>
 
                 {/* Nome da UC e UO */}
+                {/* 
+
                 <Row>
                     <Col lg={6}>
                         <h3>
@@ -217,7 +219,9 @@ const CreateDPUC = () => {
                         />
                     </Col>
                 </Row>
+                */}
                 {/* Docente Responsável / Regente */}
+                {/*
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={12}>
                         <h3>
@@ -233,7 +237,10 @@ const CreateDPUC = () => {
                     </Col>
                     
                 </Row>
+                */}
+
                 {/* ECTS*/}
+                {/*
                 <Row style={{paddingTop:"10px"}}>
                     <Col lg={2}>
                         <Text size="large" color="primary" fontWeight="400">
@@ -250,6 +257,7 @@ const CreateDPUC = () => {
                         />
                     </Col>
                 </Row>
+                */}
                 
                 
         </Container>
