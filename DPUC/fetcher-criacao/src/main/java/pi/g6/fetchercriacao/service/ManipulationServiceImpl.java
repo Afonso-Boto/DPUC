@@ -81,24 +81,16 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             log.info(uc.toString());
 
             // INSERT UC
-            String sql = "INSERT INTO uc(designacao, ects, uoid) VALUES(?, ?, ?)";
-            getJdbcTemplate().update(sql, uc.getString("designacao"), Integer.parseInt(uc.getString("ects"), uc.getInt("uoid")));
+            String sql = "INSERT INTO uc(designacao, ects, uoid, acid) VALUES(?, ?, ?, ?)";
+            getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getInt("ects"), uc.getInt("uoid"), uc.getInt("acid"));
 
             // UC id
             String sql2 = "SELECT id FROM uc WHERE designacao=\'%s\'".formatted(uc.getString("designacao"));
             int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
             // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default) adicionar regente , ver isto melhor
-            String sql3 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, UCid) VALUES(?, ?, ?, ?)";
-            getJdbcTemplate().update(sql3, 0, 2, 1, UCid);
-
-            // Dpuc id
-            String sql4 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.id = %d".formatted(UCid);
-            int dpucid = (int) getJdbcTemplate().queryForList(sql4).get(0).get("id");
-
-            // Ligar DR a Dpuc
-            String sql5 = "INSERT INTO utilizadores_dpuc(utilizadoresid, dpucid) VALUES(?, ?)";
-            getJdbcTemplate().update(sql5, regenteid, dpucid);
+            String sql3 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, UCid, utilizadoresid) VALUES(?, ?, ?, ?, ?)";
+            getJdbcTemplate().update(sql3, 0, 2, 1, UCid, regenteid);
         }catch (Exception e){
             log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
