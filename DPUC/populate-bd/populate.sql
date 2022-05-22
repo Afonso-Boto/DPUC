@@ -17,7 +17,6 @@ delete from utilizadores_dpuc where 1=1;
 delete from utilizadores where 1=1;
 delete from unidade_organica where 1=1;
 delete from uc where 1=1;
-delete from periodo_letivo where 1=1;
 delete from dpuc where 1=1;
 delete from curso_UC where 1=1;
 delete from curso where 1=1;
@@ -39,12 +38,6 @@ insert into unidade_organica (id, nome, sigla) VALUES (21, 'Departamento de Comu
 insert into unidade_organica (id, nome, sigla) VALUES (22, 'Departamento de Engenharia Mecânica', 'DEM');
 insert into unidade_organica (id, nome, sigla) VALUES (28, 'Departamento de Engenharia Civil', 'DECivil');
 insert into unidade_organica (id, nome, sigla) VALUES (30, 'Departamento de Ciências Médicas', 'DCM');
-
-#Insert períodos letivos
-insert into periodo_letivo (periodo) values ('2020/2021-1º Semestre');
-insert into periodo_letivo (periodo) values ('2020/2021-2º Semestre');
-insert into periodo_letivo (periodo) values ('2021/2022-1º Semestre');
-insert into periodo_letivo (periodo) values ('2021/2022-2º Semestre');
 
 #Insert utilizadores
     #SGA
@@ -307,7 +300,7 @@ ROSMANINHO, Nuno – «O desamparo de Fernando Lopes-Graça. A música no contex
 ROSMANINHO, Nuno – O Poder da Arte. O Estado Novo e a Cidade Universitária de Coimbra. Coimbra, Imprensa da Universidade, 2006.
 
 ROSMANINHO, Nuno – Relatório da disciplina de Património e Identidade. Universidade de Aveiro, 2009, pp. 168-246.',
-                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 5, 1);
+                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 1, 1);
 /*insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
