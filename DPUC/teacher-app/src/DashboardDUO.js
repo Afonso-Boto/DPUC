@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react';
 import useFetch from './Helper/useFetch';
 import CardDPUC from "./CardDPUC";
-import { LoadingBackgroundWrapper, Button as ButtonPaco, Text} from "@paco_ua/pacoui"
+import { LoadingBackgroundWrapper, Button, Text, Dropdown} from "@paco_ua/pacoui"
 
 /*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
             search bar com o template ua e passar a ser dinamica
@@ -12,6 +12,34 @@ import { LoadingBackgroundWrapper, Button as ButtonPaco, Text} from "@paco_ua/pa
 const DashboardDUO  = () => {
 
     const navigate = useNavigate();
+
+    const filterOptions = [
+                    {
+                    key: 'Todos',
+                    text: 'Todos',
+                    value: ''
+                    },
+                    {
+                    key: 'Em Criação',
+                    text: 'Em Criação',
+                    value: 'Em Criação'
+                    },
+                    {
+                    key: 'Em Edição',
+                    text: 'Em Edição',
+                    value: 'Em Edição'
+                    },
+                    {
+                    key: 'Em Aprovação',
+                    text: 'Em Aprovação',
+                    value: 'Em Aprovação'
+                    },
+                    {
+                    key: 'Fechados',
+                    text: 'Fechados',
+                    value: 'Fechados'
+                    }
+                ]
 
     const [dpucList, setDPUCList] = useState([]);
 
@@ -22,8 +50,7 @@ const DashboardDUO  = () => {
     }
 
     const filterDPUCList = (estado) => {
-        setDPUCList(dpuc.filter((d) => (d.estado === estado)));
-        console.log(dpuc.filter((d) => (d.estado === estado)));
+        setDPUCList(dpuc.filter((d) => (d.estado.includes(estado))));
     }
 
     const { data: dpuc , loading, error } = useFetch(URL_DPUC);
@@ -52,33 +79,42 @@ const DashboardDUO  = () => {
             <br/>
             <Row>
                 <Col style={{textAlign:"left", paddingTop:"10px"}}>
-                    <ButtonPaco primary onClick={goToCreate} style={{fontSize:"100%"}}>
+                    <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
                         Criar nova UC
-                    </ButtonPaco>
+                    </Button>
                 </Col>
                 <Col md="auto">
                     <Row>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action onClick={() => filterDPUCList("Em Edição")} style={{fontSize:"100%"}}>
+                            <Dropdown
+                                options={filterOptions}
+                                onChange={(e, data) => filterDPUCList(data.value)}
+                                placeholder="Filtrar DPUCs"
+                            />
+                        </Col>
+                        {/* 
+                        <Col md="auto" style={{paddingTop:"10px"}}>
+                            <Button action onClick={() => filterDPUCList("Em Edição")} style={{fontSize:"100%"}}>
                                 DPUC em Edição
-                            </ButtonPaco>
+                            </Button>
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action onClick={() => filterDPUCList("Em Criação")} style={{fontSize:"100%"}}>
+                            <Button action onClick={() => filterDPUCList("Em Criação")} style={{fontSize:"100%"}}>
                                 DPUC em Criação
-                            </ButtonPaco>
+                            </Button>
                             
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action onClick={() => filterDPUCList("Em Aprovação")} style={{fontSize:"100%"}}>
+                            <Button action onClick={() => filterDPUCList("Em Aprovação")} style={{fontSize:"100%"}}>
                                 DPUC aprovação
-                            </ButtonPaco>
+                            </Button>
                         </Col>
                         <Col md="auto" style={{paddingTop:"10px"}}>
-                            <ButtonPaco action onClick={() => filterDPUCList("Fechados")} style={{fontSize:"100%"}}>
+                            <Button action onClick={() => filterDPUCList("Fechados")} style={{fontSize:"100%"}}>
                                 DPUCs fechadas
-                            </ButtonPaco>
+                            </Button>
                         </Col>
+                        */}
                     </Row>
                 </Col>
             </Row>
