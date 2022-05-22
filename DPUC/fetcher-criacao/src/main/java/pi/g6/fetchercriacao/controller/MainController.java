@@ -80,9 +80,10 @@ public class MainController {
         return new ResponseEntity<>(creationService.getIdiomas(), HttpStatus.OK);
     }
 
-    @GetMapping("/docentes")
-    public ResponseEntity<List<Utilizadores>> getDocentes(@RequestParam String UO){
-        return new ResponseEntity<>(creationService.getDocente(UO), HttpStatus.OK);
+
+    @GetMapping("/docente")
+    public ResponseEntity<List<Utilizadores>> getDocentes(){
+        return new ResponseEntity<>(creationService.getDocentes(), HttpStatus.OK);
     }
 
     @GetMapping("/cursos")
@@ -95,18 +96,6 @@ public class MainController {
         return new ResponseEntity<>(creationService.getCursos(UO), HttpStatus.OK);
     }
 
-    @GetMapping("/dpucs/ultimas-versoes")
-    public ResponseEntity<List<Dpuc>> getUltimasVersoes(){
-        return new ResponseEntity<>(creationService.getUltimasVersoes(), HttpStatus.OK);
-    }
 
-    @GetMapping("/dpucs/ultima-versao")
-    public ResponseEntity<List<Dpuc>> getUltimaVersao(@RequestParam int codigo){
-        return new ResponseEntity<>(creationService.getUltimaVersao(codigo), HttpStatus.OK);
-    }
 
-    @GetMapping("/dpucs/em-aprovacao")
-    public ResponseEntity<List<Dpuc>> getDPUCsEmAprovacao(){
-        return new ResponseEntity<>(creationService.getDpucEmAprovacao(), HttpStatus.OK);
-    }
 }
