@@ -7,9 +7,7 @@ import pi.g6.fetchercriacao.entity.*;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CreationServiceImpl extends JdbcDaoSupport implements CreationService{
@@ -159,26 +157,38 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
 
     @Override
     public List<String> getIdiomas() {
-        return null;
+        Set<String> idiomas = new HashSet<>();
+        String query = "SELECT * FROM dpuc";
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+
+        for (Map<String, Object> row : rows){
+            idiomas.add((String) row.get("linguas"));
+        }
+
+        return idiomas.stream().toList();
     }
 
     @Override
-    public List<Utilizadores> getDocente(String UO) { // pode ser id uo
-        return null;
+    public List<Utilizadores> getDocentes() {
+        String query = "SELECT * FROM utilizadores WHERE tipo_utilizadorid=2";
+
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+        List<Utilizadores> result = new ArrayList<>();
+        for (Map<String, Object> row : rows) {
+
+            Utilizadores docente = new Utilizadores();
+            docente.setId((int) row.get("id"));
+            docente.setNome((String) row.get("nome"));
+            docente.setEmail((String) row.get("email"));
+            docente.setTipo_utilizadorid((int) row.get("tipo_utilizadorid"));
+
+            result.add(docente);
+
+        }
+
+        return result;
     }
 
-    @Override
-    public List<Dpuc> getUltimaVersao(int uc) { // int codigo
-        return null;
-    }
 
-    @Override
-    public List<Dpuc> getUltimasVersoes() {
-        return null;
-    }
 
-    @Override
-    public List<Dpuc> getDpucEmAprovacao() {
-        return null;
-    }
 }
