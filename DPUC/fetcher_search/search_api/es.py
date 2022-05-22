@@ -34,8 +34,23 @@ def connect():
         return None
 
 
-def get_relevant_search(conn: Elasticsearch) -> list:
-    docs = conn.search(index=INDEX_NAME, size=2)['hits']['hits']
+def get_relevant_search(conn: Elasticsearch, keywords: list=None) -> list:
+    size = len(keywords)
+    query = None
+    if size >= 1:
+        if size > 1:
+            half = int(size/2)
+        query = {
+            "multi_match": {
+                "query": keywords,
+                "fields": [
+                    "nome",
+                    "Conteudos^2",
+                    "Objetivos",
+                ]
+            }
+        }
+    docs = conn.search(index=INDEX_NAME, query=query)['hits']['hits']
     formated_docs = list()
     for doc in docs:
         new_doc = doc["_source"]
@@ -56,6 +71,17 @@ def get_data02() -> dict:
         for elem in lst:
             iduc = elem["id"]
             elem.pop("id")
+            elem.pop("AprendizagemAtiva_en", None)
+            elem.pop("Avaliacao_en", None)
+            elem.pop("Atividades_en", None)
+            elem.pop("Metodologias_en", None)
+            elem.pop("Metodologias_en", None)
+            elem.pop("CoerenciaConteudos_en", None)
+            elem.pop("Conteudos_en", None)
+            elem.pop("Requisitos_en", None)
+            elem.pop("Objetivos_en", None)
+            elem.pop("Bibliografia_en", None)
+            elem.pop("CoerenciaMetodologias_en", None)
             dpucs[iduc] = elem
     return dpucs
 
