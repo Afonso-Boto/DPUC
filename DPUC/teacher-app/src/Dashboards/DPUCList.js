@@ -6,7 +6,7 @@ import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
 
 
-const DPUCList = ({dpucs, loading, error}) => {
+const DPUCList = ({dpucs, loading, error, canCreate}) => {
 
     const navigate = useNavigate();
 
@@ -59,10 +59,12 @@ const DPUCList = ({dpucs, loading, error}) => {
         <Container>
             <Row style={{paddingBottom:"10px"}}>
                 <Col style={{textAlign:"left"}}>
-                    <br></br>
-                    <Button primary onClick={goToCreate} style={{fontSize:"100%", height:"64%"}}>
-                        Criar nova UC
-                    </Button>
+                    <br/>
+                    { canCreate && 
+                        <Button primary onClick={goToCreate} style={{fontSize:"100%", height:"64%"}}>
+                            Criar nova UC
+                        </Button>
+                    }
                 </Col>
                 <Col md="4">
                     <Row>

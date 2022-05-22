@@ -33,7 +33,7 @@ const DashboardDUO  = () => {
                 </Col>
             </Row>
             <br/>
-            <DPUCList dpucs={dpuc} loading={loading} error={error}/>
+            <DPUCList dpucs={dpuc} loading={loading} error={error} canCreate={true}/>
         </Container>
      );
 }
