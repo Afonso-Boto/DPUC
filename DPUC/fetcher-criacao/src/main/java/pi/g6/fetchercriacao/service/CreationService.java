@@ -12,9 +12,7 @@ public interface CreationService {
     List<Curso> getCursos();
     List<Curso> getCursos(String UO);
     List<String> getIdiomas();
-    List<Utilizadores> getDocente(String UO);
-    List<Dpuc> getUltimaVersao(int uc);
-    List<Dpuc> getUltimasVersoes();
-    List<Dpuc> getDpucEmAprovacao();
+    List<Utilizadores> getDocentes();
+
 
 }
