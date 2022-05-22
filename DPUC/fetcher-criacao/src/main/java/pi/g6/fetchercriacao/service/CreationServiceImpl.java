@@ -88,6 +88,8 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             dpuc.setAprendizagem((String) row.get("aprendizagem"));
             dpuc.setEstadoid((int) row.get("estado_id"));
             dpuc.setPeriodo_letivoid((int) row.get("periodo_letivoid"));
+            dpuc.setUcID((int) row.get("UCid"));
+            dpuc.setRegenteID((int) row.get("utilizadoresid"));
 
             result.add(dpuc);
 
@@ -107,6 +109,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             uo.setId((int) row.get("id"));
             uo.setNome((String) row.get("nome"));
             uo.setSigla((String) row.get("sigla"));
+            uo.setUtilizadores_id((int) row.get("utilizadoresid"));
 
             result.add(uo);
         }
@@ -126,6 +129,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             curso.setId((int) row.get("id"));
             curso.setNome((String) row.get("nome"));
             curso.setUnidade_organicaid((int) row.get("unidade_organicaid"));
+            curso.setUtilizadores_id((int) row.get("utilizadoresid"));
 
             result.add(curso);
         }

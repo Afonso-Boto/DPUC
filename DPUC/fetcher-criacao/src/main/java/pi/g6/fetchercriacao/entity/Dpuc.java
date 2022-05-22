@@ -26,6 +26,24 @@ public class Dpuc {
     private String aprendizagem;
     private int estadoid;
     private int periodo_letivoid;
+    private int ucID;
+    private int regenteID;
+
+    public int getUcID() {
+        return ucID;
+    }
+
+    public void setUcID(int ucID) {
+        this.ucID = ucID;
+    }
+
+    public int getRegenteID() {
+        return regenteID;
+    }
+
+    public void setRegenteID(int regenteID) {
+        this.regenteID = regenteID;
+    }
 
     public int getId() {
         return id;
