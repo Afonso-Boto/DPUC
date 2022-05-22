@@ -3,7 +3,8 @@ import Select from "react-select";
 const Selector = ({
     className = "",
     classNamePrefix = "",
-    name = "select",
+    name = "",
+    placeholder = "Selecione...",
     
     options = [],
     getOptionLabel = ((option)=>option.label),
@@ -49,6 +50,7 @@ const Selector = ({
             className={className}
             classNamePrefix={classNamePrefix}
             name={name}
+            placeholder={placeholder}
 
             options={options}
             getOptionLabel={getOptionLabel}
@@ -64,7 +66,6 @@ const Selector = ({
             isSearchable={isSearchable}
 
             closeMenuOnSelect={closeMenuOnSelect}
-
             styles={customStyles}
             theme={(theme) => ({
                 ...theme,
