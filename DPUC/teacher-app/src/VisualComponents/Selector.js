@@ -26,9 +26,9 @@ const Selector = ({
             ...provided,
             borderColor: "#F8F4F4",
             border: state.isFocused && "2px solid black" || "1px solid black",
-            //boxShadow: "0 0 10px #719ECE",
             fontWeight: "500",
-            fontSize: "90%"
+            fontSize: "90%",
+            minHeight: 42,
         }),
         option: (provided, state) => ({
             ...provided,
@@ -43,7 +43,15 @@ const Selector = ({
               backgroundColor: "#A4A2A2",
               color: "white",
             },
-          }),
+        }),
+        dropdownIndicator: base => ({
+            ...base,
+            color: "black"
+        }),
+        clearIndicator: base => ({
+            ...base,
+            color: "black"
+        }),
     }
     return ( 
         <Select

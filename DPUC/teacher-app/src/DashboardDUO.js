@@ -83,7 +83,7 @@ const DashboardDUO  = () => {
             <Row style={{paddingBottom:"10px"}}>
                 <Col style={{textAlign:"left"}}>
                     <br></br>
-                    <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
+                    <Button primary onClick={goToCreate} style={{fontSize:"100%", height:"64%"}}>
                         Criar nova UC
                     </Button>
                 </Col>
@@ -94,7 +94,6 @@ const DashboardDUO  = () => {
                                 Filtrar DPUCs por estado:
                             </Text>
                             <Selector
-                                className="ultra mega fixe" 
                                 options={filterOptions}
                                 getOptionLabel={(option)=>option.text}
                                 defaultValue={filterOptions[0]}

@@ -284,6 +284,15 @@
       "estado": "Em Criação",
       "dataAlteracao": "2022-05-19",
       "id": 5
+    },
+    {
+      "designacao": "Nova UC",
+      "unidadeOrganica": 4,
+      "responsavel": 15777,
+      "ects": 6,
+      "estado": "Em Criação",
+      "dataAlteracao": "2022-05-22",
+      "id": 6
     }
   ]
 }
