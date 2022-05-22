@@ -2,13 +2,14 @@ use dpuc;
 
 /*select * from utilizadores;
 select * from curso;
+select * from curso_uc;
 select * from periodo_letivo;
 select * from estado;
 select * from unidade_organica;
 select * from utilizadores_unidade_organica;
 select * from uc;
 select * from dpuc;
-select * from utilizadores_dpuc;*/
+select * from utilizadores_dpuc;
 
 insert into utilizadores(nome, nmec, email, password, tipo_utilizadorid) values ('SGA', 1, 'sga@ua.pt', '123', 0);
 
@@ -77,25 +78,25 @@ insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES
 insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Maria Fernanda da Silva Rodrigues', 10318755,'mfrodrigues@ua.pt', '123', 3);
 insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Bruno Miguel Rodrigues das Neves', 80306414,'bruno.neves@ua.pt', '123', 3);
     #DR
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('António Nuno Rosmaninho Rolo', 10311482, 'rosmaninho@ua.pt', '123', 2);
-/*insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);
-insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('DR', 124, 'dr@ua.pt', '123', 2);*/
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('António Nuno Rosmaninho Rolo', 10311482, 'rosmaninho@ua.pt', '123', 2);*/
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('João Manuel de Oliveira e Silva Rodrigues', 10314156, 'jmr@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Maria Raquel Rocha Pinto', 10312973, 'raquel@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Maria Helena Abreu Silva', 10310285, 'hsilva@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Augusto Luís Barros Lopes', 10311839, 'augusto.dr@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Jorge Manuel da Rocha São Marcos', 11707604, 'sao.marcos@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Natália da Costa Martins', 10312280, 'natalia@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Rodrigo Manuel de Mesquita Pomares Salgueiro de Carvalho', 10321611, 'rcarvalho@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Ricardo Assis Guimarães Dias', 10315164, 'rdias@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Maria do Amparo Ferreira Faustino', 103315885, 'faustino@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Fernando Joaquim Fernandes Tavares Rocha', 10309858, 'tavares.rocha@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Marco Alexandre Barbosa de Vasconcelos', 80511143, 'mvasconcelos@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Joaquim Lourenço Fragoso Branco', 10320925, 'jlfbranco@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('António Gil D''Orey de Andrade Campos', 10321688, 'gilac@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('José Claudino de Pinho Cardoso', 10308367, 'claudino.dr@ua.pt', '123', 2);
+insert into utilizadores (nome, nmec, email, password, tipo_utilizadorid) VALUES ('Carla Alexandra Pina da Cruz Nunes', 10325566, 'alexandranunes@ua.pt', '123', 2);
 
 #Insert utilizadores unidade orgânica
-insert into utilizadores_unidade_organica (utilizadoresid, unidade_organicaid) values (8, 2);
+/*insert into utilizadores_unidade_organica (utilizadoresid, unidade_organicaid) values (8, 2);
 insert into utilizadores_unidade_organica (utilizadoresid, unidade_organicaid) values (9, 4);
 insert into utilizadores_unidade_organica (utilizadoresid, unidade_organicaid) values (10, 7);
 insert into utilizadores_unidade_organica (utilizadoresid, unidade_organicaid) values (11, 8);
@@ -128,29 +129,29 @@ insert into curso (id, nome, unidade_organicaid) VALUES (42, 'Licenciatura em Ps
 insert into curso (id, nome, unidade_organicaid) VALUES (40, 'Licenciatura em Música', 21);
 insert into curso (id, nome, unidade_organicaid) VALUES (482, 'Licenciatura em Engenharia Mecânica', 22);
 insert into curso (id, nome, unidade_organicaid) VALUES (491, 'Licenciatura em Engenharia Civil', 28);
-insert into curso (id, nome, unidade_organicaid) VALUES (18, 'Licenciatura em Ciências Biomédicas', 30);
+insert into curso (id, nome, unidade_organicaid) VALUES (18, 'Licenciatura em Ciências Biomédicas', 30);*/
 
 #Insert unidades curriculares
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (44535, 'Cultura Portugues Contemporânea', 'EC', 6, 2);
-/*insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();
-insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES ();*/
+#insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (44535, 'Cultura Portugues Contemporânea', 'EC', 6, 2);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (40379, 'Fundamentos de Programação', 'I', 6, 4);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (42709, 'Álgebra Linear e Geometria Analítica', 'M', 6, 7);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (40352, 'Biologia Celular', 'BIO', 6, 8);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (40787, 'Introdução à Engenharia de Materiais', 'CEM', 6, 9);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (45702, 'Contabilidade Geral', 'C', 6, 10);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (42706, 'Análise Matemática I', 'M', 8, 11);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (45824, 'Introdução Ao Direito', 'CJ', 4, 12);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (47169, 'Mecânica Clássica', 'F', 6, 13);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (41937, 'Fundamentos de Química', 'Q', 6, 15);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (42240, 'Mineralogia', 'GEO', 6, 16);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (47141, 'Introdução à Psicologia', 'PSI', 6, 18);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (46713, 'Formação Auditiva A', 'MU', 4, 21);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (46493, 'Introdução à Engenharia Mecânica', 'EM', 6, 22);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (42038, 'Introdução à Engenharia Civil', 'EC', 2, 28);
+insert into uc (codigo, designacao, sigla_ac, ects, uoid) VALUES (41569, 'Laboratórios de Biomedicina 1', 'CBM', 4, 30);
 
 #Insert cursos_UC
-insert into curso_UC (curso_id, UCid) VALUES (35, 1);
-/*insert into curso_UC (curso_id, UCid) VALUES (383, 2);
+#insert into curso_UC (curso_id, UCid) VALUES (35, 1);
+insert into curso_UC (curso_id, UCid) VALUES (383, 2);
 insert into curso_UC (curso_id, UCid) VALUES (8318, 3);
 insert into curso_UC (curso_id, UCid) VALUES (15, 4);
 insert into curso_UC (curso_id, UCid) VALUES (483, 5);
@@ -164,10 +165,10 @@ insert into curso_UC (curso_id, UCid) VALUES (42, 12);
 insert into curso_UC (curso_id, UCid) VALUES (40, 13);
 insert into curso_UC (curso_id, UCid) VALUES (482, 14);
 insert into curso_UC (curso_id, UCid) VALUES (491, 15);
-insert into curso_UC (curso_id, UCid) VALUES (18, 16);*/
+insert into curso_UC (curso_id, UCid) VALUES (18, 16);
 
 #Insert DPUC
-insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
+/*insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
                   UCid) VALUES (0, 'Semestral', 'TP:3H/semana', 'I – A descoberta de Portugal na transição para o século XX
@@ -300,7 +301,7 @@ ROSMANINHO, Nuno – «O desamparo de Fernando Lopes-Graça. A música no contex
 ROSMANINHO, Nuno – O Poder da Arte. O Estado Novo e a Cidade Universitária de Coimbra. Coimbra, Imprensa da Universidade, 2006.
 
 ROSMANINHO, Nuno – Relatório da disciplina de Património e Identidade. Universidade de Aveiro, 2009, pp. 168-246.',
-                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 1, 1);
+                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 1, 1);*/
 /*insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
@@ -364,11 +365,11 @@ insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid) VALUES ();*/
+                  UCid) VALUES ();
 
 #Insert utilizadores dpuc
-insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (40, 1);
-/*insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (41, 2);
+#insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (40, 1);
+insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (41, 2);
 insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (42, 3);
 insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (43, 4);
 insert into utilizadores_dpuc (utilizadoresid, dpucid) VALUES (44, 5);
