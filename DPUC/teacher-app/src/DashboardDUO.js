@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 import useFetch from './Helper/useFetch';
 import CardDPUC from "./CardDPUC";
 import { LoadingBackgroundWrapper, Button, Text, Dropdown} from "@paco_ua/pacoui"
-
+import Selector from "./VisualComponents/Selector";
 /*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
             search bar com o template ua e passar a ser dinamica
              */
@@ -16,23 +16,23 @@ const DashboardDUO  = () => {
     const filterOptions = [
                     {
                     key: 'Todos',
-                    text: 'Todos',
+                    text: 'Mostrar Todos',
                     value: ''
                     },
                     {
                     key: 'Em Criação',
                     text: 'Em Criação',
-                    value: 'Em Criação'
+                    value: 'Criação'
                     },
                     {
                     key: 'Em Edição',
                     text: 'Em Edição',
-                    value: 'Em Edição'
+                    value: 'Edição'
                     },
                     {
                     key: 'Em Aprovação',
                     text: 'Em Aprovação',
-                    value: 'Em Aprovação'
+                    value: 'Aprovação'
                     },
                     {
                     key: 'Fechados',
@@ -41,6 +41,8 @@ const DashboardDUO  = () => {
                     }
                 ]
 
+    const [filterOption, setFilterOption] = useState(filterOptions[0]);
+                
     const [dpucList, setDPUCList] = useState([]);
 
     const URL_DPUC = "http://localhost:8000/dpuc";
@@ -50,7 +52,8 @@ const DashboardDUO  = () => {
     }
 
     const filterDPUCList = (estado) => {
-        setDPUCList(dpuc.filter((d) => (d.estado.includes(estado))));
+        setDPUCList(dpuc.filter((d) => (d.estado.includes(estado.value))));
+        setFilterOption(estado)
     }
 
     const { data: dpuc , loading, error } = useFetch(URL_DPUC);
@@ -77,50 +80,33 @@ const DashboardDUO  = () => {
             </Row>
             
             <br/>
-            <Row>
-                <Col style={{textAlign:"left", paddingTop:"10px"}}>
+            <Row style={{paddingBottom:"10px"}}>
+                <Col style={{textAlign:"left"}}>
+                    <br></br>
                     <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
                         Criar nova UC
                     </Button>
                 </Col>
-                <Col md="auto">
+                <Col md="4">
                     <Row>
-                        <Col md="auto" style={{paddingTop:"10px"}}>
-                            <Dropdown
+                        <Col>
+                            <Text>
+                                Filtrar DPUCs por estado:
+                            </Text>
+                            <Selector
+                                className="ultra mega fixe" 
                                 options={filterOptions}
-                                onChange={(e, data) => filterDPUCList(data.value)}
-                                placeholder="Filtrar DPUCs"
+                                getOptionLabel={(option)=>option.text}
+                                defaultValue={filterOptions[0]}
+                                value={filterOption}
+                                onChange={(e) => filterDPUCList(e)}
+                                isClearable={false}
                             />
                         </Col>
-                        {/* 
-                        <Col md="auto" style={{paddingTop:"10px"}}>
-                            <Button action onClick={() => filterDPUCList("Em Edição")} style={{fontSize:"100%"}}>
-                                DPUC em Edição
-                            </Button>
-                        </Col>
-                        <Col md="auto" style={{paddingTop:"10px"}}>
-                            <Button action onClick={() => filterDPUCList("Em Criação")} style={{fontSize:"100%"}}>
-                                DPUC em Criação
-                            </Button>
-                            
-                        </Col>
-                        <Col md="auto" style={{paddingTop:"10px"}}>
-                            <Button action onClick={() => filterDPUCList("Em Aprovação")} style={{fontSize:"100%"}}>
-                                DPUC aprovação
-                            </Button>
-                        </Col>
-                        <Col md="auto" style={{paddingTop:"10px"}}>
-                            <Button action onClick={() => filterDPUCList("Fechados")} style={{fontSize:"100%"}}>
-                                DPUCs fechadas
-                            </Button>
-                        </Col>
-                        */}
                     </Row>
+                
                 </Col>
             </Row>
-            <br/>
-            <br/>
-            <br/>
             { loading && <LoadingBackgroundWrapper loading length={4} /> }
             { error && <Text as="i" size="large" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
             { dpucList &&
