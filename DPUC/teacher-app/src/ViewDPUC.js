@@ -1,9 +1,9 @@
 import { Button } from "@paco_ua/pacoui";
-import { Input, Select, Text, AnimatedBackground } from "@uaveiro/ui";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { useState, useEffect, useContext } from "react";
+import { Text, AnimatedBackground } from "@uaveiro/ui";
+import { Container, Row, Col } from "react-bootstrap";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { EntitiesContext } from "./Helper/Context";
+import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
 
@@ -16,6 +16,8 @@ import {
 const ViewDPUC = () => {
 
     const { id } = useParams();
+
+    const { userType } = useContext(UserContext);
 
     const URL_DPUC = "http://localhost:8000/dpuc/" + id;
 
@@ -40,7 +42,6 @@ const ViewDPUC = () => {
         setRetry(retryFetch + 1);
     }
 
-    console.table(dpuc);
     return ( 
         <Container>
             <Row>
@@ -77,23 +78,39 @@ const ViewDPUC = () => {
             { dpuc && !loadDPUC &&
             <Container> 
                 <Row>
-                    <Col md="auto">
+                    <Col md={2} style={{paddingTop:"10px"}}>
                         <Button action style={{fontSize:"100%"}} onClick={handleBack}>
                             Voltar
                         </Button>
                     </Col>
-                    <Col md="auto">
+                    <Col md={4} style={{paddingTop:"10px"}}>
                         {detailedView && 
                         <Button primary style={{fontSize:"100%"}} onClick={changeView}>
                             Vista Normal
                         </Button>
                         }
                         {!detailedView && 
-                            <Button success style={{fontSize:"100%"}} onClick={changeView}>
-                                Vista Detalhada
-                            </Button>
+                        <Button success style={{fontSize:"100%"}} onClick={changeView}>
+                            Vista Detalhada
+                        </Button>
                         }
                     </Col>
+                    {userType === "SGA" && 
+                        <Col md={6} style={{paddingTop:"10px"}}>
+                            <Row>
+                                <Col>
+                                    <Button danger style={{fontSize:"100%"}}>
+                                        Fechar DPUC
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button primary style={{fontSize:"100%"}}>
+                                        Aprovar DPUC
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    }
                 </Row>
                 <br/>
                 <ThemeProviderPortal theme={ThemePortal}>

@@ -5,15 +5,14 @@ import CreateUC from './CreateUC';
 import EditDPUC from './EditDPUC';
 import ViewDPUC from './ViewDPUC';
 import NotFound from './NotFound';
-import { EntitiesContext } from './Helper/Context';
-import { useState } from "react";
-import useFetch from './Helper/useFetch';
+import { EntitiesContext, UserContext } from './Helper/Context';
 import useGetAPIEntities from './Helper/useGetAPIEntities';
-
+import useUserData from './Helper/useUserData';
 
 function App() {
   return (
     <EntitiesContext.Provider value={useGetAPIEntities()}>
+    <UserContext.Provider value={useUserData()}>
       <Router>
         <div className="App">
           <div className="content" style={{paddingTop:"40px"}}>
@@ -29,6 +28,7 @@ function App() {
           </div>
         </div>
       </Router>
+    </UserContext.Provider>
     </EntitiesContext.Provider>
   );
 }
