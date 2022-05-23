@@ -1,5 +1,6 @@
 import { useState } from "react";
-import DashboardDUO from "./DashboardDUO";
+import DashboardDUO from "./Dashboards/DashboardDUO";
+import DashboardSGA from "./Dashboards/DashboardSGA";
 
 import { Button, Link, Text } from "@paco_ua/pacoui";
 import Row from "react-bootstrap/Row";
@@ -13,7 +14,7 @@ const Home = () => {
 
     const URL_DPUC = "http://localhost:8000/dpuc/" + 1;
 
-    const [userType, setUserType] = useState("DR");
+    const [userType, setUserType] = useState("SGA");
     
     return ( 
         <>
@@ -27,7 +28,7 @@ const Home = () => {
         }
         {
             userType === "SGA" &&
-            <DashboardDUO/>
+            <DashboardSGA/>
         }
         </>
      );

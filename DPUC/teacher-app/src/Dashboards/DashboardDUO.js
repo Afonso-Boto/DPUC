@@ -1,9 +1,9 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react';
-import useFetch from './Helper/useFetch';
+import useFetch from '../Helper/useFetch';
 import { Text} from "@paco_ua/pacoui"
-import DPUCList from "./Dashboards/DPUCList";
+import DPUCList from "./DPUCList";
 /*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
             search bar com o template ua e passar a ser dinamica
              */
