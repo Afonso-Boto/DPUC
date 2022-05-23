@@ -1,4 +1,3 @@
-import classes from '../index.css';
 import { Button, Text, FormInput } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
@@ -7,7 +6,6 @@ const ApproveDPUC = ({id, codigo}) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    console.log(codigo)
     return ( 
         <>
             <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
@@ -55,7 +53,7 @@ const ApproveDPUC = ({id, codigo}) => {
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button primary style={{fontSize:"100%"}} onClick={handleClose} >
+                    <Button success style={{fontSize:"100%"}} onClick={handleClose} >
                         Aprovar DPUC
                     </Button>
                 </Modal.Footer>

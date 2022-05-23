@@ -98,13 +98,9 @@ const ViewDPUC = () => {
                     </Col>
                     {userType === "SGA" && 
                         <Col md={6} style={{paddingTop:"10px"}}>
-                            
-                            <CloseDPUC/>
                             <Row>
                                 <Col>
-                                    <Button danger style={{fontSize:"100%"}}>
-                                        Fechar DPUC
-                                    </Button>
+                                    <CloseDPUC id={dpuc.id}/>
                                 </Col>
                                 <Col>
                                     <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
