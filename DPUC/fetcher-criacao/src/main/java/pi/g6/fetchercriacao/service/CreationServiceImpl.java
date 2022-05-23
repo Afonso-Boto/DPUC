@@ -1,5 +1,6 @@
 package pi.g6.fetchercriacao.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import javax.sql.DataSource;
 import java.util.*;
 
 @Service
+@Log4j2
 public class CreationServiceImpl extends JdbcDaoSupport implements CreationService{
     @Autowired
     DataSource dataSource;
@@ -67,14 +69,16 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             try {
                 dpuc.setId((int) ((row.get("id") != null) ?  row.get("id") : -1));
 
+
                 if (row.get("criacao_edicao") == null)
                     throw new Exception();
                 dpuc.setCriacao_edicao((boolean) row.get("criacao_edicao"));
 
                 dpuc.setDuracao((String) ((row.get("duracao") != null) ? row.get("duracao") : null));
                 dpuc.setCarga_horaria((String) ((row.get("carga_horaria") != null) ? row.get("carga_horaria") : null));
-                dpuc.setHoras_contacto((int) ((row.get("horas_contacto") != null) ? row.get("horas_contacto") : null)); //deveria ser int como tambem na BD
-                dpuc.setHoras_trabalho((int) ((row.get("horas_trabalho") != null) ? row.get("horas_trabalho") : null)); //deveria ser int como na BD
+
+                dpuc.setHoras_contacto((String) ((row.get("horas_contacto") != null) ? row.get("horas_contacto") : null));
+                dpuc.setHoras_trabalho((String) ((row.get("horas_trabalho") != null) ? row.get("horas_trabalho") : null));
                 dpuc.setObjetivos((String) ((row.get("objetivos") != null) ? row.get("objetivos") : null));
                 dpuc.setConteudos((String) ((row.get("conteudos") != null) ? row.get("conteudos") : null));
                 dpuc.setCoerencia_conteudos((String) ((row.get("coerencia_conteudos") != null) ? row.get("coerencia_conteudos") : null));
@@ -91,18 +95,28 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
                 dpuc.setPagina_publica((String) ((row.get("pagina_publica") != null) ? row.get("pagina_publica") : null));
                 dpuc.setFuncionamento((String) ((row.get("funcionamento") != null) ? row.get("funcionamento") : null));
                 dpuc.setAprendizagem((String) ((row.get("aprendizagem") != null) ? row.get("aprendizagem") : null));
-                dpuc.setEstadoid((int) ((row.get("estado_id") != null) ? row.get("estado_id") : -1));
+                dpuc.setEstadoid((int) ((row.get("estadoid") != null) ? row.get("estadoid") : -1));
                 dpuc.setPeriodo_letivoid((int) ((row.get("periodo_letivoid") != null) ? row.get("periodo_letivoid") : -1));
                 dpuc.setUcID((int) ((row.get("UCid") != null) ? row.get("UCid") : -1));
                 dpuc.setRegenteID((int) ((row.get("utilizadoresid") != null) ? row.get("utilizadoresid") : -1));
 
                 if (dpuc.getId() == -1 || dpuc.getEstadoid() == -1 || dpuc.getPeriodo_letivoid() == -1 || dpuc.getUcID() == -1 || dpuc.getRegenteID() == -1){
+                    log.info("DPUCCC" + dpuc.getId());
+                    log.info("ESTADO" + dpuc.getEstadoid());
+                    log.info("PERIODO" + dpuc.getPeriodo_letivoid());
+                    log.info("UC_IDDD" + dpuc.getUcID());
+                    log.info("REGENTE" + dpuc.getRegenteID());
+
                     throw new Exception();
                 }
 
+
             }catch (Exception e){
+                log.info(e.getMessage());
                 continue;
             }
+            log.info("DPUC has ID HYEEEE");
+            log.info(dpuc);
 
             result.add(dpuc);
 
