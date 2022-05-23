@@ -65,9 +65,12 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         for (Map<String, Object> row : rows){
             Dpuc dpuc = new Dpuc();
             try {
+                dpuc.setId((int) ((row.get("id") != null) ?  row.get("id") : -1));
 
-                dpuc.setId((int) ((row.get("id") != null) ? dpuc.setId((int) row.get("id")) : new Exception()));
-                dpuc.setCriacao_edicao((boolean) ((row.get("criacao_edicao") != null) ? row.get("criacao_edicao") : new Exception()));
+                if (row.get("criacao_edicao") == null)
+                    throw new Exception();
+                dpuc.setCriacao_edicao((boolean) row.get("criacao_edicao"));
+
                 dpuc.setDuracao((String) ((row.get("duracao") != null) ? row.get("duracao") : null));
                 dpuc.setCarga_horaria((String) ((row.get("carga_horaria") != null) ? row.get("carga_horaria") : null));
                 dpuc.setHoras_contacto((int) ((row.get("horas_contacto") != null) ? row.get("horas_contacto") : null)); //deveria ser int como tambem na BD
@@ -88,10 +91,15 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
                 dpuc.setPagina_publica((String) ((row.get("pagina_publica") != null) ? row.get("pagina_publica") : null));
                 dpuc.setFuncionamento((String) ((row.get("funcionamento") != null) ? row.get("funcionamento") : null));
                 dpuc.setAprendizagem((String) ((row.get("aprendizagem") != null) ? row.get("aprendizagem") : null));
-                dpuc.setEstadoid((int) ((row.get("estado_id") != null) ? row.get("estado_id") : new Exception()));
-                dpuc.setPeriodo_letivoid((int) ((row.get("periodo_letivoid") != null) ? row.get("periodo_letivoid") : new Exception()));
-                dpuc.setUcID((int) ((row.get("UCid") != null) ? row.get("UCid") : new Exception()));
-                dpuc.setRegenteID((int) ((row.get("utilizadoresid") != null) ? row.get("utilizadoresid") : new Exception()));
+                dpuc.setEstadoid((int) ((row.get("estado_id") != null) ? row.get("estado_id") : -1));
+                dpuc.setPeriodo_letivoid((int) ((row.get("periodo_letivoid") != null) ? row.get("periodo_letivoid") : -1));
+                dpuc.setUcID((int) ((row.get("UCid") != null) ? row.get("UCid") : -1));
+                dpuc.setRegenteID((int) ((row.get("utilizadoresid") != null) ? row.get("utilizadoresid") : -1));
+
+                if (dpuc.getId() == -1 || dpuc.getEstadoid() == -1 || dpuc.getPeriodo_letivoid() == -1 || dpuc.getUcID() == -1 || dpuc.getRegenteID() == -1){
+                    throw new Exception();
+                }
+
             }catch (Exception e){
                 continue;
             }

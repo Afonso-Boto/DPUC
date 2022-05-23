@@ -29,6 +29,7 @@ public class Dpuc {
     private int ucID;
     private int regenteID;
 
+
     public int getUcID() {
         return ucID;
     }
