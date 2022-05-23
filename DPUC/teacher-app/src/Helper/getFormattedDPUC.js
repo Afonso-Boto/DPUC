@@ -24,14 +24,14 @@ const getFormattedDPUC = (dpuc, status) => {
         formattedDocentesHoras += "P:" + dpuc.horasP + "H$";
 
     const date = new Date();
-    var dataAlt = "" + date.getFullYear() + "-";
-    dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
-    dataAlt += "-";
-    dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
+    var data_alteracao = "" + date.getFullYear() + "-";
+    data_alteracao += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
+    data_alteracao += "-";
+    data_alteracao += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
 
     let formattedArea = null;
-    if(dpuc.areaCientifica)
-        formattedArea = dpuc.areaCientifica.sigla;
+    if(dpuc.ACid)
+        formattedArea = dpuc.ACid.sigla;
     let formattedDuracao = null;
     if(dpuc.duracao)
         formattedDuracao = dpuc.duracao.nome;
@@ -48,43 +48,43 @@ const getFormattedDPUC = (dpuc, status) => {
     if(dpuc.responsavel)
         formattedResponsavel = dpuc.responsavel.cod_int;
     let formattedUnidadeOrganica = null;
-    if(dpuc.unidadeOrganica)
-        formattedUnidadeOrganica = dpuc.unidadeOrganica.id;
+    if(dpuc.unidade_organicaid)
+        formattedUnidadeOrganica = dpuc.unidade_organicaid.id;
 
     const codigoUC = 10000 + Math.floor(Math.random() * 90000);
 
     return { designacao: dpuc.designacao, 
-        areaCientifica: formattedArea, 
+        ACid: formattedArea, 
         duracao: formattedDuracao, 
         codigo: codigoUC,
         responsavel: formattedResponsavel, 
-        cargaHoraria: null, 
-        horasContacto: dpuc.horasOT,
-        docentes: formattedDocentes, 
+        carga_horaria: null, 
+        horas_contacto: dpuc.horasOT,
+        docentes: formattedDocentes,
         docentesHoras: formattedDocentesHoras,
-        horasTrabalho: dpuc.ects*27, 
+        horas_trabalho: dpuc.ects*27, 
         ects: dpuc.ects, 
         objetivos: dpuc.objetivos,
         conteudos: dpuc.conteudos, 
-        coerenciaConteudos: dpuc.coerenciaConteudos, 
+        coerencia_conteudos: dpuc.coerencia_conteudos, 
         metodologias: dpuc.metodologias,
-        coerenciaMetodologias: dpuc.coerenciaMetodologias, 
+        coerencia_metodologia: dpuc.coerencia_metodologia, 
         bibliografia: dpuc.bibliografia, 
         observacoes: dpuc.observacoes,
-        unidadeOrganica: formattedUnidadeOrganica,  
+        unidade_organicaid: formattedUnidadeOrganica,  
         cursos: formattedCursos, 
-        regimeFaltas: dpuc.regimeFaltas, 
+        regime_faltas: dpuc.regime_faltas, 
         linguas: formattedLinguas, 
         modalidade: formattedModalidade, 
         requisitos: dpuc.requisitos, 
         ficheiros: dpuc.ficheiros,
-        paginaPublica: dpuc.paginaPublica, 
+        pagina_publica: dpuc.pagina_publica, 
         funcionamento: dpuc.funcionamento, 
         aprendizagem: dpuc.aprendizagem,
         grau: formattedGrau, 
         avaliacao: dpuc.avaliacao, 
         periodo: formattedPeriodo,  
-        dataAlteracao: dataAlt,  
+        data_alteracao: data_alteracao,  
         estado: status };
 }
  

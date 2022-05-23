@@ -76,7 +76,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/docente")
+    @GetMapping("/docentes")
     public ResponseEntity<List<Utilizadores>> getDocentes(){
         return new ResponseEntity<>(creationService.getDocentes(), HttpStatus.OK);
     }

@@ -81,8 +81,8 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             log.info(uc.toString());
 
             // INSERT UC
-            String sql = "INSERT INTO uc(designacao, ects, uoid, acid) VALUES(?, ?, ?, ?)";
-            getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getInt("ects"), uc.getInt("uoid"), uc.getInt("acid"));
+            String sql = "INSERT INTO uc(designacao, ects, unidade_organicaid, acid) VALUES(?, ?, ?, ?)";
+            getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getInt("ects"), uc.getInt("unidade_organicaid"), uc.getInt("acid"));
 
             // UC id
             String sql2 = "SELECT id FROM uc WHERE designacao=\'%s\'".formatted(uc.getString("designacao"));
