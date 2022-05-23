@@ -28,7 +28,7 @@ const ApproveDPUC = ({id, codigo}) => {
                 { codigo && 
                     <Modal.Body>
                         <Text>
-                            Tem a certeza que pretende aprovar este DPUC?
+                            Tem a certeza que pretende <b>aprovar</b> este DPUC?
                         </Text>
                     </Modal.Body>
                     ||

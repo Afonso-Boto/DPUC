@@ -27,7 +27,7 @@ const CloseDPUC = (id) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Text>
-                        Tem a certeza que pretende fechar este DPUC?
+                        Tem a certeza que pretende <b>fechar</b> este DPUC?
                     </Text>
                 </Modal.Body>
                 <Modal.Footer>
