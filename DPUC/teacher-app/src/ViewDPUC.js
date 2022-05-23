@@ -1,4 +1,4 @@
-import { Button } from "@paco_ua/pacoui";
+import { Button, Modal } from "@paco_ua/pacoui";
 import { Text, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col } from "react-bootstrap";
 import { useState, useContext } from "react";
@@ -6,11 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
-
 import {
     ThemeProvider as ThemeProviderPortal,
     Theme as ThemePortal
   } from "@uaveiro/ui";
+import ApproveDPUC from "./Actions/ApproveDPUC";
+import CloseDPUC from "./Actions/CloseDPUC";
 
 
 const ViewDPUC = () => {
@@ -97,6 +98,8 @@ const ViewDPUC = () => {
                     </Col>
                     {userType === "SGA" && 
                         <Col md={6} style={{paddingTop:"10px"}}>
+                            
+                            <CloseDPUC/>
                             <Row>
                                 <Col>
                                     <Button danger style={{fontSize:"100%"}}>
@@ -104,9 +107,7 @@ const ViewDPUC = () => {
                                     </Button>
                                 </Col>
                                 <Col>
-                                    <Button primary style={{fontSize:"100%"}}>
-                                        Aprovar DPUC
-                                    </Button>
+                                    <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
                                 </Col>
                             </Row>
                         </Col>

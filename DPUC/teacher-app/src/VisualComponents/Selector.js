@@ -1,5 +1,6 @@
 import Select from "react-select";
 
+// Alterar estas vars para props e dentro do component usar {... props} em vez das vars todas
 const Selector = ({
     className = "",
     classNamePrefix = "",
