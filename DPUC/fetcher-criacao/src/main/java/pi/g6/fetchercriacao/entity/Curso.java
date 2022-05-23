@@ -4,6 +4,7 @@ public class Curso {
     private int id;
     private String nome;
     private int unidade_organicaid;
+    private int utilizadores_id;
 
 
     public int getId() {
@@ -20,6 +21,14 @@ public class Curso {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getUtilizadores_id() {
+        return utilizadores_id;
+    }
+
+    public void setUtilizadores_id(int utilizadores_id) {
+        this.utilizadores_id = utilizadores_id;
     }
 
     public int getUnidade_organicaid() {

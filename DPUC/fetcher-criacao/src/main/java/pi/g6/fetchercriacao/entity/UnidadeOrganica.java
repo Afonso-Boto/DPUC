@@ -7,9 +7,18 @@ public class UnidadeOrganica {
     private int id;
     private String nome;
     private String sigla;
+    private int utilizadores_id;
 
     //Getters and Setters
 
+
+    public int getUtilizadores_id() {
+        return utilizadores_id;
+    }
+
+    public void setUtilizadores_id(int utilizadores_id) {
+        this.utilizadores_id = utilizadores_id;
+    }
 
     public int getId() {
         return id;
