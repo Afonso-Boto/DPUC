@@ -27,7 +27,7 @@ const DashboardDUO  = () => {
             </Row>
             <Row>
                 <Col>
-                    <Text as="h3" color="primary" size="large" fontWeight="400">
+                    <Text as="h3" color="primary" size="large" fontWeight="medium">
                         Olá, docente x! 
                     </Text>
                 </Col>

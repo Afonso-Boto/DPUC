@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useUserData = () => {
-    const [userType, setUserType] = useState("SGA");
+    const [userType, setUserType] = useState("DUO");
 
     return { userType, setUserType };
 }
