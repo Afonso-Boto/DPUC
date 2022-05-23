@@ -5,39 +5,39 @@ const useGetDPUC = (data) => {
         
     const [designacao, setDesignacao] = useState("");
     const [estado, setEstado] = useState("");
-    const [areaCientifica, setAreaCientifica] = useState({});
+    const [ACid, setACid] = useState({});
     const [duracao, setDuracao] = useState({});
     const [codigo, setCodigo] = useState("");
-    const [responsavel, setResponsavel] = useState({});
-    const [cargaHoraria, setCargaHoraria] = useState(null); // Ainda não se sabe o que é isto
+    const [responsavel, setResponsavel] = useState({}); //?
+    const [carga_horaria, setCarga_horaria] = useState(null); // Ainda não se sabe o que é isto
     const [horasOT, setHorasOT] = useState(0);
     const [horasTP, setHorasTP] = useState(0);
     const [horasT, setHorasT] = useState(0);
     const [horasP, setHorasP] = useState(0);
     const [docentes, setDocentes] = useState([]);
-    const [horasTrabalho, setHorasTrabalho] = useState(0);
+    const [horas_trabalho, setHoras_trabalho] = useState(0);
     const [ects, setEcts] = useState(0);
     const [objetivos, setObjetivos] = useState("");
     const [conteudos, setConteudos] = useState("");
-    const [coerenciaConteudos, setCoerenciaConteudos] = useState("");
+    const [coerencia_conteudos, setCoerencia_conteudos] = useState("");
     const [metodologias, setMetodologias] = useState("");
-    const [coerenciaMetodologias, setCoerenciaMetodologias] = useState("");
+    const [coerencia_metodologia, setCoerencia_metodologia] = useState("");
     const [bibliografia, setBibliografia] = useState("");
     const [observacoes, setObservacoes] = useState("");
-    const [unidadeOrganica, setUnidadeOrganica] = useState({});
+    const [unidade_organicaid, setUoid] = useState({});
     const [cursos, setCursos] = useState([]);
-    const [regimeFaltas, setRegimeFaltas] = useState("");
+    const [regime_faltas, setRegime_faltas] = useState("");
     const [linguas, setLinguas] = useState([]);
     const [modalidade, setModalidade] = useState({});
     const [requisitos, setRequisitos] = useState("");
     const [ficheiros, setFicheiros] = useState("");
-    const [paginaPublica, setPaginaPublica] = useState("");
+    const [pagina_publica, setPagina_publica] = useState("");
     const [funcionamento, setFuncionamento] = useState("");
     const [aprendizagem, setAprendizagem] = useState("");
     const [grau, setGrau] = useState({});
     const [avaliacao, setAvaliacao] = useState({});
     const [periodo, setPeriodo] = useState({});
-    const [dataAlteracao, setDataAlteracao] = useState("");
+    const [data_alteracao, setData_alteracao] = useState("");
     
     const [error, setError] = useState(false);
     const [parsing, setParsing] = useState(false);
@@ -52,28 +52,28 @@ const useGetDPUC = (data) => {
                 setObjetivos(data.objetivos);
             if(data.estado)
                 setEstado(data.estado);
-            if(data.horasContacto)
-                setHorasOT(data.horasContacto);
+            if(data.horas_contacto)
+                setHorasOT(data.horas_contacto);
             if(data.conteudos)
                 setConteudos(data.conteudos);
-            if(data.coerenciaConteudos)
-                setCoerenciaConteudos(data.coerenciaConteudos);
+            if(data.coerencia_conteudos)
+                setCoerencia_conteudos(data.coerencia_conteudos);
             if(data.metodologias)
                 setMetodologias(data.metodologias);
-            if(data.coerenciaMetodologias)
-                setCoerenciaMetodologias(data.coerenciaMetodologias);
+            if(data.coerencia_metodologia)
+                setCoerencia_metodologia(data.coerencia_metodologia);
             if(data.bibliografia)
                 setBibliografia(data.bibliografia);
             if(data.observacoes)
                 setObservacoes(data.observacoes);
-            if(data.regimeFaltas)
-                setRegimeFaltas(data.regimeFaltas);
+            if(data.regime_faltas)
+                setRegime_faltas(data.regime_faltas);
             if(data.requisitos)
                 setRequisitos(data.requisitos);
             if(data.ficheiros)
                 setFicheiros(data.ficheiros);
-            if(data.paginaPublica)
-                setPaginaPublica(data.paginaPublica);
+            if(data.pagina_publica)
+                setPagina_publica(data.pagina_publica);
             if(data.funcionamento)
                 setFuncionamento(data.funcionamento);
             if(data.aprendizagem)
@@ -84,15 +84,15 @@ const useGetDPUC = (data) => {
                 setDesignacao(data.designacao);
             if(data.codigo)
                 setCodigo(data.codigo);
-            if(data.cargaHoraria)
-                setCargaHoraria(data.cargaHoraria);
-            if(data.horasTrabalho)
-                setHorasTrabalho(data.horasTrabalho);
+            if(data.carga_horaria)
+                setCarga_horaria(data.carga_horaria);
+            if(data.horas_trabalho)
+                setHoras_trabalho(data.horas_trabalho);
             if(data.ects)
                 setEcts(data.ects);
 
-            if(data.areaCientifica && areas)
-                setAreaCientifica(areas.find((a) => (a.sigla === data.areaCientifica)));
+            if(data.ACid && areas)
+                setACid(areas.find((a) => (a.sigla === data.ACid)));
             if(data.grau && graus)
                 setGrau(graus.find((g) => (g.nome === data.grau))); 
             if(data.duracao && duracoes)
@@ -101,12 +101,12 @@ const useGetDPUC = (data) => {
                 setPeriodo(semestre.find((s) => (s.nome === data.periodo)));
             if(data.modalidade && modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
-            if(data.unidadeOrganica && uos)
-                setUnidadeOrganica(uos.find((uo) => (uo.id === data.unidadeOrganica)));
+            if(data.unidade_organicaid && uos)
+                setUoid(uos.find((uo) => (uo.id === data.unidade_organicaid)));
             
-            if(data.dataAlteracao){
-                const dataDPUC = data.dataAlteracao.split("-");
-                setDataAlteracao(new Date(dataDPUC[0], dataDPUC[1]-1, dataDPUC[2]));
+            if(data.data_alteracao){
+                const dataDPUC = data.data_alteracao.split("-");
+                setData_alteracao(new Date(dataDPUC[0], dataDPUC[1]-1, dataDPUC[2]));
             }
 
             if(data.cursos && entCursos){
@@ -157,77 +157,77 @@ const useGetDPUC = (data) => {
     const dpuc = {
         designacao,
         estado,
-        areaCientifica,
+        ACid,
         duracao,
         codigo,
         responsavel,
-        cargaHoraria,
+        carga_horaria,
         horasOT,
         horasTP,
         horasT,
         horasP,
         docentes,
-        horasTrabalho,
+        horas_trabalho,
         ects,
         objetivos,
         conteudos,
-        coerenciaConteudos,
+        coerencia_conteudos,
         metodologias,
-        coerenciaMetodologias,
+        coerencia_metodologia,
         bibliografia,
         observacoes,
-        unidadeOrganica,
+        unidade_organicaid,
         cursos,
-        regimeFaltas,
+        regime_faltas,
         linguas,
         modalidade,
         requisitos,
         ficheiros,
-        paginaPublica,
+        pagina_publica,
         funcionamento,
         aprendizagem,
         grau,
         avaliacao,
         periodo,
-        dataAlteracao   
+        data_alteracao   
     };
 
     const dpucSet = {
         setDesignacao,
         setEstado,
-        setAreaCientifica,
+        setACid,
         setDuracao,
         setCodigo,
         setResponsavel,
-        setCargaHoraria,
+        setCarga_horaria,
         setHorasOT,
         setHorasTP,
         setHorasT,
         setHorasP,
         setDocentes,
-        setHorasTrabalho,
+        setHoras_trabalho,
         setEcts,
         setObjetivos,
         setConteudos,
-        setCoerenciaConteudos,
+        setCoerencia_conteudos,
         setMetodologias,
-        setCoerenciaMetodologias,
+        setCoerencia_metodologia,
         setBibliografia,
         setObservacoes,
-        setUnidadeOrganica,
+        setUoid,
         setCursos,
-        setRegimeFaltas,
+        setRegime_faltas,
         setLinguas,
         setModalidade,
         setRequisitos,
         setFicheiros,
-        setPaginaPublica,
+        setPagina_publica,
         setFuncionamento,
         setAprendizagem,
         setGrau,
         setAvaliacao,
         setPeriodo,
-        setDataAlteracao
+        setData_alteracao
     };
 
     return { error, parsing, dpuc, dpucSet }
