@@ -10,7 +10,7 @@ const useGetAPIEntities = () => {
     const URL_UOS = "http://localhost:82/creation/uos";
     const URL_AREAS = "http://localhost:8000/areas";
     const URL_CURSOS = "http://localhost:82/creation/cursos";
-    const URL_IDIOMAS = "http://localhost:82/creation/idiomas";
+    const URL_IDIOMAS = "http://localhost:8000/idiomas";
     const URL_DOCENTES = "http://localhost:82/creation/docentes";
     
     const URL_MODALIDADES = "http://localhost:8000/modalidades";
