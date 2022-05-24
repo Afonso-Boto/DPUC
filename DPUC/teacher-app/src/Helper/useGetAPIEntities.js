@@ -7,11 +7,11 @@ const useGetAPIEntities = () => {
     //const URL_UOS = "http://localhost:82/creation/uos";
 
     // JSON SERVER
-    const URL_UOS = "http://localhost:8000/uos";
+    const URL_UOS = "http://localhost:82/creation/uos";
     const URL_AREAS = "http://localhost:8000/areas";
-    const URL_CURSOS = "http://localhost:8000/cursos";
+    const URL_CURSOS = "http://localhost:82/creation/cursos";
     const URL_IDIOMAS = "http://localhost:8000/idiomas";
-    const URL_DOCENTES = "http://localhost:8000/docentes";
+    const URL_DOCENTES = "http://localhost:82/creation/docentes";
     
     const URL_MODALIDADES = "http://localhost:8000/modalidades";
     const URL_GRAUS = "http://localhost:8000/graus";
