@@ -10,6 +10,7 @@ import useGetAPIEntities from './Helper/useGetAPIEntities';
 import useUserData from './Helper/useUserData';
 import BlueNav from './Navbars/BlueNav';
 import WhiteNav from './Navbars/WhiteNav';
+import SideNav from './Navbars/SideNav';
 
 function App() {
   return (
@@ -18,22 +19,27 @@ function App() {
       <Router>
         <div className="App">
           <div className="content">
-            <WhiteNav/>
-            <BlueNav/>
-              <Row>
-                <Col style={{maxWidth:"80px", minWidth:"80px",backgroundColor:"black"}}>
-                
-                </Col>
-                <Col md={"auto"}>
-                  <Switch>
-                    <Route exact path="/" element={<Home/>}/>
-                    <Route exact path="/create" element={<CreateUC/>}/>
-                    <Route exact path="/edit/:id" element={<EditDPUC/>}/>
-                    <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
-                    <Route path="*" element= {<NotFound />}/>
-                  </Switch>
-                </Col>
-              </Row>
+            <Row>
+              <WhiteNav/>
+            </Row>
+            <Row>
+              <BlueNav/>
+            </Row>
+            <Row>
+              <Col md={"auto"} style={{maxWidth:"80px", minWidth:"80px",backgroundColor:"#302C2C"}}>
+                <SideNav/>
+              </Col>
+              <Col md={"auto"}>
+                <br/>
+                <Switch>
+                  <Route exact path="/" element={<Home/>}/>
+                  <Route exact path="/create" element={<CreateUC/>}/>
+                  <Route exact path="/edit/:id" element={<EditDPUC/>}/>
+                  <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
+                  <Route path="*" element= {<NotFound />}/>
+                </Switch>
+              </Col>
+            </Row>
           </div>
         </div>
       </Router>
