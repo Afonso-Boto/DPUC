@@ -7,7 +7,6 @@ import axios from "axios";
 import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
-
 import {
     ThemeProvider as ThemeProviderPortal,
     Theme as ThemePortal
@@ -125,6 +124,16 @@ const EditDPUC = () => {
                 <br/>
                 <br/>
                 <br/>
+                {/*
+                <Row>
+                    <Col>
+                        <NewInput type="text" 
+                            placeholder="Enter email" 
+                            as="textarea" 
+                            style={{height:"200px"}}/>
+                    </Col>
+                </Row>
+                */}
                 <ThemeProviderPortal theme={ThemePortal}>
                 {/* Nome da UC e UO */}
                     <Row>
