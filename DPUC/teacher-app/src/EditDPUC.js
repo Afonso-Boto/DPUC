@@ -1,16 +1,11 @@
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
-import { Input as OldInput } from "@uaveiro/ui";
 import useFetch from "./Helper/useFetch";
 import axios from "axios";
 import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
-import {
-    ThemeProvider as ThemeProviderPortal,
-    Theme as ThemePortal
-  } from "@uaveiro/ui";
 import Selector from "./VisualComponents/Selector";
 import {Button, LoadingBackgroundWrapper, FormInput, Text} from "@paco_ua/pacoui";
 import Input from "./VisualComponents/Input";

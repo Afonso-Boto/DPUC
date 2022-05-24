@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
-import { Button, Counter, ThemeProvider as ThemeProviderPaco, Text, FormInput, DropdownSelector, Dropdown, Theme as ThemePaco} from "@paco_ua/pacoui"; //oq vai ser usado
-import { Text as TextPortal, ThemeProvider as ThemeProviderPortal, Theme as ThemePortal } from "@uaveiro/ui"; //para remover no final
+import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui"; 
 import Selector from "./VisualComponents/Selector";
 import axios from "axios";
 import { EntitiesContext } from "./Helper/Context";
@@ -99,9 +98,7 @@ const CreateDPUC = () => {
             { (!uos || !docentes) &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
-                    <ThemeProviderPortal theme={ThemePortal}>
-                        <TextPortal as="i" size="large" color="red"> Não foi possível carregar o formulário de criação de DPUC. </TextPortal>
-                    </ThemeProviderPortal>
+                    <Text as="i" size="large" color="red"> Não foi possível carregar o formulário de criação de DPUC. </Text>
                     </Col>
                     <Col md="auto">
                         <Button primary onClick={reloadEntities} style={{fontSize:"100%"}}>Recarregar</Button>
@@ -109,7 +106,7 @@ const CreateDPUC = () => {
                 </Row>
             }
             { errorPOST &&
-                    <TextPortal as="i" size="medium" color="red"> Não foi possível criar a UC. Por favor tente novamente mais tarde. </TextPortal>
+                    <Text as="i" size="medium" color="red"> Não foi possível criar a UC. Por favor tente novamente mais tarde. </Text>
             }
             <Row>
                 <Col>
