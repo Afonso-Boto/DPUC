@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import { Button, Counter, ThemeProvider as ThemeProviderPaco, Text, FormInput, DropdownSelector, Dropdown, Theme as ThemePaco} from "@paco_ua/pacoui"; //oq vai ser usado
-import { Select, Input, Text as TextPortal, ThemeProvider as ThemeProviderPortal, Theme as ThemePortal } from "@uaveiro/ui"; //para remover no final
+import { Text as TextPortal, ThemeProvider as ThemeProviderPortal, Theme as ThemePortal } from "@uaveiro/ui"; //para remover no final
 import Selector from "./VisualComponents/Selector";
 import axios from "axios";
 import { EntitiesContext } from "./Helper/Context";
@@ -19,7 +19,7 @@ const CreateDPUC = () => {
     const [loadingPOST, setLoadingPOST] = useState(false);
 
 
-    const { retryFetch, setRetry, uos, docentes, docentesOptions, uosOptions } = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, docentes } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
     const [ucUO, setUO] = useState(null);

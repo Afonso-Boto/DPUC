@@ -1,15 +1,10 @@
 import { Button, LoadingBackgroundWrapper, Text } from "@paco_ua/pacoui";
-import { Text as TextPortal, AnimatedBackground } from "@uaveiro/ui";
 import { Container, Row, Col } from "react-bootstrap";
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
-import {
-    ThemeProvider as ThemeProviderPortal,
-    Theme as ThemePortal,
-  } from "@uaveiro/ui";
 import ApproveDPUC from "./Actions/ApproveDPUC";
 import CloseDPUC from "./Actions/CloseDPUC";
 
