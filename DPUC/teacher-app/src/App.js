@@ -21,8 +21,7 @@ function App() {
           <div className="content">
               <WhiteNav/>
               <BlueNav/>
-              <Container style={{paddingLeft:"0", marginLeft:"0"}}>
-                <Row>
+                <Row style={{paddingLeft:"0", marginLeft:"0", paddingRight:"0", marginRight:"0"}}>
                   <Col md={"auto"} style={{maxWidth:"80px", minWidth:"80px",backgroundColor:"#302C2C"}}>
                     <SideNav/>
                   </Col>
@@ -37,7 +36,6 @@ function App() {
                   </Switch>
                 </Col>
                 </Row>
-              </Container>
           </div>
         </div>
       </Router>
