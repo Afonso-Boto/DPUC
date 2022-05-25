@@ -8,6 +8,7 @@ public interface CreationService {
     List<Estado> getEstados();
     List<PeriodoLetivo> getPeriodos();
     List<DpucUc> getDPUCs();
+    DpucUc getDPUC(int id);
     List<UnidadeOrganica> getUOs();
     List<Curso> getCursos();
     List<Curso> getCursos(String UO);
