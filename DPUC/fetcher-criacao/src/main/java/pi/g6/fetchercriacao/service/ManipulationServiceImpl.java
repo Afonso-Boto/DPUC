@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Repository
 @Log4j2
@@ -64,10 +67,12 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
     public HttpStatus editarDpuc(JSONObject dpuc, int dpucid) {
         try{
             // Update dpuc
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date d = new Date();
+            df.format(d);
 
-            LocalDate currentDate = LocalDate.now();
             String sql = "UPDATE dpuc SET duracao=?, carga_horaria=?, horas_contacto=?, horas_trabalho=?, objetivos=?, conteudos=?, coerencia_conteudos=?, metodologias=?, coerencia_metodologia=?, bibliografia=?, observacoes=?, regime_faltas=?, linguas=?, modalidade=?, requisitos=?, ficheiros=?, data_alteracao=?, pagina_publica=?, funcionamento=?, aprendizagem=? WHERE id=?";
-            getJdbcTemplate().update(sql, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologias"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), currentDate.toString(), dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
+            getJdbcTemplate().update(sql, dpuc.getString("duracao"), dpuc.getString("carga_horaria"), dpuc.get("horas_contacto"), dpuc.get("horas_trabalho"), dpuc.getString("objetivos"), dpuc.getString("conteudos"), dpuc.getString("coerencia_conteudos"), dpuc.getString("metodologias"), dpuc.getString("coerencia_metodologias"), dpuc.getString("bibliografia"), dpuc.getString("observacoes"), dpuc.getString("regime_faltas"), dpuc.getString("linguas"), dpuc.getString("modalidade"), dpuc.getString("requisitos"), dpuc.getString("ficheiros").getBytes(), d, dpuc.getString("pagina_publica"), dpuc.getString("funcionamento"), dpuc.getString("aprendizagem"), dpucid);
 
         }catch (Exception e){
             log.warn(e.getMessage());
@@ -91,8 +96,12 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
             // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default) adicionar regente , ver isto melhor
-            String sql3 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, UCid, utilizadoresid) VALUES(?, ?, ?, ?, ?)";
-            getJdbcTemplate().update(sql3, 0, 2, 1, UCid, regenteid);
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date d = new Date();
+            df.format(d);
+
+            String sql3 = "INSERT INTO dpuc(criacao_edicao, estadoid, periodo_letivoid, data_alteracao, UCid, utilizadoresid) VALUES(?, ?, ?, ?, ?, ?)";
+            getJdbcTemplate().update(sql3, 0, 2, 1, d, UCid, regenteid);
         }catch (Exception e){
             log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
