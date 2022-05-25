@@ -4,11 +4,15 @@ import { Row, Col, Container } from "react-bootstrap";
 import { LoadingBackgroundWrapper, Button, Text} from "@paco_ua/pacoui"
 import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
+import useFetch from '../Helper/useFetch';
 
-
-const DPUCList = ({dpucs, loading, error, canCreate}) => {
+const DPUCList = ({canCreate}) => {
 
     const navigate = useNavigate();
+
+    const URL_DPUC = "http://localhost:8000/dpuc";
+
+    const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 
     const filterOptions = [
         {

@@ -4,15 +4,13 @@ import useFetch from "./useFetch";
 const useGetAPIEntities = () => {
 
     // Fetcher criação
-    //const URL_UOS = "http://localhost:82/creation/uos";
-
-    // JSON SERVER
     const URL_UOS = "http://localhost:82/creation/uos";
-    const URL_AREAS = "http://localhost:8000/areas";
     const URL_CURSOS = "http://localhost:82/creation/cursos";
-    const URL_IDIOMAS = "http://localhost:8000/idiomas";
     const URL_DOCENTES = "http://localhost:82/creation/docentes";
+    const URL_AREAS = "http://localhost:8000/areas";
+    //const URL_IDIOMAS = "http://localhost:8000/idiomas";
     
+    // JSON SERVER
     // const URL_MODALIDADES = "http://localhost:8000/modalidades";
     // const URL_GRAUS = "http://localhost:8000/graus";
     // const URL_SEMESTRE = "http://localhost:8000/semestres";
@@ -25,8 +23,9 @@ const useGetAPIEntities = () => {
     const { data: uos } = useFetch(URL_UOS, retryFetch);
     const { data: cursos } = useFetch(URL_CURSOS, retryFetch);
     const { data: areas } = useFetch(URL_AREAS, retryFetch);
-    const { data: idiomas } = useFetch(URL_IDIOMAS, retryFetch);
     const { data: docentes } = useFetch(URL_DOCENTES, retryFetch);
+    
+    //const { data: idiomas } = useFetch(URL_IDIOMAS, retryFetch);
 
     // const { data: modalidades } = useFetch(URL_MODALIDADES, retryFetch);
     // const { data: graus } = useFetch(URL_GRAUS, retryFetch);
@@ -54,6 +53,13 @@ const useGetAPIEntities = () => {
         { id: 1, nome: "Semestral" },
         { id: 2, nome: "Anual" }
       ];
+
+    const idiomas = [
+      { id: 1, nome: "Português" },
+      { id: 2, nome: "Inglês" },
+      { id: 3, nome: "Espanhol" },
+      { id: 3, nome: "Alemão" },
+    ];
 
     return {retryFetch, setRetry, 
         uos, cursos, graus, areas, idiomas, 
