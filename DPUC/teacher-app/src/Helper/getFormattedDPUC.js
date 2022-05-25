@@ -77,7 +77,7 @@ const getFormattedDPUC = (dpuc) => {
         avaliacao: dpuc.avaliacao, 
         periodo_letivoid: formattedPeriodo,  
         data_alteracao: data_alteracao,  
-        estadoid: dpuc.estado 
+        estadoid: dpuc.estado.id 
     };
 }
  

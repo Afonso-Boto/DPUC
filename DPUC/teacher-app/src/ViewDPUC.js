@@ -15,7 +15,8 @@ const ViewDPUC = () => {
 
     const { userType } = useContext(UserContext);
 
-    const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
 
     const navigate = useNavigate();
 
@@ -108,7 +109,7 @@ const ViewDPUC = () => {
                     </Col>
                     {   detailedView && dpuc.estado &&
                         <Col sm={"auto"}>
-                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado}</Text>
+                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado.descricao}</Text>
                         </Col>
                     }
                 </Row>
@@ -297,12 +298,12 @@ const ViewDPUC = () => {
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall" fontWeight="500">Área Científica </Text>
-                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.areaCientifica.nome}</Text>
+                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.areaCientifica.designacao}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500">Docente Responsável </Text>
-                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.responsavel.nome_completo}</Text>
+                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.responsavel.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
@@ -336,7 +337,7 @@ const ViewDPUC = () => {
                             }
                             <Row style={{paddingBottom:"10px"}}>
                                 <Text as="span" size="mediumSmall" fontWeight="500">Cursos </Text>
-                                {
+                                {dpuc.cursos.length > 0 &&
                                  dpuc.cursos.map((curso) => (
                                     <li><Text size="mediumSmall" fontWeight="350">{curso.nome}</Text></li>
                                  ))   

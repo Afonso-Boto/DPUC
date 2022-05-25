@@ -47,7 +47,7 @@ const useGetDPUC = (data) => {
 
     const [error, setError] = useState(false);
     const [parsing, setParsing] = useState(false);
-    const {cursos:entCursos, graus, areas, idiomas, duracoes, semestre, uos, modalidades, docentes: entDocentes} = useContext(EntitiesContext);
+    const {cursos:entCursos, graus, areas, idiomas, duracoes, semestre, uos, estados, modalidades, docentes: entDocentes} = useContext(EntitiesContext);
     
     useEffect(() => {
         
@@ -60,8 +60,7 @@ const useGetDPUC = (data) => {
                 setCriacaoEdicao(data.criacao_edicao);
             if(data.objetivos)
                 setObjetivos(data.objetivos);
-            if(data.estadoid)
-                setEstado(data.estadoid);
+            
             if(data.horas_contacto)
                 setHorasOT(data.horas_contacto);
             if(data.conteudos)
@@ -101,6 +100,9 @@ const useGetDPUC = (data) => {
             if(data.ects)
                 setEcts(data.ects);
 
+            if(data.estadoid && estados)
+                setEstado(estados.find((e) => (e.id === data.estadoid)));
+
             if(data.sigla_ac && areas)
                 setAreaCientifica(areas.find((a) => (a.id === data.sigla_ac)));
                 
@@ -126,7 +128,8 @@ const useGetDPUC = (data) => {
                     cList.push(entCursos.find((curso) => curso.nome === c[ci]));
                 setCursos(cList);
             }
-
+            console.log(data.cursos)
+            console.log(cursos)
             if(data.linguas && idiomas){
                 const l = data.linguas.split("$").filter((e) => e.length > 0);
                 let lList = [];
@@ -143,7 +146,7 @@ const useGetDPUC = (data) => {
                 const d = data.docentes.split("$").filter((e) => e.length > 0);
                 let dList = [];
                 for(var di = 0; di < d.length; di++)
-                    dList.push(entDocentes.find((docente) => docente.cod_int.toString() === d[di]));
+                    dList.push(entDocentes.find((docente) => docente.id.toString() === d[di]));
                 setDocentes(dList);
             }
 
