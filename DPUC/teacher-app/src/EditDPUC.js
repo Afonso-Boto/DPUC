@@ -14,7 +14,8 @@ const EditDPUC = () => {
 
     const { id } = useParams();
 
-    const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
 
     const navigate = useNavigate();
     
@@ -45,8 +46,6 @@ const EditDPUC = () => {
             .finally( () => {
                 setLoadingPUT(false);
             });
-
-        console.log(getFormattedDPUC(dpuc, "Em Edição"));     
     }
     const handleBack = () => {
         navigate("/");
@@ -54,9 +53,6 @@ const EditDPUC = () => {
     const reloadEntities = () => {
         setRetry(retryFetch + 1);
     }
-
-    if(dpuc)
-        console.log(dpuc);
 
     return ( 
         <Container>
@@ -129,7 +125,7 @@ const EditDPUC = () => {
                             }
                         </Col>
                     </Row>
-                    {/* Regente e ECTS*/}
+                    {/* Regente, ECTS e Código*/}
                     <Row style={{paddingTop:"10px"}}>
                         <Col lg={"auto"}>
                             <h3>
@@ -140,7 +136,7 @@ const EditDPUC = () => {
                             { dpuc.responsavel &&
                                 <h4>
                                     <Text as="h4" size="medium" fontWeight="400">
-                                        {dpuc.responsavel.nome_completo}
+                                        {dpuc.responsavel.nmec} - {dpuc.responsavel.nome}
                                     </Text>
                                 </h4>
                             }
@@ -157,13 +153,32 @@ const EditDPUC = () => {
                                 </Text>
                             </h4>
                         </Col>
+                        <Col lg={"auto"}>
+                            <h3>
+                                <Text as="h3" size="large" color="primary" fontWeight="400">
+                                    Código
+                                </Text>
+                            </h3>
+                            <h4>
+                                <Text as="h4" size="medium" fontWeight="400">
+                                    {
+                                     dpuc.codigo && dpuc.codigo
+                                     || "-"
+                                    }
+                                </Text>
+                            </h4>
+                        </Col>
                     </Row>
                     <hr className="custom-hr"/>
                     <Row>
                         <Col>
-                            <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
-                            { dpuc.dataAlteracao &&
+                        { dpuc.dataAlteracao &&
+                            <>
+                                <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
                                 <Text as="span" size="medium">{dpuc.dataAlteracao.toLocaleDateString()}</Text>
+                            </>
+                            ||
+                                "Sem alterações prévias"
                             }
                         </Col>
                         <Col>
@@ -192,7 +207,7 @@ const EditDPUC = () => {
                         </div>
                         <div className="col-lg-6">
                             <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
+                                <Text size="large" color="primary" fontWeight="400">
                                     Grau do Ciclo de estudos*
                                 </Text>
                             </h3>

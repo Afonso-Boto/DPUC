@@ -7,6 +7,8 @@ public class Uc {
     private String designacao;
     private int sigla_ac;
     private int unidade_organicaid;
+    private int ects;
+
 
     public int getId() {
         return id;
@@ -47,4 +49,13 @@ public class Uc {
     public void setUnidade_organicaid(int unidade_organicaid) {
         this.unidade_organicaid = unidade_organicaid;
     }
+
+    public int getEcts() {
+        return ects;
+    }
+
+    public void setEcts(int ects) {
+        this.ects = ects;
+    }
+
 }

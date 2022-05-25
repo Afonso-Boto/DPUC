@@ -112,7 +112,6 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
                     throw new Exception();
                 }
 
-
             }catch (Exception e){
                 log.info(e.getMessage());
                 continue;
@@ -121,7 +120,6 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             //log.info(dpuc);
 
             dpucList.add(dpuc);
-
         }
         //Check this code
         //Check this code
@@ -135,22 +133,38 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         query = "SELECT * FROM UC";
         rows = getJdbcTemplate().queryForList(query);
         Map<Integer, Uc> ucMap = new HashMap<>();
+        Map<Integer, String> ucCursos = new HashMap<>();
 
         for (Map<String, Object> row : rows) {
             Uc uc = new Uc();
             uc.setId((int) row.get("id"));
             uc.setDesignacao((String) row.get("designacao"));
+            uc.setUnidade_organicaid((int) row.get("unidade_organicaid"));
             if(row.get("codigo") != null)
                 uc.setCodigo(Integer.parseInt((String) row.get("codigo")));
-            uc.setUnidade_organicaid((int) row.get("unidade_organicaid"));
             if(row.get("ACid") != null)
                 uc.setSigla_ac((int) row.get("ACid"));
+            if(row.get("ects") != null)
+                uc.setEcts((int) row.get("ects"));
             ucMap.put(uc.getId(), uc);
+
+            // Obtain cursos
+            query = "SELECT * FROM curso_UC WHERE UCid=" + uc.getId();
+            String cursos = "";
+            List<Map<String, Object>> cursosRow = getJdbcTemplate().queryForList(query);
+            for (Map<String, Object> r : cursosRow){
+                if(r.get("cursoid") != null)
+                    cursos += (String) r.get("cursoid") + "$";
+            }
+            if(cursos.isEmpty())
+                cursos = null;
+            ucCursos.put(uc.getId(), cursos);
         }
 
         for(Dpuc dpuc: dpucList){
-            result.add(new DpucUc(dpuc, ucMap.get(dpuc.getUcID())));
+            result.add(new DpucUc(dpuc, ucMap.get(dpuc.getUcID()), ucCursos.get(dpuc.getUcID())));
         }
+
 
         return result;
     }
@@ -227,21 +241,34 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         query = "SELECT * FROM UC WHERE id="+dpucList.get(0).getUcID();
         rows = getJdbcTemplate().queryForList(query);
         List<Uc> ucList = new ArrayList<>();
+        String cursos = "";
 
         for (Map<String, Object> row : rows) {
             Uc uc = new Uc();
             uc.setId((int) row.get("id"));
             uc.setDesignacao((String) row.get("designacao"));
+            uc.setUnidade_organicaid((int) row.get("unidade_organicaid"));
+
             if(row.get("codigo") != null)
                 uc.setCodigo(Integer.parseInt((String) row.get("codigo")));
-            uc.setUnidade_organicaid((int) row.get("unidade_organicaid"));
             if(row.get("ACid") != null)
                 uc.setSigla_ac((int) row.get("ACid"));
+            if(row.get("ects") != null)
+                uc.setEcts((int) row.get("ects"));
             ucList.add(uc);
+
+            // Obtain cursos
+            query = "SELECT * FROM curso_UC WHERE UCid=" + uc.getId();
+            List<Map<String, Object>> cursosRow = getJdbcTemplate().queryForList(query);
+            for (Map<String, Object> r : cursosRow){
+                if(r.get("cursoid") != null)
+                    cursos += (String) r.get("cursoid") + "$";
+            }
             break;
         }
-
-        return new DpucUc(dpucList.get(0), ucList.get(0));
+        if(cursos.isEmpty())
+            cursos = null;
+        return new DpucUc(dpucList.get(0), ucList.get(0), cursos);
     }
 
     @Override

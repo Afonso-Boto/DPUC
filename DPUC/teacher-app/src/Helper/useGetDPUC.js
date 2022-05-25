@@ -3,12 +3,14 @@ import { EntitiesContext } from "./Context";
 
 const useGetDPUC = (data) => {
         
+    const [unidade_organicaid, setUoid] = useState({});
+    const [ACid, setACid] = useState({});
+
     const [designacao, setDesignacao] = useState("");
     const [estado, setEstado] = useState("");
-    const [ACid, setACid] = useState({});
     const [duracao, setDuracao] = useState({});
     const [codigo, setCodigo] = useState("");
-    const [responsavel, setResponsavel] = useState({}); //?
+    const [responsavel, setResponsavel] = useState({});
     const [carga_horaria, setCarga_horaria] = useState(null); // Ainda não se sabe o que é isto
     const [horasOT, setHorasOT] = useState(0);
     const [horasTP, setHorasTP] = useState(0);
@@ -24,7 +26,6 @@ const useGetDPUC = (data) => {
     const [coerencia_metodologia, setCoerencia_metodologia] = useState("");
     const [bibliografia, setBibliografia] = useState("");
     const [observacoes, setObservacoes] = useState("");
-    const [unidade_organicaid, setUoid] = useState({});
     const [cursos, setCursos] = useState([]);
     const [regime_faltas, setRegime_faltas] = useState("");
     const [linguas, setLinguas] = useState([]);
@@ -34,10 +35,11 @@ const useGetDPUC = (data) => {
     const [pagina_publica, setPagina_publica] = useState("");
     const [funcionamento, setFuncionamento] = useState("");
     const [aprendizagem, setAprendizagem] = useState("");
-    const [grau, setGrau] = useState({});
+    const [grau, setGrau] = useState([]);
     const [avaliacao, setAvaliacao] = useState({});
     const [periodo, setPeriodo] = useState({});
     const [data_alteracao, setData_alteracao] = useState("");
+    const [unidadeOrganica, setUnidadeOrganica] = useState({});
     
     const [error, setError] = useState(false);
     const [parsing, setParsing] = useState(false);
@@ -48,6 +50,7 @@ const useGetDPUC = (data) => {
         setParsing(true);
         setError(false);
         if(data){
+            console.table(data);
             if(data.objetivos)
                 setObjetivos(data.objetivos);
             if(data.estado)
@@ -82,8 +85,8 @@ const useGetDPUC = (data) => {
                 setAvaliacao(data.avaliacao);
             if(data.designacao)
                 setDesignacao(data.designacao);
-            if(data.codigo)
-                setCodigo(data.codigo);
+            if(data.ucCodigo)
+                setCodigo(data.ucCodigo);
             if(data.carga_horaria)
                 setCarga_horaria(data.carga_horaria);
             if(data.horas_trabalho)
@@ -101,14 +104,13 @@ const useGetDPUC = (data) => {
                 setPeriodo(semestre.find((s) => (s.nome === data.periodo)));
             if(data.modalidade && modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
+
             if(data.unidade_organicaid && uos)
-                setUoid(uos.find((uo) => (uo.id === data.unidade_organicaid)));
-            
+                setUnidadeOrganica(uos.find((uo) => (uo.id === data.unidade_organicaid)));
             if(data.data_alteracao){
                 const dataDPUC = data.data_alteracao.split("-");
                 setData_alteracao(new Date(dataDPUC[0], dataDPUC[1]-1, dataDPUC[2]));
             }
-
             if(data.cursos && entCursos){
                 const c = data.cursos.split("$").filter((e) => e.length > 0);
                 let cList = [];
@@ -117,6 +119,8 @@ const useGetDPUC = (data) => {
                 setCursos(cList);
             }
 
+            console.log(cursos);
+            console.log(grau);
             if(data.linguas && idiomas){
                 const l = data.linguas.split("$").filter((e) => e.length > 0);
                 let lList = [];
@@ -125,8 +129,8 @@ const useGetDPUC = (data) => {
                 setLinguas(lList);
             }
 
-            if(data.responsavel && entDocentes){
-                setResponsavel(entDocentes.find((docente) => docente.cod_int === data.responsavel));
+            if(data.regenteID && entDocentes){
+                setResponsavel(entDocentes.find((docente) => docente.id === data.regenteID));
             }
 
             if(data.docentes && entDocentes){
@@ -155,9 +159,11 @@ const useGetDPUC = (data) => {
     }, [data]);    
 
     const dpuc = {
+        ACid,
+        unidade_organicaid,
+
         designacao,
         estado,
-        ACid,
         duracao,
         codigo,
         responsavel,
@@ -176,7 +182,6 @@ const useGetDPUC = (data) => {
         coerencia_metodologia,
         bibliografia,
         observacoes,
-        unidade_organicaid,
         cursos,
         regime_faltas,
         linguas,
@@ -189,13 +194,15 @@ const useGetDPUC = (data) => {
         grau,
         avaliacao,
         periodo,
-        data_alteracao   
+        data_alteracao,
+        unidadeOrganica
     };
 
     const dpucSet = {
+        setACid,
+        setUoid,
         setDesignacao,
         setEstado,
-        setACid,
         setDuracao,
         setCodigo,
         setResponsavel,
@@ -214,7 +221,6 @@ const useGetDPUC = (data) => {
         setCoerencia_metodologia,
         setBibliografia,
         setObservacoes,
-        setUoid,
         setCursos,
         setRegime_faltas,
         setLinguas,
@@ -227,7 +233,8 @@ const useGetDPUC = (data) => {
         setGrau,
         setAvaliacao,
         setPeriodo,
-        setData_alteracao
+        setData_alteracao,
+        setUnidadeOrganica
     };
 
     return { error, parsing, dpuc, dpucSet }

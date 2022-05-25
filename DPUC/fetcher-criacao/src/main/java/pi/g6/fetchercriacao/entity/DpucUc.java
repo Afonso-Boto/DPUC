@@ -31,10 +31,12 @@ public class DpucUc {
     private int regenteID;
     private int ucCodigo;
     private String designacao;
-    private int sigla_ac;
     private int unidade_organicaid;
+    private int sigla_ac;
+    private int ects;
+    private String cursos;
 
-    public DpucUc(Dpuc dpuc, Uc uc){
+    public DpucUc(Dpuc dpuc, Uc uc, String cursos){
         id = dpuc.getId();
         criacao_edicao = dpuc.getCriacao_edicao();
         duracao = dpuc.getDuracao();
@@ -64,6 +66,8 @@ public class DpucUc {
         designacao = uc.getDesignacao();
         sigla_ac = uc.getSigla_ac();
         unidade_organicaid = uc.getUnidade_organicaid();
+        ects = uc.getEcts();
+        this.cursos = cursos;
     }
 
     public int getId() {
@@ -296,6 +300,22 @@ public class DpucUc {
 
     public void setUnidade_organicaid(int unidade_organicaid) {
         this.unidade_organicaid = unidade_organicaid;
+    }
+
+    public int getEcts() {
+        return ects;
+    }
+
+    public void setEcts(int ects) {
+        this.ects = ects;
+    }
+
+    public String getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(String cursos) {
+        this.cursos = cursos;
     }
 
     @Override
