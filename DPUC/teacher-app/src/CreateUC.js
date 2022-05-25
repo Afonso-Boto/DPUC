@@ -19,10 +19,11 @@ const CreateDPUC = () => {
     const [loadingPOST, setLoadingPOST] = useState(false);
 
 
-    const { retryFetch, setRetry, uos, docentes } = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, docentes, areas } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
     const [ucUO, setUO] = useState(null);
+    const [ucArea, setArea] = useState(null);
     const [ucECTS, setECTS] = useState(6);
     const [ectsError, setECTSError]= useState("");
     const [ucRegente, setRegente] = useState(null);
@@ -34,7 +35,7 @@ const CreateDPUC = () => {
         setError(false);
         setErrorPOST(false);
         
-        if(ucName.length < 3 || !ucUO || !ucRegente || ucECTS < 4 || ucECTS > 30){
+        if(ucName.length < 3 || !ucArea || !ucUO || !ucRegente || ucECTS < 4 || ucECTS > 30){
             setError(true);
             return;
         }
@@ -46,8 +47,9 @@ const CreateDPUC = () => {
         dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
         dataAlt += "-";
         dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
+        
         const uc = { designacao: ucName, unidade_organicaid: ucUO.id, 
-            ects: ucECTS, dataAlteracao: dataAlt, acid: 0 }
+            ects: ucECTS, dataAlteracao: dataAlt, acid: ucArea.id }
         
         console.log(uc);
 
@@ -78,15 +80,6 @@ const CreateDPUC = () => {
         }else
             setECTSError("Valor de ECTS necessita de ser entre 4 e 30");
     };
-
-    const changeUO = (value) => {
-        setUO(uos.find((uo) => uo.id === value));
-
-    }
-
-    const changeRegente = (value) => {
-        setRegente(docentes.find((d) => d.cod_int === value));
-    }
 
     return ( 
         <Container fluid>
@@ -180,6 +173,23 @@ const CreateDPUC = () => {
             </Row>
             {/* ECTS*/}
             <Row style={{paddingTop:"10px"}}>
+                <Col lg={6}>
+                    <h2>
+                        <Text size="large" color="primary" fontWeight="400">
+                            Área Científica
+                        </Text>
+                    </h2>
+                    { uos && 
+                        <Selector
+                            options={areas}
+                            value={ucArea}
+                            getOptionLabel ={(option)=>(option.sigla + " - " +option.designacao)}
+                            getOptionValue ={(option)=>option.id}
+                            onChange={(e) => setArea(e)}
+                            placeholder="Indique a Área Científica da UC..."
+                        />
+                    }
+                </Col>
                 <Col>
                     <Text size="large" color="primary" fontWeight="400">
                         ECTS
