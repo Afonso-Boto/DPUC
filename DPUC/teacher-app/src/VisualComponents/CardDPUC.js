@@ -39,8 +39,6 @@ const GetData = ({dpuc}) => {
 }
 
 const CardDPUC = ({dpuc}) => {
-    console.table(dpuc)
-
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
