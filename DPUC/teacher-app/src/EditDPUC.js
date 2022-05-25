@@ -35,7 +35,7 @@ const EditDPUC = () => {
 
         setErrorPUT(false);
         setLoadingPUT(true);
-
+        
         console.log(getFormattedDPUC(dpuc))
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
