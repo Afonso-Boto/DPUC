@@ -55,3 +55,32 @@ hr{
   padding: 4px;
   border: 1px solid #424242;
 }
+
+.modal-ua div {
+  border-radius: 0px !important;
+}
+
+input{
+  border-color: #000000;
+  border-radius: 0px;
+}
+
+textarea div{
+  border-radius: 0px;
+}
+
+.form-control{
+  box-shadow: none;
+  border-radius: 0px;
+  border: 1px solid black;
+  
+}
+
+.form-control:focus{
+  box-shadow: 0 0 0 0;
+  border-radius: 0px;
+  border: 2px solid black;
+  outline: none !important;
+  border-color: #000000;
+  box-shadow: 0 0 10px #000000;
+}

@@ -37,7 +37,7 @@ const CardDPUC = ({dpuc}) => {
                         <Col>
                             <Row>
                                 <Text fontWeight="400" size="mediumSmall">
-                                    Ultima alteração: {dpuc.data_alteracao}
+                                    Ultima alteração: {dpuc.dataAlteracao}
                                 </Text>
                             </Row>
                             <Row>
