@@ -35,11 +35,8 @@ def connect():
 
 
 def get_relevant_search(conn: Elasticsearch, keywords: list=None) -> list:
-    size = len(keywords)
     query = None
-    if size >= 1:
-        if size > 1:
-            half = int(size/2)
+    if len(keywords) >= 1:
         query = {
             "multi_match": {
                 "query": keywords,

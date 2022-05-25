@@ -13,10 +13,28 @@ def search_dpuc(request):
 
     if request.method == "GET":
         keywords = request.GET.get('keywords', '')
-        print(f"keywords: {keywords}")
         conn = es.connect()
         if conn:
             docs = es.get_relevant_search(conn, keywords)
             return Response(docs, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def similars_dpuc(request):
+
+    if request.method == "GET":
+        id = request.GET.get("id", '')
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def update(request):
+
+    if request.method == "GET":
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+
