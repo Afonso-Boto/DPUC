@@ -10,7 +10,8 @@ const DPUCList = ({canCreate}) => {
 
     const navigate = useNavigate();
 
-    const URL_DPUC = "http://localhost:8000/dpuc";
+    const URL_DPUC = "http://localhost:82/creation/dpucs";
+    //const URL_DPUC = "http://localhost:8000/dpuc";
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 

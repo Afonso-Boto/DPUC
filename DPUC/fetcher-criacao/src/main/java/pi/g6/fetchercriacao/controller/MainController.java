@@ -61,10 +61,15 @@ public class MainController {
     }
 
     @GetMapping("/dpucs")
-    public ResponseEntity<List<Dpuc>> getDpucs(){
+    public ResponseEntity<List<DpucUc>> getDpucs(){
         return new ResponseEntity<>(creationService.getDPUCs(), HttpStatus.OK);
     }
-
+/*
+    @GetMapping("/dpucs/id")
+    public ResponseEntity<DpucUc> getDpuc(@RequestParam("id") int id){
+        return new ResponseEntity<>(creationService.getDPUC(id), HttpStatus.OK);
+    }
+*/
     @GetMapping("/uos")
     public ResponseEntity<List<UnidadeOrganica>> getUOs(){
         return new ResponseEntity<>(creationService.getUOs(), HttpStatus.OK);

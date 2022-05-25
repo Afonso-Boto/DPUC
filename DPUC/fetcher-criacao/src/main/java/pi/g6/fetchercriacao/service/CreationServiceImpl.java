@@ -58,11 +58,13 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
     }
 
     @Override
-    public List<Dpuc> getDPUCs() {
+    public List<DpucUc> getDPUCs() {
         String query = "SELECT * FROM dpuc";
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
-        List<Dpuc> result = new ArrayList<>();
+        List<DpucUc> result = new ArrayList<>();
+
+        List<Dpuc> dpucList = new ArrayList<>();
 
         for (Map<String, Object> row : rows){
             Dpuc dpuc = new Dpuc();
@@ -118,9 +120,37 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             log.info("DPUC has ID HYEEEE");
             log.info(dpuc);
 
-            result.add(dpuc);
+            dpucList.add(dpuc);
 
         }
+        //Check this code
+        //Check this code
+        //Check this code
+        //Check this code
+        //Check this code
+        //Check this code
+        //Check this code
+        //Check this code
+
+        query = "SELECT * FROM UC";
+        rows = getJdbcTemplate().queryForList(query);
+        Map<Integer, Uc> ucMap = new HashMap<>();
+
+        for (Map<String, Object> row : rows) {
+            Uc uc = new Uc();
+            uc.setId((int) row.get("id"));
+            uc.setDesignacao((String) row.get("designacao"));
+            if(row.get("codigo") != null)
+                uc.setCodigo(Integer.parseInt((String) row.get("codigo")));
+            uc.setUnidade_organicaid((int) row.get("unidade_organicaid"));
+            uc.setSigla_ac((int) row.get("ACid"));
+            ucMap.put(uc.getId(), uc);
+        }
+
+        for(Dpuc dpuc: dpucList){
+            result.add(new DpucUc(dpuc, ucMap.get(dpuc.getUcID())));
+        }
+
         return result;
     }
 

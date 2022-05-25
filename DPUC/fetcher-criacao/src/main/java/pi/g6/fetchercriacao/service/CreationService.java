@@ -7,7 +7,7 @@ import java.util.List;
 public interface CreationService {
     List<Estado> getEstados();
     List<PeriodoLetivo> getPeriodos();
-    List<Dpuc> getDPUCs();
+    List<DpucUc> getDPUCs();
     List<UnidadeOrganica> getUOs();
     List<Curso> getCursos();
     List<Curso> getCursos(String UO);

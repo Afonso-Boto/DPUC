@@ -7,14 +7,16 @@ const useGetAPIEntities = () => {
     const URL_UOS = "http://localhost:82/creation/uos";
     const URL_CURSOS = "http://localhost:82/creation/cursos";
     const URL_DOCENTES = "http://localhost:82/creation/docentes";
+    const URL_ESTADOS = "http://localhost:82/creation/estados";
+    
     const URL_AREAS = "http://localhost:8000/areas";
-    //const URL_IDIOMAS = "http://localhost:8000/idiomas";
     
     // JSON SERVER
     // const URL_MODALIDADES = "http://localhost:8000/modalidades";
     // const URL_GRAUS = "http://localhost:8000/graus";
     // const URL_SEMESTRE = "http://localhost:8000/semestres";
     // const URL_DURACOES = "http://localhost:8000/duracoes";
+    // const URL_IDIOMAS = "http://localhost:8000/idiomas";
 
     // If this number changes, API requests will be re-done
     const [ retryFetch, setRetry ] = useState(0);
@@ -24,6 +26,7 @@ const useGetAPIEntities = () => {
     const { data: cursos } = useFetch(URL_CURSOS, retryFetch);
     const { data: areas } = useFetch(URL_AREAS, retryFetch);
     const { data: docentes } = useFetch(URL_DOCENTES, retryFetch);
+    const { data: estados } = useFetch(URL_ESTADOS, retryFetch);
     
     //const { data: idiomas } = useFetch(URL_IDIOMAS, retryFetch);
 
@@ -64,6 +67,7 @@ const useGetAPIEntities = () => {
     return {retryFetch, setRetry, 
         uos, cursos, graus, areas, idiomas, 
         duracoes, semestre, modalidades, docentes,
+        estados
     };
 }
 

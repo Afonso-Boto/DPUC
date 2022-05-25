@@ -2,8 +2,8 @@ package pi.g6.fetchercriacao.entity;
 
 import java.util.Arrays;
 
-public class Dpuc {
-    
+public class DpucUc {
+
     private int id;
     private boolean criacao_edicao;
     private String duracao;
@@ -28,24 +28,42 @@ public class Dpuc {
     private String aprendizagem;
     private int estadoid;
     private int periodo_letivoid;
-    private int ucID;
     private int regenteID;
+    private int ucCodigo;
+    private String designacao;
+    private int sigla_ac;
+    private int unidade_organicaid;
 
-
-    public int getUcID() {
-        return ucID;
-    }
-
-    public void setUcID(int ucID) {
-        this.ucID = ucID;
-    }
-
-    public int getRegenteID() {
-        return regenteID;
-    }
-
-    public void setRegenteID(int regenteID) {
-        this.regenteID = regenteID;
+    public DpucUc(Dpuc dpuc, Uc uc){
+        id = dpuc.getId();
+        criacao_edicao = dpuc.getCriacao_edicao();
+        duracao = dpuc.getDuracao();
+        carga_horaria = dpuc.getCarga_horaria();
+        horas_contacto = dpuc.getHoras_contacto();
+        horas_trabalho = dpuc.getHoras_trabalho();
+        objetivos = dpuc.getObjetivos();
+        conteudos = dpuc.getConteudos();
+        coerencia_conteudos = dpuc.getCoerencia_conteudos();
+        metodologias = dpuc.getMetodologias();
+        coerencia_metodologias = dpuc.getCoerencia_metodologias();
+        bibliografia = dpuc.getBibliografia();
+        observacoes =dpuc.getObservacoes() ;
+        regime_faltas = dpuc.getRegime_faltas();
+        linguas = dpuc.getLinguas();
+        modalidade = dpuc.getModalidade();
+        requisitos = dpuc.getRequisitos();
+        ficheiros = dpuc.getFicheiros();
+        data_alteracao = dpuc.getData_alteracao();
+        pagina_publica = dpuc.getPagina_publica();
+        funcionamento = dpuc.getFuncionamento();
+        aprendizagem = dpuc.getAprendizagem();
+        estadoid = dpuc.getEstadoid();
+        periodo_letivoid = dpuc.getPeriodo_letivoid();
+        regenteID = dpuc.getRegenteID();
+        ucCodigo = uc.getCodigo();
+        designacao = uc.getDesignacao();
+        sigla_ac = uc.getSigla_ac();
+        unidade_organicaid = uc.getUnidade_organicaid();
     }
 
     public int getId() {
@@ -62,10 +80,6 @@ public class Dpuc {
 
     public void setCriacao_edicao(boolean criacao_edicao) {
         this.criacao_edicao = criacao_edicao;
-    }
-
-    public boolean getCriacao_edicao(){
-        return criacao_edicao;
     }
 
     public String getDuracao() {
@@ -244,15 +258,55 @@ public class Dpuc {
         this.periodo_letivoid = periodo_letivoid;
     }
 
+    public int getRegenteID() {
+        return regenteID;
+    }
+
+    public void setRegenteID(int regenteID) {
+        this.regenteID = regenteID;
+    }
+
+    public int getUcCodigo() {
+        return ucCodigo;
+    }
+
+    public void setUcCodigo(int ucCodigo) {
+        this.ucCodigo = ucCodigo;
+    }
+
+    public String getDesignacao() {
+        return designacao;
+    }
+
+    public void setDesignacao(String designacao) {
+        this.designacao = designacao;
+    }
+
+    public int getSigla_ac() {
+        return sigla_ac;
+    }
+
+    public void setSigla_ac(int sigla_ac) {
+        this.sigla_ac = sigla_ac;
+    }
+
+    public int getUnidade_organicaid() {
+        return unidade_organicaid;
+    }
+
+    public void setUnidade_organicaid(int unidade_organicaid) {
+        this.unidade_organicaid = unidade_organicaid;
+    }
+
     @Override
     public String toString() {
-        return "Dpuc{" +
+        return "DpucUc{" +
                 "id=" + id +
                 ", criacao_edicao=" + criacao_edicao +
                 ", duracao='" + duracao + '\'' +
                 ", carga_horaria='" + carga_horaria + '\'' +
-                ", horas_contacto=" + horas_contacto +
-                ", horas_trabalho=" + horas_trabalho +
+                ", horas_contacto='" + horas_contacto + '\'' +
+                ", horas_trabalho='" + horas_trabalho + '\'' +
                 ", objetivos='" + objetivos + '\'' +
                 ", conteudos='" + conteudos + '\'' +
                 ", coerencia_conteudos='" + coerencia_conteudos + '\'' +
@@ -271,8 +325,11 @@ public class Dpuc {
                 ", aprendizagem='" + aprendizagem + '\'' +
                 ", estadoid=" + estadoid +
                 ", periodo_letivoid=" + periodo_letivoid +
-                ", ucID=" + ucID +
                 ", regenteID=" + regenteID +
+                ", ucCodigo=" + ucCodigo +
+                ", designacao='" + designacao + '\'' +
+                ", sigla_ac=" + sigla_ac +
+                ", unidade_organicaid=" + unidade_organicaid +
                 '}';
     }
 }
