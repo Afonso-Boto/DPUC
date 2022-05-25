@@ -118,7 +118,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
                 continue;
             }
             log.info("DPUC has ID HYEEEE");
-            log.info(dpuc);
+            //log.info(dpuc);
 
             dpucList.add(dpuc);
 
@@ -340,6 +340,25 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         return result;
     }
 
+    @Override
+    public List<AreaCientifica> getAreasCientificas() {
+        String query = "SELECT * FROM AC";
 
+        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+        List<AreaCientifica> result = new ArrayList<>();
+        for (Map<String, Object> row : rows) {
+
+            AreaCientifica ac = new AreaCientifica();
+            ac.setId((int) row.get("id"));
+            if(row.get("designacao") != null)
+                ac.setDesignacao((String) row.get("designacao"));
+            if(row.get("sigla") != null)
+                ac.setSigla((String) row.get("sigla"));
+
+            result.add(ac);
+        }
+
+        return result;
+    }
 
 }

@@ -9,7 +9,8 @@ import { EntitiesContext } from "./Helper/Context";
 
 const CreateDPUC = () => {
 
-    const URL_DPUC = "http://localhost:8000/dpuc";
+    //const URL_DPUC = "http://localhost:8000/dpuc";
+    const URL_DPUC = "http://localhost:82/creation/criarUC?regenteid=";
 
 
     const navigate = useNavigate();
@@ -45,21 +46,23 @@ const CreateDPUC = () => {
         dataAlt += ((date.getMonth() + 1) > 9 ? "" : "0") + (date.getMonth() + 1);
         dataAlt += "-";
         dataAlt += ((date.getDate()) > 9 ? "" : "0") + (date.getDate());
-        const uc = { designacao: ucName, unidadeOrganica: ucUO.id, responsavel: ucRegente.cod_int, ects: ucECTS,
-                estado: "Em Criação", dataAlteracao: dataAlt }
+        const uc = { designacao: ucName, unidade_organicaid: ucUO.id, 
+            ects: ucECTS, dataAlteracao: dataAlt, acid: 0 }
+        
+        console.log(uc);
 
         axios
-            .post(URL_DPUC, uc)
+            .post(URL_DPUC+ucRegente.id, uc)
             .then(() => {
                 navigate("/");
             })
             .catch((error) => {
                 setErrorPOST(true);
+                console.log(error);
             })
             .finally( () => {
                 setLoadingPOST(false);
             });
-
     }
     const handleBack = () => {
         navigate("/");
@@ -167,8 +170,8 @@ const CreateDPUC = () => {
                         <Selector
                             options={docentes}
                             value={ucRegente}
-                            getOptionLabel ={(option)=>option.nome_completo}
-                            getOptionValue ={(option)=>option.cod_int}
+                            getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
+                            getOptionValue ={(option)=>option.id}
                             onChange={(e) => setRegente(e)}
                             placeholder="Selecione o docente responsável pela UC..."
                         />

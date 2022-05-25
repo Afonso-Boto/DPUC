@@ -96,6 +96,9 @@ public class MainController {
         return new ResponseEntity<>(creationService.getCursos(UO), HttpStatus.OK);
     }
 
-
+    @GetMapping("/acs")
+    public ResponseEntity<List<AreaCientifica>> getAreasCientificas(){
+        return new ResponseEntity<>(creationService.getAreasCientificas(), HttpStatus.OK);
+    }
 
 }

@@ -14,6 +14,5 @@ public interface CreationService {
     List<Curso> getCursos(String UO);
     List<String> getIdiomas();
     List<Utilizadores> getDocentes();
-
-
+    List<AreaCientifica> getAreasCientificas();
 }
