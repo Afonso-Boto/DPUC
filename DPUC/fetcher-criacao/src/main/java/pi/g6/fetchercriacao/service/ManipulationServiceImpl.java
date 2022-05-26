@@ -25,36 +25,23 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
         setDataSource(dataSource);
     }
 
-
     @Override
-    public HttpStatus aprovarDpuc(int ucid, String codigo) {
+    public HttpStatus criarUc(JSONObject uc, int regenteid) {
         try{
-            String sql = "UPDATE uc SET codigo=? where id=?";
-            getJdbcTemplate().update(sql, codigo, ucid);
+            log.info(uc.toString());
 
-            // Dpuc id
-            String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.id = \'%s\'".formatted(ucid);
-            int dpucid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
+            // INSERT UC
+            String sql = "INSERT INTO uc(designacao, ects, unidade_organicaid, acid) VALUES(?, ?, ?, ?)";
+            getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getInt("ects"), uc.getInt("unidade_organicaid"), uc.getInt("acid"));
 
-            // Update Dpuc estado para C4  "Em Aprovação"
-            String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
-            getJdbcTemplate().update(sql3, 4, dpucid);
+            // UC id
+            String sql2 = "SELECT id FROM uc WHERE designacao=\'%s\'".formatted(uc.getString("designacao"));
+            int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
-        }catch (Exception e){
-            log.warn(e.getMessage());
-            return HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return HttpStatus.OK;
-    }
-
-    @Override
-    public HttpStatus desativarDpuc(int dpucid) {
-        try{
-            // Update Dpuc estado para C6 "Desativada"
-            String sql = "UPDATE dpuc SET estadoid=? WHERE id=?";
-            getJdbcTemplate().update(sql, 6, dpucid);
-
+            // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default) adicionar regente , ver isto melhor
+            LocalDate date = LocalDate.now();
+            String sql3 = "INSERT INTO dpuc(criacao_edicao, data_alteracao, estadoid, periodo_letivoid, UCid, utilizadoresid) VALUES(?, ?, ?, ?, ?, ?)";
+            getJdbcTemplate().update(sql3, 0, date.toString(), 2, 1, UCid, regenteid);
         }catch (Exception e){
             log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -81,22 +68,11 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
     }
 
     @Override
-    public HttpStatus criarUc(JSONObject uc, int regenteid) {
+    public HttpStatus fecharDpuc(int dpucid) {
         try{
-            log.info(uc.toString());
+            String sql = "UPDATE dpuc SET estadoid=? where id=?";
+            getJdbcTemplate().update(sql, 3, dpucid);
 
-            // INSERT UC
-            String sql = "INSERT INTO uc(designacao, ects, unidade_organicaid, acid) VALUES(?, ?, ?, ?)";
-            getJdbcTemplate().update(sql, uc.getString("designacao"), uc.getInt("ects"), uc.getInt("unidade_organicaid"), uc.getInt("acid"));
-
-            // UC id
-            String sql2 = "SELECT id FROM uc WHERE designacao=\'%s\'".formatted(uc.getString("designacao"));
-            int UCid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
-
-            // Criar dpuc para ser editado pelo regente <-> estado=C2, periodo_letivo=1 (default) adicionar regente , ver isto melhor
-            LocalDate date = LocalDate.now();
-            String sql3 = "INSERT INTO dpuc(criacao_edicao, data_alteracao, estadoid, periodo_letivoid, UCid, utilizadoresid) VALUES(?, ?, ?, ?, ?, ?)";
-            getJdbcTemplate().update(sql3, 0, date.toString(), 2, 1, UCid, regenteid);
         }catch (Exception e){
             log.warn(e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -104,4 +80,69 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
 
         return HttpStatus.OK;
     }
+
+
+    @Override
+    public HttpStatus emAprovacao(int ucid, String codigo) {
+        try{
+            String sql = "UPDATE uc SET codigo=? where id=?";
+            getJdbcTemplate().update(sql, codigo, ucid);
+
+            // Dpuc id
+            String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.id = \'%s\'".formatted(ucid);
+            int dpucid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
+
+            // Update Dpuc estado para C4  "Em Aprovação"
+            String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
+            getJdbcTemplate().update(sql3, 4, dpucid);
+
+        }catch (Exception e){
+            log.warn(e.getMessage());
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return HttpStatus.OK;
+    }
+
+    @Override
+    public HttpStatus aprovarDpuc(int dpucid, JSONObject aprovado) {
+        try{
+            if (aprovado.getBoolean("aprovado")){
+                // Update Dpuc estado para C4  "Em Aprovação"
+                String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
+                getJdbcTemplate().update(sql3, 4, dpucid);
+
+            }else{
+                // Update Dpuc estado para C?, campos incorretos
+                String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
+                getJdbcTemplate().update(sql3, aprovado.get("estadoid"), dpucid);
+            }
+
+
+        }catch (Exception e){
+            log.warn(e.getMessage());
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return HttpStatus.OK;
+    }
+
+    @Override
+    public HttpStatus desativarDpuc(int dpucid) {
+        try{
+            // Update Dpuc estado para C6 "Desativada"
+            String sql = "UPDATE dpuc SET estadoid=? WHERE id=?";
+            getJdbcTemplate().update(sql, 6, dpucid);
+
+        }catch (Exception e){
+            log.warn(e.getMessage());
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return HttpStatus.OK;
+    }
+
+
+
+
 }

@@ -40,9 +40,20 @@ public class MainController {
         return manipulationService.editarDpuc(new JSONObject(dpuc), id);
     }
 
+    @PutMapping("/fecharDpuc")
+    public HttpStatus fecharDpuc(@RequestParam("id") int id){
+        return manipulationService.fecharDpuc(id);
+    }
+
+    @PutMapping("/emAprovacao")
+    public HttpStatus aprovarDpuc(@RequestParam("id") int id,
+                                  @RequestParam("codigo") String codigo){
+        return manipulationService.emAprovacao(id, codigo);
+    }
+
     @PutMapping("/aprovarDpuc")
-    public HttpStatus aprovarDpuc(@RequestParam("id") int id, @RequestParam("codigo") String codigo){
-        return manipulationService.aprovarDpuc(id, codigo);
+    public HttpStatus aprovarDpuc(@RequestBody String aprovado, @RequestParam("id") int id){
+        return manipulationService.aprovarDpuc(id, new JSONObject(aprovado));
     }
 
     @PutMapping("/desativarDpuc")
