@@ -90,8 +90,6 @@ services:
 
   fetcher-search:
     depends_on:
-      mysqldb:
-        condition: service_healthy
       es01:
         condition: service_healthy
       kibana:

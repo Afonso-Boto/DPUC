@@ -1,3 +1,3 @@
-import search_api.es as es
+import search_api.core as es
 
 es.connect()

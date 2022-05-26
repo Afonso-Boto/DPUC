@@ -2,3 +2,4 @@ openpyxl
 elasticsearch
 requests
 bs4
+unidecode

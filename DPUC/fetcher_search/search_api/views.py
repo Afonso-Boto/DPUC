@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from django.http.request import HttpRequest
 
-import search_api.es as es
+import search_api.core as es
 
 
 @api_view(['GET'])
