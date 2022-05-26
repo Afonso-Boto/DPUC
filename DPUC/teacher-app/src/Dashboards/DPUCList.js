@@ -23,32 +23,32 @@ const DPUCList = ({canCreate}) => {
         },
         {
             key: 'Em Criação',
-            text: 'Em Criação',
+            text: '1 - Em Criação',
             value: 1
         },
         {
             key: 'Em Edição',
-            text: 'Em Edição',
+            text: '2 - Em Edição',
             value: 2
         },
         {
+            key: 'Fechados',
+            text: '3 - Fechados',
+            value: 3
+        },
+        {
             key: 'Em Aprovação',
-            text: 'Em Aprovação',
+            text: '4 - Em Aprovação',
             value: 4
         },
         {
             key: 'Aprovados',
-            text: 'Aprovados',
+            text: '5 - Aprovados',
             value: 5
         },
         {
-            key: 'Fechados',
-            text: 'Fechados',
-            value: 3
-        },
-        {
             key: 'Desativados',
-            text: 'Desativados',
+            text: '6 - Desativados',
             value: 6
         },
     ]
