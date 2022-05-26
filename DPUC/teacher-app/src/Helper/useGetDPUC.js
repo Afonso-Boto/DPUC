@@ -53,7 +53,6 @@ const useGetDPUC = (data) => {
         
         setParsing(true);
         setError(false);
-        console.log(data);
         if(data){
             if(data.id)
                 setId(data.id);
@@ -70,8 +69,8 @@ const useGetDPUC = (data) => {
                 setCoerenciaConteudos(data.coerencia_conteudos);
             if(data.metodologias)
                 setMetodologias(data.metodologias);
-            if(data.coerencia_metodologia)
-                setCoerenciaMetodologias(data.coerencia_metodologia);
+            if(data.coerencia_metodologias)
+                setCoerenciaMetodologias(data.coerencia_metodologias);
             if(data.bibliografia)
                 setBibliografia(data.bibliografia);
             if(data.observacoes)
@@ -129,8 +128,6 @@ const useGetDPUC = (data) => {
                     cList.push(entCursos.find((curso) => curso.nome === c[ci]));
                 setCursos(cList);
             }
-            console.log(data.cursos)
-            console.log(cursos)
             if(data.linguas && idiomas){
                 const l = data.linguas.split("$").filter((e) => e.length > 0);
                 let lList = [];
