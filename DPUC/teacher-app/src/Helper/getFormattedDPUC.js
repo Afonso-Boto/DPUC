@@ -37,11 +37,14 @@ const getFormattedDPUC = (dpuc) => {
     const formattedGrau = Array.isArray(dpuc.grau) ? "" : dpuc.grau.nome;
     const formattedPeriodo = Array.isArray(dpuc.periodo) ? "" : dpuc.periodo.id;
 
-    const formattedUnidadeOrganica = dpuc.unidadeOrganica ? null : dpuc.unidadeOrganica.id;
-    const formattedResponsavel = dpuc.responsavel ? null : dpuc.responsavel.id;
-    const formattedArea = dpuc.areaCientifica ? null : dpuc.areaCientifica.id;
+    const formattedUnidadeOrganica = dpuc.unidadeOrganica ? dpuc.unidadeOrganica.id : null;
+    const formattedResponsavel = dpuc.responsavel ? dpuc.responsavel.id : null;
+    const formattedArea = dpuc.areaCientifica ? dpuc.areaCientifica.id : null;
 
 
+    console.log(formattedResponsavel)
+    console.log(codigoUC)
+    console.log(formattedUnidadeOrganica)
 
     return { 
         criacao_edicao: dpuc.criacaoEdicao,

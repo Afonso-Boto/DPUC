@@ -53,6 +53,7 @@ const useGetDPUC = (data) => {
         
         setParsing(true);
         setError(false);
+        console.log(data);
         if(data){
             if(data.id)
                 setId(data.id);
