@@ -3,21 +3,20 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-
-const CloseDPUC = ({id}) => {
-    const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
+const InApprovalDPUC = ({id, codigo}) => {
+    const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
 
     const [show, setShow] = useState(false);
+    const [codigoUC, setCodigo] = useState(codigo);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
-    const close = () => {
+    const approve = () => {
         axios
-            .put(BASE_URL)
+            .put(BASE_URL + codigoUC, {aprovado: true})
             .then(() => {
                 handleClose();
             })
@@ -27,12 +26,12 @@ const CloseDPUC = ({id}) => {
             .finally( () => {
                 setLoading(false);
             });
+        
     }
-
     return ( 
         <>
-            <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
-                Fechar DPUC
+            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
+                Começar Aprovação
             </Button>
             <Modal
                 show={show} 
@@ -45,29 +44,39 @@ const CloseDPUC = ({id}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Fechar DPUC
+                        Começar Aprovação de DPUC
                     </Modal.Title>
                 </Modal.Header>
+                
                 <Modal.Body>
-                    <Text as="p">
-                        Tem a certeza que pretende <b>fechar</b> este DPUC?
-                    </Text>
-                    <br/>
-                    <Text as="p">
-                        O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
-                    </Text>
+                    <Row>
+                        <Col>
+                            <h3>
+                                <Text size="large" color="primary" fontWeight="400">
+                                    Insira o código da Unidade Curricular
+                                </Text>
+                            </h3>
+                            <FormInput
+                                border
+                                fontSize="mediumSmall"
+                                value={codigoUC}
+                                onChange={(e) => setCodigo(e.target.value)}
+                            />
+                        </Col>
+                    </Row>
                 </Modal.Body>
+
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button primary style={{fontSize:"100%"}} onClick={close} >
-                        Fechar DPUC
+                    <Button success style={{fontSize:"100%"}} onClick={approve} >
+                        Passar DPUC para Aprovação
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
-    );
+     );
 }
  
-export default CloseDPUC;
+export default InApprovalDPUC;

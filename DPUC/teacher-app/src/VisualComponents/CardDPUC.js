@@ -88,11 +88,8 @@ const CardDPUC = ({dpuc}) => {
                                             <Button content="Action Button" primary style={{fontSize:"100%"}}> Editar DPUC </Button>
                                         </RouterLink> 
                                     ||
-                                    dpuc.estadoid === 3 && 
+                                    dpuc.estadoid === 5 && 
                                     <Button content="Action Button" primary> Lançar novo DPUC </Button>
-                                    ||
-                                    dpuc.estadoid === 4 && 
-                                    <Button content="Action Button" primary> Aprovar DPUC </Button>
                                 }
                                 </Col>
                                 <Col md="auto" style={{paddingTop:"10px"}}>

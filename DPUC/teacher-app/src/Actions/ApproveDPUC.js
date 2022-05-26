@@ -3,11 +3,10 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const ApproveDPUC = ({id, codigo=null }) => {
-    const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id + "&codigo=";
+const ApproveDPUC = ({ id }) => {
+    const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
 
     const [show, setShow] = useState(false);
-    const [codigoUC, setCodigo] = useState(codigo);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -15,9 +14,8 @@ const ApproveDPUC = ({id, codigo=null }) => {
     const handleShow = () => setShow(true);
 
     const approve = () => {
-        console.log(codigoUC);
         axios
-            .put(BASE_URL + codigoUC)
+            .put(BASE_URL, {estadoid: 2})
             .then(() => {
                 handleClose();
             })
@@ -31,7 +29,7 @@ const ApproveDPUC = ({id, codigo=null }) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
+            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
                 Aprovar DPUC
             </Button>
             <Modal
@@ -48,30 +46,11 @@ const ApproveDPUC = ({id, codigo=null }) => {
                         Aprovar DPUC
                     </Modal.Title>
                 </Modal.Header>
-                { codigo && 
-                    <Modal.Body>
-                        <Text>
-                            Tem a certeza que pretende <b>aprovar</b> este DPUC?
-                        </Text>
-                    </Modal.Body>
-                    ||
-                    <Modal.Body>
-                        <Row>
-                            <Col>
-                                <h3>
-                                    <Text size="large" color="primary" fontWeight="400">
-                                        Insira o código da Unidade Curricular
-                                    </Text>
-                                </h3>
-                                <FormInput
-                                    border
-                                    fontSize="mediumSmall"
-                                    onChange={(e) => setCodigo(e.target.value)}
-                                />
-                            </Col>
-                        </Row>
-                    </Modal.Body>
-                }
+                <Modal.Body>
+                    <Text>
+                        Tem a certeza que pretende <b>aprovar</b> este DPUC?
+                    </Text>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar

@@ -6,8 +6,10 @@ import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
 import ApproveDPUC from "./Actions/ApproveDPUC";
+import DeactivateDPUC from "./Actions/DeactivateDPUC";
+import InApprovalDPUC from "./Actions/InApprovalDPUC";
 import CloseDPUC from "./Actions/CloseDPUC";
-
+import OpenDPUC from "./Actions/OpenDPUC";
 
 const ViewDPUC = () => {
 
@@ -92,10 +94,25 @@ const ViewDPUC = () => {
                         <Col md={6} style={{paddingTop:"10px"}}>
                             <Row>
                                 <Col>
-                                    <CloseDPUC id={dpuc.id}/>
+                                    <DeactivateDPUC id={dpuc.id}/>
+                                </Col>
+                                <Col>
+                                    <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo}/>
                                 </Col>
                                 <Col>
                                     <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
+                                </Col>
+                                <Col>
+                                    <OpenDPUC id={dpuc.id}/>
+                                </Col>
+                            </Row>
+                        </Col>
+                    }
+                    {userType === "DR" && 
+                        <Col md={4} style={{paddingTop:"10px"}}>
+                            <Row>
+                                <Col>
+                                    <CloseDPUC id={dpuc.id}/>
                                 </Col>
                             </Row>
                         </Col>

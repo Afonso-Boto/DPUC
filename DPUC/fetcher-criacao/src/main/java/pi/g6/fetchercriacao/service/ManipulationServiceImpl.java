@@ -110,7 +110,7 @@ public class ManipulationServiceImpl extends JdbcDaoSupport implements Manipulat
             if (aprovado.getBoolean("aprovado")){
                 // Update Dpuc estado para C4  "Em Aprovação"
                 String sql3 = "UPDATE dpuc SET estadoid=? WHERE id=?";
-                getJdbcTemplate().update(sql3, 4, dpucid);
+                getJdbcTemplate().update(sql3, 5, dpucid);
 
             }else{
                 // Update Dpuc estado para C?, campos incorretos

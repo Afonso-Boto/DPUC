@@ -4,8 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 
 
-const CloseDPUC = ({id}) => {
-    const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
+const DeactivateDPUC = ({id}) => {
+    const BASE_URL = "http://localhost:82/creation/desativarDpuc?id=" + id;
 
     const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
@@ -31,8 +31,8 @@ const CloseDPUC = ({id}) => {
 
     return ( 
         <>
-            <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
-                Fechar DPUC
+            <Button danger style={{fontSize:"90%"}} onClick={handleShow} >
+                Desativar DPUC
             </Button>
             <Modal
                 show={show} 
@@ -49,20 +49,16 @@ const CloseDPUC = ({id}) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Text as="p">
-                        Tem a certeza que pretende <b>fechar</b> este DPUC?
-                    </Text>
-                    <br/>
-                    <Text as="p">
-                        O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
+                    <Text>
+                        Tem a certeza que pretende <b>desativar</b> este DPUC?
                     </Text>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button primary style={{fontSize:"100%"}} onClick={close} >
-                        Fechar DPUC
+                    <Button danger style={{fontSize:"100%"}} onClick={close} >
+                        Desativar DPUC
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -70,4 +66,4 @@ const CloseDPUC = ({id}) => {
     );
 }
  
-export default CloseDPUC;
+export default DeactivateDPUC;
