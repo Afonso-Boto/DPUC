@@ -41,11 +41,6 @@ const getFormattedDPUC = (dpuc) => {
     const formattedResponsavel = dpuc.responsavel ? dpuc.responsavel.id : null;
     const formattedArea = dpuc.areaCientifica ? dpuc.areaCientifica.id : null;
 
-
-    console.log(formattedResponsavel)
-    console.log(codigoUC)
-    console.log(formattedUnidadeOrganica)
-
     return { 
         criacao_edicao: dpuc.criacaoEdicao,
         id: dpuc.id,

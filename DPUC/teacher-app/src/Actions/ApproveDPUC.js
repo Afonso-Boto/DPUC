@@ -1,11 +1,34 @@
 import { Button, Text, FormInput } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
+import axios from "axios";
 
-const ApproveDPUC = ({id, codigo}) => {
+const ApproveDPUC = ({id, codigo=null }) => {
+    const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id + "&codigo=";
+
     const [show, setShow] = useState(false);
+    const [codigoUC, setCodigo] = useState(codigo);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const approve = () => {
+        console.log(codigoUC);
+        axios
+            .put(BASE_URL + codigoUC)
+            .then(() => {
+                handleClose();
+            })
+            .catch((error) => {
+                setError(true);
+            })
+            .finally( () => {
+                setLoading(false);
+            });
+        
+    }
     return ( 
         <>
             <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
@@ -43,7 +66,7 @@ const ApproveDPUC = ({id, codigo}) => {
                                 <FormInput
                                     border
                                     fontSize="mediumSmall"
-                                    onChange={(e) => console.log(e)}
+                                    onChange={(e) => setCodigo(e.target.value)}
                                 />
                             </Col>
                         </Row>
@@ -53,7 +76,7 @@ const ApproveDPUC = ({id, codigo}) => {
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button success style={{fontSize:"100%"}} onClick={handleClose} >
+                    <Button success style={{fontSize:"100%"}} onClick={approve} >
                         Aprovar DPUC
                     </Button>
                 </Modal.Footer>

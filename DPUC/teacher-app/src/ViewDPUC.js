@@ -308,7 +308,7 @@ const ViewDPUC = () => {
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500">Idioma(s) de lecionação </Text>
-                                {
+                                {dpuc.linguas.length > 0 &&
                                  dpuc.linguas.map((l) => (
                                     <Text as="span" size="mediumSmall" fontWeight="350">{l.nome}</Text>
                                  ))

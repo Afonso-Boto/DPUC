@@ -36,7 +36,6 @@ const EditDPUC = () => {
         setErrorPUT(false);
         setLoadingPUT(true);
         
-        console.log(getFormattedDPUC(dpuc))
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {
@@ -581,7 +580,8 @@ const EditDPUC = () => {
                                     Aprendizagem ativa
                                 </Text>
                             </h3>
-                            <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
+                            <Input 
+                                placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
                                 as="textarea" 
                                 value={dpuc.aprendizagem}
                                 onChange={(e) => dpucSet.setAprendizagem(e.target.value)}
@@ -599,9 +599,9 @@ const EditDPUC = () => {
                             </h3>
                             <Input 
                                 placeholder="Indique o(s) tipo(s) de avaliação da UC" 
-                                as="textarea"
+                                as="textarea" 
                                 value={dpuc.avaliacao}
-                                onChange={(e) => dpuc.setAvaliacao(e.target.value)}
+                                onChange={(e) => dpucSet.setAvaliacao(e.target.value)}
                                 style={{height:"180pt"}}
                             />
                         </div>
