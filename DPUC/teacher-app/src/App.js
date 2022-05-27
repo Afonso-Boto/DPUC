@@ -12,8 +12,15 @@ import BlueNav from './Navbars/BlueNav';
 import WhiteNav from './Navbars/WhiteNav';
 import SideNav from './Navbars/SideNav';
 import Footer from './Navbars/Footer';
+import useGetWindowDimensions from './Helper/useGetWindowDimensions';
+import { useEffect } from 'react';
 
 function App() {
+
+  useGetWindowDimensions();
+
+  const sideBarHeight = window.innerHeight - 80 - 40;
+
   return (
     <EntitiesContext.Provider value={useGetAPIEntities()}>
     <UserContext.Provider value={useUserData()}>
@@ -26,7 +33,9 @@ function App() {
                 <Col md={"auto"} 
                   style={{  maxWidth:"80px", 
                             minWidth:"80px",
+                            minHeight:sideBarHeight,
                             backgroundColor:"#302C2C", 
+                            flex: "1 1 auto",
                           }}
                 >
                   <SideNav/>
