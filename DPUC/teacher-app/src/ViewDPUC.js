@@ -1,4 +1,4 @@
-import { Button, LoadingBackgroundWrapper, Text } from "@paco_ua/pacoui";
+import { Button, LoadingBackgroundWrapper, Text, ScrollDownButton } from "@paco_ua/pacoui";
 import { Container, Row, Col } from "react-bootstrap";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -49,6 +49,13 @@ const ViewDPUC = () => {
 
     return ( 
         <Container>
+            <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, 0)} />
+            </div>
+            <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
+            </div>
+            
             <Row>
                 <Col>
                     { loadDPUC && <LoadingBackgroundWrapper length={2} /> }

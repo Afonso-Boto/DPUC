@@ -7,7 +7,7 @@ import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
 import Selector from "./VisualComponents/Selector";
-import {Button, LoadingBackgroundWrapper, FormInput, Text} from "@paco_ua/pacoui";
+import {Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton } from "@paco_ua/pacoui";
 import Input from "./VisualComponents/Input";
 
 const EditDPUC = () => {
@@ -88,6 +88,12 @@ const EditDPUC = () => {
             }
             { dpuc && !loadDPUC && !loadParse && uos && cursos && graus && areas && docentes &&
             <form onSubmit={handleSubmit}>
+                <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
+                    <ScrollDownButton onClick={() => window.scrollTo(0, 0)} />
+                </div>
+                <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
+                    <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
+                </div>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
                         <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
