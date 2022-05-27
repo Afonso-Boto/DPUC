@@ -26,7 +26,6 @@ def es_query(keywords):
 
 def row2dict(row):
     dicio = dict()
-    print(f"aqui aqui aqui: {row}")
     dicio["id"] = row[0]
     dicio["nome"] = unidecode(row[1]).lower().strip()
     dicio["area_cientifica"] = unidecode(row[2]).lower().strip()
@@ -35,4 +34,5 @@ def row2dict(row):
     dicio["bibliografia"] = unidecode(row[5]).lower().strip()
     dicio["requisitos"] = unidecode(row[6]).lower().strip()
     dicio["aprendizagem"] = unidecode(row[7]).lower().strip()
+    print(f"aqui aqui aqui: {dicio}")
     return dicio
