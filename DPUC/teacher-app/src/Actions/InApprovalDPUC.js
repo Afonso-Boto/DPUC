@@ -2,12 +2,15 @@ import { Button, Text, FormInput } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import Input from "../VisualComponents/Input";
 
 const InApprovalDPUC = ({id, codigo}) => {
     const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
 
     const [show, setShow] = useState(false);
-    const [codigoUC, setCodigo] = useState(codigo);
+    const [codigoUC, setCodigo] = useState(10000);
+    if(codigo)
+        setCodigo(codigo);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -41,6 +44,7 @@ const InApprovalDPUC = ({id, codigo}) => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 dialogClassName="modal-ua"
+                
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
@@ -50,15 +54,21 @@ const InApprovalDPUC = ({id, codigo}) => {
                 
                 <Modal.Body>
                     <Row>
-                        <Col>
+                        <Col sm="auto">
                             <h3>
                                 <Text size="large" color="primary" fontWeight="400">
                                     Insira o código da Unidade Curricular
                                 </Text>
                             </h3>
-                            <FormInput
+                            
+                        </Col>
+                        <Col sm="2">
+                            <Input
                                 border
-                                fontSize="mediumSmall"
+                                as="input" 
+                                type="number"
+                                min={0} max={999999}
+                                
                                 value={codigoUC}
                                 onChange={(e) => setCodigo(e.target.value)}
                             />
