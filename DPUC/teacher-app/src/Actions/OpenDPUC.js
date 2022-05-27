@@ -14,6 +14,8 @@ const OpenDPUC = ({id}) => {
     const handleShow = () => setShow(true);
 
     const approve = () => {
+        setError(false);
+        setLoading(true);
         axios
             .put(BASE_URL, {aprovado:false, estadoid: 2})
             .then(() => {
@@ -55,6 +57,14 @@ const OpenDPUC = ({id}) => {
                     <Text as="i" size="small">
                         O DPUC passará para o estado <b>Em Edição(2).</b>
                     </Text>
+                    {   error &&
+                        <>
+                        <br/>
+                        <Text as="i" size="small" color="red">
+                            Ocorreu um erro ao alterar o estado do DPUC.
+                        </Text>
+                        </>
+                    }
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -62,7 +72,7 @@ const OpenDPUC = ({id}) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        Abrir DPUC
+                        {loading && "A abrir DPUC..." || "Abrir DPUC"}
                     </Button>
                 </Modal.Footer>
             </Modal>

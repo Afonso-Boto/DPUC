@@ -16,6 +16,8 @@ const CloseDPUC = ({id}) => {
 
 
     const close = () => {
+        setError(false);
+        setLoading(true);
         axios
             .put(BASE_URL)
             .then(() => {
@@ -60,13 +62,21 @@ const CloseDPUC = ({id}) => {
                     <Text as="i" size="small">
                         O DPUC passará para o estado <b>Fechado(3).</b>
                     </Text>
+                    {   error &&
+                        <>
+                        <br/>
+                        <Text as="i" size="small" color="red">
+                            Ocorreu um erro ao alterar o estado do DPUC.
+                        </Text>
+                        </>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
                     <Button primary style={{fontSize:"100%"}} onClick={close} >
-                        Fechar DPUC
+                        {loading && "A fechar DPUC..." || "Fechar DPUC"}
                     </Button>
                 </Modal.Footer>
             </Modal>

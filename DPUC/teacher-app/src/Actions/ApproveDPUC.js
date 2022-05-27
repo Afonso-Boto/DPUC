@@ -14,6 +14,8 @@ const ApproveDPUC = ({ id }) => {
     const handleShow = () => setShow(true);
 
     const approve = () => {
+        setError(false);
+        setLoading(true);
         axios
             .put(BASE_URL, {aprovado: true})
             .then(() => {
@@ -54,13 +56,21 @@ const ApproveDPUC = ({ id }) => {
                     <Text as="i" size="small">
                         O DPUC passará para o estado <b>Aprovado(5).</b>
                     </Text>
+                    {   error &&
+                        <>
+                        <br/>
+                        <Text as="i" size="small" color="red">
+                            Ocorreu um erro ao alterar o estado do DPUC.
+                        </Text>
+                        </>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        Aprovar DPUC
+                        {loading && "A aprovar DPUC..." || "Aprovar DPUC"}
                     </Button>
                 </Modal.Footer>
             </Modal>
