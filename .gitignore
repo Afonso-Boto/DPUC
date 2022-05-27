@@ -210,8 +210,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
-DPUC/volumes/mysql/db/ib_buffer_pool
-DPUC/volumes/mysql/db/ib_logfile0
-DPUC/volumes/mysql/db/ibdata1
-/DPUC/volumes/mysql/db
 

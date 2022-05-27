@@ -20,7 +20,12 @@ for row in sheet.iter_rows(min_row=1):
         current_dpucid = id
         dpucs[current_dpucid] = dict()
 
-        dpucs[current_dpucid]["nome"] = row[1].value
+        nome = row[1].value
+        nome = nome.strip().lower()
+        nome = unidecode.unidecode(nome)
+        dpucs[current_dpucid]["nome"] = nome
+
+        dpucs[current_dpucid]["semestre"] = 
 
     if row[8].value == "en":
         continue
@@ -29,7 +34,8 @@ for row in sheet.iter_rows(min_row=1):
     if campo:
         campo = campo.replace("&nbsp;", " ")
         campo = BeautifulSoup(campo, features="html.parser").get_text()
-        campo = campo.strip()
+        campo = campo.strip().lower()
+        campo = unidecode.unidecode(campo)
         if campo:
             new_campo = row[7].value.lower()
             if new_campo == "aprendizagemativa":
