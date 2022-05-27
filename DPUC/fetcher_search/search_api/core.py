@@ -4,9 +4,10 @@ import fetcher_search.env as env
 import json
 from pathlib import Path
 import os
+from datetime import datetime
+from .mysql import MysqlConnector
 
-INDEX_NAME = env.INDEX_NAME
-URL = "http://" + env.ES_HOST + ":" + env.ES_PORT
+from typing import List, Dict
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -14,60 +15,130 @@ logging.basicConfig(
     datefmt="%m-%d %H:%M:%S",
 )
 
-logger = logging.getLogger("Elastic Search Connector")
+DAY_IN_SECOND = 60*60*24
 
 
-def connect():
-    es = Elasticsearch(URL)
-    if es.ping():
-        if not es.indices.exists(index=env.INDEX_NAME):
-            logger.info(f"Connection {URL} successful")
-            es.indices.create(index=env.INDEX_NAME)
-        count = es.count(index=INDEX_NAME)["count"]
-        if count == 0:
-            logger.info("Populate index")
-            dpucs = get_data02()
-            for id in dpucs:
-                es.create(index=INDEX_NAME, id=id, document=dpucs[id])
-        return es
-    else:
-        return None
+class ElasticSearchConnector:
+
+    @classmethod
+    def TTL(cls):
+        return DAY_IN_SECOND
+
+    @classmethod
+    def is_outdated(cls, date: datetime):
+        now = datetime.now().timestamp()
+        return now > datetime.timestamp(date) + cls.TTL()
+
+    @classmethod
+    def index_name(cls):
+        return env.INDEX_NAME
+
+    @classmethod
+    def url(cls):
+        return "http://" + env.ES_HOST + ":" + env.ES_PORT
+
+    @classmethod
+    def get_connection(cls):
+        connector = Elasticsearch(cls.url())
+        if not connector.ping():
+            raise ElasticsearchUnreachable(cls.url())
+        return connector
+
+    def __init__(self):
+        self.logger = logging.getLogger(f"es-connector: {self.url()}")
+        self.db_connection = MysqlConnector()
+        self.last_updated = None
+
+        connection = self.get_connection()
+        connection.close()
+
+        self.initialize()
+
+    def update(self):
+        connector = None
+        try:
+            connector = self.get_connection()
+
+            docs = self.db_connection.get_dpucs(timestamp=self.last_updated)
+            for doc in docs:
+                id = doc["id"]
+                doc.pop("id")
+                connector.update(index=self.index_name(), id=id, doc=doc)
+            self.last_updated = datetime.now()
+
+        except Exception as e:
+            raise RuntimeError("Error while interacting with Elastic Search Engine")
+        finally:
+            if connector is not None and connector.ping():
+                connector.close()
+
+    def initialize(self):
+        connector = None
+        index = self.index_name()
+        try:
+            connector = self.get_connection()
+
+            if connector.indices.exists(index=index):
+                connector.indices.delete(index=index)
+            connector.indices.create(index=index)
+            docs = self.db_connection.get_dpucs()
+            for doc in docs:
+                id = doc["id"]
+                doc.pop("id", "")
+                connector.create(index=index, id=id, document=doc)
+            self.last_updated = datetime.now()
+
+        except Exception as e:
+            raise RuntimeError("Error while interacting with Elastic Search Engine")
+        finally:
+            if connector is not None and connector.ping():
+                connector.close()
+
+    def get_relevant_search(self, keywords=None) -> List[Dict]:
+        if self.last_updated is None or self.is_outdated(self.last_updated):
+            self.logger.info(f"last_update is None or data is Outdated - {self.last_updated}")
+            self.initialize()
+
+        connector = None
+        new_docs = list()
+        try:
+            connector = self.get_connection()
+
+            query = None
+            if len(keywords.split(" ")) >= 1:
+                query = {
+                    "multi_match": {
+                        "query": keywords,
+                        "fields": [
+                            "nome",
+                            "conteudos^2",
+                            "objetivos",
+                        ]
+                    }
+                }
+            response = connector.search(index=self.index_name(), query=query)
+            docs = response["hits"]["hits"]
+            for doc in docs:
+                new_doc = doc["_source"]
+                new_doc["id"] = doc["_id"]
+                new_docs.append(new_doc)
+
+        except Exception as e:
+            raise RuntimeError("Error while interacting with Elastic Search Engine")
+        finally:
+            if connector is not None and connector.ping():
+                connector.close()
+            return new_docs
 
 
-def get_relevant_search(conn: Elasticsearch, keywords: list=None) -> list:
-    query = None
-    if len(keywords) >= 1:
-        query = {
-            "multi_match": {
-                "query": keywords,
-                "fields": [
-                    "nome",
-                    "conteudos^2",
-                    "objetivos",
-                ]
-            }
-        }
-    docs = conn.search(index=INDEX_NAME, query=query)['hits']['hits']
-    formated_docs = list()
-    for doc in docs:
-        new_doc = doc["_source"]
-        new_doc["id"] = doc["_id"]
-        formated_docs.append(new_doc)
-    return formated_docs
+class ElasticsearchUnreachable(Exception):
+
+    def __init__(self, url):
+        self._url = url
+
+    @property
+    def msg(self):
+        return f"Cannot connect to Elastic Search Node {self._url}"
 
 
-def get_data() -> dict:
-    pass
-
-
-def get_data02() -> dict:
-    filename = os.path.join(Path(__file__).parent, "dpuc.json")
-    dpucs = dict()
-    with open(filename, "r") as file:
-        lst = json.load(file)
-        for elem in lst:
-            iduc = elem["id"]
-            elem.pop("id")
-            dpucs[iduc] = elem
-    return dpucs
-
+CONNECTOR = ElasticSearchConnector()
