@@ -25,8 +25,6 @@ for row in sheet.iter_rows(min_row=1):
         nome = unidecode.unidecode(nome)
         dpucs[current_dpucid]["nome"] = nome
 
-        dpucs[current_dpucid]["semestre"] = 
-
     if row[8].value == "en":
         continue
 
