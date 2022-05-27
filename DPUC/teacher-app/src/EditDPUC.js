@@ -14,7 +14,9 @@ const EditDPUC = () => {
 
     const { id } = useParams();
 
-    const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
+    const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
+    const URL_DPUC_PUT = "http://localhost:82/creation/editarDpuc?id=" + id;
 
     const navigate = useNavigate();
     
@@ -33,9 +35,9 @@ const EditDPUC = () => {
 
         setErrorPUT(false);
         setLoadingPUT(true);
-
+        
         axios
-            .put(URL_DPUC, getFormattedDPUC(dpuc, "Em Edição"))
+            .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {
                 navigate("/");
             })
@@ -45,8 +47,6 @@ const EditDPUC = () => {
             .finally( () => {
                 setLoadingPUT(false);
             });
-
-        console.log(getFormattedDPUC(dpuc, "Em Edição"));     
     }
     const handleBack = () => {
         navigate("/");
@@ -54,9 +54,6 @@ const EditDPUC = () => {
     const reloadEntities = () => {
         setRetry(retryFetch + 1);
     }
-
-    if(dpuc)
-        console.log(dpuc);
 
     return ( 
         <Container>
@@ -102,7 +99,7 @@ const EditDPUC = () => {
                     </Col>
                 </Row>
                 <br/>
-                {/* Nome da UC e UO */}
+                    {/* Nome, Código, ECTS */}
                     <Row>
                         <Col lg={6}>
                             <h3>
@@ -116,6 +113,36 @@ const EditDPUC = () => {
                                 </Text>
                             </h4>
                         </Col>
+                        <Col lg={2}>
+                            <h3>
+                                <Text as="h3" size="large" color="primary" fontWeight="400">
+                                    ECTS
+                                </Text>
+                            </h3>
+                            <h4>
+                                <Text as="h4" size="medium" fontWeight="400">
+                                    {dpuc.ects}
+                                </Text>
+                            </h4>
+                        </Col>
+                        <Col lg={3}>
+                            <h3>
+                                <Text as="h3" size="large" color="primary" fontWeight="400">
+                                    Código
+                                </Text>
+                            </h3>
+                            <h4>
+                                <Text as="h4" size="medium" fontWeight="400">
+                                    {
+                                     dpuc.codigo && dpuc.codigo
+                                     || "-"
+                                    }
+                                </Text>
+                            </h4>
+                        </Col>
+                    </Row>
+                    {/* UO e Regente*/}
+                    <Row style={{paddingTop:"10px"}}>
                         <Col lg={6}>
                             <Text as="h3" size="large" color="primary" fontWeight="400">
                                 Unidade Orgânica
@@ -128,9 +155,6 @@ const EditDPUC = () => {
                                 </h4>
                             }
                         </Col>
-                    </Row>
-                    {/* Regente e ECTS*/}
-                    <Row style={{paddingTop:"10px"}}>
                         <Col lg={"auto"}>
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
@@ -140,30 +164,23 @@ const EditDPUC = () => {
                             { dpuc.responsavel &&
                                 <h4>
                                     <Text as="h4" size="medium" fontWeight="400">
-                                        {dpuc.responsavel.nome_completo}
+                                        {dpuc.responsavel.nmec} - {dpuc.responsavel.nome}
                                     </Text>
                                 </h4>
                             }
                         </Col>
-                        <Col lg={"auto"}>
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    ECTS
-                                </Text>
-                            </h3>
-                            <h4>
-                                <Text as="h4" size="medium" fontWeight="400">
-                                    {dpuc.ects}
-                                </Text>
-                            </h4>
-                        </Col>
+                        
                     </Row>
                     <hr className="custom-hr"/>
                     <Row>
                         <Col>
-                            <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
-                            { dpuc.dataAlteracao &&
+                        { dpuc.dataAlteracao &&
+                            <>
+                                <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
                                 <Text as="span" size="medium">{dpuc.dataAlteracao.toLocaleDateString()}</Text>
+                            </>
+                            ||
+                                "Sem alterações prévias"
                             }
                         </Col>
                         <Col>
@@ -192,7 +209,7 @@ const EditDPUC = () => {
                         </div>
                         <div className="col-lg-6">
                             <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
+                                <Text size="large" color="primary" fontWeight="400">
                                     Grau do Ciclo de estudos*
                                 </Text>
                             </h3>
@@ -222,8 +239,7 @@ const EditDPUC = () => {
                                     options={areas}
                                     value={dpuc.areaCientifica}
                                     onChange={(e) => dpucSet.setAreaCientifica(e)}
-                                    getOptionLabel ={(option)=>(option.nome)}
-                                    getOptionValue ={(option)=>(option.sigla)}
+                                    getOptionLabel ={(option)=>(option.sigla + " - " +option.designacao)}
                                 />
                             }
                         </div>
@@ -291,7 +307,7 @@ const EditDPUC = () => {
                                             min={0} max={12}
                                             value={dpuc.horasT}
                                             onChange={(e) => dpucSet.setHorasT(e.target.value)}
-                                            style={{width:"50px"}}
+                                            style={{width:"55px"}}
                                             />
                                         </Col>
                                     </Row>
@@ -312,7 +328,7 @@ const EditDPUC = () => {
                                             min={0} max={12}
                                             value={dpuc.horasP}
                                             onChange={(e) => dpucSet.setHorasP(e.target.value)}
-                                            style={{width:"50px"}}
+                                            style={{width:"55px"}}
                                             />
                                         </Col>
                                     </Row>
@@ -333,48 +349,48 @@ const EditDPUC = () => {
                                             min={0} max={12}
                                             value={dpuc.horasOT}
                                             onChange={(e) => dpucSet.setHorasOT(e.target.value)}
-                                            style={{width:"50px"}}
+                                            style={{width:"55px"}}
                                             />
                                         </Col>
                                     </Row>
                                 </Col>
                             </Row>
-                        </div>
+                    </div>
+                    <div className="col-lg-3">
+                        <h3>
+                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                Duração*
+                            </Text>
+                        </h3>
+                        { duracoes && dpuc.duracao &&
+                            <Selector 
+                                placeholder="Duração da UC"
+                                options={duracoes}
+                                value={dpuc.duracao}
+                                onChange={(e) => dpucSet.setDuracao(e)}
+                                getOptionLabel ={(option)=>(option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                            />
+                        }
+                    </div>
+                    { dpuc.duracao && dpuc.duracao.nome === "Semestral" &&
                         <div className="col-lg-3">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Duração*
+                                    Semestre
                                 </Text>
                             </h3>
-                            { duracoes && dpuc.duracao &&
-                                <Selector 
-                                    placeholder="Duração da UC"
-                                    options={duracoes}
-                                    value={dpuc.duracao}
-                                    onChange={(e) => dpucSet.setDuracao(e)}
+                            { semestre &&
+                                <Selector
+                                    placeholder="Semestre da UC"
+                                    options={semestre}
+                                    value={dpuc.periodo}
+                                    onChange={(e) => dpucSet.setPeriodo(e)}
                                     getOptionLabel ={(option)=>(option.nome)}
                                     getOptionValue ={(option)=>option.id}
                                 />
                             }
                         </div>
-                        { dpuc.duracao && dpuc.duracao.nome === "Semestral" &&
-                            <div className="col-lg-3">
-                                <h3>
-                                    <Text as="h3" size="large" color="primary" fontWeight="400">
-                                        Semestre
-                                    </Text>
-                                </h3>
-                                { semestre &&
-                                    <Selector
-                                        placeholder="Semestre da UC"
-                                        options={semestre}
-                                        value={dpuc.periodo}
-                                        onChange={(e) => dpucSet.setPeriodo(e)}
-                                        getOptionLabel ={(option)=>(option.nome)}
-                                        getOptionValue ={(option)=>option.id}
-                                    />
-                                }
-                            </div>
                         }
                     </div>
                     {/* Modalidade e Página Pública*/}
@@ -426,8 +442,8 @@ const EditDPUC = () => {
                                     options={docentes}
                                     value={dpuc.docentes}
                                     onChange={(e) => dpucSet.setDocentes(Array.from(e, (v => v)))}
-                                    getOptionLabel ={(option)=>(option.nome_completo)}
-                                    getOptionValue ={(option)=>option.cod_int}
+                                    getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
+                                    getOptionValue ={(option)=>option.id}
                                 />
                             }
                         </div>
@@ -525,7 +541,7 @@ const EditDPUC = () => {
                         <div className="col-lg-12">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Coerência dos Conteúdos programáticos*
+                                    Coerência das Metodologias de ensino*
                                 </Text>
                             </h3>
                             <Input 
@@ -564,7 +580,8 @@ const EditDPUC = () => {
                                     Aprendizagem ativa
                                 </Text>
                             </h3>
-                            <Input placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
+                            <Input 
+                                placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
                                 as="textarea" 
                                 value={dpuc.aprendizagem}
                                 onChange={(e) => dpucSet.setAprendizagem(e.target.value)}
@@ -582,9 +599,9 @@ const EditDPUC = () => {
                             </h3>
                             <Input 
                                 placeholder="Indique o(s) tipo(s) de avaliação da UC" 
-                                as="textarea"
+                                as="textarea" 
                                 value={dpuc.avaliacao}
-                                onChange={(e) => dpuc.setAvaliacao(e.target.value)}
+                                onChange={(e) => dpucSet.setAvaliacao(e.target.value)}
                                 style={{height:"180pt"}}
                             />
                         </div>

@@ -11,6 +11,7 @@ import useUserData from './Helper/useUserData';
 import BlueNav from './Navbars/BlueNav';
 import WhiteNav from './Navbars/WhiteNav';
 import SideNav from './Navbars/SideNav';
+import Footer from './Navbars/Footer';
 
 function App() {
   return (
@@ -21,10 +22,15 @@ function App() {
           <div className="content">
               <WhiteNav/>
               <BlueNav/>
-                <Row style={{paddingLeft:"0", marginLeft:"0", paddingRight:"0", marginRight:"0"}}>
-                  <Col md={"auto"} style={{maxWidth:"80px", minWidth:"80px",backgroundColor:"#302C2C"}}>
-                    <SideNav/>
-                  </Col>
+              <Row style={{paddingLeft:"0", marginLeft:"0", paddingRight:"0", marginRight:"0"}}>
+                <Col md={"auto"} 
+                  style={{  maxWidth:"80px", 
+                            minWidth:"80px",
+                            backgroundColor:"#302C2C", 
+                          }}
+                >
+                  <SideNav/>
+                </Col>
                 <Col>
                   <br/>
                   <Switch>
@@ -34,8 +40,13 @@ function App() {
                     <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
                     <Route path="*" element= {<NotFound />}/>
                   </Switch>
+                  <Footer/>
                 </Col>
-                </Row>
+              </Row>
+              <Row>
+                <Col>
+                </Col>
+              </Row>
           </div>
         </div>
       </Router>

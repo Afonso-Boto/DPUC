@@ -10,36 +10,47 @@ const DPUCList = ({canCreate}) => {
 
     const navigate = useNavigate();
 
-    const URL_DPUC = "http://localhost:8000/dpuc";
+    const URL_DPUC = "http://localhost:82/creation/dpucs";
+    //const URL_DPUC = "http://localhost:8000/dpuc";
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 
     const filterOptions = [
         {
-        key: 'Todos',
-        text: 'Mostrar Todos',
-        value: ''
+            key: 'Todos',
+            text: 'Mostrar Todos',
+            value: 0
         },
         {
-        key: 'Em Criação',
-        text: 'Em Criação',
-        value: 'Criação'
+            key: 'Em Criação',
+            text: '1 - Em Criação',
+            value: 1
         },
         {
-        key: 'Em Edição',
-        text: 'Em Edição',
-        value: 'Edição'
+            key: 'Em Edição',
+            text: '2 - Em Edição',
+            value: 2
         },
         {
-        key: 'Em Aprovação',
-        text: 'Em Aprovação',
-        value: 'Aprovação'
+            key: 'Fechados',
+            text: '3 - Fechados',
+            value: 3
         },
         {
-        key: 'Fechados',
-        text: 'Fechados',
-        value: 'Fechados'
-        }
+            key: 'Em Aprovação',
+            text: '4 - Em Aprovação',
+            value: 4
+        },
+        {
+            key: 'Aprovados',
+            text: '5 - Aprovados',
+            value: 5
+        },
+        {
+            key: 'Desativados',
+            text: '6 - Desativados',
+            value: 6
+        },
     ]
 
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
@@ -51,7 +62,11 @@ const DPUCList = ({canCreate}) => {
     }
 
     const filterDPUCList = (estado) => {
-        setDPUCList(dpucs.filter((d) => (d.estado.includes(estado.value))));
+        console.log(estado)
+        if(estado.value === 0)
+            setDPUCList(dpucs);
+        else
+            setDPUCList(dpucs.filter((d) => (d.estadoid === estado.value)));
         setFilterOption(estado)
     }
 

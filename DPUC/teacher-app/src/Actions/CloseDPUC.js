@@ -1,14 +1,37 @@
 import { Button, Text, FormInput } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
+import axios from "axios";
 
-const CloseDPUC = (id) => {
+
+const CloseDPUC = ({id}) => {
+    const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
+
     const [show, setShow] = useState(false);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
+    const close = () => {
+        axios
+            .put(BASE_URL)
+            .then(() => {
+                handleClose();
+            })
+            .catch((error) => {
+                setError(true);
+            })
+            .finally( () => {
+                setLoading(false);
+            });
+    }
+
     return ( 
         <>
-            <Button danger style={{fontSize:"100%"}} onClick={handleShow} >
+            <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
                 Fechar DPUC
             </Button>
             <Modal
@@ -26,15 +49,19 @@ const CloseDPUC = (id) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Text>
+                    <Text as="p">
                         Tem a certeza que pretende <b>fechar</b> este DPUC?
+                    </Text>
+                    <br/>
+                    <Text as="p">
+                        O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
                     </Text>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button danger style={{fontSize:"100%"}} onClick={handleClose} >
+                    <Button primary style={{fontSize:"100%"}} onClick={close} >
                         Fechar DPUC
                     </Button>
                 </Modal.Footer>

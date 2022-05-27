@@ -64,6 +64,10 @@ public class Dpuc {
         this.criacao_edicao = criacao_edicao;
     }
 
+    public boolean getCriacao_edicao(){
+        return criacao_edicao;
+    }
+
     public String getDuracao() {
         return duracao;
     }

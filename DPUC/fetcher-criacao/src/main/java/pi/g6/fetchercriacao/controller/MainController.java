@@ -40,9 +40,20 @@ public class MainController {
         return manipulationService.editarDpuc(new JSONObject(dpuc), id);
     }
 
+    @PutMapping("/fecharDpuc")
+    public HttpStatus fecharDpuc(@RequestParam("id") int id){
+        return manipulationService.fecharDpuc(id);
+    }
+
+    @PutMapping("/emAprovacao")
+    public HttpStatus aprovarDpuc(@RequestParam("id") int id,
+                                  @RequestParam("codigo") String codigo){
+        return manipulationService.emAprovacao(id, codigo);
+    }
+
     @PutMapping("/aprovarDpuc")
-    public HttpStatus aprovarDpuc(@RequestParam("id") int id, @RequestParam("codigo") String codigo){
-        return manipulationService.aprovarDpuc(id, codigo);
+    public HttpStatus aprovarDpuc(@RequestBody String aprovado, @RequestParam("id") int id){
+        return manipulationService.aprovarDpuc(id, new JSONObject(aprovado));
     }
 
     @PutMapping("/desativarDpuc")
@@ -61,8 +72,13 @@ public class MainController {
     }
 
     @GetMapping("/dpucs")
-    public ResponseEntity<List<Dpuc>> getDpucs(){
+    public ResponseEntity<List<DpucUc>> getDpucs(){
         return new ResponseEntity<>(creationService.getDPUCs(), HttpStatus.OK);
+    }
+
+    @GetMapping("/dpucs/{id}")
+    public ResponseEntity<DpucUc> getDpuc(@PathVariable int id){
+        return new ResponseEntity<>(creationService.getDPUC(id), HttpStatus.OK);
     }
 
     @GetMapping("/uos")
@@ -91,6 +107,9 @@ public class MainController {
         return new ResponseEntity<>(creationService.getCursos(UO), HttpStatus.OK);
     }
 
-
+    @GetMapping("/acs")
+    public ResponseEntity<List<AreaCientifica>> getAreasCientificas(){
+        return new ResponseEntity<>(creationService.getAreasCientificas(), HttpStatus.OK);
+    }
 
 }
