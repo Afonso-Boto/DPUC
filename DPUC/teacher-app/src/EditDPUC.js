@@ -65,7 +65,7 @@ const EditDPUC = () => {
                 </Col>
             </Row>
             <hr/>
-            { (!uos || !cursos || !graus || !areas || !idiomas || !duracoes || !semestre || !modalidades || !docentes) &&
+            { (!uos || !cursos || !graus || !areas || !docentes) &&
                 !loadDPUC && !loadParse && !dpuc &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
@@ -86,7 +86,7 @@ const EditDPUC = () => {
             { errorDPUC && 
                 <Text as="i" size="large" color="red"> Não foi possível obter detalhes sobre este DPUC. </Text>
             }
-            { dpuc && !loadDPUC && !loadParse &&
+            { dpuc && !loadDPUC && !loadParse && uos && cursos && graus && areas && docentes &&
             <form onSubmit={handleSubmit}>
                 <Row style={{paddingTop:"10px"}}>
                     <Col>

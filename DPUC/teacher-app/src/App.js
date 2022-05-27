@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router , Route, Routes as Switch} from 'react-router-dom';
 import Home from './Home';
 import CreateUC from './CreateUC';
@@ -13,7 +13,6 @@ import WhiteNav from './Navbars/WhiteNav';
 import SideNav from './Navbars/SideNav';
 import Footer from './Navbars/Footer';
 import useGetWindowDimensions from './Helper/useGetWindowDimensions';
-import { useEffect } from 'react';
 
 function App() {
 

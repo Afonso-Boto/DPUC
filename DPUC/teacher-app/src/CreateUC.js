@@ -91,7 +91,7 @@ const CreateDPUC = () => {
                 </Col>
             </Row>
             <hr/>
-            { (!uos || !docentes) &&
+            { (!uos || !docentes || !areas) &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
                     <Text as="i" size="large" color="red"> Não foi possível carregar o formulário de criação de DPUC. </Text>
@@ -119,89 +119,94 @@ const CreateDPUC = () => {
                 <Text as="i" size="medium" color="red"> Preencha todos os campos. </Text>
             }
             {/* Nome da UC e UO */}
-            <Row>
-                <Col lg={6}>
-                    <h3>
-                        <Text size="large" color="primary" fontWeight="400">
-                            Nome da Unidade Curricular
-                        </Text>
-                    </h3>
-                    <FormInput
-                        border
-                        fontSize="mediumSmall"
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </Col>
-                <Col lg={6}>
-                    <h3>
-                        <Text size="large" color="primary" fontWeight="400">
-                            Unidade Orgânica
-                        </Text>
-                    </h3>
-                    { uos && 
-                        <Selector
-                            options={uos}
-                            value={ucUO}
-                            getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
-                            getOptionValue ={(option)=>option.id}
-                            onChange={(e) => setUO(e)}
-                            placeholder="Indique a Unidade Orgânica em que a UC está alocada..."
+            {
+                uos && docentes && areas &&
+                <>
+                <Row>
+                    <Col lg={6}>
+                        <h3>
+                            <Text size="large" color="primary" fontWeight="400">
+                                Nome da Unidade Curricular
+                            </Text>
+                        </h3>
+                        <FormInput
+                            border
+                            fontSize="mediumSmall"
+                            onChange={(e) => setName(e.target.value)}
                         />
-                    }
-                </Col>
-            </Row>
-            
-            {/* Docente Responsável / Regente */}
-            <Row style={{paddingTop:"10px"}}>
-                <Col lg={12}>
-                    <h3>
+                    </Col>
+                    <Col lg={6}>
+                        <h3>
+                            <Text size="large" color="primary" fontWeight="400">
+                                Unidade Orgânica
+                            </Text>
+                        </h3>
+                        { uos && 
+                            <Selector
+                                options={uos}
+                                value={ucUO}
+                                getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                                onChange={(e) => setUO(e)}
+                                placeholder="Indique a Unidade Orgânica em que a UC está alocada..."
+                            />
+                        }
+                    </Col>
+                </Row>
+                
+                {/* Docente Responsável / Regente */}
+                <Row style={{paddingTop:"10px"}}>
+                    <Col lg={12}>
+                        <h3>
+                            <Text size="large" color="primary" fontWeight="400">
+                                Docente Responsável (Regente)
+                            </Text>
+                        </h3>
+                        { docentes &&
+                            <Selector
+                                options={docentes}
+                                value={ucRegente}
+                                getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
+                                getOptionValue ={(option)=>option.id}
+                                onChange={(e) => setRegente(e)}
+                                placeholder="Selecione o docente responsável pela UC..."
+                            />
+                        }
+                    </Col>
+                </Row>
+                {/* ECTS*/}
+                <Row style={{paddingTop:"10px"}}>
+                    <Col lg={6}>
+                        <h2>
+                            <Text size="large" color="primary" fontWeight="400">
+                                Área Científica
+                            </Text>
+                        </h2>
+                        { uos && 
+                            <Selector
+                                options={areas}
+                                value={ucArea}
+                                getOptionLabel ={(option)=>(option.sigla + " - " +option.designacao)}
+                                getOptionValue ={(option)=>option.id}
+                                onChange={(e) => setArea(e)}
+                                placeholder="Indique a Área Científica da UC..."
+                            />
+                        }
+                    </Col>
+                    <Col>
                         <Text size="large" color="primary" fontWeight="400">
-                            Docente Responsável (Regente)
+                            ECTS
                         </Text>
-                    </h3>
-                    { docentes &&
-                        <Selector
-                            options={docentes}
-                            value={ucRegente}
-                            getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                            getOptionValue ={(option)=>option.id}
-                            onChange={(e) => setRegente(e)}
-                            placeholder="Selecione o docente responsável pela UC..."
+                        <Counter
+                            defaultValue={ucECTS} 
+                            name="counter"
+                            error={ectsError}
+                            onChange={(e) => { changeECTS(e) }}
                         />
-                    }
-                </Col>
-            </Row>
-            {/* ECTS*/}
-            <Row style={{paddingTop:"10px"}}>
-                <Col lg={6}>
-                    <h2>
-                        <Text size="large" color="primary" fontWeight="400">
-                            Área Científica
-                        </Text>
-                    </h2>
-                    { uos && 
-                        <Selector
-                            options={areas}
-                            value={ucArea}
-                            getOptionLabel ={(option)=>(option.sigla + " - " +option.designacao)}
-                            getOptionValue ={(option)=>option.id}
-                            onChange={(e) => setArea(e)}
-                            placeholder="Indique a Área Científica da UC..."
-                        />
-                    }
-                </Col>
-                <Col>
-                    <Text size="large" color="primary" fontWeight="400">
-                        ECTS
-                    </Text>
-                    <Counter
-                        defaultValue={ucECTS} 
-                        name="counter"
-                        error={ectsError}
-                        onChange={(e) => { changeECTS(e) }}
-                    />
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+                </>
+            }
         </Container>
      );
 }
