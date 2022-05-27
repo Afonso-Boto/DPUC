@@ -94,6 +94,8 @@ services:
         condition: service_healthy
       kibana:
         condition: service_healthy
+      mysqldb:
+        condition: service_healthy
     container_name: ${FETCHER_SEARCH_HOST_NAME}
     build: ./fetcher_search
     command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
