@@ -1,11 +1,10 @@
 from elasticsearch import Elasticsearch
 import logging
 import fetcher_search.env as env
-import json
-from pathlib import Path
-import os
+
 from datetime import datetime
 from .mysql import MysqlConnector
+from .utils import es_query
 
 from typing import List, Dict
 
@@ -83,8 +82,7 @@ class ElasticSearchConnector:
             connector.indices.create(index=index)
             docs = self.db_connection.get_dpucs()
             for doc in docs:
-                id = doc["id"]
-                doc.pop("id", "")
+                id = doc.pop("id", "")
                 connector.create(index=index, id=id, document=doc)
             self.last_updated = datetime.now()
 
@@ -106,16 +104,7 @@ class ElasticSearchConnector:
 
             query = None
             if len(keywords.split(" ")) >= 1:
-                query = {
-                    "multi_match": {
-                        "query": keywords,
-                        "fields": [
-                            "nome",
-                            "conteudos^2",
-                            "objetivos",
-                        ]
-                    }
-                }
+                query = es_query(keywords)
             response = connector.search(index=self.index_name(), query=query)
             docs = response["hits"]["hits"]
             for doc in docs:
@@ -141,4 +130,4 @@ class ElasticsearchUnreachable(Exception):
         return f"Cannot connect to Elastic Search Node {self._url}"
 
 
-CONNECTOR = ElasticSearchConnector()
+main_connector = ElasticSearchConnector()

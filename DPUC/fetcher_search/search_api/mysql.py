@@ -3,8 +3,9 @@ from mysql.connector import Error
 import fetcher_search.env as env
 import logging
 from datetime import datetime
-from mysql.connector.connection import MySQLConnection
 from typing import List, Dict
+
+from .utils import row2dict, query_very_basic
 
 import os
 import json
@@ -49,15 +50,16 @@ class MysqlConnector:
             query = ""
             if timestamp is None:
                 self.logger.info("Query each UC")
-                query = self.query_all()
+                query = query_very_basic()
             else:
                 self.logger.info("Query updated UCs")
-                query = self.query_updated(timestamp)
-            docs = get_data()
+                # TODO os dados inseridos deverão conter data de alteração para eu poder usar uma função especifica
+                query = query_very_basic()
             cursor.execute(query)
-            response = cursor.fetchall()
-            self.logger.info(f"response from db: {response}")
+            for row in cursor:
+                docs.append(row2dict(row))
         except Error as e:
+            self.logger.error(e.msg)
             raise RuntimeError("Error while interacting with database")
         finally:
             if cursor is not None:
@@ -65,18 +67,3 @@ class MysqlConnector:
             if connection is not None and connection.is_connected():
                 connection.close()
             return docs
-
-    def query_all(self) -> str:
-        return "show databases;"
-
-    def query_updated(self, timestamp: datetime) -> str:
-        return "show databases;"
-
-
-
-def get_data() -> List[Dict]:
-    filename = os.path.join(Path(__file__).parent, "dpuc.json")
-    with open(filename, "r") as file:
-        return json.load(file)
-
-
