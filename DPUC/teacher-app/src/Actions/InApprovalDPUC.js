@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import Input from "../VisualComponents/Input";
 
-const InApprovalDPUC = ({id, codigo}) => {
+const InApprovalDPUC = ({id, codigo, setEstado}) => {
     const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
 
     const [show, setShow] = useState(false);
@@ -23,6 +23,7 @@ const InApprovalDPUC = ({id, codigo}) => {
         axios
             .put(BASE_URL + codigoUC, {aprovado: true})
             .then(() => {
+                setEstado(4);
                 handleClose();
             })
             .catch((error) => {

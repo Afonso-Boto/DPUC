@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 
 
-const DeactivateDPUC = ({id}) => {
+const DeactivateDPUC = ({id, setEstado}) => {
     const BASE_URL = "http://localhost:82/creation/desativarDpuc?id=" + id;
 
     const [show, setShow] = useState(false);
@@ -21,6 +21,7 @@ const DeactivateDPUC = ({id}) => {
         axios
             .put(BASE_URL)
             .then(() => {
+                setEstado(6);
                 handleClose();
             })
             .catch((error) => {

@@ -3,8 +3,7 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-
-const CloseDPUC = ({id}) => {
+const CloseDPUC = ({id, setEstado}) => {
     const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
 
     const [show, setShow] = useState(false);
@@ -21,6 +20,7 @@ const CloseDPUC = ({id}) => {
         axios
             .put(BASE_URL)
             .then(() => {
+                setEstado(3);
                 handleClose();
             })
             .catch((error) => {

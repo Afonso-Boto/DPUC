@@ -1,6 +1,6 @@
 import { Button, LoadingBackgroundWrapper, Text } from "@paco_ua/pacoui";
 import { Container, Row, Col } from "react-bootstrap";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
@@ -26,13 +26,14 @@ const ViewDPUC = () => {
         navigate("/");
     }
 
-    const { retryFetch, setRetry, uos, areas, docentes} = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, areas, docentes, estados} = useContext(EntitiesContext);
 
     const { data , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
-    const { parsing: loadParse, error: errorParse, dpuc} = useGetDPUC(data);
+    const { parsing: loadParse, error: errorParse, dpuc , dpucSet } = useGetDPUC(data);
 
     const [ detailedView, setDetailedView ] = useState(false);
+    const [ estado, setEstado ] = useState(false);
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -40,6 +41,11 @@ const ViewDPUC = () => {
     const reloadEntities = () => {
         setRetry(retryFetch + 1);
     }
+
+    useEffect(() => {
+        if(estado)
+            dpucSet.setEstado(estados.find((e) => e.id === estado));
+    }, [estado]);
 
     return ( 
         <Container>
@@ -95,22 +101,22 @@ const ViewDPUC = () => {
                             <Row>
                                 { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
                                     <Col>
-                                        <OpenDPUC id={dpuc.id}/>
+                                        <OpenDPUC id={dpuc.id} setEstado={setEstado}/>
                                     </Col>
                                 }
                                 { dpuc.estado.id === 3 &&
                                     <Col>
-                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo}/>
+                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
                                     </Col>
                                 }
                                 { dpuc.estado.id === 4 &&
                                     <Col>
-                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
+                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
                                     </Col>
                                 }
                                 { dpuc.estado.id !== 6 &&
                                     <Col>
-                                        <DeactivateDPUC id={dpuc.id}/>
+                                        <DeactivateDPUC id={dpuc.id} setEstado={setEstado}/>
                                     </Col>
                                 }
                             </Row>
@@ -120,7 +126,7 @@ const ViewDPUC = () => {
                         <Col md={4} style={{paddingTop:"10px"}}>
                             <Row>
                                 <Col>
-                                    <CloseDPUC id={dpuc.id}/>
+                                    <CloseDPUC id={dpuc.id} setEstado={setEstado}/>
                                 </Col>
                             </Row>
                         </Col>

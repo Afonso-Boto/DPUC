@@ -3,7 +3,7 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const ApproveDPUC = ({ id }) => {
+const ApproveDPUC = ({ id, setEstado }) => {
     const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
 
     const [show, setShow] = useState(false);
@@ -19,6 +19,7 @@ const ApproveDPUC = ({ id }) => {
         axios
             .put(BASE_URL, {aprovado: true})
             .then(() => {
+                setEstado(5);
                 handleClose();
             })
             .catch((error) => {
