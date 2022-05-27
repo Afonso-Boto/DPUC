@@ -62,7 +62,6 @@ const DPUCList = ({canCreate}) => {
     }
 
     const filterDPUCList = (estado) => {
-        console.log(estado)
         if(estado.value === 0)
             setDPUCList(dpucs);
         else
