@@ -154,7 +154,7 @@ const ViewDPUC = () => {
                                     Objetivos
                                 </Text>
                                 {dpuc.objetivos.split("\n").map((objetivo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { objetivo }
                                     </Text>
                                 ))}
@@ -202,7 +202,7 @@ const ViewDPUC = () => {
                                     Metodologias de Ensino
                                 </Text>
                                 {dpuc.metodologias.split("\n").map((metodo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { metodo }
                                     </Text>
                                 ))}
@@ -226,7 +226,7 @@ const ViewDPUC = () => {
                                     Funcionamento da Componente Prática
                                 </Text>
                                 {dpuc.funcionamento.split("\n").map((func) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { func }
                                     </Text>
                                 ))}
@@ -238,7 +238,7 @@ const ViewDPUC = () => {
                                     Aprendizagem Ativa
                                 </Text>
                                 {dpuc.aprendizagem.split("\n").map((apre) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { apre }
                                     </Text>
                                 ))}
@@ -250,7 +250,7 @@ const ViewDPUC = () => {
                                     Avaliação
                                 </Text>
                                 {dpuc.avaliacao.toString().split("\n").map((aval) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { aval }
                                     </Text>
                                 ))}
@@ -262,7 +262,7 @@ const ViewDPUC = () => {
                                     Regime de Faltas
                                 </Text>
                                 {dpuc.regimeFaltas.split("\n").map((faltas) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { faltas }
                                     </Text>
                                 ))}
