@@ -14,7 +14,7 @@ logging.basicConfig(
     datefmt="%m-%d %H:%M:%S",
 )
 
-DAY_IN_SECOND = 60*60*24
+DAY_IN_SECOND = 60*60*24*1000
 
 
 class ElasticSearchConnector:
@@ -59,11 +59,11 @@ class ElasticSearchConnector:
             connector = self.get_connection()
 
             docs = self.db_connection.get_dpucs(timestamp=self.last_updated)
+            self.last_updated = datetime.now()
             for doc in docs:
                 id = doc["id"]
                 doc.pop("id")
                 connector.update(index=self.index_name(), id=id, doc=doc)
-            self.last_updated = datetime.now()
 
         except Exception as e:
             raise RuntimeError("Error while interacting with Elastic Search Engine")
@@ -81,10 +81,10 @@ class ElasticSearchConnector:
                 connector.indices.delete(index=index)
             connector.indices.create(index=index)
             docs = self.db_connection.get_dpucs()
+            self.last_updated = datetime.now()
             for doc in docs:
                 id = doc.pop("id", "")
                 connector.create(index=index, id=id, document=doc)
-            self.last_updated = datetime.now()
 
         except Exception as e:
             raise RuntimeError("Error while interacting with Elastic Search Engine")
@@ -108,9 +108,9 @@ class ElasticSearchConnector:
             response = connector.search(index=self.index_name(), query=query)
             docs = response["hits"]["hits"]
             for doc in docs:
-                new_doc = doc["_source"]
-                new_doc["id"] = doc["_id"]
-                new_docs.append(new_doc)
+                #new_doc = doc["_source"]
+                #new_doc["id"] = doc["_id"]
+                new_docs.append(doc["_id"])
 
         except Exception as e:
             raise RuntimeError("Error while interacting with Elastic Search Engine")
