@@ -64,6 +64,9 @@ const InApprovalDPUC = ({id, codigo}) => {
                             />
                         </Col>
                     </Row>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Em Aprovação(4).</b>
+                    </Text>
                 </Modal.Body>
 
                 <Modal.Footer>

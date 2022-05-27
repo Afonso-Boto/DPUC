@@ -93,18 +93,26 @@ const ViewDPUC = () => {
                     {userType === "SGA" && 
                         <Col md={6} style={{paddingTop:"10px"}}>
                             <Row>
-                                <Col>
-                                    <DeactivateDPUC id={dpuc.id}/>
-                                </Col>
-                                <Col>
-                                    <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo}/>
-                                </Col>
-                                <Col>
-                                    <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
-                                </Col>
-                                <Col>
-                                    <OpenDPUC id={dpuc.id}/>
-                                </Col>
+                                { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
+                                    <Col>
+                                        <OpenDPUC id={dpuc.id}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id === 3 &&
+                                    <Col>
+                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id === 4 &&
+                                    <Col>
+                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id !== 6 &&
+                                    <Col>
+                                        <DeactivateDPUC id={dpuc.id}/>
+                                    </Col>
+                                }
                             </Row>
                         </Col>
                     }
@@ -126,7 +134,7 @@ const ViewDPUC = () => {
                     </Col>
                     {   detailedView && dpuc.estado &&
                         <Col sm={"auto"}>
-                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado.descricao}</Text>
+                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado.descricao} ({dpuc.estado.id})</Text>
                         </Col>
                     }
                 </Row>
@@ -343,6 +351,11 @@ const ViewDPUC = () => {
                                 {dpuc.horasTP > 0 && <Text as="span" size="mediumSmall" fontWeight="350">TP: {dpuc.horasTP}H</Text>}
                                 {dpuc.horasP > 0 && <Text as="span" size="mediumSmall" fontWeight="350">PL: {dpuc.horasP}H</Text>}
                                 {dpuc.horasOT > 0 && <Text as="span"size="mediumSmall" fontWeight="350">OT: {dpuc.horasOT}H</Text>}
+                                <hr className="uc_details_hr"/>
+                            </Row>
+                            <Row>
+                                <Text as="span" size="mediumSmall"fontWeight="500">Duração </Text>
+                                {dpuc.duracao && <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.duracao.nome}</Text>}
                                 <hr className="uc_details_hr"/>
                             </Row>
                             { dpuc.paginaPublica &&

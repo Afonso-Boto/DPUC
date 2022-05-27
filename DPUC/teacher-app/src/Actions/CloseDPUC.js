@@ -56,6 +56,10 @@ const CloseDPUC = ({id}) => {
                     <Text as="p">
                         O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
                     </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Fechado(3).</b>
+                    </Text>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >

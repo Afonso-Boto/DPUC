@@ -51,6 +51,10 @@ const OpenDPUC = ({id}) => {
                     <Text as="p">
                         Tem a certeza que pretende <b>abrir</b> este DPUC?
                     </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Em Edição(2).</b>
+                    </Text>
                 </Modal.Body>
 
                 <Modal.Footer>

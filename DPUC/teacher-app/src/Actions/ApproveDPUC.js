@@ -15,7 +15,7 @@ const ApproveDPUC = ({ id }) => {
 
     const approve = () => {
         axios
-            .put(BASE_URL, {estadoid: 2})
+            .put(BASE_URL, {aprovado: true})
             .then(() => {
                 handleClose();
             })
@@ -49,6 +49,10 @@ const ApproveDPUC = ({ id }) => {
                 <Modal.Body>
                     <Text>
                         Tem a certeza que pretende <b>aprovar</b> este DPUC?
+                    </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Aprovado(5).</b>
                     </Text>
                 </Modal.Body>
                 <Modal.Footer>

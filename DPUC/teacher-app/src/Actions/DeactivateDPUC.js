@@ -52,6 +52,10 @@ const DeactivateDPUC = ({id}) => {
                     <Text>
                         Tem a certeza que pretende <b>desativar</b> este DPUC?
                     </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Desativado(6).</b>
+                    </Text>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
