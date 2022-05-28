@@ -25,8 +25,8 @@ public class EditionController {
     }
 
     @PutMapping("/emEdicao")
-    public void emEdicao(@RequestBody String json, @RequestParam("id") int id) {
-        editionService.emEdicao(id, new JSONObject(json));
+    public void emEdicao(@RequestBody String json, @RequestParam("id") int id, @RequestParam("finished") boolean finished) {
+        editionService.emEdicao(id, new JSONObject(json), finished);
     }
 
     @PutMapping("/emAprovacao")
