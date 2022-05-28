@@ -1,9 +1,6 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { Text } from "@paco_ua/pacoui"
 import DPUCList from "./DPUCList";
-/*a faltar: onClick => para DPUC em edicao, em criacao e fechadas
-            search bar com o template ua e passar a ser dinamica
-             */
 
 const DashboardDR  = () => {
 

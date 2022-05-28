@@ -1,4 +1,4 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
+import { Button, Text } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
@@ -14,7 +14,6 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const approve = () => {
         setError(false);
@@ -91,7 +90,7 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        {loading && "A passar DPUC para aprovação..." || "Passar DPUC para Aprovação DPUC"}
+                        {(loading && "A passar DPUC para aprovação...") || ("Passar DPUC para Aprovação DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -1,14 +1,14 @@
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
-import useFetch from "./Helper/useFetch";
+import useFetch from "../Helper/useFetch";
 import axios from "axios";
-import useGetDPUC from "./Helper/useGetDPUC";
-import getFormattedDPUC from "./Helper/getFormattedDPUC";
-import { EntitiesContext } from "./Helper/Context";
-import Selector from "./VisualComponents/Selector";
+import useGetDPUC from "../Helper/useGetDPUC";
+import getFormattedDPUC from "../Helper/getFormattedDPUC";
+import { EntitiesContext } from "../Helper/Context";
+import Selector from "../VisualComponents/Selector";
 import { Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton, Accordion } from "@paco_ua/pacoui";
-import Input from "./VisualComponents/Input";
+import Input from "../VisualComponents/Input";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const EditDPUC = () => {
@@ -28,9 +28,6 @@ const EditDPUC = () => {
     const { parsing: loadParse, error: errorParse, dpuc, dpucSet} = useGetDPUC(data);
     const [errorPUT, setErrorPUT] = useState(false);
     const [loadingPUT, setLoadingPUT] = useState(false);
-
-
-    const dataDpuc = new Date();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -85,7 +82,7 @@ const EditDPUC = () => {
             { (loadDPUC || loadParse) &&
                 <LoadingBackgroundWrapper length={2} />
             }
-            { errorDPUC && 
+            { (errorDPUC || errorParse) && 
                 <Text as="i" size="large" color="red"> Não foi possível obter detalhes sobre este DPUC. </Text>
             }
             { dpuc && !loadDPUC && !loadParse && uos && cursos && graus && areas && docentes &&
@@ -142,8 +139,8 @@ const EditDPUC = () => {
                             <h4>
                                 <Text as="h4" size="medium" fontWeight="400">
                                     {
-                                     dpuc.codigo && dpuc.codigo
-                                     || "-"
+                                     (dpuc.codigo && dpuc.codigo)
+                                     || ("-")
                                     }
                                 </Text>
                             </h4>
@@ -182,13 +179,13 @@ const EditDPUC = () => {
                     <hr className="custom-hr"/>
                     <Row>
                         <Col>
-                        { dpuc.dataAlteracao &&
+                        { (dpuc.dataAlteracao &&
                             <>
                                 <Text as="span" size="medium" color="#0EB4BD" fontWeight="400">Última alteração: </Text>
                                 <Text as="span" size="medium">{dpuc.dataAlteracao.toLocaleDateString()}</Text>
-                            </>
+                            </>)
                             ||
-                                "Sem alterações prévias"
+                                ("Sem alterações prévias")
                             }
                         </Col>
                         <Col>

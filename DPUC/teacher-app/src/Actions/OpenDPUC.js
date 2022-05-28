@@ -1,5 +1,5 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
-import { Modal, Col, Row } from "react-bootstrap";
+import { Button, Text } from "@paco_ua/pacoui";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
@@ -10,7 +10,6 @@ const OpenDPUC = ({id, setEstado, show, setShow}) => {
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const approve = () => {
         setError(false);
@@ -69,7 +68,7 @@ const OpenDPUC = ({id, setEstado, show, setShow}) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        {loading && "A abrir DPUC..." || "Abrir DPUC"}
+                        {(loading && "A abrir DPUC...") || ("Abrir DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>

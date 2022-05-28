@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui"; 
-import Selector from "./VisualComponents/Selector";
+import Selector from "../VisualComponents/Selector";
 import axios from "axios";
-import { EntitiesContext } from "./Helper/Context";
+import { EntitiesContext } from "../Helper/Context";
 
 
 const CreateDPUC = () => {
