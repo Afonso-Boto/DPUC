@@ -31,7 +31,7 @@ const GetData = ({dpuc}) => {
                     dpuc.estadoid === 6 && 
                         "#A09C9C"
                 }
-                label={estados.find((e) => (e.id === dpuc.estadoid)).descricao}
+                label={estados.find((e) => (e.id === dpuc.estadoid)).descricao + " (" + estados.find((e) => (e.id === dpuc.estadoid)).id + ")"}
             />
         }
         </>
