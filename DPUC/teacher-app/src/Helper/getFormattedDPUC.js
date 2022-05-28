@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 const getFormattedDPUC = (dpuc) => {
 
     var formattedCursos = "";

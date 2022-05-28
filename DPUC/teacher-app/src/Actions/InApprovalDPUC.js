@@ -1,13 +1,12 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
+import { Button, Text } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import Input from "../VisualComponents/Input";
 
-const InApprovalDPUC = ({id, codigo, setEstado}) => {
+const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
     const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
 
-    const [show, setShow] = useState(false);
     const [codigoUC, setCodigo] = useState(10000);
     if(codigo)
         setCodigo(codigo);
@@ -15,7 +14,6 @@ const InApprovalDPUC = ({id, codigo, setEstado}) => {
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const approve = () => {
         setError(false);
@@ -36,9 +34,6 @@ const InApprovalDPUC = ({id, codigo, setEstado}) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
-                Começar Aprovação
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
@@ -95,7 +90,7 @@ const InApprovalDPUC = ({id, codigo, setEstado}) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        {loading && "A passar DPUC para aprovação..." || "Passar DPUC para Aprovação DPUC"}
+                        {(loading && "A passar DPUC para aprovação...") || ("Passar DPUC para Aprovação DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>

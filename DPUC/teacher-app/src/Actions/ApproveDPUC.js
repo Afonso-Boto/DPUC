@@ -1,17 +1,15 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
-import { Modal, Col, Row } from "react-bootstrap";
+import { Button, Text } from "@paco_ua/pacoui";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const ApproveDPUC = ({ id, setEstado }) => {
+const ApproveDPUC = ({ id, setEstado, show, setShow }) => {
     const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
 
-    const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const approve = () => {
         setError(false);
@@ -32,9 +30,6 @@ const ApproveDPUC = ({ id, setEstado }) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
-                Aprovar DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
@@ -71,7 +66,7 @@ const ApproveDPUC = ({ id, setEstado }) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        {loading && "A aprovar DPUC..." || "Aprovar DPUC"}
+                        {(loading && "A aprovar DPUC...") || ("Aprovar DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>

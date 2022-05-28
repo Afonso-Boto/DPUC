@@ -2,22 +2,15 @@ import { Button, LoadingBackgroundWrapper, Text, ScrollDownButton } from "@paco_
 import { Container, Row, Col } from "react-bootstrap";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { EntitiesContext, UserContext } from "./Helper/Context";
-import useFetch from "./Helper/useFetch";
-import useGetDPUC from "./Helper/useGetDPUC";
-import ApproveDPUC from "./Actions/ApproveDPUC";
-import DeactivateDPUC from "./Actions/DeactivateDPUC";
-import InApprovalDPUC from "./Actions/InApprovalDPUC";
-import CloseDPUC from "./Actions/CloseDPUC";
-import OpenDPUC from "./Actions/OpenDPUC";
+import { EntitiesContext } from "../Helper/Context";
+import useFetch from "../Helper/useFetch";
+import useGetDPUC from "../Helper/useGetDPUC";
+import ActionList from "../Actions/ActionList";
 
 const ViewDPUC = () => {
 
     const { id } = useParams();
 
-    const { userType } = useContext(UserContext);
-
-    //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
     const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
 
     const navigate = useNavigate();
@@ -43,9 +36,10 @@ const ViewDPUC = () => {
     }
 
     useEffect(() => {
-        if(estado)
-            dpucSet.setEstado(estados.find((e) => e.id === estado));
-    }, [estado]);
+        if(!estado || !dpucSet || !estados)
+            return;
+        dpucSet.setEstado(estados.find((e) => e.id === estado));
+    }, [estado, dpucSet, estados]);
 
     return ( 
         <Container>
@@ -59,7 +53,7 @@ const ViewDPUC = () => {
             <Row>
                 <Col>
                     { loadDPUC && <LoadingBackgroundWrapper length={2} /> }
-                    { dpuc && !loadDPUC && 
+                    { dpuc && !loadDPUC && !loadParse &&
                         <h3>
                             <Text size="xLarge" fontWeight="400"> 
                                 {dpuc.designacao}
@@ -71,7 +65,7 @@ const ViewDPUC = () => {
             </Row>
             <br/>
             { (!uos || !areas || !docentes) &&
-                !loadDPUC && !dpuc &&
+                !loadDPUC && !loadParse && !dpuc &&
                 <Row style={{paddingTop:"10px"}}>
                     <Col>
                     <Text as="i" size="large" color="red"> Não possível obter informações sobre esta UC.</Text>
@@ -82,8 +76,8 @@ const ViewDPUC = () => {
                 </Row>
             }
             { loadDPUC && <LoadingBackgroundWrapper height="100px" width="50%"></LoadingBackgroundWrapper> }
-            { errorDPUC && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre esta UC. </Text> }
-            { dpuc && !loadDPUC &&
+            { (errorDPUC || errorParse) && <Text as="i" size="large" color="red"> Não foi possível obter informações sobre este DPUC. </Text> }
+            { dpuc && !loadDPUC && !loadParse &&
             <Container> 
                 <Row>
                     <Col md={2} style={{paddingTop:"10px"}}>
@@ -103,44 +97,11 @@ const ViewDPUC = () => {
                         </Button>
                         }
                     </Col>
-                    {userType === "SGA" && 
-                        <Col md={6} style={{paddingTop:"10px"}}>
-                            <Row>
-                                { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
-                                    <Col>
-                                        <OpenDPUC id={dpuc.id} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id === 3 &&
-                                    <Col>
-                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id === 4 &&
-                                    <Col>
-                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id !== 6 &&
-                                    <Col>
-                                        <DeactivateDPUC id={dpuc.id} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                            </Row>
-                        </Col>
-                    }
-                    {userType === "DR" && 
-                        <Col md={4} style={{paddingTop:"10px"}}>
-                            <Row>
-                                <Col>
-                                    <CloseDPUC id={dpuc.id} setEstado={setEstado}/>
-                                </Col>
-                            </Row>
-                        </Col>
-                    }
+                    <Col style={{paddingTop:"10px"}}>
+                        <ActionList dpuc={dpuc} setEstado={setEstado}/>
+                    </Col>
                 </Row>
                 <br/>
-                
                 <Row>
                     <Col>
                         <Text as="i" size="medium" fontWeight="300"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>
@@ -282,7 +243,7 @@ const ViewDPUC = () => {
                                 </Text>
                                 {dpuc.ficheiros.split("\n").map((ficheiro) =>(
                                     <Text as="article" size="medium" fontWeight="300">
-                                        <li><a href={ficheiro} target="_blank">{ ficheiro }</a></li>
+                                        <li><a href={ficheiro}>{ ficheiro }</a></li>
                                     </Text>
                                 ))}
                             </Row>
@@ -390,11 +351,6 @@ const ViewDPUC = () => {
                         <br/>
                         { detailedView &&
                             <Container className="uc_details_extra">
-                                <Row style={{paddingTop:"10px"}}>
-                                    <Text as="span" size="mediumSmall" fontWeight="500">Carga Horária </Text>
-                                    <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.cargaHoraria}</Text>
-                                    <hr className="uc_details_hr"/>
-                                </Row>
                                 <Row>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Horas de Trabalho </Text>
                                     <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.horasTrabalho}</Text>

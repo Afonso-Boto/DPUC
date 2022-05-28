@@ -1,14 +1,11 @@
 import { useContext } from "react";
-import DashboardDUO from "./Dashboards/DashboardDUO";
-import DashboardSGA from "./Dashboards/DashboardSGA";
-import DashboardDR from "./Dashboards/DashboardDR";
+import DashboardDUO from "../Dashboards/DashboardDUO";
+import DashboardSGA from "../Dashboards/DashboardSGA";
+import DashboardDR from "../Dashboards/DashboardDR";
 
-import { UserContext } from "./Helper/Context";
+import { UserContext } from "../Helper/Context";
 
 const Home = () => {
-
-
-    const URL_DPUC = "http://localhost:8000/dpuc/" + 1;
 
     const { userType } = useContext(UserContext);
     

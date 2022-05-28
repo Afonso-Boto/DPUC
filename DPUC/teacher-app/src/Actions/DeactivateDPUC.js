@@ -1,19 +1,16 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
-import { Modal, Col, Row } from "react-bootstrap";
+import { Button, Text } from "@paco_ua/pacoui";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
 
-const DeactivateDPUC = ({id, setEstado}) => {
+const DeactivateDPUC = ({id, setEstado, show, setShow}) => {
     const BASE_URL = "http://localhost:82/creation/desativarDpuc?id=" + id;
 
-    const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
 
     const close = () => {
         setError(false);
@@ -34,9 +31,6 @@ const DeactivateDPUC = ({id, setEstado}) => {
 
     return ( 
         <>
-            <Button danger style={{fontSize:"90%"}} onClick={handleShow} >
-                Desativar DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
@@ -73,7 +67,7 @@ const DeactivateDPUC = ({id, setEstado}) => {
                         Cancelar
                     </Button>
                     <Button danger style={{fontSize:"100%"}} onClick={close} >
-                        {loading && "A desativar DPUC..." || "Desativar DPUC"}
+                        {(loading && "A desativar DPUC...") || ("Desativar DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>
