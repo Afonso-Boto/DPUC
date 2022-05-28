@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import useFetch from "./Helper/useFetch";
@@ -28,7 +28,8 @@ const EditDPUC = () => {
     const { parsing: loadParse, error: errorParse, dpuc, dpucSet} = useGetDPUC(data);
     const [errorPUT, setErrorPUT] = useState(false);
     const [loadingPUT, setLoadingPUT] = useState(false);
-    
+
+
     const dataDpuc = new Date();
 
     const handleSubmit = (e) => {
@@ -468,8 +469,12 @@ const EditDPUC = () => {
                                         placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" 
                                         as="textarea" 
                                         value={dpuc.objetivos}
-                                        onChange={(e) => dpucSet.setObjetivos(e.target.value)}
-                                        style={{height:"180pt"}}
+                                        onChange={(e) => {
+                                            dpucSet.setObjetivos(e.target.value);
+                                            e.target.style.height="1px";
+                                            e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                        }}
+                                        style={{height:"48pt"}}
                                     />
                                 ],
                                 parent: 
@@ -496,8 +501,12 @@ const EditDPUC = () => {
                                             placeholder="Especifique os requisitos da UC"  
                                             as="textarea"
                                             value={dpuc.requisitos}
-                                            onChange={(e) => dpucSet.setRequisitos(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setRequisitos(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -525,8 +534,12 @@ const EditDPUC = () => {
                                             placeholder="Especifique os conteúdos programáticos da UC"  
                                             as="textarea"
                                             value={dpuc.conteudos}
-                                            onChange={(e) => dpucSet.setConteudos(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setConteudos(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -553,8 +566,12 @@ const EditDPUC = () => {
                                             placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" 
                                             as="textarea" 
                                             value={dpuc.coerenciaConteudos}
-                                            onChange={(e) => dpucSet.setCoerenciaConteudos(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setCoerenciaConteudos(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -582,8 +599,12 @@ const EditDPUC = () => {
                                             placeholder="Especifique as metodologias de ensino da UC" 
                                             as="textarea" 
                                             value={dpuc.metodologias}
-                                            onChange={(e) => dpucSet.setMetodologias(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setMetodologias(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -611,8 +632,12 @@ const EditDPUC = () => {
                                             placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" 
                                             as="textarea" 
                                             value={dpuc.coerenciaMetodologias}
-                                            onChange={(e) => dpucSet.setCoerenciaMetodologias(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setCoerenciaMetodologias(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -639,8 +664,12 @@ const EditDPUC = () => {
                                             placeholder="Indique o funcionamento da componente prática da UC" 
                                             as="textarea" 
                                             value={dpuc.funcionamento}
-                                            onChange={(e) => dpucSet.setFuncionamento(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setFuncionamento(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -669,8 +698,12 @@ const EditDPUC = () => {
                                             placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
                                             as="textarea" 
                                             value={dpuc.aprendizagem}
-                                            onChange={(e) => dpucSet.setAprendizagem(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setAprendizagem(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -697,8 +730,12 @@ const EditDPUC = () => {
                                             placeholder="Indique o(s) tipo(s) de avaliação da UC" 
                                             as="textarea" 
                                             value={dpuc.avaliacao}
-                                            onChange={(e) => dpucSet.setAvaliacao(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setAvaliacao(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -725,8 +762,12 @@ const EditDPUC = () => {
                                             placeholder="Indique o regime de faltas da UC" 
                                             as="textarea"
                                             value={dpuc.regimeFaltas}
-                                            onChange={(e) => dpucSet.setRegimeFaltas(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setRegimeFaltas(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -753,8 +794,12 @@ const EditDPUC = () => {
                                         <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" 
                                             as="textarea"
                                             value={dpuc.bibliografia}
-                                            onChange={(e) => dpucSet.setBibliografia(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setBibliografia(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -780,8 +825,12 @@ const EditDPUC = () => {
                                         <Input placeholder="URL de ficheiros extras úteis à UC" 
                                             as="textarea"
                                             value={dpuc.ficheiros}
-                                            onChange={(e) => dpucSet.setFicheiros(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setFicheiros(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
@@ -807,8 +856,12 @@ const EditDPUC = () => {
                                         <Input placeholder="Indique informação relevante e variada sobre a UC" 
                                             as="textarea" 
                                             value={dpuc.observacoes}
-                                            onChange={(e) => dpucSet.setObservacoes(e.target.value)}
-                                            style={{height:"180pt"}}
+                                            onChange={(e) => {
+                                                dpucSet.setObservacoes(e.target.value);
+                                                e.target.style.height="1px";
+                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            }}
+                                            style={{height:"48pt"}}
                                         />
                                     ],
                                     parent: 
