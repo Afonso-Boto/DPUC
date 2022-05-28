@@ -390,11 +390,6 @@ const ViewDPUC = () => {
                         <br/>
                         { detailedView &&
                             <Container className="uc_details_extra">
-                                <Row style={{paddingTop:"10px"}}>
-                                    <Text as="span" size="mediumSmall" fontWeight="500">Carga Horária </Text>
-                                    <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.cargaHoraria}</Text>
-                                    <hr className="uc_details_hr"/>
-                                </Row>
                                 <Row>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Horas de Trabalho </Text>
                                     <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.horasTrabalho}</Text>
