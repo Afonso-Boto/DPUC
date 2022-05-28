@@ -18,7 +18,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class MainController {
 
-
     @Autowired
     private final CreationService creationService;
 
