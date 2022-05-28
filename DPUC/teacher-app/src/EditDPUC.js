@@ -7,8 +7,9 @@ import useGetDPUC from "./Helper/useGetDPUC";
 import getFormattedDPUC from "./Helper/getFormattedDPUC";
 import { EntitiesContext } from "./Helper/Context";
 import Selector from "./VisualComponents/Selector";
-import {Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton } from "@paco_ua/pacoui";
+import { Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton, Accordion } from "@paco_ua/pacoui";
 import Input from "./VisualComponents/Input";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const EditDPUC = () => {
 
@@ -458,34 +459,56 @@ const EditDPUC = () => {
                     {/* Objetivos de aprendizagem */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Objetivos de aprendizagem*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" 
-                                as="textarea" 
-                                value={dpuc.objetivos}
-                                onChange={(e) => dpucSet.setObjetivos(e.target.value)}
-                                style={{height:"180pt"}}
-                            />
+                        <Accordion
+                            structure={[
+                                {
+                                defaultOpen: true,
+                                children: [
+                                    <Input 
+                                        placeholder="Especifique os objetivos de aprendizagem (conhecimentos, aptidões e competências a desenvolver pelos estudantes)" 
+                                        as="textarea" 
+                                        value={dpuc.objetivos}
+                                        onChange={(e) => dpucSet.setObjetivos(e.target.value)}
+                                        style={{height:"180pt"}}
+                                    />
+                                ],
+                                parent: 
+                                    <h3>
+                                        <Text as="h3" size="large" color="primary" fontWeight="400">
+                                            Objetivos de aprendizagem*
+                                            {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                        </Text>
+                                    </h3>
+                                }
+                            ]}
+                        />
                         </div>
                     </div>
                     {/* Pré-requisitos */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Pré-requisitos da UC*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Especifique os requisitos da UC"  
-                                as="textarea"
-                                value={dpuc.requisitos}
-                                onChange={(e) => dpucSet.setRequisitos(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Especifique os requisitos da UC"  
+                                            as="textarea"
+                                            value={dpuc.requisitos}
+                                            onChange={(e) => dpucSet.setRequisitos(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Pré-requisitos da UC*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
@@ -493,34 +516,56 @@ const EditDPUC = () => {
                     {/* Conteúdos programáticos */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                Conteúdos programáticos*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Especifique os conteúdos programáticos da UC"  
-                                as="textarea"
-                                value={dpuc.conteudos}
-                                onChange={(e) => dpucSet.setConteudos(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Especifique os conteúdos programáticos da UC"  
+                                            as="textarea"
+                                            value={dpuc.conteudos}
+                                            onChange={(e) => dpucSet.setConteudos(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Conteúdos programáticos*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     {/* Demonstração da coerência dos conteúdos programáticos com os objectivos da unidade curricular. */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Coerência dos Conteúdos programáticos*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" 
-                                as="textarea" 
-                                value={dpuc.coerenciaConteudos}
-                                onChange={(e) => dpucSet.setCoerenciaConteudos(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Demonstre a coerência dos conteúdos programáticos com os objectivos da unidade curricular" 
+                                            as="textarea" 
+                                            value={dpuc.coerenciaConteudos}
+                                            onChange={(e) => dpucSet.setCoerenciaConteudos(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Coerência dos Conteúdos programáticos*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
@@ -528,51 +573,85 @@ const EditDPUC = () => {
                     {/* Metodologias de ensino */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Metodologias de ensino*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Especifique as metodologias de ensino da UC" 
-                                as="textarea" 
-                                value={dpuc.metodologias}
-                                onChange={(e) => dpucSet.setMetodologias(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Especifique as metodologias de ensino da UC" 
+                                            as="textarea" 
+                                            value={dpuc.metodologias}
+                                            onChange={(e) => dpucSet.setMetodologias(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Metodologias de ensino*
+
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     {/* Demonstração da coerência das metodologias de ensino com os objectivos de aprendizagem da unidade */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Coerência das Metodologias de ensino*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" 
-                                as="textarea" 
-                                value={dpuc.coerenciaMetodologias}
-                                onChange={(e) => dpucSet.setCoerenciaMetodologias(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Demonstre a coerência das metodologias de ensino com os objectivos de aprendizagem da unidade" 
+                                            as="textarea" 
+                                            value={dpuc.coerenciaMetodologias}
+                                            onChange={(e) => dpucSet.setCoerenciaMetodologias(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Coerência das Metodologias de ensino*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     { /* Funcionamento da Componente Prática */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Funcionamento da Componente Prática
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Indique o funcionamento da componente prática da UC" 
-                                as="textarea" 
-                                value={dpuc.funcionamento}
-                                onChange={(e) => dpucSet.setFuncionamento(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Indique o funcionamento da componente prática da UC" 
+                                            as="textarea" 
+                                            value={dpuc.funcionamento}
+                                            onChange={(e) => dpucSet.setFuncionamento(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Funcionamento da Componente Prática
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
@@ -581,51 +660,84 @@ const EditDPUC = () => {
                     { /* Aprendizagem ativa */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Aprendizagem ativa
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
-                                as="textarea" 
-                                value={dpuc.aprendizagem}
-                                onChange={(e) => dpucSet.setAprendizagem(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Apresente as metodologias de ensino que promovam a aprendizagem ativa e a autonomia e fomentem a ligação entre investigação e ensino" 
+                                            as="textarea" 
+                                            value={dpuc.aprendizagem}
+                                            onChange={(e) => dpucSet.setAprendizagem(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Aprendizagem ativa
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     { /* Tipo de avaliação */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Tipo de avaliação*
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Indique o(s) tipo(s) de avaliação da UC" 
-                                as="textarea" 
-                                value={dpuc.avaliacao}
-                                onChange={(e) => dpucSet.setAvaliacao(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Indique o(s) tipo(s) de avaliação da UC" 
+                                            as="textarea" 
+                                            value={dpuc.avaliacao}
+                                            onChange={(e) => dpucSet.setAvaliacao(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Tipo de avaliação*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     { /* Regime de Faltas */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Regime de Faltas
-                                </Text>
-                            </h3>
-                            <Input 
-                                placeholder="Indique o regime de faltas da UC" 
-                                as="textarea"
-                                value={dpuc.regimeFaltas}
-                                onChange={(e) => dpucSet.setRegimeFaltas(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input 
+                                            placeholder="Indique o regime de faltas da UC" 
+                                            as="textarea"
+                                            value={dpuc.regimeFaltas}
+                                            onChange={(e) => dpucSet.setRegimeFaltas(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Regime de Faltas
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
@@ -633,48 +745,81 @@ const EditDPUC = () => {
                     { /* Bibliografia de consulta */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Bibliografia de consulta*
-                                </Text>
-                            </h3>
-                            <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" 
-                                as="textarea"
-                                value={dpuc.bibliografia}
-                                onChange={(e) => dpucSet.setBibliografia(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input placeholder="Indique a bibliografia principal/obrigatória (com pelo menos uma com data de edição igual ou superior a 2015)" 
+                                            as="textarea"
+                                            value={dpuc.bibliografia}
+                                            onChange={(e) => dpucSet.setBibliografia(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Bibliografia de consulta*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     { /* Ficheiros */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Ficheiros
-                                </Text>
-                            </h3>
-                            <Input placeholder="URL de ficheiros extras úteis à UC" 
-                                as="textarea"
-                                value={dpuc.ficheiros}
-                                onChange={(e) => dpucSet.setFicheiros(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input placeholder="URL de ficheiros extras úteis à UC" 
+                                            as="textarea"
+                                            value={dpuc.ficheiros}
+                                            onChange={(e) => dpucSet.setFicheiros(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Ficheiros
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                     { /* Observações */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Observações*
-                                </Text>
-                            </h3>
-                            <Input placeholder="Indique informação relevante e variada sobre a UC" 
-                                as="textarea" 
-                                value={dpuc.observacoes}
-                                onChange={(e) => dpucSet.setObservacoes(e.target.value)}
-                                style={{height:"180pt"}}
+                            <Accordion
+                                structure={[
+                                    {
+                                    defaultOpen: true,
+                                    children: [
+                                        <Input placeholder="Indique informação relevante e variada sobre a UC" 
+                                            as="textarea" 
+                                            value={dpuc.observacoes}
+                                            onChange={(e) => dpucSet.setObservacoes(e.target.value)}
+                                            style={{height:"180pt"}}
+                                        />
+                                    ],
+                                    parent: 
+                                        <h3>
+                                            <Text as="h3" size="large" color="primary" fontWeight="400">
+                                                Observações*
+                                                {" "}<FontAwesomeIcon icon={{icon: [256, 512, [], 'f107', 'M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z'], iconName: 'angle-down', prefix: 'fal'}} />
+                                            </Text>
+                                        </h3>
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
@@ -684,11 +829,4 @@ const EditDPUC = () => {
         </Container>
      );
 }
- 
-/* 
-Como implementar ???????????????
-Carga horária do docentes responsável
-Carga horária dos docentes
-Horas de contacto (OT)
-*/
 export default EditDPUC;

@@ -43,12 +43,12 @@ const CloseDPUC = ({id, setEstado, show, setShow}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Fechar DPUC
+                        Submeter para Aprovação
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Text as="p">
-                        Tem a certeza que pretende <b>fechar</b> este DPUC?
+                        Tem a certeza que pretende submeter este DPUC para <b>Aprovação</b> este DPUC?
                     </Text>
                     <br/>
                     <Text as="p">
@@ -72,7 +72,7 @@ const CloseDPUC = ({id, setEstado, show, setShow}) => {
                         Cancelar
                     </Button>
                     <Button primary style={{fontSize:"100%"}} onClick={close} >
-                        {loading && "A fechar DPUC..." || "Fechar DPUC"}
+                        {loading && "A submeter DPUC..." || "Submeter DPUC"}
                     </Button>
                 </Modal.Footer>
             </Modal>

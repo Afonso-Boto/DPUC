@@ -28,7 +28,7 @@ const ActionList = ({dpuc, setEstado}) => {
             userType: "DUO",    estados: [5]},
         { value: "editar",      label: "Editar",            
             userType: "DR SGA", estados: [1, 2]},
-        { value: "fechar",      label: "Fechar",            
+        { value: "fechar",      label: "Submeter para Aprovação",            
             userType: "DR SGA", estados: [2]},
         { value: "reabrir",     label: "Re-abrir",          
             userType: "SGA",    estados: [3, 4]},
