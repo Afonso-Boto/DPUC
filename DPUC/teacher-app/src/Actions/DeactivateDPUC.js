@@ -4,10 +4,9 @@ import { useState } from "react";
 import axios from "axios";
 
 
-const DeactivateDPUC = ({id, setEstado}) => {
+const DeactivateDPUC = ({id, setEstado, show, setShow}) => {
     const BASE_URL = "http://localhost:82/creation/desativarDpuc?id=" + id;
 
-    const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -34,9 +33,6 @@ const DeactivateDPUC = ({id, setEstado}) => {
 
     return ( 
         <>
-            <Button danger style={{fontSize:"90%"}} onClick={handleShow} >
-                Desativar DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 

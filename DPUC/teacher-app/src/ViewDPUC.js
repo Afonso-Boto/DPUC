@@ -5,11 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
 import useGetDPUC from "./Helper/useGetDPUC";
-import ApproveDPUC from "./Actions/ApproveDPUC";
-import DeactivateDPUC from "./Actions/DeactivateDPUC";
-import InApprovalDPUC from "./Actions/InApprovalDPUC";
-import CloseDPUC from "./Actions/CloseDPUC";
-import OpenDPUC from "./Actions/OpenDPUC";
+import ActionList from "./Actions/ActionList";
 
 const ViewDPUC = () => {
 
@@ -103,44 +99,11 @@ const ViewDPUC = () => {
                         </Button>
                         }
                     </Col>
-                    {userType === "SGA" && 
-                        <Col md={6} style={{paddingTop:"10px"}}>
-                            <Row>
-                                { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
-                                    <Col>
-                                        <OpenDPUC id={dpuc.id} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id === 3 &&
-                                    <Col>
-                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id === 4 &&
-                                    <Col>
-                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                                { dpuc.estado.id !== 6 &&
-                                    <Col>
-                                        <DeactivateDPUC id={dpuc.id} setEstado={setEstado}/>
-                                    </Col>
-                                }
-                            </Row>
-                        </Col>
-                    }
-                    {userType === "DR" && 
-                        <Col md={4} style={{paddingTop:"10px"}}>
-                            <Row>
-                                <Col>
-                                    <CloseDPUC id={dpuc.id} setEstado={setEstado}/>
-                                </Col>
-                            </Row>
-                        </Col>
-                    }
+                    <Col style={{paddingTop:"10px"}}>
+                        <ActionList dpuc={dpuc} setEstado={setEstado}/>
+                    </Col>
                 </Row>
                 <br/>
-                
                 <Row>
                     <Col>
                         <Text as="i" size="medium" fontWeight="300"> Última alteração: {dpuc.dataAlteracao && dpuc.dataAlteracao.toLocaleDateString()}</Text>

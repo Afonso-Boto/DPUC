@@ -3,10 +3,9 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const ApproveDPUC = ({ id, setEstado }) => {
+const ApproveDPUC = ({ id, setEstado, show, setShow }) => {
     const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
 
-    const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -32,9 +31,6 @@ const ApproveDPUC = ({ id, setEstado }) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
-                Aprovar DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 

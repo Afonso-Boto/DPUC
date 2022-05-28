@@ -4,10 +4,9 @@ import { useState } from "react";
 import axios from "axios";
 import Input from "../VisualComponents/Input";
 
-const InApprovalDPUC = ({id, codigo, setEstado}) => {
+const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
     const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
 
-    const [show, setShow] = useState(false);
     const [codigoUC, setCodigo] = useState(10000);
     if(codigo)
         setCodigo(codigo);
@@ -36,9 +35,6 @@ const InApprovalDPUC = ({id, codigo, setEstado}) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
-                Começar Aprovação
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
