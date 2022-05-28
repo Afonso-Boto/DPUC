@@ -110,6 +110,8 @@ const useGetDPUC = (data) => {
                 setGrau(graus.find((g) => (g.nome === data.grau))); 
             if(data.duracao && duracoes)
                 setDuracao(duracoes.find((d) => (d.nome === data.duracao)));
+
+            console.table(data)
             if(data.periodo_letivoid && semestre)
                 setPeriodo(semestre.find((s) => (s.id === data.periodo_letivoid)));
             if(data.modalidade && modalidades)

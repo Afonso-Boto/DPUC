@@ -13,7 +13,7 @@ const BlueNav = () => {
 
     return ( 
         <>
-        <Navbar variant="dark" style={{minHeight:"80px", height: "80px", backgroundColor:"#0EB4BD", color:"white"}}>
+        <Navbar variant="dark" style={{minHeight:"80px", height: "80px", width:"100wv", backgroundColor:"#0EB4BD", color:"white"}}>
             <Container>
             <Navbar.Brand>
                 <img

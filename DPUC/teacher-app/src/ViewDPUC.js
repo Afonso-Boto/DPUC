@@ -1,6 +1,6 @@
-import { Button, LoadingBackgroundWrapper, Text } from "@paco_ua/pacoui";
+import { Button, LoadingBackgroundWrapper, Text, ScrollDownButton } from "@paco_ua/pacoui";
 import { Container, Row, Col } from "react-bootstrap";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EntitiesContext, UserContext } from "./Helper/Context";
 import useFetch from "./Helper/useFetch";
@@ -26,13 +26,14 @@ const ViewDPUC = () => {
         navigate("/");
     }
 
-    const { retryFetch, setRetry, uos, areas, docentes} = useContext(EntitiesContext);
+    const { retryFetch, setRetry, uos, areas, docentes, estados} = useContext(EntitiesContext);
 
     const { data , loading: loadDPUC, error: errorDPUC } = useFetch(URL_DPUC);
     
-    const { parsing: loadParse, error: errorParse, dpuc} = useGetDPUC(data);
+    const { parsing: loadParse, error: errorParse, dpuc , dpucSet } = useGetDPUC(data);
 
     const [ detailedView, setDetailedView ] = useState(false);
+    const [ estado, setEstado ] = useState(false);
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -41,8 +42,20 @@ const ViewDPUC = () => {
         setRetry(retryFetch + 1);
     }
 
+    useEffect(() => {
+        if(estado)
+            dpucSet.setEstado(estados.find((e) => e.id === estado));
+    }, [estado]);
+
     return ( 
         <Container>
+            <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, 0)} />
+            </div>
+            <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
+            </div>
+            
             <Row>
                 <Col>
                     { loadDPUC && <LoadingBackgroundWrapper length={2} /> }
@@ -93,18 +106,26 @@ const ViewDPUC = () => {
                     {userType === "SGA" && 
                         <Col md={6} style={{paddingTop:"10px"}}>
                             <Row>
-                                <Col>
-                                    <DeactivateDPUC id={dpuc.id}/>
-                                </Col>
-                                <Col>
-                                    <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo}/>
-                                </Col>
-                                <Col>
-                                    <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo}/>
-                                </Col>
-                                <Col>
-                                    <OpenDPUC id={dpuc.id}/>
-                                </Col>
+                                { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
+                                    <Col>
+                                        <OpenDPUC id={dpuc.id} setEstado={setEstado}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id === 3 &&
+                                    <Col>
+                                        <InApprovalDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id === 4 &&
+                                    <Col>
+                                        <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado}/>
+                                    </Col>
+                                }
+                                { dpuc.estado.id !== 6 &&
+                                    <Col>
+                                        <DeactivateDPUC id={dpuc.id} setEstado={setEstado}/>
+                                    </Col>
+                                }
                             </Row>
                         </Col>
                     }
@@ -112,7 +133,7 @@ const ViewDPUC = () => {
                         <Col md={4} style={{paddingTop:"10px"}}>
                             <Row>
                                 <Col>
-                                    <CloseDPUC id={dpuc.id}/>
+                                    <CloseDPUC id={dpuc.id} setEstado={setEstado}/>
                                 </Col>
                             </Row>
                         </Col>
@@ -126,7 +147,7 @@ const ViewDPUC = () => {
                     </Col>
                     {   detailedView && dpuc.estado &&
                         <Col sm={"auto"}>
-                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado.descricao}</Text>
+                            <Text as="i" size="medium" color="#63CF7C" fontWeight="500" style={{color:"#63CF7C"}}> Estado: {dpuc.estado.descricao} ({dpuc.estado.id})</Text>
                         </Col>
                     }
                 </Row>
@@ -140,7 +161,7 @@ const ViewDPUC = () => {
                                     Objetivos
                                 </Text>
                                 {dpuc.objetivos.split("\n").map((objetivo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { objetivo }
                                     </Text>
                                 ))}
@@ -188,7 +209,7 @@ const ViewDPUC = () => {
                                     Metodologias de Ensino
                                 </Text>
                                 {dpuc.metodologias.split("\n").map((metodo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { metodo }
                                     </Text>
                                 ))}
@@ -212,7 +233,7 @@ const ViewDPUC = () => {
                                     Funcionamento da Componente Prática
                                 </Text>
                                 {dpuc.funcionamento.split("\n").map((func) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { func }
                                     </Text>
                                 ))}
@@ -224,7 +245,7 @@ const ViewDPUC = () => {
                                     Aprendizagem Ativa
                                 </Text>
                                 {dpuc.aprendizagem.split("\n").map((apre) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { apre }
                                     </Text>
                                 ))}
@@ -236,7 +257,7 @@ const ViewDPUC = () => {
                                     Avaliação
                                 </Text>
                                 {dpuc.avaliacao.toString().split("\n").map((aval) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { aval }
                                     </Text>
                                 ))}
@@ -248,7 +269,7 @@ const ViewDPUC = () => {
                                     Regime de Faltas
                                 </Text>
                                 {dpuc.regimeFaltas.split("\n").map((faltas) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { faltas }
                                     </Text>
                                 ))}
@@ -343,6 +364,11 @@ const ViewDPUC = () => {
                                 {dpuc.horasTP > 0 && <Text as="span" size="mediumSmall" fontWeight="350">TP: {dpuc.horasTP}H</Text>}
                                 {dpuc.horasP > 0 && <Text as="span" size="mediumSmall" fontWeight="350">PL: {dpuc.horasP}H</Text>}
                                 {dpuc.horasOT > 0 && <Text as="span"size="mediumSmall" fontWeight="350">OT: {dpuc.horasOT}H</Text>}
+                                <hr className="uc_details_hr"/>
+                            </Row>
+                            <Row>
+                                <Text as="span" size="mediumSmall"fontWeight="500">Duração </Text>
+                                {dpuc.duracao && <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.duracao.nome}</Text>}
                                 <hr className="uc_details_hr"/>
                             </Row>
                             { dpuc.paginaPublica &&

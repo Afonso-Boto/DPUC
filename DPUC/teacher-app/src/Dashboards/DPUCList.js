@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
-import { LoadingBackgroundWrapper, Button, Text} from "@paco_ua/pacoui"
+import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton } from "@paco_ua/pacoui"
 import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
 import useFetch from '../Helper/useFetch';
@@ -62,7 +62,6 @@ const DPUCList = ({canCreate}) => {
     }
 
     const filterDPUCList = (estado) => {
-        console.log(estado)
         if(estado.value === 0)
             setDPUCList(dpucs);
         else
@@ -76,6 +75,12 @@ const DPUCList = ({canCreate}) => {
 
     return ( 
         <Container>
+            <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, 0)} />
+            </div>
+            <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
+            </div>
             <Row style={{paddingBottom:"10px"}}>
                 <Col style={{textAlign:"left"}}>
                     <br/>
