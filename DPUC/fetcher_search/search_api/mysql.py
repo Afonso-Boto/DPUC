@@ -22,7 +22,9 @@ class MysqlConnector:
             host=self.host,
             database=self.database,
             user=self.user,
-            password=self.password
+            password=self.password,
+            use_unicode=True,
+            charset="iso-8859-1"
         )
 
     def get_dpucs(self, timestamp: float = None) -> List[Dict]:

@@ -43,8 +43,6 @@ def row2dict(row):
 
 def format_value(value: str) -> str:
     logger.info(f"old value: {value}")
-    value = value.encode(env.UTF8)
-    value = value.decode(env.UTF8)
     value = unidecode(value).lower().strip()
     logger.info(f"new value: {value}")
     return value
