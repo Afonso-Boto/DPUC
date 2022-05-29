@@ -111,10 +111,10 @@ const useGetDPUC = (data) => {
                         estadoID = 2;
                         break;
                     case 9:
-                        estadoID = 3;
+                        estadoID = 4;
                         break;
                     case 10:
-                        estadoID = 3;
+                        estadoID = 5;
                         break;
                     default:
                         break;
