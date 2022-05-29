@@ -1,69 +1,47 @@
 import mysql.connector
-from mysql.connector import Error
-import fetcher_search.env as env
-import logging
-from datetime import datetime
 from typing import List, Dict
+from datetime import datetime
 
 from .utils import row2dict, query_very_basic
-
-import os
-import json
-from pathlib import Path
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
-    datefmt="%m-%d %H:%M:%S",
-)
+from .log import get_logger
 
 
 class MysqlConnector:
 
-    @classmethod
-    def get_connection(cls):
-        connector = mysql.connector.connect(
-            host=env.DB_HOST,
-            database=env.DB_NAME,
-            user=env.DB_USER,
-            password=env.DB_PASSWORD
-        )
-        if not connector.is_connected():
-            raise RuntimeError("Cannot connect to the database!")
-        return connector
+    def __init__(self, host, database, user, password):
+        self.host = host
+        self.database = database
+        self.user = user
+        self.password = password
 
-    def __init__(self):
+        self.logger = get_logger(f"db-connector({self.host}, {self.database}, {self.user})")
+        self.logger.info(f"successfully initialized")
+
+    def get_connection(self):
+        return mysql.connector.connect(
+            host=self.host,
+            database=self.database,
+            user=self.user,
+            password=self.password
+        )
+
+    def get_dpucs(self, timestamp: float = None) -> List[Dict]:
+        self.logger.info(f"get_dpucs(ts={timestamp})")
+
         connection = self.get_connection()
+        cursor = connection.cursor()
+
+        if timestamp is None:
+            query = query_very_basic()
+        else:
+            #TODO
+            query = query_very_basic()
+        cursor.execute(query)
+        docs = list()
+        for row in cursor:
+            docs.append(row2dict(row))
+
+        cursor.close()
         connection.close()
 
-        self.logger = logging.getLogger("MysqlConnector")
-        self.logger.info(f"connector to database is successfully initialized")
-
-    def get_dpucs(self, timestamp: datetime = None) -> List[Dict]:
-        self.logger.info(f"Call to get dpucs from database with timestamp {timestamp}")
-        connection = None
-        cursor = None
-        docs = []
-        try:
-            connection = self.get_connection()
-            cursor = connection.cursor()
-            query = ""
-            if timestamp is None:
-                self.logger.info("Query each UC")
-                query = query_very_basic()
-            else:
-                self.logger.info("Query updated UCs")
-                # TODO os dados inseridos deverão conter data de alteração para eu poder usar uma função especifica
-                query = query_very_basic()
-            cursor.execute(query)
-            for row in cursor:
-                docs.append(row2dict(row))
-        except Error as e:
-            self.logger.error(e.msg)
-            raise RuntimeError("Error while interacting with database")
-        finally:
-            if cursor is not None:
-                cursor.close()
-            if connection is not None and connection.is_connected():
-                connection.close()
-            return docs
+        return docs
