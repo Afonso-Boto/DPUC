@@ -11,3 +11,9 @@ DB_PORT = os.getenv('DB_PORT')
 ES_HOST = os.getenv("ES01_NAME")
 ES_PORT = os.getenv("ES_PORT")
 INDEX_NAME = os.getenv("INDEX_NAME")
+
+DAY_MILLISECONDS = 60*60*24*1000
+
+UTF8 = "utf-8"
+LATIN1 = "latin-1"
+

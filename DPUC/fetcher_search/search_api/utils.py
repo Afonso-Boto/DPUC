@@ -1,7 +1,8 @@
 from unidecode import unidecode
-import logging
+import fetcher_search.env as env
+from .log import get_logger
 
-logger = logging.getLogger("utils-module")
+logger = get_logger("utils-module")
 
 
 def query_very_basic():
@@ -42,8 +43,8 @@ def row2dict(row):
 
 def format_value(value: str) -> str:
     logger.info(f"old value: {value}")
-    value = value.encode("ascii")
-    value = value.decode("utf-8")
+    value = value.encode(env.UTF8)
+    value = value.decode(env.UTF8)
     value = unidecode(value).lower().strip()
     logger.info(f"new value: {value}")
     return value
