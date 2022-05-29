@@ -2,10 +2,13 @@ import { Button, Text } from "@paco_ua/pacoui";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const CloseDPUC = ({id, estadoTipo, setEstado, show, setShow}) => {
+const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow}) => {
     const BASE_URL_CREATION = "http://localhost:82/creation/fecharDpuc?id=" + id;
     const BASE_URL_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + true;
+
+    const navigate = useNavigate();
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -23,6 +26,8 @@ const CloseDPUC = ({id, estadoTipo, setEstado, show, setShow}) => {
             .then(() => {
                 setEstado(proxEstado);
                 handleClose();
+                if(redirect)
+                    navigate("/dpuc/" + id);
             })
             .catch((error) => {
                 setError(true);
