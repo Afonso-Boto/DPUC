@@ -16,10 +16,10 @@ services:
       - ./volumes/mysql/db:/var/lib/mysql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
 
-  fetcher:
+  fetcher-main:
     depends_on:
       - mysqldb
-    build: ./fetcher
+    build: ./fetcher-main
     env_file: ./.env
     ports:
       - $SPRING_FETCHER_LOCAL_PORT:$SPRING_DOCKER_PORT
@@ -31,7 +31,7 @@ services:
           "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
           "spring.jpa.hibernate.ddl-auto" : "create-drop"}'
     volumes:
-      - ./volumes/fetcher/:/root/.m2
+      - ./volumes/fetcher-main/:/root/.m2
     stdin_open: true
     tty: true
 
