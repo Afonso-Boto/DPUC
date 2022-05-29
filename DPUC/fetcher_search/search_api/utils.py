@@ -42,7 +42,8 @@ def row2dict(row):
 
 
 def format_value(value: str) -> str:
-    logger.info(f"old value: {value}")
+    logger.info(f"old value: {value} - type: {type(value)}")
+    value = value.encode('cp1252').decode('utf-8').encode('cp1252').decode('utf-8')
     value = unidecode(value).lower().strip()
     logger.info(f"new value: {value}")
     return value
