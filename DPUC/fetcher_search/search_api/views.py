@@ -2,9 +2,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
-from django.http.request import HttpRequest
 
-from .core import main_connector, ElasticsearchUnreachable
+from .config import es_connector
+from .log import get_logger
+
+logger = get_logger("search_api.views")
 
 
 @api_view(['GET'])
@@ -14,9 +16,10 @@ def search_dpuc(request):
     if request.method == "GET":
         keywords = request.GET.get('keywords', '')
         try:
-            docs = main_connector.get_relevant_search(keywords)
+            docs = es_connector.get_relevant_search(keywords)
             return Response(docs, status=status.HTTP_200_OK)
-        except ElasticsearchUnreachable:
+        except Exception as e:
+            logger.warning(e.args)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -25,5 +28,9 @@ def search_dpuc(request):
 def update(request):
 
     if request.method == "GET":
-        main_connector.update()
-        return Response(status=status.HTTP_200_OK)
+        try:
+            es_connector.update()
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.warning(e.args)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,4 +1,7 @@
 from unidecode import unidecode
+import logging
+
+logger = logging.getLogger("utils-module")
 
 
 def query_very_basic():
@@ -26,13 +29,20 @@ def es_query(keywords):
 
 def row2dict(row):
     dicio = dict()
-    dicio["id"] = row[0]
-    dicio["nome"] = unidecode(row[1]).lower().strip()
-    dicio["area_cientifica"] = unidecode(row[2]).lower().strip()
-    dicio["objetivos"] = unidecode(row[3]).lower().strip()
-    dicio["conteudos"] = unidecode(row[4]).lower().strip()
-    dicio["bibliografia"] = unidecode(row[5]).lower().strip()
-    dicio["requisitos"] = unidecode(row[6]).lower().strip()
-    dicio["aprendizagem"] = unidecode(row[7]).lower().strip()
-    print(f"aqui aqui aqui: {dicio}")
+    dicio["id"] = int(row[0])
+    dicio["nome"] = format_value(row[1])
+    dicio["area_cientifica"] = format_value(row[2])
+    dicio["objetivos"] = format_value(row[3])
+    dicio["conteudos"] = format_value(row[4])
+    dicio["bibliografia"] = format_value(row[5])
+    dicio["requisitos"] = format_value(row[6])
+    dicio["aprendizagem"] = format_value(row[7])
     return dicio
+
+
+def format_value(value: str) -> str:
+    logger.info(f"old value: {value}")
+    value = value.encode("ascii").decode("utf-8")
+    value = unidecode(value).lower().strip()
+    logger.info(f"new value: {value}")
+    return value
