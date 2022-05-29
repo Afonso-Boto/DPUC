@@ -3,8 +3,9 @@ import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const ApproveDPUC = ({ id, setEstado, show, setShow }) => {
-    const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
+const ApproveDPUC = ({ id, estadoTipo, setEstado, show, setShow }) => {
+    const BASE_URL_CREATION = "http://localhost:82/creation/aprovarDpuc?id=" + id;
+    const BASE_URL_EDITION = "http://localhost:82/edition/emAprovacao?id=" + id + "&aprovado=" + true;
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -14,6 +15,9 @@ const ApproveDPUC = ({ id, setEstado, show, setShow }) => {
     const approve = () => {
         setError(false);
         setLoading(true);
+
+        const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
+
         axios
             .put(BASE_URL, {aprovado: true})
             .then(() => {

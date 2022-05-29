@@ -100,7 +100,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
                     <Row>
                         { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
                             <Col>
-                                <OpenDPUC id={dpuc.id} setEstado={setEstado} show={showOpen} setShow={setShowOpen}/>
+                                <OpenDPUC id={dpuc.id} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showOpen} setShow={setShowOpen}/>
                             </Col>
                         }
                         { dpuc.estado.id === 3 &&
@@ -110,7 +110,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
                         }
                         { dpuc.estado.id === 4 &&
                             <Col>
-                                <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado} show={showApprove} setShow={setShowApprove}/>
+                                <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showApprove} setShow={setShowApprove}/>
                             </Col>
                         }
                         { dpuc.estado.id !== 6 &&

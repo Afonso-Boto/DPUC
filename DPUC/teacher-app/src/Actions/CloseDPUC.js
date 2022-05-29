@@ -15,7 +15,6 @@ const CloseDPUC = ({id, estadoTipo, setEstado, show, setShow}) => {
     const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
     const proxEstado = estadoTipo === "C" ? 3 : 4;
 
-    console.log(BASE_URL);
     const close = () => {
         setError(false);
         setLoading(true);
