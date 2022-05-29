@@ -74,13 +74,12 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
     @Override
     public HttpStatus emEdicao(int dpucid, JSONObject dpuc, boolean finished) {
         try{
-            //Update dpuc
-            creationManipulationService.editarDpuc(dpuc, dpucid);
-
             if (finished){
                 // Update estado para E3 - Em edição (9 na tabela de estados)
                 String sql = "UPDATE dpuc SET estadoid=? WHERE id = ?";
                 getJdbcTemplate().update(sql, 9, dpucid);
+            }else{
+                creationManipulationService.editarDpuc(dpuc, dpucid);
             }
 
         }catch (Exception e){

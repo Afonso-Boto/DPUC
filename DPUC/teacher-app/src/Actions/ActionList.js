@@ -125,7 +125,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
                 <Col style={{paddingTop:"10px"}}>
                     <Row>
                         <Col>
-                            <CloseDPUC id={dpuc.id} setEstado={setEstado} show={showClose} setShow={setShowClose}/>
+                            <CloseDPUC id={dpuc.id} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showClose} setShow={setShowClose}/>
                         </Col>
                     </Row>
                 </Col>

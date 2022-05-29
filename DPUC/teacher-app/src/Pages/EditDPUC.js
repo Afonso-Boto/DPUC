@@ -17,7 +17,8 @@ const EditDPUC = () => {
 
     //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
     const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
-    const URL_DPUC_PUT = "http://localhost:82/creation/editarDpuc?id=" + id;
+    const URL_DPUC_PUT_CREATION = "http://localhost:82/creation/editarDpuc?id=" + id;
+    const URL_DPUC_PUT_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + false;
 
     const navigate = useNavigate();
     
@@ -35,6 +36,8 @@ const EditDPUC = () => {
         setErrorPUT(false);
         setLoadingPUT(true);
         
+        const URL_DPUC_PUT = dpuc.estadoTipo === "C" ? URL_DPUC_PUT_CREATION : URL_DPUC_PUT_EDITION;
+        console.log(URL_DPUC_PUT);
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {

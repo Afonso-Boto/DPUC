@@ -27,8 +27,7 @@ const CreateDPUC = ({ id, show, setShow, responsavel }) => {
         axios
             .put(BASE_URL + regente.id)
             .then((response) => {
-                console.log(response.data);
-                //navigate("/dpuc/"+response.data.id);
+                navigate("/dpuc/"+response.data);
                 handleClose();
             })
             .catch((error) => {
