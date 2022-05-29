@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { Link as RouterLink} from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { EntitiesContext, UserContext } from "../Helper/Context";
+import CreateDPUC from "../Actions/CreateDPUC";
 
 const GetData = ({dpuc}) => {
     const { estados } = useContext(EntitiesContext);
@@ -54,6 +55,7 @@ const CardDPUC = ({dpuc}) => {
 
     const { userType } = useContext(UserContext);
 
+    const [ showCreate, setShowCreate ] = useState(false);
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
@@ -105,7 +107,10 @@ const CardDPUC = ({dpuc}) => {
                                     )
                                     ||
                                     ((dpuc.estadoid === 5 || dpuc.estadoid === 10) && userType === "DUO" &&
-                                    <Button content="Action Button" primary> Lançar novo DPUC </Button>
+                                    <>
+                                        <Button content="Action Button" primary onClick={()=>setShowCreate(true)}> Lançar novo DPUC </Button>
+                                        <CreateDPUC id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowCreate}/>
+                                    </>
                                     )
                                 }
                                 </Col>
