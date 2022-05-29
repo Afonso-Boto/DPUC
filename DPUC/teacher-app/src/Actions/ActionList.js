@@ -9,6 +9,7 @@ import OpenDPUC from "../Actions/OpenDPUC";
 import ChangeDR from "./ChangeDR";
 import Selector from "../VisualComponents/Selector";
 import { useNavigate } from "react-router-dom";
+import CreateDPUC from "./CreateDPUC";
 
 const ActionList = ({dpuc, setEstado, setResponsavel}) => {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
     const [showDeactive, setShowDeactivate] = useState(false);
     const [showInApproval, setShowInApproval] = useState(false);
     const [showOpen, setShowOpen] = useState(false);
+    const [showCreate, setShowCreate] = useState(false);
 
     const options = [
         { value: "regente",     label: "Alterar Responsável da UC",   
@@ -48,7 +50,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
                 setShowChangeDR(true);
                 break;
             case "novo":
-                // Abrir página de criar novo DPUC
+                setShowCreate(true);
                 break;
             case "editar":
                 navigate("/edit/"+dpuc.id);
@@ -134,6 +136,11 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
                         <Col>
                             <ChangeDR id={dpuc.id} responsavel={dpuc.responsavel} setResponsavel={setResponsavel} show={showChangeDR} setShow={setShowChangeDR}/>
                         </Col>
+                        { (dpuc.estado.id === 5 || dpuc.estado.id === 10) &&
+                            <Col>
+                                <CreateDPUC id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowCreate}/>
+                            </Col>
+                        }
                     </Row>
                 </Col>
             }

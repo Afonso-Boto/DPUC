@@ -4,10 +4,12 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
 import Selector from "../VisualComponents/Selector";
+import { useNavigate } from "react-router-dom";
 
-const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/edition/setRegente?id=" + id + "&regenteid=";
+const CreateDPUC = ({ id, show, setShow, responsavel }) => {
+    const BASE_URL = "http://localhost:82/edition/definicaoRegente?id=" + id + "&regenteid=";
 
+    const navigate = useNavigate();
     const {docentes} = useContext(EntitiesContext);
 
     const [error, setError] = useState(false);
@@ -24,17 +26,17 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
         setLoading(true);
         axios
             .put(BASE_URL + regente.id)
-            .then(() => {
-                setResponsavel(regente);
+            .then((response) => {
+                console.log(response.data);
+                //navigate("/dpuc/"+response.data.id);
                 handleClose();
             })
             .catch((error) => {
                 setError(true);
             })
-            .finally( () => {
+            .finally(() => {
                 setLoading(false);
             });
-        
     }
     return ( 
         <>
@@ -50,7 +52,7 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Alterar Responsável da Unidade Curricular
+                        Lançar Nova Versão de DPUC
                     </Modal.Title>
                 </Modal.Header>
                 
@@ -59,7 +61,7 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
                         <Col sm="auto">
                             <h3>
                                 <Text size="large" color="primary" fontWeight="400">
-                                    Escolha a/o novo Responsável:
+                                    Escolha a/o Responsável da UC:
                                 </Text>
                             </h3>
                         </Col>
@@ -72,11 +74,22 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
                         onChange={(e) => setRegente(e)}
                         placeholder="Selecione o novo docente responsável pela UC..."
                     />
+                    <Text as="i" size="small">
+                        Ao lançar um DPUC é necessário definir a/o Responsável. 
+                    </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        Toda a informação do DPUC atual será copiada para o novo DPUC podendo fazer alterações.
+                    </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O novo DPUC ficará no estado <b>Em Edição(2)</b>.
+                    </Text>
                     {   error &&
                         <>
                         <br/>
                         <Text as="i" size="small" color="red">
-                            Ocorreu um erro ao alterar o regente da Unidade Curricular.
+                            Ocorreu um erro ao lançar o novo DPUC.
                         </Text>
                         </>
                     }
@@ -87,7 +100,7 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
                         Cancelar
                     </Button>
                     <Button primary style={{fontSize:"100%"}} onClick={approve} >
-                        {(loading && "A alterar Responsável da UC...") || ("Alterar Responsável da UC")}
+                        {(loading && "A Lançar Novo DPUC...") || ("Lançar Novo DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -95,4 +108,4 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
      );
 }
  
-export default ChangeDR;
+export default CreateDPUC;

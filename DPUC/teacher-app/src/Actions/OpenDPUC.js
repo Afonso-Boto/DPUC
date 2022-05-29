@@ -51,7 +51,7 @@ const OpenDPUC = ({id, setEstado, show, setShow}) => {
                     </Text>
                     <br/>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Em Edição(2).</b>
+                        O DPUC passará para o estado <b>Em Edição(2)</b>.
                     </Text>
                     {   error &&
                         <>

@@ -50,7 +50,7 @@ const ApproveDPUC = ({ id, setEstado, show, setShow }) => {
                     </Text>
                     <br/>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Aprovado(5).</b>
+                        O DPUC passará para o estado <b>Aprovado(5)</b>.
                     </Text>
                     {   error &&
                         <>

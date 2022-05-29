@@ -54,7 +54,7 @@ const CloseDPUC = ({id, setEstado, show, setShow}) => {
                     </Text>
                     <br/>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Fechado(3).</b>
+                        O DPUC passará para o estado <b>Fechado(3)</b>.
                     </Text>
                     {   error &&
                         <>
