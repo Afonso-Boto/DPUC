@@ -44,8 +44,6 @@ secrets.yml
 .sts4-cache
 
 # Docker volumes
-/DPUC/volumes/fetcher-criacao
-/DPUC/volumes/fetcher-edicao
+/DPUC/volumes/fetcher-main
 /DPUC/volumes/fetcher-search
-/DPUC/volumes/teacher-app
 /DPUC/volumes/mysql/db
