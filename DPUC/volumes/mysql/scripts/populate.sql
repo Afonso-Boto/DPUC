@@ -91,7 +91,7 @@ CREATE TABLE dpuc (
   modalidade            text,
   requisitos            text,
   ficheiros             longblob,
-  data_alteracao        datetime NULL,
+  data_alteracao        text NULL,
   pagina_publica        text,
   funcionamento         text,
   aprendizagem          text,
