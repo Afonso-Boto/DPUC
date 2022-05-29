@@ -73,7 +73,7 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
                         </Col>
                     </Row>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Em Aprovação(4).</b>
+                        O DPUC passará para o estado <b>Em Aprovação(4)</b>.
                     </Text>
                     {   error &&
                         <>

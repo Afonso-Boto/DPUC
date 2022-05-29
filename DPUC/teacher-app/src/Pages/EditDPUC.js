@@ -10,6 +10,7 @@ import Selector from "../VisualComponents/Selector";
 import { Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton, Accordion } from "@paco_ua/pacoui";
 import Input from "../VisualComponents/Input";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CloseDPUC from "../Actions/CloseDPUC";
 
 const EditDPUC = () => {
 
@@ -17,7 +18,8 @@ const EditDPUC = () => {
 
     //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
     const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
-    const URL_DPUC_PUT = "http://localhost:82/creation/editarDpuc?id=" + id;
+    const URL_DPUC_PUT_CREATION = "http://localhost:82/creation/editarDpuc?id=" + id;
+    const URL_DPUC_PUT_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + false;
 
     const navigate = useNavigate();
     
@@ -29,12 +31,17 @@ const EditDPUC = () => {
     const [errorPUT, setErrorPUT] = useState(false);
     const [loadingPUT, setLoadingPUT] = useState(false);
 
+    const [estado, setEstado] = useState(0);
+    const [showClose, setShowClose] = useState(0);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setErrorPUT(false);
         setLoadingPUT(true);
         
+        const URL_DPUC_PUT = dpuc.estadoTipo === "C" ? URL_DPUC_PUT_CREATION : URL_DPUC_PUT_EDITION;
+        console.log(URL_DPUC_PUT);
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {
@@ -98,9 +105,19 @@ const EditDPUC = () => {
                         <Button action onClick={handleBack} style={{fontSize:"100%"}}>Voltar</Button>
                     </Col>
                     <Col md="auto">
-                        <Button primary style={{fontSize:"100%"}}>
-                            { loadingPUT ? "A Guardar DPUC..." : "Guardar"}
-                        </Button>
+                        <Row>
+                            <Col>
+                                <Button primary onClick={(e) => {e.preventDefault(); setShowClose(true);}}>
+                                    Submeter para Aprovação
+                                </Button>
+                                <CloseDPUC redirect={true} id={dpuc.id} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showClose} setShow={setShowClose}/>
+                            </Col>
+                            <Col>
+                                <Button primary style={{fontSize:"100%"}}>
+                                    { loadingPUT ? "A Guardar DPUC..." : "Guardar"}
+                                </Button>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
                 <br/>
