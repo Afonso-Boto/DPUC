@@ -2,7 +2,7 @@ import { Card, Button, StatusLabel, Text } from "@paco_ua/pacoui";
 import { Row, Col } from "react-bootstrap";
 import { Link as RouterLink} from "react-router-dom";
 import { useContext } from "react";
-import { EntitiesContext } from "../Helper/Context";
+import { EntitiesContext, UserContext } from "../Helper/Context";
 
 const GetData = ({dpuc}) => {
     const { estados } = useContext(EntitiesContext);
@@ -39,6 +39,9 @@ const GetData = ({dpuc}) => {
 }
 
 const CardDPUC = ({dpuc}) => {
+
+    const { userType } = useContext(UserContext);
+
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
@@ -89,7 +92,7 @@ const CardDPUC = ({dpuc}) => {
                                         </RouterLink>
                                     )
                                     ||
-                                    (dpuc.estadoid === 5 && 
+                                    (dpuc.estadoid === 5 && userType === "DUO" &&
                                     <Button content="Action Button" primary> Lançar novo DPUC </Button>
                                     )
                                 }
