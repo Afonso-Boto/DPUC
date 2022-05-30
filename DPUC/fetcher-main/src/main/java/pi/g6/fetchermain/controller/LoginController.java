@@ -1,44 +1,54 @@
 package pi.g6.fetchermain.controller;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import pi.g6.fetchermain.service.LoginService;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+import pi.g6.fetchermain.config.JwtRequest;
+import pi.g6.fetchermain.config.JwtResponse;
+import pi.g6.fetchermain.config.JwtTokenUtil;
+import pi.g6.fetchermain.config.JwtUserDetailsService;
 
 @RestController
 @RequestMapping("/")
+@Log4j2
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private AuthenticationManager authenticationManager;
 
-    // setCookie to user
-    public void setCookie(String name, HttpServletResponse response) {
-        // Create cookie
-        Cookie jwtTokenCookie = new Cookie("user-id", "secret1");
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-        jwtTokenCookie.setMaxAge(86400);
-        jwtTokenCookie.setSecure(true);
-        jwtTokenCookie.setHttpOnly(true);
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
 
-        // Set cookie onto user
-        response.addCookie(jwtTokenCookie);
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @PostMapping("/login")
-    public HttpStatus login(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletResponse response) {
-        if(loginService.login(email, password) ==  HttpStatus.OK){
-            setCookie(email, response);
-        }else {
-            return HttpStatus.UNAUTHORIZED;
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
         }
-
-        return HttpStatus.OK;
     }
+
 }
