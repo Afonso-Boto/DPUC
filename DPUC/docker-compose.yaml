@@ -114,7 +114,7 @@ services:
           'CMD-SHELL',
           'curl -s http://localhost:8000/ || exit 1'
         ]
-      interval: 10s
+      interval: 20s
       timeout: 10s
       retries: 5
 
