@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
-import { LoadingBackgroundWrapper, Button, Text} from "@paco_ua/pacoui"
+import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton } from "@paco_ua/pacoui"
 import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
 import useFetch from '../Helper/useFetch';
@@ -19,37 +19,37 @@ const DPUCList = ({canCreate}) => {
         {
             key: 'Todos',
             text: 'Mostrar Todos',
-            value: 0
+            value: [0]
         },
         {
             key: 'Em Criação',
             text: '1 - Em Criação',
-            value: 1
+            value: [1, 7]
         },
         {
             key: 'Em Edição',
             text: '2 - Em Edição',
-            value: 2
+            value: [2, 8]
         },
         {
             key: 'Fechados',
             text: '3 - Fechados',
-            value: 3
+            value: [3]
         },
         {
             key: 'Em Aprovação',
             text: '4 - Em Aprovação',
-            value: 4
+            value: [4, 9]
         },
         {
             key: 'Aprovados',
             text: '5 - Aprovados',
-            value: 5
+            value: [5, 10]
         },
         {
             key: 'Desativados',
             text: '6 - Desativados',
-            value: 6
+            value: [6]
         },
     ]
 
@@ -62,11 +62,10 @@ const DPUCList = ({canCreate}) => {
     }
 
     const filterDPUCList = (estado) => {
-        console.log(estado)
-        if(estado.value === 0)
+        if(estado.value[0] === 0)
             setDPUCList(dpucs);
         else
-            setDPUCList(dpucs.filter((d) => (d.estadoid === estado.value)));
+        setDPUCList(dpucs.filter((d) => (estado.value.includes(d.estadoid))));
         setFilterOption(estado)
     }
 
@@ -76,6 +75,12 @@ const DPUCList = ({canCreate}) => {
 
     return ( 
         <Container>
+            <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, 0)} />
+            </div>
+            <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
+                <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
+            </div>
             <Row style={{paddingBottom:"10px"}}>
                 <Col style={{textAlign:"left"}}>
                     <br/>

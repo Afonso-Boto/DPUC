@@ -118,44 +118,24 @@ services:
       timeout: 10s
       retries: 5
 
-#  fetcher-criacao:
-#    depends_on:
-#      - mysqldb
-#    build: ./fetcher-criacao
-#    env_file: ./.env
-#    ports:
-#      - $SPRING_FETCHER_CRIACAO_LOCAL_PORT:$SPRING_DOCKER_PORT
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#          "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-#          "spring.datasource.username" : "$MYSQLDB_USER",
-#          "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-#          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-#          "spring.jpa.hibernate.ddl-auto" : "create-drop"}'
-#    volumes:
-#      - ./volumes/fetcher-criacao/:/root/.m2
-#    stdin_open: true
-#    tty: true
-
-#  fetcher-edicao:
-#    depends_on:
-#      - mysqldb
-#    build: ./fetcher-edicao
-#    env_file: ./.env
-#    ports:
-#      - $SPRING_FETCHER_EDICAO_LOCAL_PORT:$SPRING_DOCKER_PORT
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#            "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-#            "spring.datasource.username" : "$MYSQLDB_USER",
-#            "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-#            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-#            "spring.jpa.hibernate.ddl-auto" : "update"}'
-#    volumes:
-#      - ./volumes/fetcher-edicao/:/root/.m2
-#    stdin_open: true
-#    tty: true
-#
+  fetcher-main:
+    depends_on:
+      - mysqldb
+    build: ./fetcher-main
+    env_file: ./.env
+    ports:
+      - $SPRING_FETCHER_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
+          "spring.datasource.username" : "$MYSQLDB_USER",
+          "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+          "spring.jpa.hibernate.ddl-auto" : "create-drop"}'
+    volumes:
+      - ./volumes/fetcher-main/:/root/.m2
+    stdin_open: true
+    tty: true
 
 #  teacher-app:
 #    depends_on:

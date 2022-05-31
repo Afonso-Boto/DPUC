@@ -1,25 +1,33 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
-import { Modal, Col, Row } from "react-bootstrap";
+import { Button, Text } from "@paco_ua/pacoui";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
+const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow}) => {
+    const BASE_URL_CREATION = "http://localhost:82/creation/fecharDpuc?id=" + id;
+    const BASE_URL_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + true;
 
-const CloseDPUC = ({id}) => {
-    const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
+    const navigate = useNavigate();
 
-    const [show, setShow] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
+    const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
+    const proxEstado = estadoTipo === "C" ? 3 : 4;
 
     const close = () => {
+        setError(false);
+        setLoading(true);
         axios
-            .put(BASE_URL)
+            .put(BASE_URL, {})
             .then(() => {
+                setEstado(proxEstado);
                 handleClose();
+                if(redirect)
+                    navigate("/dpuc/" + id);
             })
             .catch((error) => {
                 setError(true);
@@ -31,9 +39,6 @@ const CloseDPUC = ({id}) => {
 
     return ( 
         <>
-            <Button primary style={{fontSize:"100%"}} onClick={handleShow} >
-                Fechar DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
@@ -45,24 +50,43 @@ const CloseDPUC = ({id}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Fechar DPUC
+                        Submeter para Aprovação
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Text as="p">
-                        Tem a certeza que pretende <b>fechar</b> este DPUC?
+                        Tem a certeza que pretende submeter este DPUC para <b>Aprovação</b> este DPUC?
                     </Text>
                     <br/>
                     <Text as="p">
                         O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
                     </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado{" "}
+                        {
+                        (estadoTipo === "C" &&
+                            <b>Fechado(3)</b>)
+                        ||
+                            <b>Em Edição(4)</b>
+                        }
+                        .
+                    </Text>
+                    {   error &&
+                        <>
+                        <br/>
+                        <Text as="i" size="small" color="red">
+                            Ocorreu um erro ao alterar o estado do DPUC.
+                        </Text>
+                        </>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
                     <Button primary style={{fontSize:"100%"}} onClick={close} >
-                        Fechar DPUC
+                        {(loading && "A submeter DPUC...") || ("Submeter DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>

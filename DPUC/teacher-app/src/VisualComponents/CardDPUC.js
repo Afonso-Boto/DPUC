@@ -1,37 +1,50 @@
 import { Card, Button, StatusLabel, Text } from "@paco_ua/pacoui";
 import { Row, Col } from "react-bootstrap";
 import { Link as RouterLink} from "react-router-dom";
-import { useContext } from "react";
-import { EntitiesContext } from "../Helper/Context";
+import { useContext, useState, useEffect } from "react";
+import { EntitiesContext, UserContext } from "../Helper/Context";
+import CreateDPUC from "../Actions/CreateDPUC";
 
 const GetData = ({dpuc}) => {
     const { estados } = useContext(EntitiesContext);
+    const [ estado, setEstado ] = useState(0);        
+
+    useEffect(() => {
+        if(!estados)
+            return;
+        var estadoID = dpuc.estadoid
+        if(estadoID === 7 || estadoID === 8)
+            estadoID -= 6;
+        if(estadoID === 9 || estadoID === 10)
+            estadoID -= 5;
+        setEstado(estados.find((e) => (e.id === estadoID)));
+    }, [estados]);
 
     return (
         <>
         {
-            estados && 
+            estados && estado &&
             <StatusLabel
                 background={
-                    dpuc.estadoid === 1 && 
-                        "#42D3B8"
+                    (estado.id === 1 && 
+                        "#42D3B8")
                     ||
-                    dpuc.estadoid === 2 && 
-                        "#0EB4BD"
+                    (estado.id === 2 && 
+                        "#0EB4BD")
                     ||
-                    dpuc.estadoid === 3 && 
-                        "#F0592A"
+                    (estado.id === 3 && 
+                        "#F0592A")
                     ||
-                    dpuc.estadoid === 4 && 
-                        "#F3B21B"
+                    (estado.id === 4 && 
+                        "#F3B21B")
                     ||
-                    dpuc.estadoid === 5 && 
-                        "#92D400"
+                    (estado.id === 5 && 
+                        "#92D400")
                     ||
-                    dpuc.estadoid === 6 && 
-                        "#A09C9C"
+                    (estado.id === 6 && 
+                        "#A09C9C")
                 }
-                label={estados.find((e) => (e.id === dpuc.estadoid)).descricao}
+                label={estado.descricao + " (" + estado.id + ")"}
             />
         }
         </>
@@ -39,6 +52,10 @@ const GetData = ({dpuc}) => {
 }
 
 const CardDPUC = ({dpuc}) => {
+
+    const { userType } = useContext(UserContext);
+
+    const [ showCreate, setShowCreate ] = useState(false);
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
@@ -58,23 +75,23 @@ const CardDPUC = ({dpuc}) => {
                             <Row>
                                 <Text fontWeight="400" as="i" size="medium">
                                     {
-                                        dpuc.estadoid === 1 && 
-                                            "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos."
+                                        ((dpuc.estadoid === 1 || dpuc.estadoid === 7) && 
+                                            "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos.")
                                         ||
-                                        dpuc.estadoid === 2 && 
-                                            "DPUC com campos por preencher."
+                                        ((dpuc.estadoid === 2 || dpuc.estadoid === 8) && 
+                                            "DPUC com campos por preencher.")
                                         ||
-                                        dpuc.estadoid === 3 && 
-                                            "DPUC fechada, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão."
+                                        (dpuc.estadoid === 3 && 
+                                            "DPUC fechada, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão.")
                                         ||
-                                        dpuc.estadoid === 4 && 
-                                            "DPUC necessita de aprovação para ser publicada."
+                                        ((dpuc.estadoid === 4 || dpuc.estadoid === 9) && 
+                                            "DPUC necessita de aprovação para ser publicada.")
                                         ||
-                                        dpuc.estadoid === 5 && 
-                                            "DPUC Aprovada."
+                                        ((dpuc.estadoid === 5 || dpuc.estadoid === 10) && 
+                                            "DPUC Aprovada.")
                                         ||
-                                        dpuc.estadoid === 6 && 
-                                            "DPUC desativada. Não é possível fazer qualquer alteração."
+                                        (dpuc.estadoid === 6 && 
+                                            "DPUC desativada. Não é possível fazer qualquer alteração.")
                                     }
                                 </Text>
                             </Row>
@@ -83,13 +100,18 @@ const CardDPUC = ({dpuc}) => {
                             <Row>
                                 <Col md="auto" style={{paddingTop:"10px"}}>
                                 {
-                                    (dpuc.estadoid === 1 || dpuc.estadoid === 2) &&
+                                    ((dpuc.estadoid === 1 || dpuc.estadoid === 2 || dpuc.estadoid === 7 || dpuc.estadoid === 8) &&
                                         <RouterLink to={"/edit/" + dpuc.id} style={{textDecoration:"none"}}>
                                             <Button content="Action Button" primary style={{fontSize:"100%"}}> Editar DPUC </Button>
-                                        </RouterLink> 
+                                        </RouterLink>
+                                    )
                                     ||
-                                    dpuc.estadoid === 5 && 
-                                    <Button content="Action Button" primary> Lançar novo DPUC </Button>
+                                    ((dpuc.estadoid === 5 || dpuc.estadoid === 10) && userType === "DUO" &&
+                                    <>
+                                        <Button content="Action Button" primary onClick={()=>setShowCreate(true)}> Lançar novo DPUC </Button>
+                                        <CreateDPUC id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowCreate}/>
+                                    </>
+                                    )
                                 }
                                 </Col>
                                 <Col md="auto" style={{paddingTop:"10px"}}>

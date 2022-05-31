@@ -41,7 +41,7 @@ const useGetDPUC = (data) => {
     const [dataAlteracao, setDataAlteracao] = useState("");
     const [unidadeOrganica, setUnidadeOrganica] = useState({});
     const [areaCientifica, setAreaCientifica] = useState([]);
-    const [criacaoEdicao, setCriacaoEdicao] = useState(false);
+    const [estadoTipo, setEstadoTipo] = useState(false);
     const [id, setId] = useState(false);
 
 
@@ -54,13 +54,14 @@ const useGetDPUC = (data) => {
         setParsing(true);
         setError(false);
         if(data){
+            if(data.criacao_edicao)
+                setEstadoTipo("E");
+            else
+                setEstadoTipo("C");
             if(data.id)
                 setId(data.id);
-            if(data.criacao_edicao)
-                setCriacaoEdicao(data.criacao_edicao);
             if(data.objetivos)
                 setObjetivos(data.objetivos);
-            
             if(data.horas_contacto)
                 setHorasOT(data.horas_contacto);
             if(data.conteudos)
@@ -100,8 +101,26 @@ const useGetDPUC = (data) => {
             if(data.ects)
                 setEcts(data.ects);
 
-            if(data.estadoid && estados)
-                setEstado(estados.find((e) => (e.id === data.estadoid)));
+            if(data.estadoid && estados){
+                let estadoID = data.estadoid;
+                switch(estadoID){
+                    case 7:
+                        estadoID = 1;
+                        break;
+                    case 8:
+                        estadoID = 2;
+                        break;
+                    case 9:
+                        estadoID = 4;
+                        break;
+                    case 10:
+                        estadoID = 5;
+                        break;
+                    default:
+                        break;
+                }
+                setEstado(estados.find((e) => (e.id === estadoID)));
+            }
 
             if(data.sigla_ac && areas)
                 setAreaCientifica(areas.find((a) => (a.id === data.sigla_ac)));
@@ -110,6 +129,7 @@ const useGetDPUC = (data) => {
                 setGrau(graus.find((g) => (g.nome === data.grau))); 
             if(data.duracao && duracoes)
                 setDuracao(duracoes.find((d) => (d.nome === data.duracao)));
+
             if(data.periodo_letivoid && semestre)
                 setPeriodo(semestre.find((s) => (s.id === data.periodo_letivoid)));
             if(data.modalidade && modalidades)
@@ -161,7 +181,6 @@ const useGetDPUC = (data) => {
                     }
                 }
             }
-
         }
         setParsing(false);
     }, [data]);    
@@ -171,6 +190,7 @@ const useGetDPUC = (data) => {
         unidade_organicaid,
 
         designacao,
+        estadoTipo,
         estado,
         duracao,
         codigo,
@@ -205,7 +225,6 @@ const useGetDPUC = (data) => {
         dataAlteracao,
         unidadeOrganica,
         areaCientifica,
-        criacaoEdicao,
         id
     };
 
@@ -213,6 +232,7 @@ const useGetDPUC = (data) => {
         setACid,
         setUoid,
         setDesignacao,
+        setEstadoTipo,
         setEstado,
         setDuracao,
         setCodigo,
@@ -247,7 +267,6 @@ const useGetDPUC = (data) => {
         setDataAlteracao,
         setUnidadeOrganica,
         setAreaCientifica,
-        setCriacaoEdicao,
         setId
     };
 

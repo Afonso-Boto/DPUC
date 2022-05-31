@@ -1,22 +1,28 @@
-import { Button, Text, FormInput } from "@paco_ua/pacoui";
-import { Modal, Col, Row } from "react-bootstrap";
+import { Button, Text } from "@paco_ua/pacoui";
+import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
-const OpenDPUC = ({id}) => {
-    const BASE_URL = "http://localhost:82/creation/aprovarDpuc?id=" + id;
+const OpenDPUC = ({id, estadoTipo, setEstado, show, setShow}) => {
+    const BASE_URL_CREATION = "http://localhost:82/creation/aprovarDpuc?id=" + id;
+    const BASE_URL_EDITION = "http://localhost:82/edition/emAprovacao?id=" + id + "&aprovado=" + false;
 
-    const [show, setShow] = useState(false);
+
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const approve = () => {
+        setError(false);
+        setLoading(true);
+
+        const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
+
         axios
             .put(BASE_URL, {aprovado:false, estadoid: 2})
             .then(() => {
+                setEstado(2);
                 handleClose();
             })
             .catch((error) => {
@@ -29,9 +35,6 @@ const OpenDPUC = ({id}) => {
     }
     return ( 
         <>
-            <Button primary style={{fontSize:"90%"}} onClick={handleShow} >
-                Re-abrir DPUC
-            </Button>
             <Modal
                 show={show} 
                 onHide={handleClose} 
@@ -51,6 +54,18 @@ const OpenDPUC = ({id}) => {
                     <Text as="p">
                         Tem a certeza que pretende <b>abrir</b> este DPUC?
                     </Text>
+                    <br/>
+                    <Text as="i" size="small">
+                        O DPUC passará para o estado <b>Em Edição(2)</b>.
+                    </Text>
+                    {   error &&
+                        <>
+                        <br/>
+                        <Text as="i" size="small" color="red">
+                            Ocorreu um erro ao alterar o estado do DPUC.
+                        </Text>
+                        </>
+                    }
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -58,7 +73,7 @@ const OpenDPUC = ({id}) => {
                         Cancelar
                     </Button>
                     <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        Abrir DPUC
+                        {(loading && "A abrir DPUC...") || ("Abrir DPUC")}
                     </Button>
                 </Modal.Footer>
             </Modal>
