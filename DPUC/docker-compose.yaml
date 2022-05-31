@@ -31,7 +31,7 @@ services:
           "CMD-SHELL",
           "curl -fsSL http://localhost:9200/_cat/health?h=status | grep -q 'green\\|yellow' "
         ]
-      interval: 30s
+      interval: 10s
       timeout: 10s
       retries: 5
 
