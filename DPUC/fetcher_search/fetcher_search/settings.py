@@ -37,10 +37,6 @@ INSTALLED_APPS = [
     'search_api'
 ]
 
-MIDDLEWARE = [
-    'django.middleware.common.CommonMiddleware',
-]
-
 ROOT_URLCONF = CURRENT_DIR + '.urls'
 
 # Database
