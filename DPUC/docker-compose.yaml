@@ -124,7 +124,7 @@ services:
     build: ./fetcher-main
     env_file: ./.env
     ports:
-      - $SPRING_FETCHER_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - ${SPRING_FETCHER_LOCAL_PORT}:$SPRING_DOCKER_PORT
     environment:
       SPRING_APPLICATION_JSON: '{
           "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
