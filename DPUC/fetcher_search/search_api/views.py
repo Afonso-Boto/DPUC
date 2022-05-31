@@ -19,7 +19,7 @@ def search_dpuc(request):
             docs = es_connector.get_relevant_search(keywords)
             return Response(docs, status=status.HTTP_200_OK)
         except Exception as e:
-            logger.warning(e.args)
+            logger.error(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -32,5 +32,5 @@ def update(request):
             es_connector.update()
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
-            logger.warning(e.args)
+            logger.error(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

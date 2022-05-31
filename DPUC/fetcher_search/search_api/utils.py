@@ -1,5 +1,7 @@
 from unidecode import unidecode
-import fetcher_search.env as env
+from ftfy import fix_text
+
+from fetcher_search.env import UTF8
 from .log import get_logger
 
 logger = get_logger("utils-module")
@@ -42,6 +44,16 @@ def row2dict(row):
 
 
 def format_value(value: str) -> str:
-    logger.info(f"from db: {value}")
+    value = fix_text(value)
     value = unidecode(value).lower().strip()
     return value
+
+
+def format_keywords(keywords):
+    words = keywords.split(" ")
+    formatted_keywords = list()
+    for word in words:
+        word = unidecode(word).lower().strip()
+        formatted_keywords.append(word)
+    keywords = " ".join(formatted_keywords).strip()
+    return keywords

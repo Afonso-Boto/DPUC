@@ -23,8 +23,6 @@ class MysqlConnector:
             database=self.database,
             user=self.user,
             password=self.password,
-            use_unicode=True,
-            charset="utf8"
         )
 
     def get_dpucs(self, timestamp: float = None) -> List[Dict]:
@@ -39,11 +37,12 @@ class MysqlConnector:
             #TODO
             query = query_very_basic()
         cursor.execute(query)
-        docs = list()
-        for row in cursor:
-            docs.append(row2dict(row))
+        response = cursor.fetchall()
 
         cursor.close()
         connection.close()
 
+        docs = list()
+        for row in response:
+            docs.append(row2dict(row))
         return docs

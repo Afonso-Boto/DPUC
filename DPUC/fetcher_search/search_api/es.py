@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List
 
 from .mysql import MysqlConnector
-from .utils import es_query
+from .utils import es_query, format_keywords
 from .log import get_logger
 from .address import Address
 
@@ -64,7 +64,8 @@ class ElasticSearchConnector:
         connector = self.get_connection()
 
         query = None
-        if len(keywords.split(" ")) >= 1:
+        if len(keywords) >= 1:
+            keywords = format_keywords(keywords)
             query = es_query(keywords)
         response = connector.search(index=self.index, query=query)["hits"]["hits"]
         identifiers = list()

@@ -2,8 +2,6 @@ drop database dpuc;
 create database dpuc;
 use dpuc;
 
-ALTER DATABASE dpuc CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 CREATE TABLE tipo_utilizador (
                                  id     int NOT NULL,
                                  codigo text,
