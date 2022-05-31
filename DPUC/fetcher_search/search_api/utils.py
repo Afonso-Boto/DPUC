@@ -19,12 +19,11 @@ def query_very_basic():
 
 def es_query(keywords):
     return {
-        "multi_match": {
-            "query": keywords,
-            "fields": [
-                "nome",
-                "conteudos^2",
-                "objetivos",
+        "bool": {
+            "should": [
+                {"match": {"nome": keywords}},
+                {"match": {"conteudos": keywords}},
+                {"match": {"objetivos": keywords}}
             ]
         }
     }
