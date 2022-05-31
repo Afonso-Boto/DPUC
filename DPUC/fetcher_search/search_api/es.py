@@ -52,7 +52,10 @@ class ElasticSearchConnector:
         self.last_updated = datetime.now()
         for doc in docs:
             identifier = doc.pop("id", "")
-            connector.update(index=self.index, id=identifier, doc=doc)
+            if connector.exists(index=self.index, id=identifier):
+                connector.update(index=self.index, id=identifier, doc=doc)
+            else:
+                connector.create(index=self.index, id=identifier, document=doc)
 
         connector.close()
 
