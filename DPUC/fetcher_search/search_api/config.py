@@ -1,8 +1,8 @@
-import fetcher_search.env as env
+import search_api.src.env as env
 
-from .mysql import MysqlConnector
-from .address import Address
-from .es import ElasticSearchConnector
+from search_api.src.mysql import MysqlConnector
+from search_api.src.address import Address
+from search_api.src.es import ElasticSearchConnector
 
 # environment variables
 ES_HOST = env.ES_HOST

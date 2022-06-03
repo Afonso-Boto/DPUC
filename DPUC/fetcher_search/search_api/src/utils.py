@@ -1,8 +1,7 @@
 from unidecode import unidecode
 from ftfy import fix_text
 
-from fetcher_search.env import UTF8
-from .log import get_logger
+from search_api.src.log import get_logger
 
 logger = get_logger("utils-module")
 

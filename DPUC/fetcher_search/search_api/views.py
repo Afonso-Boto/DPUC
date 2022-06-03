@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 
 from .config import es_connector
-from .log import get_logger
+from search_api.src.log import get_logger
 
 logger = get_logger("search_api.views")
 

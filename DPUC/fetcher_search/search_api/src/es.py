@@ -2,10 +2,10 @@ from elasticsearch import Elasticsearch
 from datetime import datetime
 from typing import List
 
-from .mysql import MysqlConnector
-from .utils import es_query, format_keywords
-from .log import get_logger
-from .address import Address
+from search_api.src.mysql import MysqlConnector
+from search_api.src.utils import es_query, format_keywords
+from search_api.src.log import get_logger
+from search_api.src.address import Address
 
 
 class ElasticSearchConnector:

@@ -1,9 +1,8 @@
 import mysql.connector
 from typing import List, Dict
-from datetime import datetime
 
-from .utils import row2dict, query_very_basic
-from .log import get_logger
+from search_api.src.utils import row2dict, query_very_basic
+from search_api.src.log import get_logger
 
 
 class MysqlConnector:
