@@ -64,7 +64,7 @@ services:
 
   mysqldb:
     depends_on:
-      kibana:
+      es01:
         condition: service_healthy
     container_name: ${MYSQLDB_HOST_NAME}
     platform: linux/x86_64
@@ -91,8 +91,6 @@ services:
   fetcher-search:
     depends_on:
       es01:
-        condition: service_healthy
-      kibana:
         condition: service_healthy
       mysqldb:
         condition: service_healthy
