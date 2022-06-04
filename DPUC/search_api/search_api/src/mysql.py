@@ -1,20 +1,19 @@
 import mysql.connector
-from typing import List, Dict
+from typing import List, Dict, Any
 
-from search_api.src.utils import row2dict, query_very_basic
-from search_api.src.log import get_logger
+from .utils import row2dict, query_very_basic
+from .log import get_logger
+from .env import DB_HOST, DB_NAME, DB_USER, DB_PASSWORD
 
 
 class MysqlConnector:
 
-    def __init__(self, host, database, user, password):
-        self.host = host
-        self.database = database
-        self.user = user
-        self.password = password
+    host = DB_HOST
+    database = DB_NAME
+    user = DB_USER
+    password = DB_PASSWORD
 
-        self.logger = get_logger(f"db-connector({self.host}, {self.database}, {self.user})")
-        self.logger.info(f"successfully initialized")
+    logger = get_logger(f"db-connector({host}, {database}, {user})")
 
     def get_connection(self):
         return mysql.connector.connect(
@@ -23,6 +22,10 @@ class MysqlConnector:
             user=self.user,
             password=self.password,
         )
+
+    @classmethod
+    def execute(cls) -> Any:
+        pass
 
     def get_dpucs(self, timestamp: float = None) -> List[Dict]:
         self.logger.info(f"get_dpucs(ts={timestamp})")

@@ -16,7 +16,7 @@ DB_USER = env.DB_USER
 DB_PASSWORD = env.DB_PASSWORD
 
 es_connector = ElasticSearchConnector(
-    MysqlConnector(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD),
+    MysqlConnector(),
     Address(ES_HOST, ES_PORT),
     INDEX,
     TTL,
