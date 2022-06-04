@@ -5,19 +5,19 @@ from typing import List
 from search_api.src.mysql import MysqlConnector
 from search_api.src.utils import es_query, format_keywords
 from search_api.src.log import get_logger
-from search_api.src.address import Address
+from .env import ES_URL, INDEX_NAME, DAY_MILLISECONDS as TTL
 
 
 class ElasticSearchConnector:
 
     database = MysqlConnector()
+    url = ES_URL
+    index = INDEX_NAME
+    ttl = TTL
 
-    def __init__(self, address: Address, index, ttl):
-        self.address = address
-        self.index = index
-        self.ttl = ttl
-        self.logger = get_logger(f"es-connector({self.url}, {self.index})")
+    logger = get_logger(f"es-connector({url}, {index})")
 
+    def __init__(self):
         self.last_updated = None
 
         connector = self.get_connection()
@@ -33,10 +33,6 @@ class ElasticSearchConnector:
             connector.create(index=self.index, id=identifier, document=doc)
 
         connector.close()
-
-    @property
-    def url(self) -> str:
-        return self.address.http_url
 
     @property
     def is_outdated(self) -> bool:

@@ -10,8 +10,4 @@ ES_PORT = env.ES_PORT
 INDEX = env.INDEX_NAME
 TTL = env.DAY_MILLISECONDS
 
-es_connector = ElasticSearchConnector(
-    Address(ES_HOST, ES_PORT),
-    INDEX,
-    TTL,
-)
+es_connector = ElasticSearchConnector()

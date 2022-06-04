@@ -1,5 +1,6 @@
 from unidecode import unidecode
 from ftfy import fix_text
+from datetime import datetime
 
 
 def query_very_basic():
@@ -11,8 +12,10 @@ def query_very_basic():
            "JOIN unidade_organica as uo ON uc.unidade_organicaid = uo.id " \
            "JOIN ac ON uc.acid = ac.id;"
 
+
 def get_fields():
     return "id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia", "requisitos", "aprendizagem"
+
 
 def es_query(keywords):
     return {
@@ -40,3 +43,7 @@ def format_keywords(keywords):
         formatted_keywords.append(word)
     keywords = " ".join(formatted_keywords).strip()
     return keywords
+
+
+def now():
+    return datetime.now().timestamp()
