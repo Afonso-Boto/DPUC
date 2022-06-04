@@ -72,6 +72,7 @@ services:
     build: ./fetcher_search
     command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
     env_file: ./.env
+    restart: always
     ports:
       - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
     environment:
