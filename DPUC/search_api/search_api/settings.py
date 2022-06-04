@@ -1,8 +1,7 @@
 """
-Django settings for fetcher_search project.
+Django settings for project.
 """
 from pathlib import Path
-from .src.env import DJANGO_SECRET_KEY
 
 # Build paths inside the project
 APP = Path(__file__).resolve().parent.name
