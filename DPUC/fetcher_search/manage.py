@@ -3,7 +3,8 @@
 import os
 import sys
 
-APP = 'fetcher_search'
+from search_api.settings import CURRENT_DIR as APP
+
 
 def main():
     """Run administrative tasks."""
