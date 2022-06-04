@@ -52,16 +52,18 @@ class ElasticSearchConnector:
                 connector.create(index=cls.index, id=identifier, document=doc)
 
     @classmethod
-    def update(cls):
-        docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
-        cls.execute(cls._update, docs)
-
-    @classmethod
     def _search(cls, connector: Elasticsearch, query: Dict):
         connector.search(index=cls.index, query=query)
 
     @classmethod
+    def update(cls):
+        cls.initialize()
+        docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
+        cls.execute(cls._update, docs)
+
+    @classmethod
     def search(cls, keywords=None) -> List[int]:
+        cls.initialize()
         if now() > cls.last_updated + cls.ttl:
             cls.logger.info("data is Outdated")
             cls.update()

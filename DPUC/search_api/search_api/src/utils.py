@@ -39,8 +39,7 @@ def format_keywords(keywords):
     words = keywords.split(" ")
     formatted_keywords = list()
     for word in words:
-        word = unidecode(word).lower().strip()
-        formatted_keywords.append(word)
+        formatted_keywords.append(format_value(word))
     keywords = " ".join(formatted_keywords).strip()
     return keywords
 
