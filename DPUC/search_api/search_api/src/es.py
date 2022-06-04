@@ -55,15 +55,13 @@ class ElasticSearchConnector:
             else:
                 connector.create(index=cls.index, id=identifier, document=doc)
 
+    @classmethod
+    def update(cls):
+        docs = cls.get_dpucs(timestamp=cls.last_updated)
+        cls.execute(cls._update, docs)
+
     def __init__(self):
         self.initialize()
-
-    def update(self):
-        docs = self.get_dpucs(timestamp=self.last_updated)
-        connector = Elasticsearch(self.url)
-        #self.execute(self._update, docs)
-        self._update(connector, docs)
-        connector.close()
 
     def get_relevant_search(self, keywords=None) -> List[int]:
         if now() > self.last_updated + self.ttl:
