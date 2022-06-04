@@ -39,7 +39,7 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-    container_name: ${MYSQLDB_HOST_NAME}
+    container_name: ${DOMAIN_MYSQLDB}
     platform: linux/x86_64
     image: mysql:5.7
     env_file: ./.env
@@ -49,7 +49,7 @@ services:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
     volumes:
       - ./volumes/mysql/db:/var/lib/mysql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
@@ -76,7 +76,7 @@ services:
     ports:
       - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
     environment:
-      - DB_HOST=${MYSQLDB_HOST_NAME}
+      - DB_HOST=${DOMAIN_MYSQLDB}
       - DB_PORT=${MYSQLDB_DOCKER_PORT}
       - DB_NAME=${MYSQLDB_DATABASE}
       - DB_USER=${MYSQLDB_USER}
@@ -85,7 +85,7 @@ services:
       test:
         [
           'CMD-SHELL',
-          'curl -s http://localhost:8000/ || exit 1'
+          curl -s http://localhost:$DJANGO_DOCKER_PORT/ || exit 1
         ]
       interval: 10s
       timeout: 10s
