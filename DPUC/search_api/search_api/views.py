@@ -18,7 +18,7 @@ def search_dpuc(request):
     if request.method == "GET":
         keywords = request.GET.get('keywords', '')
         try:
-            docs = es_connector.get_relevant_search(keywords)
+            docs = es_connector.search(keywords)
             return Response(docs, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(e)

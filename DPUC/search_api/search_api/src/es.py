@@ -56,25 +56,28 @@ class ElasticSearchConnector:
         docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
         cls.execute(cls._update, docs)
 
-    def __init__(self):
-        self.initialize()
+    @classmethod
+    def _search(cls, connector: Elasticsearch, query: Dict):
+        connector.search(index=cls.index, query=query)
 
-    def get_relevant_search(self, keywords=None) -> List[int]:
-        if now() > self.last_updated + self.ttl:
-            self.logger.info(f"data is Outdated")
-            self.update()
+    @classmethod
+    def search(cls, keywords=None) -> List[int]:
+        if now() > cls.last_updated + cls.ttl:
+            cls.logger.info("data is Outdated")
+            cls.update()
 
         query = None
         if len(keywords) >= 1:
             keywords = format_keywords(keywords)
             query = es_query(keywords)
 
-        connector = Elasticsearch(self.url)
-        response = connector.search(index=self.index, query=query)
-        connector.close()
+        response = cls.execute(cls._search, query)
 
         response = response["hits"]["hits"]
         identifiers = list()
         for doc in response:
             identifiers.append(int(doc["_id"]))
         return identifiers
+
+    def __init__(self):
+        self.initialize()
