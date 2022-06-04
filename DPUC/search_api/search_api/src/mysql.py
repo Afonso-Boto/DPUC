@@ -1,5 +1,6 @@
 import mysql.connector
 from typing import List, Dict, Any
+from collections.abc import Callable
 
 from .utils import row2dict, query_very_basic
 from .log import get_logger
@@ -25,13 +26,30 @@ class MysqlConnector:
         )
 
     @classmethod
-    def execute(cls) -> Any:
+    def _execute(cls, callback: Callable, *arg) -> Any:
         connector = mysql.connector.connect(
             host=cls.host,
             database=cls.database,
             user=cls.user,
             password=cls.password,
         )
+        cursor = connector.cursor()
+        response = callback(cls, cursor, *arg)
+        cursor.close()
+        connector.close()
+        return response
+
+    @classmethod
+    def _get_dpucs(cls, cursor, *arg):
+        timestamp = arg[0]
+        if timestamp is None:
+            query = query_very_basic()
+        else:
+            #TODO
+            query = query_very_basic()
+        cursor.execute(query)
+        return cursor.fetchall()
+
 
     @classmethod
     def get_dpucs(cls, timestamp: float = None) -> List[Dict]:
@@ -40,13 +58,7 @@ class MysqlConnector:
         connection = cls.get_connection()
         cursor = connection.cursor()
 
-        if timestamp is None:
-            query = query_very_basic()
-        else:
-            #TODO
-            query = query_very_basic()
-        cursor.execute(query)
-        response = cursor.fetchall()
+        response = cls._get_dpucs(cursor, timestamp)
 
         cursor.close()
         connection.close()
