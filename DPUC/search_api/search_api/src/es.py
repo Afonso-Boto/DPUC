@@ -30,7 +30,7 @@ class ElasticSearchConnector:
         connector.close()
 
     @classmethod
-    def initialize(cls, connector: Elasticsearch):
+    def _initialize(cls, connector: Elasticsearch):
         if cls.initialized:
             return
 
@@ -40,6 +40,10 @@ class ElasticSearchConnector:
         docs = cls.get_dpucs()
         cls._update(connector, docs)
         cls.initialized = True
+
+    @classmethod
+    def initialize(cls):
+        cls.execute(cls._initialize)
 
     @classmethod
     def _update(cls, connector: Elasticsearch, docs: List[Dict]):
@@ -53,7 +57,7 @@ class ElasticSearchConnector:
 
     def __init__(self):
         connector = Elasticsearch(self.url)
-        self.initialize(connector)
+        self._initialize(connector)
         connector.close()
 
     def update(self):
