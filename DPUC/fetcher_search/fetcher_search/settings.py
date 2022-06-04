@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-CURRENT_DIR = 'fetcher_search'
-BASE_DIR = Path(__file__).resolve().parent.parent
+CURRENT_DIR = Path(__file__).resolve().parent
+BASE_DIR = CURRENT_DIR.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -30,10 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'rest_framework',
-    'search_api'
 ]
 
-ROOT_URLCONF = CURRENT_DIR + '.urls'
+ROOT_URLCONF = ".".join([CURRENT_DIR.name, "urls"])
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
