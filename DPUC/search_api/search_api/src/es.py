@@ -26,7 +26,7 @@ class ElasticSearchConnector:
     @classmethod
     def execute(cls, callback: Callable, *arg):
         connector = Elasticsearch(cls.url)
-        callback(cls, connector, arg)
+        callback(connector, *arg)
         connector.close()
 
     @classmethod
@@ -56,9 +56,7 @@ class ElasticSearchConnector:
                 connector.create(index=cls.index, id=identifier, document=doc)
 
     def __init__(self):
-        connector = Elasticsearch(self.url)
-        self._initialize(connector)
-        connector.close()
+        self.initialize()
 
     def update(self):
         docs = self.get_dpucs(timestamp=self.last_updated)
