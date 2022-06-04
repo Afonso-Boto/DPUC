@@ -35,6 +35,32 @@ services:
       timeout: 10s
       retries: 5
 
+  mysqldb:
+    depends_on:
+      es01:
+        condition: service_healthy
+    container_name: ${MYSQLDB_HOST_NAME}
+    platform: linux/x86_64
+    image: mysql:5.7
+    env_file: ./.env
+    command: --explicit_defaults_for_timestamp
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - ./volumes/mysql/db:/var/lib/mysql
+      - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [
+        "CMD",
+        "mysqladmin" ,"ping", "-h", "localhost"
+      ]
+      timeout: 10s
+      retries: 10
+
   kibana:
     depends_on:
       es01:
@@ -61,32 +87,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-
-  mysqldb:
-    depends_on:
-      es01:
-        condition: service_healthy
-    container_name: ${MYSQLDB_HOST_NAME}
-    platform: linux/x86_64
-    image: mysql:5.7
-    env_file: ./.env
-    command: --explicit_defaults_for_timestamp
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
-    ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    volumes:
-      - ./volumes/mysql/db:/var/lib/mysql
-      - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: [
-        "CMD",
-        "mysqladmin" ,"ping", "-h", "localhost"
-      ]
-      timeout: 10s
-      retries: 10
 
   fetcher-search:
     depends_on:
