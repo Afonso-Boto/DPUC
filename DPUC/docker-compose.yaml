@@ -80,6 +80,7 @@ services:
       - DB_NAME=${MYSQLDB_DATABASE}
       - DB_USER=${MYSQLDB_USER}
       - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
     healthcheck:
       test:
         [
