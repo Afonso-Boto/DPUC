@@ -10,8 +10,9 @@ from search_api.src.address import Address
 
 class ElasticSearchConnector:
 
-    def __init__(self, db_connector: MysqlConnector, address: Address, index, ttl):
-        self.db_connection = db_connector
+    database = MysqlConnector()
+
+    def __init__(self, address: Address, index, ttl):
         self.address = address
         self.index = index
         self.ttl = ttl
@@ -25,7 +26,7 @@ class ElasticSearchConnector:
             connector.indices.delete(index=self.index)
         connector.indices.create(index=self.index)
 
-        docs = self.db_connection.get_dpucs()
+        docs = self.database.get_dpucs()
         self.last_updated = datetime.now().timestamp()
         for doc in docs:
             identifier = doc.pop("id", "")
@@ -48,7 +49,7 @@ class ElasticSearchConnector:
     def update(self):
         connector = self.get_connection()
 
-        docs = self.db_connection.get_dpucs(timestamp=self.last_updated)
+        docs = self.database.get_dpucs(timestamp=self.last_updated)
         self.last_updated = datetime.now()
         for doc in docs:
             identifier = doc.pop("id", "")

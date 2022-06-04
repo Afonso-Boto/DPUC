@@ -10,13 +10,7 @@ ES_PORT = env.ES_PORT
 INDEX = env.INDEX_NAME
 TTL = env.DAY_MILLISECONDS
 
-DB_HOST = env.DB_HOST
-DB_NAME = env.DB_NAME
-DB_USER = env.DB_USER
-DB_PASSWORD = env.DB_PASSWORD
-
 es_connector = ElasticSearchConnector(
-    MysqlConnector(),
     Address(ES_HOST, ES_PORT),
     INDEX,
     TTL,
