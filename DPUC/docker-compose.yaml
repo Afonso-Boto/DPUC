@@ -33,7 +33,7 @@ services:
         ]
       interval: 10s
       timeout: 10s
-      retries: 5
+      retries: 100
 
   mysqldb:
     depends_on:
@@ -59,7 +59,8 @@ services:
         "mysqladmin" ,"ping", "-h", "localhost"
       ]
       timeout: 10s
-      retries: 10
+      interval: 10s
+      retries: 100
 
   fetcher-search:
     depends_on:
@@ -85,9 +86,9 @@ services:
           'CMD-SHELL',
           'curl -s http://localhost:8000/ || exit 1'
         ]
-      interval: 20s
+      interval: 10s
       timeout: 10s
-      retries: 5
+      retries: 100
 
   fetcher-main:
     depends_on:
@@ -138,7 +139,7 @@ services:
         ]
       interval: 10s
       timeout: 10s
-      retries: 120
+      retries: 100
 
 #  teacher-app:
 #    depends_on:

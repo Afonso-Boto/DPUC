@@ -7,9 +7,6 @@ from pathlib import Path
 # Build paths inside the project
 CURRENT_DIR = Path(__file__).resolve().parent.name
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
 ALLOWED_HOSTS = ['*']
 
 # Application definition
