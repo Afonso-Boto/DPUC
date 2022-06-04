@@ -1,10 +1,6 @@
 from unidecode import unidecode
 from ftfy import fix_text
 
-from search_api.src.log import get_logger
-
-logger = get_logger("utils-module")
-
 
 def query_very_basic():
     return "SELECT uc.codigo as id, uc.designacao as nome, " \
