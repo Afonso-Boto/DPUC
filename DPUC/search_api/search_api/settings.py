@@ -2,6 +2,7 @@
 Django settings for fetcher_search project.
 """
 from pathlib import Path
+from .src.env import DJANGO_SECRET_KEY
 
 # Build paths inside the project
 APP = Path(__file__).resolve().parent.name
@@ -9,6 +10,8 @@ APP = Path(__file__).resolve().parent.name
 ALLOWED_HOSTS = ['*']
 
 # Application definition
+
+SECRET_KEY = DJANGO_SECRET_KEY
 
 INSTALLED_APPS = [
     'django.contrib.auth',

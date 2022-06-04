@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 from collections.abc import Callable
 
 from .mysql import MysqlConnector
-from .utils import es_query, format_keywords, now
+from .utils import es_query, now, format_value
 from .log import get_logger
 from .env import ES_URL, INDEX_NAME, DAY_MILLISECONDS as TTL
 
@@ -53,7 +53,7 @@ class ElasticSearchConnector:
 
     @classmethod
     def _search(cls, connector: Elasticsearch, query: Dict):
-        connector.search(index=cls.index, query=query)
+        return connector.search(index=cls.index, query=query)
 
     @classmethod
     def update(cls):
@@ -69,8 +69,9 @@ class ElasticSearchConnector:
             cls.update()
 
         query = None
-        if len(keywords) >= 1:
-            keywords = format_keywords(keywords)
+        if keywords is not None and len(keywords.strip()) >= 1:
+            new_words = [format_value(word) for word in keywords.split(" ")]
+            keywords = " ".join(new_words).strip()
             query = es_query(keywords)
 
         response = cls.execute(cls._search, query)

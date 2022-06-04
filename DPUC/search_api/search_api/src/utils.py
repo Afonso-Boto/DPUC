@@ -35,14 +35,5 @@ def format_value(value: str) -> str:
     return value
 
 
-def format_keywords(keywords):
-    words = keywords.split(" ")
-    formatted_keywords = list()
-    for word in words:
-        formatted_keywords.append(format_value(word))
-    keywords = " ".join(formatted_keywords).strip()
-    return keywords
-
-
 def now():
     return datetime.now().timestamp()

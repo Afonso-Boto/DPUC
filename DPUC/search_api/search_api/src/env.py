@@ -16,3 +16,5 @@ DAY_MILLISECONDS = 60*60*24*1000
 
 UTF8 = "utf-8"
 LATIN1 = "latin-1"
+
+DJANGO_SECRET_KEY = os.getenv("SECRET_KEY")
