@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 from django.http import HttpResponse
 
-import fetcher_search.views as views
+import search_api.views as views
 
 urlpatterns = [
     path('', lambda r: HttpResponse()),
