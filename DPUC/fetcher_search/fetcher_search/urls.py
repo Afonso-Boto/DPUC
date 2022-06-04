@@ -13,10 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, include
+from django.urls import path
 from django.http import HttpResponse
+
+import fetcher_search.views as views
 
 urlpatterns = [
     path('', lambda r: HttpResponse()),
-    path('api/', include('search_api.urls')),
+    path('search', views.search_dpuc),
+    path('update', views.update),
 ]
