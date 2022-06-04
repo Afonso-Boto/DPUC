@@ -11,8 +11,6 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-SECRET_KEY = DJANGO_SECRET_KEY
-
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
