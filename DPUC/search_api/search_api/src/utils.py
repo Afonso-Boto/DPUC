@@ -11,6 +11,8 @@ def query_very_basic():
            "JOIN unidade_organica as uo ON uc.unidade_organicaid = uo.id " \
            "JOIN ac ON uc.acid = ac.id;"
 
+def get_fields():
+    return ("id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia", "requisitos", "aprendizagem")
 
 def es_query(keywords):
     return {
@@ -22,19 +24,6 @@ def es_query(keywords):
             ]
         }
     }
-
-
-def row2dict(row):
-    dicio = dict()
-    dicio["id"] = int(row[0])
-    dicio["nome"] = format_value(row[1])
-    dicio["area_cientifica"] = format_value(row[2])
-    dicio["objetivos"] = format_value(row[3])
-    dicio["conteudos"] = format_value(row[4])
-    dicio["bibliografia"] = format_value(row[5])
-    dicio["requisitos"] = format_value(row[6])
-    dicio["aprendizagem"] = format_value(row[7])
-    return dicio
 
 
 def format_value(value: str) -> str:
