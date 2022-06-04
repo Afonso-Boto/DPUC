@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-from typing import List, Dict
+from typing import List, Dict, Any
 from collections.abc import Callable
 
 from .mysql import MysqlConnector
@@ -20,24 +20,20 @@ class ElasticSearchConnector:
     logger = get_logger(f"es-connector({url}, {index})")
 
     @classmethod
-    def get_dpucs(cls, timestamp: float = None):
-        return MysqlConnector.get_dpucs(timestamp)
-
-    @classmethod
-    def execute(cls, callback: Callable, *arg):
+    def execute(cls, callback: Callable, *arg) -> Any:
         connector = Elasticsearch(cls.url)
-        callback(connector, *arg)
+        response = callback(connector, *arg)
         connector.close()
+        return response
 
     @classmethod
     def _initialize(cls, connector: Elasticsearch):
         if cls.initialized:
             return
-
         if connector.indices.exists(index=cls.index):
             connector.indices.delete(index=cls.index)
         connector.indices.create(index=cls.index)
-        docs = cls.get_dpucs()
+        docs = MysqlConnector.get_dpucs()
         cls._update(connector, docs)
         cls.initialized = True
 
@@ -57,7 +53,7 @@ class ElasticSearchConnector:
 
     @classmethod
     def update(cls):
-        docs = cls.get_dpucs(timestamp=cls.last_updated)
+        docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
         cls.execute(cls._update, docs)
 
     def __init__(self):
