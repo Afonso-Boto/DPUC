@@ -1,5 +1,6 @@
 from elasticsearch import Elasticsearch
-from typing import List
+from typing import List, Dict
+from collections.abc import Callable
 
 from .mysql import MysqlConnector
 from .utils import es_query, format_keywords, now
@@ -23,38 +24,42 @@ class ElasticSearchConnector:
         return MysqlConnector.get_dpucs(timestamp)
 
     @classmethod
-    def execute(cls):
+    def execute(cls, callback: Callable, *arg):
         connector = Elasticsearch(cls.url)
-        
+        callback(cls, connector, arg)
         connector.close()
+
+    @classmethod
+    def initialize(cls, connector: Elasticsearch):
+        if cls.initialized:
+            return
+
+        if connector.indices.exists(index=cls.index):
+            connector.indices.delete(index=cls.index)
+        connector.indices.create(index=cls.index)
+        docs = cls.get_dpucs()
+        cls._update(connector, docs)
+        cls.initialized = True
+
+    @classmethod
+    def _update(cls, connector: Elasticsearch, docs: List[Dict]):
+        cls.last_updated = now()
+        for doc in docs:
+            identifier = doc.pop("id")
+            if connector.exists(index=cls.index, id=identifier):
+                connector.update(index=cls.index, id=identifier, doc=doc)
+            else:
+                connector.create(index=cls.index, id=identifier, document=doc)
 
     def __init__(self):
-
-        connector = self.get_connection()
-
-        if connector.indices.exists(index=self.index):
-            connector.indices.delete(index=self.index)
-        connector.indices.create(index=self.index)
-
-        docs = self.get_dpucs()
-        self.last_updated = now()
-        for doc in docs:
-            identifier = doc.pop("id", "")
-            connector.create(index=self.index, id=identifier, document=doc)
-
+        connector = Elasticsearch(self.url)
+        self.initialize(connector)
         connector.close()
 
-    @property
-    def is_outdated(self) -> bool:
-        return now() > self.last_updated + self.ttl
-
-    def get_connection(self):
-        return Elasticsearch(self.url)
-
     def update(self):
-        connector = self.get_connection()
-
         docs = self.get_dpucs(timestamp=self.last_updated)
+
+        connector = Elasticsearch(self.url)
         self.last_updated = now()
         for doc in docs:
             identifier = doc.pop("id", "")
@@ -62,25 +67,24 @@ class ElasticSearchConnector:
                 connector.update(index=self.index, id=identifier, doc=doc)
             else:
                 connector.create(index=self.index, id=identifier, document=doc)
-
         connector.close()
 
     def get_relevant_search(self, keywords=None) -> List[int]:
-        if self.is_outdated:
+        if now() > self.last_updated + self.ttl:
             self.logger.info(f"data is Outdated")
             self.update()
-
-        connector = self.get_connection()
 
         query = None
         if len(keywords) >= 1:
             keywords = format_keywords(keywords)
             query = es_query(keywords)
-        response = connector.search(index=self.index, query=query)["hits"]["hits"]
+
+        connector = Elasticsearch(self.url)
+        response = connector.search(index=self.index, query=query)
+        connector.close()
+
+        response = response["hits"]["hits"]
         identifiers = list()
         for doc in response:
             identifiers.append(int(doc["_id"]))
-
-        connector.close()
-
         return identifiers
