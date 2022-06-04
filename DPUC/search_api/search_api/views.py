@@ -37,6 +37,6 @@ def update(request):
         try:
             es.update()
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
-            logger.error(e)
+        except Exception:
+            logger.error(traceback.format_exc())
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
