@@ -15,22 +15,29 @@ class MysqlConnector:
 
     logger = get_logger(f"db-connector({host}, {database}, {user})")
 
-    def get_connection(self):
+    @classmethod
+    def get_connection(cls):
         return mysql.connector.connect(
-            host=self.host,
-            database=self.database,
-            user=self.user,
-            password=self.password,
+            host=cls.host,
+            database=cls.database,
+            user=cls.user,
+            password=cls.password,
         )
 
     @classmethod
     def execute(cls) -> Any:
-        pass
+        connector = mysql.connector.connect(
+            host=cls.host,
+            database=cls.database,
+            user=cls.user,
+            password=cls.password,
+        )
 
-    def get_dpucs(self, timestamp: float = None) -> List[Dict]:
-        self.logger.info(f"get_dpucs(ts={timestamp})")
+    @classmethod
+    def get_dpucs(cls, timestamp: float = None) -> List[Dict]:
+        cls.logger.info(f"get_dpucs(ts={timestamp})")
 
-        connection = self.get_connection()
+        connection = cls.get_connection()
         cursor = connection.cursor()
 
         if timestamp is None:
