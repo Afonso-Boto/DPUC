@@ -12,7 +12,7 @@ def query_very_basic():
            "JOIN ac ON uc.acid = ac.id;"
 
 def get_fields():
-    return ("id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia", "requisitos", "aprendizagem")
+    return "id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia", "requisitos", "aprendizagem"
 
 def es_query(keywords):
     return {
