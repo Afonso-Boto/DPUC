@@ -3,7 +3,7 @@
 import os
 import sys
 
-from search_api.settings import CURRENT_DIR as APP
+from search_api.settings import APP
 
 
 def main():

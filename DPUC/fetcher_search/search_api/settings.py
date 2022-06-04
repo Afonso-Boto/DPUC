@@ -1,11 +1,10 @@
 """
 Django settings for fetcher_search project.
 """
-
 from pathlib import Path
 
 # Build paths inside the project
-CURRENT_DIR = Path(__file__).resolve().parent.name
+APP = Path(__file__).resolve().parent.name
 
 ALLOWED_HOSTS = ['*']
 
@@ -17,7 +16,7 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-ROOT_URLCONF = ".".join([CURRENT_DIR, "urls"])
+ROOT_URLCONF = ".".join([APP, "urls"])
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [

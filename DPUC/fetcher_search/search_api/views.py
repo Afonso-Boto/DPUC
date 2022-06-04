@@ -13,6 +13,8 @@ logger = get_logger("search_api.views")
 @renderer_classes([JSONRenderer])
 def search_dpuc(request):
 
+    logger.info(f"GET /search from {request}")
+
     if request.method == "GET":
         keywords = request.GET.get('keywords', '')
         try:
@@ -26,6 +28,8 @@ def search_dpuc(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def update(request):
+
+    logger.info(f"GET /update from {request}")
 
     if request.method == "GET":
         try:
