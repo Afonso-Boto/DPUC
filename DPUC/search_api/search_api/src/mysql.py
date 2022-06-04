@@ -1,6 +1,5 @@
 import mysql.connector
 from typing import List, Dict, Any
-from collections.abc import Callable
 
 from .utils import query_very_basic, format_value, get_fields
 from .log import get_logger
