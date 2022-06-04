@@ -1,24 +1,34 @@
 from elasticsearch import Elasticsearch
-from datetime import datetime
 from typing import List
 
-from search_api.src.mysql import MysqlConnector
-from search_api.src.utils import es_query, format_keywords
-from search_api.src.log import get_logger
+from .mysql import MysqlConnector
+from .utils import es_query, format_keywords, now
+from .log import get_logger
 from .env import ES_URL, INDEX_NAME, DAY_MILLISECONDS as TTL
 
 
 class ElasticSearchConnector:
 
-    database = MysqlConnector()
     url = ES_URL
     index = INDEX_NAME
     ttl = TTL
 
+    last_updated = None
+    initialized = False
+
     logger = get_logger(f"es-connector({url}, {index})")
 
+    @classmethod
+    def get_dpucs(cls, timestamp: float = None):
+        return MysqlConnector.get_dpucs(timestamp)
+
+    @classmethod
+    def execute(cls):
+        connector = Elasticsearch(cls.url)
+        
+        connector.close()
+
     def __init__(self):
-        self.last_updated = None
 
         connector = self.get_connection()
 
@@ -26,8 +36,8 @@ class ElasticSearchConnector:
             connector.indices.delete(index=self.index)
         connector.indices.create(index=self.index)
 
-        docs = self.database.get_dpucs()
-        self.last_updated = datetime.now().timestamp()
+        docs = self.get_dpucs()
+        self.last_updated = now()
         for doc in docs:
             identifier = doc.pop("id", "")
             connector.create(index=self.index, id=identifier, document=doc)
@@ -36,8 +46,7 @@ class ElasticSearchConnector:
 
     @property
     def is_outdated(self) -> bool:
-        now = datetime.now().timestamp()
-        return now > self.last_updated + self.ttl
+        return now() > self.last_updated + self.ttl
 
     def get_connection(self):
         return Elasticsearch(self.url)
@@ -45,8 +54,8 @@ class ElasticSearchConnector:
     def update(self):
         connector = self.get_connection()
 
-        docs = self.database.get_dpucs(timestamp=self.last_updated)
-        self.last_updated = datetime.now()
+        docs = self.get_dpucs(timestamp=self.last_updated)
+        self.last_updated = now()
         for doc in docs:
             identifier = doc.pop("id", "")
             if connector.exists(index=self.index, id=identifier):
