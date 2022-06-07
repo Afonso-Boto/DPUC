@@ -53,11 +53,22 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
     useEffect( () => {
         setMaxPage(Math.floor(filteredDocentes.length / MAX_DOCENTES_PER_PAGE) + 1);
         setPage(1);
+        setDocentesPage(filteredDocentes.slice((currentPage - 1) * MAX_DOCENTES_PER_PAGE, currentPage * MAX_DOCENTES_PER_PAGE));
     },[filteredDocentes]);
 
     // When a filter changes
     useEffect( () => {
         console.log(searchInput);
+        setFilteredDocentes(
+            docentes
+            .filter(o => 
+                (o.nome.toLowerCase().includes(searchInput.toLowerCase()))
+                || 
+                (o.email.toLowerCase().includes(searchInput.toLowerCase()))
+                ||
+                (o.nmec.toString().includes(searchInput))
+            )
+        )
 
     },[searchInput, searchUO]);
 
@@ -142,7 +153,7 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                             {docentesPage && 
                                 docentesPage.map((docente) => (
                                     <>
-                                        <tr>
+                                        <tr key={docente.id}>
                                             <td>
                                             <Row style={{minHeight:"60px"}}>
                                                 <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
