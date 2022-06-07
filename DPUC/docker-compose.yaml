@@ -8,7 +8,7 @@ services:
     volumes:
       - esdata01:/usr/share/elasticsearch/data
     ports:
-      - ${LOCAL_PORT_ES}:9200
+      - ${ES_PORT}:9200
     environment:
       - node.name=${HOST_ES01}
       - cluster.name=${CLUSTER_NAME}
@@ -36,6 +36,10 @@ services:
       retries: 100
 
   mysqldb:
+    depends_on:
+      es01:
+        condition: service_healthy
+    container_name: ${HOST_MYSQLDB}
     platform: linux/x86_64
     image: mysql:5.7
     env_file: ./.env
@@ -45,18 +49,59 @@ services:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
     volumes:
       - ./volumes/mysql/db:/var/lib/mysql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [
+        "CMD",
+        "mysqladmin" ,"ping", "-h", "localhost"
+      ]
+      timeout: 5s
+      interval: 10s
+      retries: 100
+
+  fetcher-search:
+    depends_on:
+      es01:
+        condition: service_healthy
+      mysqldb:
+        condition: service_healthy
+    container_name: ${HOST_SEARCH_API}
+    build: search_api
+    command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
+    restart: always
+    ports:
+      - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
+    environment:
+      - DB_HOST=${HOST_MYSQLDB}
+      - DB_NAME=${MYSQLDB_DATABASE}
+      - DB_USER=${MYSQLDB_USER}
+      - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - ES_HOST=${HOST_ES01}
+      - ES_PORT=${ES_PORT}
+      - ES_INDEX=${INDEX_NAME}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          curl -s http://localhost:$DJANGO_DOCKER_PORT/ || exit 1
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 100
 
   fetcher-main:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
+      fetcher-search:
+        condition: service_healthy
     build: ./fetcher-main
     env_file: ./.env
     ports:
-      - $SPRING_FETCHER_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - ${SPRING_FETCHER_LOCAL_PORT}:$SPRING_DOCKER_PORT
     environment:
       SPRING_APPLICATION_JSON: '{
           "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
@@ -69,24 +114,34 @@ services:
     stdin_open: true
     tty: true
 
-#  fetcher-search:
-#    depends_on:
-#      - mysqldb
-#    build: ./fetcher-search
-#    env_file: ./.env
-#    ports:
-#      - $SPRING_FETCHER_SEARCH_LOCAL_PORT:$SPRING_DOCKER_PORT
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#            "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-#            "spring.datasource.username" : "$MYSQLDB_USER",
-#            "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-#            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-#            "spring.jpa.hibernate.ddl-auto" : "update"}'
-#    volumes:
-#      - ./volumes/fetcher-search/:/root/.m2
-#    stdin_open: true
-#    tty: true
+  kibana:
+    depends_on:
+      es01:
+        condition: service_healthy
+      fetcher-search:
+        condition: service_healthy
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: kibana
+    restart: always
+    volumes:
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - ${KIBANA_PORT}:5601
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=http://${HOST_ES01}:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+    mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 100
 
 #  teacher-app:
 #    depends_on:
@@ -104,3 +159,7 @@ services:
 
 volumes:
   db:
+  esdata01:
+    driver: local
+  kibanadata:
+    driver: local
