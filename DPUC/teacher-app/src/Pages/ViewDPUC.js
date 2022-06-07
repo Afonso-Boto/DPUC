@@ -27,6 +27,7 @@ const ViewDPUC = () => {
 
     const [ detailedView, setDetailedView ] = useState(false);
     const [ estado, setEstado ] = useState(false);
+    const [ responsavel, setResponsavel ] = useState(false);
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -40,6 +41,12 @@ const ViewDPUC = () => {
             return;
         dpucSet.setEstado(estados.find((e) => e.id === estado));
     }, [estado, dpucSet, estados]);
+
+    useEffect(() => {
+        if(!dpucSet|| !responsavel)
+            return;
+        dpucSet.setResponsavel(responsavel);
+    }, [dpucSet, responsavel]);
 
     return ( 
         <Container>
@@ -98,7 +105,7 @@ const ViewDPUC = () => {
                         }
                     </Col>
                     <Col style={{paddingTop:"10px"}}>
-                        <ActionList dpuc={dpuc} setEstado={setEstado}/>
+                        <ActionList dpuc={dpuc} setEstado={setEstado} setResponsavel={setResponsavel}/>
                     </Col>
                 </Row>
                 <br/>

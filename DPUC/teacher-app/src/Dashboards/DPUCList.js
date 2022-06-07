@@ -19,37 +19,37 @@ const DPUCList = ({canCreate}) => {
         {
             key: 'Todos',
             text: 'Mostrar Todos',
-            value: 0
+            value: [0]
         },
         {
             key: 'Em Criação',
             text: '1 - Em Criação',
-            value: 1
+            value: [1, 7]
         },
         {
             key: 'Em Edição',
             text: '2 - Em Edição',
-            value: 2
+            value: [2, 8]
         },
         {
             key: 'Fechados',
             text: '3 - Fechados',
-            value: 3
+            value: [3]
         },
         {
             key: 'Em Aprovação',
             text: '4 - Em Aprovação',
-            value: 4
+            value: [4, 9]
         },
         {
             key: 'Aprovados',
             text: '5 - Aprovados',
-            value: 5
+            value: [5, 10]
         },
         {
             key: 'Desativados',
             text: '6 - Desativados',
-            value: 6
+            value: [6]
         },
     ]
 
@@ -62,10 +62,10 @@ const DPUCList = ({canCreate}) => {
     }
 
     const filterDPUCList = (estado) => {
-        if(estado.value === 0)
+        if(estado.value[0] === 0)
             setDPUCList(dpucs);
         else
-            setDPUCList(dpucs.filter((d) => (d.estadoid === estado.value)));
+        setDPUCList(dpucs.filter((d) => (estado.value.includes(d.estadoid))));
         setFilterOption(estado)
     }
 

@@ -2,23 +2,32 @@ import { Button, Text } from "@paco_ua/pacoui";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const CloseDPUC = ({id, setEstado, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/creation/fecharDpuc?id=" + id;
+const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow}) => {
+    const BASE_URL_CREATION = "http://localhost:82/creation/fecharDpuc?id=" + id;
+    const BASE_URL_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + true;
+
+    const navigate = useNavigate();
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setShow(false);
 
+    const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
+    const proxEstado = estadoTipo === "C" ? 3 : 4;
+
     const close = () => {
         setError(false);
         setLoading(true);
         axios
-            .put(BASE_URL)
+            .put(BASE_URL, {})
             .then(() => {
-                setEstado(3);
+                setEstado(proxEstado);
                 handleClose();
+                if(redirect)
+                    navigate("/dpuc/" + id);
             })
             .catch((error) => {
                 setError(true);
@@ -54,7 +63,14 @@ const CloseDPUC = ({id, setEstado, show, setShow}) => {
                     </Text>
                     <br/>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Fechado(3).</b>
+                        O DPUC passará para o estado{" "}
+                        {
+                        (estadoTipo === "C" &&
+                            <b>Fechado(3)</b>)
+                        ||
+                            <b>Em Edição(4)</b>
+                        }
+                        .
                     </Text>
                     {   error &&
                         <>

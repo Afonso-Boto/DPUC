@@ -1,27 +1,31 @@
 import { Button, Text } from "@paco_ua/pacoui";
 import { Modal, Col, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import Input from "../VisualComponents/Input";
+import { EntitiesContext } from "../Helper/Context";
+import Selector from "../VisualComponents/Selector";
 
-const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
+const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
+    const BASE_URL = "http://localhost:82/edition/setRegente?id=" + id + "&regenteid=";
 
-    const [codigoUC, setCodigo] = useState(10000);
-    if(codigo)
-        setCodigo(codigo);
+    const {docentes} = useContext(EntitiesContext);
+
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [regente, setRegente] = useState(responsavel);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setRegente(responsavel);
+        setShow(false);
+    }
 
     const approve = () => {
         setError(false);
         setLoading(true);
         axios
-            .put(BASE_URL + codigoUC, {aprovado: true})
+            .put(BASE_URL + regente.id)
             .then(() => {
-                setEstado(4);
+                setResponsavel(regente);
                 handleClose();
             })
             .catch((error) => {
@@ -46,7 +50,7 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Começar Aprovação de DPUC
+                        Alterar Responsável da Unidade Curricular
                     </Modal.Title>
                 </Modal.Header>
                 
@@ -55,31 +59,24 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
                         <Col sm="auto">
                             <h3>
                                 <Text size="large" color="primary" fontWeight="400">
-                                    Insira o código da Unidade Curricular
+                                    Escolha a/o novo Responsável:
                                 </Text>
                             </h3>
-                            
-                        </Col>
-                        <Col sm="2">
-                            <Input
-                                border
-                                as="input" 
-                                type="number"
-                                min={0} max={999999}
-                                
-                                value={codigoUC}
-                                onChange={(e) => setCodigo(e.target.value)}
-                            />
                         </Col>
                     </Row>
-                    <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Em Aprovação(4)</b>.
-                    </Text>
+                    <Selector
+                        options={docentes}
+                        value={regente}
+                        getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
+                        getOptionValue ={(option)=>option.id}
+                        onChange={(e) => setRegente(e)}
+                        placeholder="Selecione o novo docente responsável pela UC..."
+                    />
                     {   error &&
                         <>
                         <br/>
                         <Text as="i" size="small" color="red">
-                            Ocorreu um erro ao alterar o estado do DPUC.
+                            Ocorreu um erro ao alterar o regente da Unidade Curricular.
                         </Text>
                         </>
                     }
@@ -89,8 +86,8 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
                     <Button action style={{fontSize:"100%"}} onClick={handleClose} >
                         Cancelar
                     </Button>
-                    <Button success style={{fontSize:"100%"}} onClick={approve} >
-                        {(loading && "A passar DPUC para aprovação...") || ("Passar DPUC para Aprovação DPUC")}
+                    <Button primary style={{fontSize:"100%"}} onClick={approve} >
+                        {(loading && "A alterar Responsável da UC...") || ("Alterar Responsável da UC")}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -98,4 +95,4 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
      );
 }
  
-export default InApprovalDPUC;
+export default ChangeDR;

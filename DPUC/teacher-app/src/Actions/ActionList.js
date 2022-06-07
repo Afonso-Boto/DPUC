@@ -6,23 +6,27 @@ import DeactivateDPUC from "../Actions/DeactivateDPUC";
 import InApprovalDPUC from "../Actions/InApprovalDPUC";
 import CloseDPUC from "../Actions/CloseDPUC";
 import OpenDPUC from "../Actions/OpenDPUC";
+import ChangeDR from "./ChangeDR";
 import Selector from "../VisualComponents/Selector";
 import { useNavigate } from "react-router-dom";
+import CreateDPUC from "./CreateDPUC";
 
-const ActionList = ({dpuc, setEstado}) => {
+const ActionList = ({dpuc, setEstado, setResponsavel}) => {
     const navigate = useNavigate();
     const { userType } = useContext(UserContext);
 
     const [availableOptions, setOptions] = useState([]);
 
+    const [showChangeDR, setShowChangeDR] = useState(false);
     const [showApprove, setShowApprove] = useState(false);
     const [showClose, setShowClose] = useState(false);
     const [showDeactive, setShowDeactivate] = useState(false);
     const [showInApproval, setShowInApproval] = useState(false);
     const [showOpen, setShowOpen] = useState(false);
+    const [showCreate, setShowCreate] = useState(false);
 
     const options = [
-        { value: "regente",     label: "Alterar Regente",   
+        { value: "regente",     label: "Alterar Responsável da UC",   
             userType: "DUO",    estados: [1, 2, 3, 4, 5]},
         { value: "novo",        label: "Lançar Novo DPUC",  
             userType: "DUO",    estados: [5]},
@@ -43,10 +47,10 @@ const ActionList = ({dpuc, setEstado}) => {
     const handleChange = (e) => {
         switch(e){
             case "regente":
-                // Abrir página de edição de regente
+                setShowChangeDR(true);
                 break;
             case "novo":
-                // Abrir página de criar novo DPUC
+                setShowCreate(true);
                 break;
             case "editar":
                 navigate("/edit/"+dpuc.id);
@@ -75,7 +79,6 @@ const ActionList = ({dpuc, setEstado}) => {
         if(!userType)
             return;
         setOptions(options.filter((o) => (o.userType.includes(userType)) && (o.estados.includes(dpuc.estado.id))));
-        console.log(availableOptions);
     }, [userType, dpuc.estado]);
 
 
@@ -93,11 +96,11 @@ const ActionList = ({dpuc, setEstado}) => {
             }
             
             {userType === "SGA" && 
-                <Col md={6} style={{paddingTop:"10px"}}>
+                <Col style={{paddingTop:"10px"}}>
                     <Row>
                         { (dpuc.estado.id === 3 || dpuc.estado.id === 4 || dpuc.estado.id === 6) &&
                             <Col>
-                                <OpenDPUC id={dpuc.id} setEstado={setEstado} show={showOpen} setShow={setShowOpen}/>
+                                <OpenDPUC id={dpuc.id} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showOpen} setShow={setShowOpen}/>
                             </Col>
                         }
                         { dpuc.estado.id === 3 &&
@@ -107,7 +110,7 @@ const ActionList = ({dpuc, setEstado}) => {
                         }
                         { dpuc.estado.id === 4 &&
                             <Col>
-                                <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} setEstado={setEstado} show={showApprove} setShow={setShowApprove}/>
+                                <ApproveDPUC id={dpuc.id} codigo={dpuc.codigo} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showApprove} setShow={setShowApprove}/>
                             </Col>
                         }
                         { dpuc.estado.id !== 6 &&
@@ -119,11 +122,25 @@ const ActionList = ({dpuc, setEstado}) => {
                 </Col>
             }
             {userType === "DR" && 
-                <Col md={4} style={{paddingTop:"10px"}}>
+                <Col style={{paddingTop:"10px"}}>
                     <Row>
                         <Col>
-                            <CloseDPUC id={dpuc.id} setEstado={setEstado} show={showClose} setShow={setShowClose}/>
+                            <CloseDPUC id={dpuc.id} estadoTipo={dpuc.estadoTipo} setEstado={setEstado} show={showClose} setShow={setShowClose}/>
                         </Col>
+                    </Row>
+                </Col>
+            }
+            {userType === "DUO" && 
+                <Col style={{paddingTop:"10px"}}>
+                    <Row>
+                        <Col>
+                            <ChangeDR id={dpuc.id} responsavel={dpuc.responsavel} setResponsavel={setResponsavel} show={showChangeDR} setShow={setShowChangeDR}/>
+                        </Col>
+                        { (dpuc.estado.id === 5 || dpuc.estado.id === 10) &&
+                            <Col>
+                                <CreateDPUC id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowCreate}/>
+                            </Col>
+                        }
                     </Row>
                 </Col>
             }

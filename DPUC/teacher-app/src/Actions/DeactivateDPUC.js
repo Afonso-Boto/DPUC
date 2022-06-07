@@ -51,7 +51,7 @@ const DeactivateDPUC = ({id, setEstado, show, setShow}) => {
                     </Text>
                     <br/>
                     <Text as="i" size="small">
-                        O DPUC passará para o estado <b>Desativado(6).</b>
+                        O DPUC passará para o estado <b>Desativado(6)</b>.
                     </Text>
                     {   error &&
                         <>
