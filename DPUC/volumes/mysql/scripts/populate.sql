@@ -13,7 +13,6 @@ CREATE TABLE utilizadores (
   nmec              int,
   email             text,
   password          text,
-  token             text,
   tipo_utilizadorid int NOT NULL,
   PRIMARY KEY (id),
   foreign key (tipo_utilizadorid) references tipo_utilizador(id));

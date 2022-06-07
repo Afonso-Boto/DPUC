@@ -58,8 +58,6 @@ public class LoginController extends JdbcDaoSupport {
         Utilizadores user = new Utilizadores();
 
         try {
-            String sql = "UPDATE utilizadores SET token=?  WHERE email = ?";
-            getJdbcTemplate().update(sql, token, authenticationRequest.getUsername());
 
             String query = "SELECT id, nome, nmec, email, tipo_utilizadorid FROM utilizadores WHERE email = \'%s\'".formatted(authenticationRequest.getUsername());
             user.setId((int) getJdbcTemplate().queryForList(query).get(0).get("id"));
@@ -81,10 +79,8 @@ public class LoginController extends JdbcDaoSupport {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody String token) {
+    public ResponseEntity<?> logout() {
         try {
-            String sql = "UPDATE utilizadores SET token=?  WHERE token = ?";
-            getJdbcTemplate().update(sql, null, token);
 
         }catch (Exception e){
             log.error("Error while fetching user details from database");
