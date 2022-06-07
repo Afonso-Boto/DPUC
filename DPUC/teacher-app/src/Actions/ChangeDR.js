@@ -3,16 +3,16 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
-import Selector from "../VisualComponents/Selector";
+import SelectDocente from "./SelectDocente";
 
 const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
     const BASE_URL = "http://localhost:82/edition/setRegente?id=" + id + "&regenteid=";
 
-    const {docentes} = useContext(EntitiesContext);
-
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [regente, setRegente] = useState(responsavel);
+    const [showSelect, setShowSelect] = useState(false);
+
 
     const handleClose = () => {
         setRegente(responsavel);
@@ -55,23 +55,35 @@ const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
                 </Modal.Header>
                 
                 <Modal.Body>
-                    <Row>
+                <Row>
                         <Col sm="auto">
                             <h3>
                                 <Text size="large" color="primary" fontWeight="400">
-                                    Escolha a/o novo Responsável:
+                                    Responsável da UC:
                                 </Text>
                             </h3>
                         </Col>
                     </Row>
-                    <Selector
-                        options={docentes}
-                        value={regente}
-                        getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                        getOptionValue ={(option)=>option.id}
-                        onChange={(e) => setRegente(e)}
-                        placeholder="Selecione o novo docente responsável pela UC..."
-                    />
+                    <Row>
+                        {
+                            regente &&
+                            <Col className="align-self-center">
+                                <Text size="medium">
+                                    {regente.nmec}
+                                    {" - "}
+                                    {regente.nome}
+                                    {" - "}
+                                    {regente.email}
+                                </Text>
+                            </Col>
+                        }
+                        <Col md="auto">
+                            <SelectDocente show={showSelect} setShow={setShowSelect} docente={regente} setDocente={setRegente} canRemove={false}/>
+                            <Button primary onClick={() => setShowSelect(true)}>
+                                Alterar Docente Responsável
+                            </Button>
+                        </Col>
+                    </Row>
                     {   error &&
                         <>
                         <br/>

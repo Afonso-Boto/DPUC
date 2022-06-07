@@ -11,6 +11,7 @@ const BlueNav = () => {
     const URL = "http://localhost:82/logout";
 
     const logout = () => {
+        /*
         axios
             .post(URL)
             .then(() => {
@@ -20,8 +21,9 @@ const BlueNav = () => {
                 console.log(error);
             })
             .finally( () => {
-                setToken(null);
             });
+            */
+        setToken(null);
     }
 
     return ( 

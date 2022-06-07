@@ -5,7 +5,7 @@ import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
 import Selector from "../VisualComponents/Selector";
 
-const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => {
+const SelectDocente = ({docente, setDocente, show, setShow, multiple=false, canRemove=true}) => {
 
     const MAX_DOCENTES_PER_PAGE = 5;
 
@@ -302,13 +302,16 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                                             </Col>
                                         </Row>
                                         </td>
-                                        <td>
-                                        <Row style={{minHeight:"60px"}}>
-                                            <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
-                                                <Button primary onClick={() => remDocente()}>Remover</Button>
-                                            </Col>
-                                        </Row>
-                                        </td>
+                                        {
+                                            canRemove &&
+                                            <td>
+                                            <Row style={{minHeight:"60px"}}>
+                                                <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
+                                                    <Button primary onClick={() => remDocente()}>Remover</Button>
+                                                </Col>
+                                            </Row>
+                                            </td>
+                                        }
                                     </tr>
                                 )
                             }

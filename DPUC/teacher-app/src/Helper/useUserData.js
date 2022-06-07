@@ -19,9 +19,11 @@ const useUserData = () => {
         localStorage.setItem("dpuc-token", token);
         if(!token){
             setUser(null);
+            localStorage.setItem("dpuc-user", null);
             setUserType("");
             setIsLogged(false);
             delete axios.defaults.headers.common["Authorization"];
+            setLoading(false);
             return;
         }
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;

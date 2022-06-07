@@ -3,18 +3,18 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
-import Selector from "../VisualComponents/Selector";
 import { useNavigate } from "react-router-dom";
+import SelectDocente from "./SelectDocente";
 
 const CreateDPUC = ({ id, show, setShow, responsavel }) => {
     const BASE_URL = "http://localhost:82/edition/definicaoRegente?id=" + id + "&regenteid=";
 
     const navigate = useNavigate();
-    const {docentes} = useContext(EntitiesContext);
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [regente, setRegente] = useState(responsavel);
+    const [showSelect, setShowSelect] = useState(false);
 
     const handleClose = () => {
         setRegente(responsavel);
@@ -60,19 +60,32 @@ const CreateDPUC = ({ id, show, setShow, responsavel }) => {
                         <Col sm="auto">
                             <h3>
                                 <Text size="large" color="primary" fontWeight="400">
-                                    Escolha a/o Responsável da UC:
+                                    Responsável da UC:
                                 </Text>
                             </h3>
                         </Col>
                     </Row>
-                    <Selector
-                        options={docentes}
-                        value={regente}
-                        getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                        getOptionValue ={(option)=>option.id}
-                        onChange={(e) => setRegente(e)}
-                        placeholder="Selecione o novo docente responsável pela UC..."
-                    />
+                    <Row>
+                        {
+                            regente &&
+                            <Col className="align-self-center">
+                                <Text size="medium">
+                                    {regente.nmec}
+                                    {" - "}
+                                    {regente.nome}
+                                    {" - "}
+                                    {regente.email}
+                                </Text>
+                            </Col>
+                        }
+                        <Col md="auto">
+                            <SelectDocente show={showSelect} setShow={setShowSelect} docente={regente} setDocente={setRegente} canRemove={false}/>
+                            <Button primary onClick={() => setShowSelect(true)}>
+                                Alterar Docente Responsável
+                            </Button>
+                        </Col>
+                    </Row>
+                    <br/>
                     <Text as="i" size="small">
                         Ao lançar um DPUC é necessário definir a/o Responsável. 
                     </Text>

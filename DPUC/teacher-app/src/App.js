@@ -29,7 +29,6 @@ function App() {
     setRetry(retryFetch+1);
   }, [isLogged])
 
-
   return (
     <Router>
       <div className="App">
