@@ -86,7 +86,7 @@ public class CreationManipulationServiceImpl extends JdbcDaoSupport implements C
             getJdbcTemplate().update(sql, codigo, ucid);
 
             // Dpuc id
-            String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.id = \'%s\'".formatted(ucid);
+            String sql2 = "SELECT d.id FROM (uc JOIN dpuc d ON uc.id = d.UCid) WHERE uc.id = %d".formatted(ucid);
             int dpucid = (int) getJdbcTemplate().queryForList(sql2).get(0).get("id");
 
             // Update Dpuc estado para C4  "Em Aprovação"

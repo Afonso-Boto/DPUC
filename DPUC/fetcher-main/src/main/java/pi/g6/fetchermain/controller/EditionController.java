@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pi.g6.fetchermain.entity.DpucUc;
 import pi.g6.fetchermain.service.EditionService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/edition")
@@ -24,6 +27,16 @@ public class EditionController {
     @PutMapping("/setRegente")
     public HttpStatus setRegente(@RequestParam("id") int id, @RequestParam("regenteid") int regenteid) {
         return editionService.setRegente(id, regenteid);
+    }
+
+    @GetMapping("/getAllDpucs")
+    public ResponseEntity<List<DpucUc>> getAllDpucs(@RequestParam("id") int id) {
+        return editionService.getAllDpucs(id);
+    }
+
+    @PutMapping("/inicarEdicao")
+    public HttpStatus iniciarEdicao() {
+        return editionService.iniciarEdicao();
     }
 
     @PutMapping("/definicaoRegente")
