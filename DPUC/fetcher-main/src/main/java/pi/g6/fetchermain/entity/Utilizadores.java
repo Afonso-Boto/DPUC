@@ -12,6 +12,14 @@ public class Utilizadores {
     public Utilizadores() {
     }
 
+    public Utilizadores(Integer id, String nome, int nmec, String email, int tipo_utilizadorid) {
+        this.id = id;
+        this.nome = nome;
+        this.nmec = nmec;
+        this.email = email;
+        this.tipo_utilizadorid = tipo_utilizadorid;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -58,5 +66,14 @@ public class Utilizadores {
 
     public void setTipo_utilizadorid(int tipo_utilizadorid) {
         this.tipo_utilizadorid = tipo_utilizadorid;
+    }
+
+    @Override
+    public String toString() {
+        return  id +
+                "$" + nome +
+                "$" + nmec +
+                "$" + email +
+                "$" + tipo_utilizadorid;
     }
 }
