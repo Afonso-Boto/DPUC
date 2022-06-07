@@ -3,14 +3,14 @@ version: '3.8'
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-    container_name: ${ES01_NAME}
+    container_name: ${HOST_ES01}
     restart: always
     volumes:
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
     environment:
-      - node.name=${ES01_NAME}
+      - node.name=${HOST_ES01}
       - cluster.name=${CLUSTER_NAME}
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -39,7 +39,7 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-    container_name: ${DOMAIN_MYSQLDB}
+    container_name: ${HOST_MYSQLDB}
     platform: linux/x86_64
     image: mysql:5.7
     env_file: ./.env
@@ -68,18 +68,20 @@ services:
         condition: service_healthy
       mysqldb:
         condition: service_healthy
-    container_name: ${FETCHER_SEARCH_HOST_NAME}
+    container_name: ${HOST_SEARCH_API}
     build: search_api
     command: python3 manage.py runserver 0.0.0.0:${DJANGO_DOCKER_PORT}
-    env_file: ./.env
     restart: always
     ports:
       - ${DJANGO_FETCHER_SEARCH_LOCAL_PORT}:${DJANGO_DOCKER_PORT}
     environment:
-      - DB_HOST=${DOMAIN_MYSQLDB}
+      - DB_HOST=${HOST_MYSQLDB}
       - DB_NAME=${MYSQLDB_DATABASE}
       - DB_USER=${MYSQLDB_USER}
       - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - ES_HOST=${HOST_ES01}
+      - ES_PORT=${ES_PORT}
+      - ES_INDEX=${INDEX_NAME}
       - SECRET_KEY=${DJANGO_SECRET_KEY}
     healthcheck:
       test:
@@ -128,7 +130,7 @@ services:
       - ${KIBANA_PORT}:5601
     environment:
       - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=http://${ES01_NAME}:9200
+      - ELASTICSEARCH_HOSTS=http://${HOST_ES01}:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
     mem_limit: ${MEM_LIMIT}

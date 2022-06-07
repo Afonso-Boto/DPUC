@@ -7,10 +7,10 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
 
 # elastic search node variables
-ES_HOST = os.getenv("ES01_NAME")
+ES_HOST = os.getenv("ES_HOST")
 ES_PORT = os.getenv("ES_PORT")
 ES_URL = "http://" + ES_HOST + ":" + str(ES_PORT)
-INDEX_NAME = os.getenv("INDEX_NAME")
+INDEX_NAME = os.getenv("ES_INDEX")
 
 DAY_MILLISECONDS = 60*60*24*1000
 
