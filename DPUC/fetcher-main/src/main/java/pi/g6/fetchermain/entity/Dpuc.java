@@ -1,6 +1,8 @@
 package pi.g6.fetchermain.entity;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Dpuc {
     
@@ -275,4 +277,5 @@ public class Dpuc {
                 ", regenteID=" + regenteID +
                 '}';
     }
+
 }
