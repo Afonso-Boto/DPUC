@@ -82,7 +82,6 @@ services:
       - ES_HOST=${HOST_ES01}
       - ES_PORT=${ES_PORT}
       - ES_INDEX=${INDEX_NAME}
-      - SECRET_KEY=${DJANGO_SECRET_KEY}
     healthcheck:
       test:
         [
