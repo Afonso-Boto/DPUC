@@ -20,29 +20,25 @@ class ElasticSearchConnector:
     logger = get_logger(f"es-connector({url}, {index})")
 
     @classmethod
-    def execute(cls, callback: Callable, *arg) -> Any:
+    def __execute(cls, callback: Callable, *arg) -> Any:
         connector = Elasticsearch(cls.url)
         response = callback(connector, *arg)
         connector.close()
         return response
 
     @classmethod
-    def _initialize(cls, connector: Elasticsearch):
+    def __initialize(cls, connector: Elasticsearch):
         if cls.initialized:
             return
         if connector.indices.exists(index=cls.index):
             connector.indices.delete(index=cls.index)
         connector.indices.create(index=cls.index)
         docs = MysqlConnector.get_dpucs()
-        cls._update(connector, docs)
+        cls.__update(connector, docs)
         cls.initialized = True
 
     @classmethod
-    def initialize(cls):
-        cls.execute(cls._initialize)
-
-    @classmethod
-    def _update(cls, connector: Elasticsearch, docs: List[Dict]):
+    def __update(cls, connector: Elasticsearch, docs: List[Dict]):
         cls.last_updated = now()
         for doc in docs:
             identifier = doc.pop("id")
@@ -52,14 +48,18 @@ class ElasticSearchConnector:
                 connector.create(index=cls.index, id=identifier, document=doc)
 
     @classmethod
-    def _search(cls, connector: Elasticsearch, query: Dict):
+    def __search(cls, connector: Elasticsearch, query: Dict):
         return connector.search(index=cls.index, query=query)
+
+    @classmethod
+    def initialize(cls):
+        cls.__execute(cls.__initialize)
 
     @classmethod
     def update(cls):
         cls.initialize()
         docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
-        cls.execute(cls._update, docs)
+        cls.__execute(cls.__update, docs)
 
     @classmethod
     def search(cls, keywords=None) -> List[int]:
@@ -74,7 +74,7 @@ class ElasticSearchConnector:
             keywords = " ".join(new_words).strip()
             query = es_query(keywords)
 
-        response = cls.execute(cls._search, query)
+        response = cls.__execute(cls.__search, query)
 
         response = response["hits"]["hits"]
         identifiers = list()
