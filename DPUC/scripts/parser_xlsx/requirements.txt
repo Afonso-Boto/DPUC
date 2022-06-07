@@ -1,3 +1,0 @@
-openpyxl
-bs4
-unidecode
