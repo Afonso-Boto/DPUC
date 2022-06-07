@@ -11,6 +11,7 @@ import { Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton, Ac
 import Input from "../VisualComponents/Input";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloseDPUC from "../Actions/CloseDPUC";
+import SelectDocente from "../Actions/SelectDocente";
 
 const EditDPUC = () => {
 
@@ -33,6 +34,9 @@ const EditDPUC = () => {
 
     const [estado, setEstado] = useState(0);
     const [showClose, setShowClose] = useState(0);
+
+    const [show, setShow] = useState(false);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -457,17 +461,29 @@ const EditDPUC = () => {
                                     Docentes Associados à UC*
                                 </Text>
                             </h3>
-                            { docentes &&
-                                <Selector 
-                                    isMulti 
-                                    placeholder="Selecione docentes associados à UC..."
-                                    options={docentes}
-                                    value={dpuc.docentes}
-                                    onChange={(e) => dpucSet.setDocentes(Array.from(e, (v => v)))}
-                                    getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                                    getOptionValue ={(option)=>option.id}
-                                />
+                            { dpuc.docentes && 
+                                <>
+                                    {dpuc.docentes.map((docente) => (
+                                        <li>
+                                            <Text size="medium">
+                                                {docente.nmec}
+                                                {" - "}
+                                                {docente.nome}
+                                                {" - "}
+                                                {docente.email}
+                                            </Text>
+                                        </li>
+                                    ))}
+                                </>
                             }
+                            <br/>   
+                            <SelectDocente show={show} setShow={setShow} docente={dpuc.docentes} setDocente={dpucSet.setDocentes} multiple={true}/>
+                            <Button primary onClick={(e) => {
+                                e.preventDefault();
+                                setShow(true)}
+                            }>
+                                Selecionar Docentes
+                            </Button>
                         </div>
                     </div>
                     <hr className="custom-hr"/>

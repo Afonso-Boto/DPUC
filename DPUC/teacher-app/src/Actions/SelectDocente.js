@@ -35,12 +35,17 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
         setPage(currentPage + 1);
     }
 
+    // For multiple docente
     const addDocente = (doce) => {
-        setDocente(Array.from(doce, (v => v)));
+        if(docente.includes(doce))
+            return;
+        setDocente([... docente, doce]);
     }
     const remDocentes = (doce) => {
-        setDocente(Array.from(doce, (v => v)));
+        setDocente(docente.filter((d) => d.id !== doce.id));
     }
+
+    // For single Docente
     const selectDocente = (doce) => {
         setDocente(doce);
     }
@@ -155,19 +160,19 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                         </thead>
                         <tbody>
                             {docentesPage && 
-                                docentesPage.map((docente) => (
+                                docentesPage.map((d) => (
                                     <>
-                                        <tr key={docente.id}>
+                                        <tr key={d.id}>
                                             <td>
                                             <Row style={{minHeight:"60px"}}>
                                                 <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
-                                                    {docente.nmec}
+                                                    {d.nmec}
                                                 </Col>
                                                 <Col className="align-self-center" md="6">
-                                                    {docente.nome}
+                                                    {d.nome}
                                                 </Col>
                                                 <Col className="align-self-center" md="3">
-                                                    {docente.email}
+                                                    {d.email}
                                                 </Col>
                                                 
                                             </Row>
@@ -176,9 +181,15 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                                             <Row style={{minHeight:"60px"}}>
                                                 <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
                                                     {
-                                                        (multiple && <Button primary onClick={() => addDocente(docente)}>Adicionar</Button>)
+                                                        (multiple && 
+                                                            (
+                                                                !docente.includes(d) && <Button primary onClick={() => addDocente(d)}>Adicionar</Button>
+                                                                ||
+                                                                <Button primary disabled>Adicionar</Button>
+                                                            )
+                                                        )
                                                         ||
-                                                        <Button primary onClick={() => selectDocente(docente)}>Selecionar</Button>
+                                                        <Button primary onClick={() => selectDocente(d)}>Selecionar</Button>
                                                     }
                                                 </Col>
                                             </Row>
