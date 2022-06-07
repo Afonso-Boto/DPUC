@@ -7,11 +7,15 @@ import Selector from "../VisualComponents/Selector";
 
 const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => {
 
+    const MAX_DOCENTES_PER_PAGE = 5;
+
     const {docentes, uos} = useContext(EntitiesContext);
 
     const [currentPage, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(10);
 
+    const [docentesPage, setDocentesPage] = useState([]);
+    const [filteredDocentes, setFilteredDocentes] = useState([]);
 
     const [searchInput, setSearchInput] = useState("");
     const [searchUO, setSearchUO] = useState([]);
@@ -31,9 +35,38 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
         setPage(currentPage + 1);
     }
 
+    const addDocente = () => {
+
+    }
+    const selectDocente = () => {
+
+    }
+
+    // When Docente List page changes
+    useEffect( () => {
+        if(currentPage < 1 || currentPage > maxPage)
+            return;
+        setDocentesPage(filteredDocentes.slice((currentPage - 1) * MAX_DOCENTES_PER_PAGE, currentPage * MAX_DOCENTES_PER_PAGE));
+    },[currentPage]);
+
+    // When Docente List finishes filtering
+    useEffect( () => {
+        setMaxPage(Math.floor(filteredDocentes.length / MAX_DOCENTES_PER_PAGE) + 1);
+        setPage(1);
+    },[filteredDocentes]);
+
+    // When a filter changes
     useEffect( () => {
         console.log(searchInput);
+
     },[searchInput, searchUO]);
+
+    // On Docentes load
+    useEffect( () => {
+        if(!docentes)
+            return
+        setFilteredDocentes(docentes);
+    },[docentes]);
 
     return ( 
         <>
@@ -84,6 +117,68 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                         </Col>
                     </Row>
                     */}
+                    
+                    <Table striped hover size="sm">
+                        <thead style={{borderBottom:"2px solid #0EB4BD"}}>
+                            <tr>
+                            <th>
+                                <Row style={{color:"#0EB4BD"}}>
+                                    <Col md="2" style={{textAlign:"center"}}>
+                                        NMec
+                                    </Col>
+                                    <Col md="6">
+                                        Nome
+                                    </Col>
+                                    <Col md="3">
+                                        Email
+                                    </Col>
+                                    <Col md="3">
+                                    </Col>
+                                </Row>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {docentesPage && 
+                                docentesPage.map((docente) => (
+                                    <>
+                                        <tr>
+                                            <td>
+                                            <Row style={{minHeight:"60px"}}>
+                                                <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
+                                                    {docente.nmec}
+                                                </Col>
+                                                <Col className="align-self-center" md="6">
+                                                    {docente.nome}
+                                                </Col>
+                                                <Col className="align-self-center" md="3">
+                                                    {docente.email}
+                                                </Col>
+                                                
+                                            </Row>
+                                            </td>
+                                            <td>
+                                            <Row style={{minHeight:"60px"}}>
+                                                <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
+                                                    {
+                                                        (multiple && <Button primary onClick={addDocente}>Adicionar</Button>)
+                                                        ||
+                                                        <Button primary onClick={selectDocente}>Selecionar</Button>
+                                                    }
+                                                </Col>
+                                            </Row>
+                                            </td>
+                                        </tr>
+                                    </>
+                                ))
+                            }
+                        </tbody>
+                    </Table>
+                    {
+                        (!docentesPage || docentesPage.length == 0)
+                        &&
+                        <Text as="i">Não foram encontrados docentes.</Text>
+                    }
                     <Row>
                         <Col></Col>
                         <Col>
@@ -106,63 +201,19 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                                     ||
                                     <Button primary disabled>{">"}</Button>
                                 }
-                                
                             </ButtonGroup>
                         </Col>
                         <Col></Col>
                     </Row>
-                    <Table striped hover size="sm">
-                        <thead style={{borderBottom:"2px solid #0EB4BD"}}>
-                            <tr>
-                            <th>
-                                <Row style={{color:"#0EB4BD"}}>
-                                    <Col md="2" style={{textAlign:"center"}}>
-                                        NMec
-                                    </Col>
-                                    <Col md="6">
-                                        Nome
-                                    </Col>
-                                    <Col md="3">
-                                        Email
-                                    </Col>
-                                    <Col md="3">
-                                    </Col>
-                                </Row>
-                            </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {docentes && 
-                                docentes.map((docente) => (
-                                    <>
-                                        <tr>
-                                            <td>
-                                            <Row style={{minHeight:"60px"}}>
-                                                <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
-                                                    {docente.nmec}
-                                                </Col>
-                                                <Col className="align-self-center" md="6">
-                                                    {docente.nome}
-                                                </Col>
-                                                <Col className="align-self-center" md="3">
-                                                    {docente.email}
-                                                </Col>
-                                                
-                                            </Row>
-                                            </td>
-                                            <td>
-                                            <Row style={{minHeight:"60px"}}>
-                                                <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
-                                                    <Button primary>Adicionar</Button>
-                                                </Col>
-                                            </Row>
-                                            </td>
-                                        </tr>
-                                    </>
-                                ))
+                    <Row>
+                        <Col>
+                            {
+                                (multiple && <Text size="large">Docentes Selecionados</Text>)
+                                ||
+                                <Text size="large">Docente Selecionado</Text>
                             }
-                        </tbody>
-                    </Table>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                         
