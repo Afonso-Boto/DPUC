@@ -6,23 +6,29 @@ import EditDPUC from './Pages/EditDPUC';
 import ViewDPUC from './Pages/ViewDPUC';
 import NotFound from './Pages/NotFound';
 import { EntitiesContext, UserContext } from './Helper/Context';
-import useGetAPIEntities from './Helper/useGetAPIEntities';
-import useUserData from './Helper/useUserData';
 import BlueNav from './Navbars/BlueNav';
 import WhiteNav from './Navbars/WhiteNav';
 import SideNav from './Navbars/SideNav';
 import Footer from './Navbars/Footer';
 import LoginPage from './Pages/LoginPage';
 import useGetWindowDimensions from './Helper/useGetWindowDimensions';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 function App() {
 
   useGetWindowDimensions();
 
   const { isLogged } = useContext(UserContext);
+  const { retryFetch, setRetry } = useContext(EntitiesContext);
 
   const sideBarHeight = window.innerHeight - 80 - 40;
+
+  useEffect( () => {
+    if(!isLogged)
+      return;
+    setRetry(retryFetch+1);
+  }, [isLogged])
+
 
   return (
     <Router>

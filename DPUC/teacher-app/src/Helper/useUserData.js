@@ -1,18 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const useUserData = () => {
-    const [userType, setUserType] = useState("DUO");
-    const [isLogged, setIsLogged] = useState(true);
 
-    if(localStorage.getItem("token") && localStorage.getItem("user")){
+
+    // API URLs
+    const URL_ME   = "http://localhost:8080/users/me";
+
+    axios.defaults.headers.common["Content-Type"] = "application/json";
+    // delete axios.defaults.headers.common["Authorization"];
+    // User type
+    const [user, setUser] = useState(localStorage.getItem("dpuc-user"));
+    const [token, setToken] = useState(localStorage.getItem("dpuc-token"));
+
+    const [userType, setUserType] = useState("SGA");
+    const [isLogged, setIsLogged] = useState(false);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        localStorage.setItem("dpuc-token", token);
+        if(!token){
+            setUser(null);
+            setUserType("");
+            setIsLogged(false);
+            delete axios.defaults.headers.common["Authorization"];
+            return;
+        }
+        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+        console.log(axios.defaults.headers.common["Authorization"]);
+        setLoading(false);
         setIsLogged(true);
-        
-        //setUserType(localStorage.getItem("user"));
-    }
-        
+    }, [token]);
 
+    useEffect(() => {
+        if(!user)
+            return;
+        setUserType(user.type);
+        console.log(user);
+    }, [user])
 
-    return { userType, setUserType, isLogged, setIsLogged };
+    return {
+      user, setUser, userType, isLogged, loading, setToken
+    };
 }
  
 export default useUserData;

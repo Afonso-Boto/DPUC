@@ -9,41 +9,51 @@ const Home = () => {
 
     const URL = "http://localhost:82/authenticate";
 
-    const { userType } = useContext(UserContext);
+    const { setToken, setUser } = useContext(UserContext);
     
-    const [ email, setEmail ] = useState("");
-    const [ emailError, setEmailError ] = useState(false);
-    const [ password, setPassword ] = useState("");
-    const [ passwordError, setPasswordError ] = useState(false);
+    const [ email, setEmail ] = useState("sga@ua.pt");
+    const [ password, setPassword ] = useState("123");
+    const [ errorForm, setErrorForm ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ loading, setLoading ] = useState(false);
 
     const authenticate = () =>{
-        setEmailError(false);
-        setPasswordError(false);
+        setErrorForm(false);
         setError(false);
         setLoading(true);
-        if(!email)
-            setEmailError(true);
-        if(!password)
-            setPasswordError(true);
-        if(!email || !password)
+        if(!email || !password){
+            setErrorForm(true);
             return;
+        }
 
         const auth = {username: email, password: password};
 
         axios
             .post(URL, auth)
-            .then(() => {
+            .then((response) => {
+                setToken(response.data.token);
+                parseUser(response.data.user);
                 //navigate("/");
             })
             .catch((error) => {
-                setError(true);
-                console.log(error);
+                setError(error.response.status);
             })
             .finally( () => {
                 setLoading(false);
         });
+    }
+
+    const parseUser = (data) => {
+        const args = data.split("$");
+        const userType = args[4] === "0" ? "SGA" : args[4] === "1" ? "DUO" : "DR";
+        const user = {
+            id: parseInt(args[0]),
+            nome: args[1],
+            nmec: parseInt(args[2]),
+            email: args[3],
+            type: userType
+        };
+        setUser(user);
     }
 
     return ( 
@@ -56,7 +66,7 @@ const Home = () => {
                         <Col>
                             <Text size="medium">Utilizador</Text>
                             <Input
-                                border
+                                border="true"
                                 as="input" 
                                 type="email"
                                 value={email}
@@ -69,7 +79,7 @@ const Home = () => {
                         <Col>
                             <Text size="medium">Palavra-passe</Text>
                             <Input
-                                border
+                                border="true"
                                 as="input" 
                                 type="password"
                                 value={password}
@@ -78,8 +88,21 @@ const Home = () => {
                             />
                         </Col>
                     </Row>
+                    {
+                        error &&
+                        (
+                            ( error === 401 && <Text as="i" size="small" color="red"> Credenciais incorretas. </Text>)
+                            ||
+                            <Text as="i" size="small" color="red"> Não foi possível conectar ao servidor.</Text>
+                        )
+                        
+                    }
                     <Row style={{paddingTop:"20px", paddingLeft:"12px", paddingRight:"12px"}}>
-                        <Button success onClick={authenticate}> Autenticar</Button>
+                        {
+                            (loading && <Button success> A autenticar... </Button>)
+                            ||
+                            <Button success onClick={authenticate}> Autenticar </Button>
+                        }
                     </Row>
                 </Col>
                 <Col></Col>
