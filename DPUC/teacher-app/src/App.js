@@ -18,7 +18,7 @@ function App() {
 
   useGetWindowDimensions();
 
-  const { isLogged } = useContext(UserContext);
+  const { isLogged, loading } = useContext(UserContext);
   const { retryFetch, setRetry } = useContext(EntitiesContext);
 
   const sideBarHeight = window.innerHeight - 80 - 40;
@@ -49,17 +49,21 @@ function App() {
               </Col>
               <Col>
                 <br/>
-                {
-                  isLogged &&
-                    <Switch>
-                      <Route exact path="/" element={<Home/>}/>
-                      <Route exact path="/create" element={<CreateUC/>}/>
-                      <Route exact path="/edit/:id" element={<EditDPUC/>}/>
-                      <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
-                      <Route path="*" element= {<NotFound />}/>
-                    </Switch>
-                  ||
-                    <LoginPage/>
+                { !loading &&
+                  <>
+                    {
+                      isLogged &&
+                      <Switch>
+                          <Route exact path="/" element={<Home/>}/>
+                          <Route exact path="/create" element={<CreateUC/>}/>
+                          <Route exact path="/edit/:id" element={<EditDPUC/>}/>
+                          <Route exact path="/dpuc/:id" element={<ViewDPUC/>}/>
+                          <Route path="*" element= {<NotFound />}/>
+                        </Switch>
+                      ||
+                      <LoginPage/>
+                    }
+                  </>
                 }
                 <Footer/>
               </Col>

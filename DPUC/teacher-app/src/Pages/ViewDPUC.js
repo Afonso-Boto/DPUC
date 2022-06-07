@@ -316,7 +316,7 @@ const ViewDPUC = () => {
                                 <Text as="span" size="mediumSmall"fontWeight="500">Idioma(s) de lecionação </Text>
                                 {dpuc.linguas.length > 0 &&
                                  dpuc.linguas.map((l) => (
-                                    <Text as="span" size="mediumSmall" fontWeight="350">{l.nome}</Text>
+                                    <Text as="span" size="mediumSmall" fontWeight="350">{l && l.nome}</Text>
                                  ))
                                 }
                                 <hr className="uc_details_hr"/>

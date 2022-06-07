@@ -5,6 +5,7 @@ import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui";
 import Selector from "../VisualComponents/Selector";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
+import SelectDocente from "../Actions/SelectDocente";
 
 
 const CreateDPUC = () => {
@@ -27,6 +28,7 @@ const CreateDPUC = () => {
     const [ucECTS, setECTS] = useState(6);
     const [ectsError, setECTSError]= useState("");
     const [ucRegente, setRegente] = useState(null);
+    const [show, setShow] = useState(false);
 
     
     const handleSubmit = (e) => {
@@ -162,6 +164,13 @@ const CreateDPUC = () => {
                                 Docente Responsável (Regente)
                             </Text>
                         </h3>
+                        <SelectDocente show={show} setShow={setShow} docente={ucRegente} setDocente={setRegente}/>
+                        <Text size="medium" fontWeight="400">
+                            {ucRegente && ucRegente.nome}
+                        </Text>
+                        <Button primary onClick={() => setShow(true)}>
+                            Selecionar Docente Responsável
+                        </Button>
                         { docentes &&
                             <Selector
                                 options={docentes}

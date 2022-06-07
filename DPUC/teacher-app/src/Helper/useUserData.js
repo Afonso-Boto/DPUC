@@ -6,7 +6,7 @@ const useUserData = () => {
     axios.defaults.headers.common["Content-Type"] = "application/json";
     // delete axios.defaults.headers.common["Authorization"];
     // User type
-    const [user, setUser] = useState(localStorage.getItem("dpuc-user"));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("dpuc-user")));
     const [token, setToken] = useState(localStorage.getItem("dpuc-token"));
 
     const [userType, setUserType] = useState("SGA");
@@ -25,7 +25,6 @@ const useUserData = () => {
             return;
         }
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        console.log(axios.defaults.headers.common["Authorization"]);
         setLoading(false);
         setIsLogged(true);
     }, [token]);
@@ -33,8 +32,8 @@ const useUserData = () => {
     useEffect(() => {
         if(!user)
             return;
+        localStorage.setItem("dpuc-user", JSON.stringify(user));
         setUserType(user.type);
-        console.log(user);
     }, [user])
 
     return {

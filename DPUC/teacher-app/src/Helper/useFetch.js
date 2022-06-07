@@ -15,7 +15,6 @@ const useFetch = (url, retry) => {
             })
             .catch((error) => {
                 setError(error);
-                console.log(error);
             })
             .finally(() => {
                 setLoading(false);

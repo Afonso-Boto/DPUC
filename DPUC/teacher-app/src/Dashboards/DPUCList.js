@@ -70,7 +70,6 @@ const DPUCList = ({canCreate}) => {
 
     useEffect(() => {
         setDPUCList(dpucs);
-        console.log(dpucs);
     }, [dpucs]);
 
     return ( 

@@ -89,6 +89,10 @@ const Home = () => {
                         </Col>
                     </Row>
                     {
+                        errorForm &&
+                        <Text as="i" size="small" color="red">Preencha todos os campos.</Text>
+                    }
+                    {
                         error &&
                         (
                             ( error === 401 && <Text as="i" size="small" color="red"> Credenciais incorretas. </Text>)

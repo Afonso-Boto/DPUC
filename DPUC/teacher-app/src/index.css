@@ -23,6 +23,12 @@ hr{
   background-color: #0EB4BD;
 }
 
+.footer-hr{
+  height: 2px;
+  color: #10B4BC;
+  background-color: #10B4BC;
+}
+
 .viewUC-row{
   padding-top: 20px;
 }
