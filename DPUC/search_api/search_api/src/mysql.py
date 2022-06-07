@@ -8,20 +8,20 @@ from .env import DB_HOST, DB_NAME, DB_USER, DB_PASSWORD
 
 class MysqlConnector:
 
-    host = DB_HOST
-    database = DB_NAME
-    user = DB_USER
-    password = DB_PASSWORD
+    __host = DB_HOST
+    __database = DB_NAME
+    __user = DB_USER
+    __password = DB_PASSWORD
 
-    logger = get_logger(f"db-connector({host}, {database}, {user})")
+    __logger = get_logger(f"db-connector({__host}, {__database}, {__user})")
 
     @classmethod
-    def execute(cls, query) -> Any:
+    def __execute(cls, query) -> Any:
         connector = mysql.connector.connect(
-            host=cls.host,
-            database=cls.database,
-            user=cls.user,
-            password=cls.password,
+            host=cls.__host,
+            database=cls.__database,
+            user=cls.__user,
+            password=cls.__password,
         )
         cursor = connector.cursor()
         cursor.execute(query)
@@ -32,15 +32,15 @@ class MysqlConnector:
 
     @classmethod
     def get_dpucs(cls, timestamp: float = None) -> List[Dict]:
-        cls.logger.info(f"get_dpucs(ts={timestamp})")
+        cls.__logger.info(f"get_dpucs(ts={timestamp})")
 
         if timestamp is None:
             query = query_very_basic()
         else:
-            #TODO
+            # TODO
             query = query_very_basic()
 
-        response = cls.execute(query)
+        response = cls.__execute(query)
 
         fields = get_fields()
         docs = list()
