@@ -10,46 +10,46 @@ from .env import ES_URL, INDEX_NAME, DAY_MILLISECONDS as TTL
 
 class ElasticSearchConnector:
 
-    url = ES_URL
-    index = INDEX_NAME
-    ttl = TTL
+    __url = ES_URL
+    __index = INDEX_NAME
+    __ttl = TTL
 
-    last_updated = None
-    initialized = False
+    __last_updated = None
+    __initialized = False
 
-    logger = get_logger(f"es-connector({url}, {index})")
+    __logger = get_logger(f"es-connector({__url}, {__index})")
 
     @classmethod
     def __execute(cls, callback: Callable, *arg) -> Any:
-        connector = Elasticsearch(cls.url)
+        connector = Elasticsearch(cls.__url)
         response = callback(connector, *arg)
         connector.close()
         return response
 
     @classmethod
     def __initialize(cls, connector: Elasticsearch):
-        if cls.initialized:
+        if cls.__initialized:
             return
-        if connector.indices.exists(index=cls.index):
-            connector.indices.delete(index=cls.index)
-        connector.indices.create(index=cls.index)
+        if connector.indices.exists(index=cls.__index):
+            connector.indices.delete(index=cls.__index)
+        connector.indices.create(index=cls.__index)
         docs = MysqlConnector.get_dpucs()
         cls.__update(connector, docs)
-        cls.initialized = True
+        cls.__initialized = True
 
     @classmethod
     def __update(cls, connector: Elasticsearch, docs: List[Dict]):
-        cls.last_updated = now()
+        cls.__last_updated = now()
         for doc in docs:
             identifier = doc.pop("id")
-            if connector.exists(index=cls.index, id=identifier):
-                connector.update(index=cls.index, id=identifier, doc=doc)
+            if connector.exists(index=cls.__index, id=identifier):
+                connector.update(index=cls.__index, id=identifier, doc=doc)
             else:
-                connector.create(index=cls.index, id=identifier, document=doc)
+                connector.create(index=cls.__index, id=identifier, document=doc)
 
     @classmethod
     def __search(cls, connector: Elasticsearch, query: Dict):
-        return connector.search(index=cls.index, query=query)
+        return connector.search(index=cls.__index, query=query)
 
     @classmethod
     def initialize(cls):
@@ -58,14 +58,14 @@ class ElasticSearchConnector:
     @classmethod
     def update(cls):
         cls.initialize()
-        docs = MysqlConnector.get_dpucs(timestamp=cls.last_updated)
+        docs = MysqlConnector.get_dpucs(timestamp=cls.__last_updated)
         cls.__execute(cls.__update, docs)
 
     @classmethod
     def search(cls, keywords=None) -> List[int]:
         cls.initialize()
-        if now() > cls.last_updated + cls.ttl:
-            cls.logger.info("data is Outdated")
+        if now() > cls.__last_updated + cls.__ttl:
+            cls.__logger.info("data is Outdated")
             cls.update()
 
         query = None
