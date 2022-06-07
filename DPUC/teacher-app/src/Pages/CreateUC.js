@@ -165,22 +165,26 @@ const CreateDPUC = () => {
                             </Text>
                         </h3>
                         <SelectDocente show={show} setShow={setShow} docente={ucRegente} setDocente={setRegente}/>
-                        <Text size="medium" fontWeight="400">
-                            {ucRegente && ucRegente.nome}
-                        </Text>
-                        <Button primary onClick={() => setShow(true)}>
-                            Selecionar Docente Responsável
-                        </Button>
-                        { docentes &&
-                            <Selector
-                                options={docentes}
-                                value={ucRegente}
-                                getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                                getOptionValue ={(option)=>option.id}
-                                onChange={(e) => setRegente(e)}
-                                placeholder="Selecione o docente responsável pela UC..."
-                            />
-                        }
+                        <Row>
+                            {
+                                ucRegente &&
+                                <Col>
+                                    <Text size="medium">
+                                        {ucRegente.nmec}
+                                        {" - "}
+                                        {ucRegente.nome}
+                                        {" - "}
+                                        {ucRegente.email}
+                                    </Text>
+                                </Col>
+                            }
+                            <Col>
+                                <Button primary onClick={() => setShow(true)}>
+                                    Selecionar Docente Responsável
+                                </Button>
+                            </Col>
+                        </Row>
+                        
                     </Col>
                 </Row>
                 {/* ECTS*/}

@@ -35,11 +35,17 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
         setPage(currentPage + 1);
     }
 
-    const addDocente = () => {
-
+    const addDocente = (doce) => {
+        setDocente(Array.from(doce, (v => v)));
     }
-    const selectDocente = () => {
-
+    const remDocentes = (doce) => {
+        setDocente(Array.from(doce, (v => v)));
+    }
+    const selectDocente = (doce) => {
+        setDocente(doce);
+    }
+    const remDocente = (doce) => {
+        setDocente(null);
     }
 
     // When Docente List page changes
@@ -58,7 +64,6 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
 
     // When a filter changes
     useEffect( () => {
-        console.log(searchInput);
         setFilteredDocentes(
             docentes
             .filter(o => 
@@ -69,7 +74,6 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                 (o.nmec.toString().includes(searchInput))
             )
         )
-
     },[searchInput, searchUO]);
 
     // On Docentes load
@@ -172,9 +176,9 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                                             <Row style={{minHeight:"60px"}}>
                                                 <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
                                                     {
-                                                        (multiple && <Button primary onClick={addDocente}>Adicionar</Button>)
+                                                        (multiple && <Button primary onClick={() => addDocente(docente)}>Adicionar</Button>)
                                                         ||
-                                                        <Button primary onClick={selectDocente}>Selecionar</Button>
+                                                        <Button primary onClick={() => selectDocente(docente)}>Selecionar</Button>
                                                     }
                                                 </Col>
                                             </Row>
@@ -225,11 +229,80 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false}) => 
                             }
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                        
-                        </Col>
-                    </Row>
+                    <Table striped hover size="sm">
+                        <thead style={{borderBottom:"2px solid #0EB4BD"}}>
+                            <tr>
+                            <th>
+                                <Row style={{color:"#0EB4BD"}}>
+                                    <Col md="2" style={{textAlign:"center"}}>
+                                        NMec
+                                    </Col>
+                                    <Col md="6">
+                                        Nome
+                                    </Col>
+                                    <Col md="3">
+                                        Email
+                                    </Col>
+                                    <Col md="3">
+                                    </Col>
+                                </Row>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {docente && 
+                                (multiple && docente.map((d) => (
+                                    <tr key={d.id}>
+                                        <td>
+                                        <Row style={{minHeight:"60px"}}>
+                                            <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
+                                                {d.nmec}
+                                            </Col>
+                                            <Col className="align-self-center" md="6">
+                                                {d.nome}
+                                            </Col>
+                                            <Col className="align-self-center" md="3">
+                                                {d.email}
+                                            </Col>
+                                            
+                                        </Row>
+                                        </td>
+                                        <td>
+                                        <Row style={{minHeight:"60px"}}>
+                                            <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
+                                                <Button primary onClick={() => remDocentes(d)}>Remover</Button>
+                                            </Col>
+                                        </Row>
+                                        </td>
+                                    </tr>
+                                ))
+                                ||
+                                    <tr key={docente.id}>
+                                        <td>
+                                        <Row style={{minHeight:"60px"}}>
+                                            <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
+                                                {docente.nmec}
+                                            </Col>
+                                            <Col className="align-self-center" md="6">
+                                                {docente.nome}
+                                            </Col>
+                                            <Col className="align-self-center" md="3">
+                                                {docente.email}
+                                            </Col>
+                                        </Row>
+                                        </td>
+                                        <td>
+                                        <Row style={{minHeight:"60px"}}>
+                                            <Col className="align-self-center" md="auto" style={{textAlign:"right"}}>
+                                                <Button primary onClick={() => remDocente()}>Remover</Button>
+                                            </Col>
+                                        </Row>
+                                        </td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </Table>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button primary style={{fontSize:"100%"}} onClick={handleClose}>
