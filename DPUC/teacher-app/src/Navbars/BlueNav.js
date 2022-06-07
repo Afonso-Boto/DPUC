@@ -1,14 +1,27 @@
 import { Navbar, Container, Nav, NavDropdown, Row, Col } from "react-bootstrap";
-import { Text } from "@paco_ua/pacoui";
+import { Text, Button } from "@paco_ua/pacoui";
 import { useContext } from "react";
 import { UserContext } from "../Helper/Context";
+import axios from "axios";
 
 const BlueNav = () => {
 
-    const { userType, setUserType } = useContext(UserContext);
+    const { isLogged, setToken } = useContext(UserContext);
 
-    const changeUser = (user) => {
-        setUserType(user);
+    const URL = "http://localhost:82/logout";
+
+    const logout = () => {
+        axios
+            .post(URL)
+            .then(() => {
+                
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally( () => {
+                setToken(null);
+            });
     }
 
     return ( 
@@ -31,16 +44,14 @@ const BlueNav = () => {
                             paco
                         </Text>
                     </Col>
-                    <Col>
-                        <NavDropdown title="Alterar Utilizador" id="basic-nav-dropdown" style={{color:"white"}}>
-                            <NavDropdown.Item onClick={() => changeUser("DUO")}>DUO</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => changeUser("DR")}>DR</NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => changeUser("SGA")}>SGA</NavDropdown.Item>
-                        </NavDropdown>
-                    </Col>
                 </Row>
-                
-                
+            </Nav>
+            <Nav>
+                { isLogged &&
+                    <Button danger onClick={logout}>
+                        Terminar Sessão
+                    </Button>
+                }
             </Nav>
             </Container>
         </Navbar>

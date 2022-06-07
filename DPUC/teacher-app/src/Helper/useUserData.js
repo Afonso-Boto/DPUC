@@ -3,10 +3,6 @@ import axios from "axios";
 
 const useUserData = () => {
 
-
-    // API URLs
-    const URL_ME   = "http://localhost:8080/users/me";
-
     axios.defaults.headers.common["Content-Type"] = "application/json";
     // delete axios.defaults.headers.common["Authorization"];
     // User type
