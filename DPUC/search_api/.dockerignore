@@ -1,0 +1,17 @@
+# ignore .git and .cache folders
+.git
+.cache
+
+# ignore .gitignore files
+**/.gitignore
+
+# ignore python virtual environments
+**/venv/**/*
+venv/
+
+# ignore all markdown files (md) beside all README*.md other than README-secret.md
+*.md
+!README*.md
+README-secret.md
+
+
