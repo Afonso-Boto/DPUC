@@ -111,7 +111,7 @@ const ViewDPUC = () => {
                     </Col>
                     <Col  style={{paddingTop:"10px"}}>
                         {dpuc &&
-                            <DPUCVersions uc={dpuc.codigo}/>
+                            <DPUCVersions uc={dpuc.codigo} id={dpuc.id}/>
                         }
                     </Col>
                     <Col md={4} style={{paddingTop:"10px"}}>
