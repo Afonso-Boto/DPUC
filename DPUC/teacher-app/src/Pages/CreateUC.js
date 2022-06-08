@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui"; 
 import Selector from "../VisualComponents/Selector";
 import axios from "axios";
-import { EntitiesContext } from "../Helper/Context";
+import { EntitiesContext, UserContext } from "../Helper/Context";
 import SelectDocente from "../Actions/SelectDocente";
 
 
@@ -15,11 +15,19 @@ const CreateDPUC = () => {
 
 
     const navigate = useNavigate();
+
+    const { userType } = useContext(UserContext);
+
+    useEffect( () => {
+        if(userType && userType !== "DUO")
+            navigate("/");
+    }, userType)
+
     const [error, setError] = useState(false);
     const [errorPOST, setErrorPOST] = useState(false);
     const [loadingPOST, setLoadingPOST] = useState(false);
 
-
+    
     const { retryFetch, setRetry, uos, docentes, areas } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
