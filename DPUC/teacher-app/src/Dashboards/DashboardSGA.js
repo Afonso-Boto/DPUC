@@ -24,7 +24,6 @@ const DashboardSGA  = () => {
                     </Text>
                 </Col>
             </Row>
-            <br/>
             <DPUCList canCreate={false}/>
         </Container>
      );

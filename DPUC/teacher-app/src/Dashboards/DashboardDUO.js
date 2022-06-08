@@ -24,8 +24,6 @@ const DashboardDUO  = () => {
                     </Text>
                 </Col>
             </Row>
-            <br/>
-            
             <DPUCList canCreate={true}/>
         </Container>
      );

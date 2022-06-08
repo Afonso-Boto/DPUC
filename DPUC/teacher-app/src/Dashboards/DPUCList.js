@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
-import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton } from "@paco_ua/pacoui"
+import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton, SearchBox } from "@paco_ua/pacoui"
 import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
 import useFetch from '../Helper/useFetch';
@@ -56,6 +56,8 @@ const DPUCList = ({canCreate}) => {
                 
     const [dpucList, setDPUCList] = useState([]);
 
+    const [searchInput, setSearchInput] = useState("");
+
     const goToCreate = () => {
         navigate("/create");
     }
@@ -80,18 +82,35 @@ const DPUCList = ({canCreate}) => {
             <div style={{ position:"fixed", bottom:"10px", right:"10px"}}>
                 <ScrollDownButton onClick={() => window.scrollTo(0, document.body.scrollHeight)}/>
             </div>
-            <Row style={{paddingBottom:"10px"}}>
-                <Col style={{textAlign:"left"}}>
-                    <br/>
-                    { canCreate && 
-                        <Button primary onClick={goToCreate} style={{fontSize:"100%", height:"64%"}}>
-                            Criar nova UC
-                        </Button>
-                    }
-                </Col>
-                <Col md="4">
+
+            { loading && <LoadingBackgroundWrapper loading length={4} /> }
+            { error && <Text as="i" size="large" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
+            { !error && !loading &&
+                <>
                     <Row>
-                        <Col>
+                        <Col style={{textAlign:"left", paddingBottom:"10px"}}>
+                            <br/>
+                            { canCreate && 
+                                <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
+                                    Criar nova UC
+                                </Button>
+                            }
+                        </Col>
+                    </Row>
+                    <Row style={{paddingBottom:"10px"}}>
+                        <Col md="8">
+                            <Text>
+                                Pesquisa de DPUC:
+                            </Text>
+                            <SearchBox
+                                borderColor="#000"
+                                value={searchInput}
+                                iconColor=""
+                                onSearch={(e) => setSearchInput(e)}
+                                placeholder="Parâmetros de pesquisa de DPUC"
+                            />
+                        </Col>
+                        <Col  md="4">
                             <Text>
                                 Filtrar DPUCs por estado:
                             </Text>
@@ -105,10 +124,8 @@ const DPUCList = ({canCreate}) => {
                             />
                         </Col>
                     </Row>
-                </Col>
-            </Row>
-            { loading && <LoadingBackgroundWrapper loading length={4} /> }
-            { error && <Text as="i" size="large" color="red"> Não foi possível obter os seus Dossier Pedagógicos.</Text> }
+                </>
+            }
             { dpucList &&
                 dpucList.map((uc) => (
                     <CardDPUC key={uc.id} dpuc={uc}/>

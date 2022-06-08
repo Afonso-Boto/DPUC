@@ -24,7 +24,6 @@ const DashboardDR  = () => {
                     </Text>
                 </Col>
             </Row>
-            <br/>
             <DPUCList canCreate={false}/>
         </Container>
      );
