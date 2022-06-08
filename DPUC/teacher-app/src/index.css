@@ -90,3 +90,19 @@ textarea div{
   border-color: #000000;
   box-shadow: 0 0 10px #000000;
 }
+
+.no-decor-link{
+  text-decoration: "none"
+}
+.no-decor-link:link{
+  text-decoration: "none"
+}
+.no-decor-link:hover{
+  text-decoration: "none"
+}
+.no-decor-link:visited{
+  text-decoration: "none"
+}
+.no-decor-link:active{
+  text-decoration: "none"
+}
