@@ -17,43 +17,45 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 
-    const filterOptions = [
-        {
-            key: 'Todos',
-            text: 'Mostrar Todos',
-            value: [0]
-        },
-        {
-            key: 'Em Criação',
-            text: '1 - Em Criação',
-            value: [1, 7]
-        },
-        {
-            key: 'Em Edição',
-            text: '2 - Em Edição',
-            value: [2, 8]
-        },
-        {
-            key: 'Fechados',
-            text: '3 - Fechados',
-            value: [3]
-        },
-        {
-            key: 'Em Aprovação',
-            text: '4 - Em Aprovação',
-            value: [4, 9]
-        },
-        {
-            key: 'Aprovados',
-            text: '5 - Aprovados',
-            value: [5, 10]
-        },
-        {
-            key: 'Desativados',
-            text: '6 - Desativados',
-            value: [6]
-        },
-    ]
+    const [filterOptions, setFilterOptions] = useState(
+        [
+            {
+                key: 'Todos',
+                text: 'Mostrar Todos',
+                value: [0]
+            },
+            {
+                key: 'Em Criação',
+                text: '1 - Em Criação',
+                value: [1, 7]
+            },
+            {
+                key: 'Em Edição',
+                text: '2 - Em Edição',
+                value: [2, 8]
+            },
+            {
+                key: 'Fechados',
+                text: '3 - Fechados',
+                value: [3]
+            },
+            {
+                key: 'Em Aprovação',
+                text: '4 - Em Aprovação',
+                value: [4, 9]
+            },
+            {
+                key: 'Aprovados',
+                text: '5 - Aprovados',
+                value: [5, 10]
+            },
+            {
+                key: 'Desativados',
+                text: '6 - Desativados',
+                value: [6]
+            },
+        ]
+    )
 
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
                 
@@ -73,7 +75,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         setLaunchError(false);
         axios
             .put(URL_LAUNCH)
-            .then((response) => {
+            .then(() => {
                 window.location.reload(false);
             })
             .catch((error) => {
@@ -93,6 +95,21 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }
 
     useEffect(() => {
+        if(!dpucs)
+            return;
+        const filterCount = new Array(filterOptions.length).fill(0);
+        dpucs.map((d) => {
+            const filter = filterOptions.find((f) => f.value.includes(d.estadoid));
+            filterCount[filterOptions.indexOf(filter)] ++;
+        });
+        const newFilterOptions = [];
+        for(let i = 0; i < filterCount.length; i++){
+            const newFilter = filterOptions[i];
+            newFilter.text = newFilter.text.split("(")[0] += " (" + filterCount[i] + ")";
+            newFilterOptions.push(newFilter);
+            console.log(newFilter);
+        }
+        setFilterOptions(newFilterOptions);
         setDPUCList(dpucs);
     }, [dpucs]);
 
@@ -149,14 +166,18 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                             <Text>
                                 Filtrar DPUCs por estado:
                             </Text>
-                            <Selector
-                                options={filterOptions}
-                                getOptionLabel={(option)=>option.text}
-                                defaultValue={filterOptions[0]}
-                                value={filterOption}
-                                onChange={(e) => filterDPUCList(e)}
-                                isClearable={false}
-                            />
+                            {
+                                dpucList &&
+                                <Selector
+                                    options={filterOptions}
+                                    getOptionLabel={(option)=>option.text}
+                                    defaultValue={filterOptions[0]}
+                                    value={filterOption}
+                                    onChange={(e) => filterDPUCList(e)}
+                                    isClearable={false}
+                                />
+                            }
+
                         </Col>
                     </Row>
                 </>
