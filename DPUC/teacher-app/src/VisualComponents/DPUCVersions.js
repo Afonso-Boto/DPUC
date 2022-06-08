@@ -33,7 +33,7 @@ const DPUCVersions = ({uc, id}) => {
             options={versionList}
             isClearable={false}
             onChange={(e) => navigate("/dpuc/" + e.id)}
-            getOptionLabel ={(option)=>"Versão " + option.versao + " [" + option.data_alteracao + "]"}
+            getOptionLabel ={(option)=>"Versão " + option.versao + " [" + (option.data_alteracao ? option.data_alteracao : " ") + "]"}
             getOptionValue ={(option)=>option.id}
         />
      );

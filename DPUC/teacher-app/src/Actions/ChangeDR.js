@@ -3,7 +3,7 @@ import { Modal, Col, Row } from "react-bootstrap";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
-import SelectDocente from "./SelectDocente";
+import SelectDocente from "../VisualComponents/SelectDocente";
 
 const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
     const BASE_URL = "http://localhost:82/edition/setRegente?id=" + id + "&regenteid=";

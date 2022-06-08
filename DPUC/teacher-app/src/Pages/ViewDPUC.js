@@ -138,8 +138,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Objetivos
                                 </Text>
-                                {dpuc.objetivos.split("\n").map((objetivo) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.objetivos.split("\n").map((objetivo, index) =>(
+                                    <Text key={"obj_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { objetivo }
                                     </Text>
                                 ))}
@@ -150,8 +150,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Conteúdos
                                 </Text>
-                                {dpuc.conteudos.split("\n").map((conteudo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.conteudos.split("\n").map((conteudo, index) =>(
+                                    <Text key={"con_"+index} as="article" size="medium" fontWeight="300">
                                         <li>{ conteudo }</li>
                                     </Text>
                                 ))}
@@ -162,8 +162,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Coerência de Conteúdos
                                 </Text>
-                                {dpuc.coerenciaConteudos.split("\n").map((conteudo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.coerenciaConteudos.split("\n").map((conteudo, index) =>(
+                                    <Text key={"ccon_"+index}  as="article" size="medium" fontWeight="300">
                                         <li>{ conteudo }</li>
                                     </Text>
                                 ))}
@@ -174,8 +174,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Requisitos
                                 </Text>
-                                {dpuc.requisitos.split("\n").map((requisito) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.requisitos.split("\n").map((requisito, index) =>(
+                                    <Text key={"req_"+index}  as="article" size="medium" fontWeight="300">
                                         <li>{ requisito }</li>
                                     </Text>
                                 ))}
@@ -186,8 +186,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Metodologias de Ensino
                                 </Text>
-                                {dpuc.metodologias.split("\n").map((metodo) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.metodologias.split("\n").map((metodo, index) =>(
+                                    <Text key={"met_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { metodo }
                                     </Text>
                                 ))}
@@ -196,10 +196,10 @@ const ViewDPUC = () => {
                         { dpuc.coerenciaMetodologias && detailedView &&
                             <Row className="viewUC-row">
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
-                                    Coerência de Conteúdos
+                                    Coerência de Metodologias
                                 </Text>
-                                {dpuc.coerenciaMetodologias.split("\n").map((metodo) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.coerenciaMetodologias.split("\n").map((metodo, index) =>(
+                                    <Text key={"cmet_"+index} as="article" size="medium" fontWeight="300">
                                         <li>{ metodo }</li>
                                     </Text>
                                 ))}
@@ -210,8 +210,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Funcionamento da Componente Prática
                                 </Text>
-                                {dpuc.funcionamento.split("\n").map((func) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.funcionamento.split("\n").map((func, index) =>(
+                                    <Text  key={"fun_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { func }
                                     </Text>
                                 ))}
@@ -222,8 +222,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Aprendizagem Ativa
                                 </Text>
-                                {dpuc.aprendizagem.split("\n").map((apre) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.aprendizagem.split("\n").map((apre, index) =>(
+                                    <Text key={"apr_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { apre }
                                     </Text>
                                 ))}
@@ -234,8 +234,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Avaliação
                                 </Text>
-                                {dpuc.avaliacao.toString().split("\n").map((aval) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.avaliacao.toString().split("\n").map((aval, index) =>(
+                                    <Text key={"ava_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { aval }
                                     </Text>
                                 ))}
@@ -246,8 +246,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Regime de Faltas
                                 </Text>
-                                {dpuc.regimeFaltas.split("\n").map((faltas) =>(
-                                    <Text as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
+                                {dpuc.regimeFaltas.split("\n").map((faltas, index) =>(
+                                    <Text key={"reg_"+index} as="article" size="medium" fontWeight="300" style={{paddingBottom:"2pt"}}>
                                         { faltas }
                                     </Text>
                                 ))}
@@ -258,8 +258,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Ficheiros
                                 </Text>
-                                {dpuc.ficheiros.split("\n").map((ficheiro) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.ficheiros.split("\n").map((ficheiro, index) =>(
+                                    <Text key={"fic_"+index} as="article" size="medium" fontWeight="300">
                                         <li><a href={ficheiro}>{ ficheiro }</a></li>
                                     </Text>
                                 ))}
@@ -270,8 +270,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Bibliografia
                                 </Text>
-                                {dpuc.bibliografia.split("\n").map((livro) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.bibliografia.split("\n").map((livro, index) =>(
+                                    <Text key={"liv_"+index} as="article" size="medium" fontWeight="300">
                                         <li>{ livro }</li>
                                     </Text>
                                 ))}
@@ -282,8 +282,8 @@ const ViewDPUC = () => {
                                 <Text as="h3" size="xlarge" color="primary" fontWeight="400">
                                     Observações
                                 </Text>
-                                {dpuc.observacoes.split("\n").map((obs) =>(
-                                    <Text as="article" size="medium" fontWeight="300">
+                                {dpuc.observacoes.split("\n").map((obs, index) =>(
+                                    <Text key={"obs_"+index} as="article" size="medium" fontWeight="300">
                                         <li>{ obs }</li>
                                     </Text>
                                 ))}
@@ -325,8 +325,8 @@ const ViewDPUC = () => {
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500">Idioma(s) de lecionação </Text>
                                 {dpuc.linguas.length > 0 &&
-                                 dpuc.linguas.map((l) => (
-                                    <Text as="span" size="mediumSmall" fontWeight="350">{l && l.nome}</Text>
+                                 dpuc.linguas.map((l, index) => (
+                                    <Text key={"lin_"+index} as="span" size="mediumSmall" fontWeight="350">{l && l.nome}</Text>
                                  ))
                                 }
                                 <hr className="uc_details_hr"/>
@@ -359,8 +359,8 @@ const ViewDPUC = () => {
                             <Row style={{paddingBottom:"10px"}}>
                                 <Text as="span" size="mediumSmall" fontWeight="500">Cursos </Text>
                                 {dpuc.cursos.length > 0 &&
-                                 dpuc.cursos.map((curso) => (
-                                    <li><Text size="mediumSmall" fontWeight="350">{curso.nome}</Text></li>
+                                 dpuc.cursos.map((curso, index) => (
+                                    <li key={"cur_"+index}><Text size="mediumSmall" fontWeight="350">{curso.nome}</Text></li>
                                  ))   
                                 }
                             </Row>
@@ -381,8 +381,8 @@ const ViewDPUC = () => {
                                 <Row style={{paddingBottom:"10px"}}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Docentes </Text>
                                     {
-                                        dpuc.docentes.map((docente) => (
-                                            <Text as="span" size="mediumSmall" fontWeight="350">{docente.nome_completo}</Text>
+                                        dpuc.docentes.map((docente, index) => (
+                                            <Text key={"doc_"+index} as="span" size="mediumSmall" fontWeight="350">{docente.nome_completo}</Text>
                                         ))   
                                     }
                                 </Row>

@@ -11,7 +11,7 @@ import { Button, LoadingBackgroundWrapper, FormInput, Text, ScrollDownButton, Ac
 import Input from "../VisualComponents/Input";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloseDPUC from "../Actions/CloseDPUC";
-import SelectDocente from "../Actions/SelectDocente";
+import SelectDocente from "../VisualComponents/SelectDocente";
 
 const EditDPUC = () => {
 

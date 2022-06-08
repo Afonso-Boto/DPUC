@@ -3,7 +3,7 @@ import { Modal, Col, Row, Table, ButtonGroup } from "react-bootstrap";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
-import Selector from "../VisualComponents/Selector";
+import Selector from "./Selector";
 
 const SelectDocente = ({docente, setDocente, show, setShow, multiple=false, canRemove=true}) => {
 
@@ -161,8 +161,7 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false, canR
                         <tbody>
                             {docentesPage && 
                                 docentesPage.map((d) => (
-                                    <>
-                                        <tr key={d.id}>
+                                        <tr key={d.id + "docente"}>
                                             <td>
                                             <Row style={{minHeight:"60px"}}>
                                                 <Col className="align-self-center" md="2" style={{textAlign:"center"}}>
@@ -195,7 +194,6 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false, canR
                                             </Row>
                                             </td>
                                         </tr>
-                                    </>
                                 ))
                             }
                         </tbody>

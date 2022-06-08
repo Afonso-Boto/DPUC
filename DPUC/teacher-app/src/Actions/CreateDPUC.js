@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { EntitiesContext } from "../Helper/Context";
 import { useNavigate } from "react-router-dom";
-import SelectDocente from "./SelectDocente";
+import SelectDocente from "../VisualComponents/SelectDocente";
 
 const CreateDPUC = ({ id, show, setShow, responsavel }) => {
     const BASE_URL = "http://localhost:82/edition/definicaoRegente?id=" + id + "&regenteid=";
