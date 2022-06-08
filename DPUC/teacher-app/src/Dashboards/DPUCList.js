@@ -107,7 +107,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             const newFilter = filterOptions[i];
             newFilter.text = newFilter.text.split("(")[0] += " (" + filterCount[i] + ")";
             newFilterOptions.push(newFilter);
-            console.log(newFilter);
         }
         setFilterOptions(newFilterOptions);
         setDPUCList(dpucs);

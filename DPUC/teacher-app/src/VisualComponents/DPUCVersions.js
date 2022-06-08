@@ -25,7 +25,6 @@ const DPUCVersions = ({uc, id}) => {
         }
     }, [versions]);
     
-    console.log(versionList);
     return ( 
         <Selector
             placeholder="Outras versões"

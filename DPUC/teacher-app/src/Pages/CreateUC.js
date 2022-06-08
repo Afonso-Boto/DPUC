@@ -10,9 +10,7 @@ import SelectDocente from "../Actions/SelectDocente";
 
 const CreateDPUC = () => {
 
-    //const URL_DPUC = "http://localhost:8000/dpuc";
     const URL_DPUC = "http://localhost:82/creation/criarUC?regenteid=";
-
 
     const navigate = useNavigate();
 
