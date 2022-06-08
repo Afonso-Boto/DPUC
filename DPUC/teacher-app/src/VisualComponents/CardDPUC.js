@@ -4,11 +4,11 @@ import { Link as RouterLink} from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { EntitiesContext, UserContext } from "../Helper/Context";
 import CreateDPUC from "../Actions/CreateDPUC";
+import ChangeDR from "../Actions/ChangeDR";
 
 const GetData = ({dpuc}) => {
     const { estados } = useContext(EntitiesContext);
     const [ estado, setEstado ] = useState(0);        
-
     useEffect(() => {
         if(!estados)
             return;
@@ -56,6 +56,8 @@ const CardDPUC = ({dpuc}) => {
     const { userType } = useContext(UserContext);
 
     const [ showCreate, setShowCreate ] = useState(false);
+    const [ showChangeDR, setShowChangeDR ] = useState(false);
+
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
@@ -100,16 +102,23 @@ const CardDPUC = ({dpuc}) => {
                             <Row>
                                 <Col md="auto" style={{paddingTop:"10px"}}>
                                 {
-                                    ((dpuc.estadoid === 1 || dpuc.estadoid === 2 || dpuc.estadoid === 7 || dpuc.estadoid === 8) &&
+                                    ((dpuc.estadoid === 2 || dpuc.estadoid === 8) &&
                                         <RouterLink to={"/edit/" + dpuc.id} style={{textDecoration:"none"}}>
                                             <Button content="Action Button" primary style={{fontSize:"100%"}}> Editar DPUC </Button>
                                         </RouterLink>
                                     )
                                     ||
-                                    ((dpuc.estadoid === 5 || dpuc.estadoid === 10) && userType === "DUO" &&
+                                    ((dpuc.estadoid === 7) && userType === "DUO" &&
                                     <>
                                         <Button content="Action Button" primary onClick={()=>setShowCreate(true)}> Lançar novo DPUC </Button>
                                         <CreateDPUC id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowCreate}/>
+                                    </>
+                                    )
+                                    ||
+                                    ((dpuc.estadoid !== 6 ) && userType === "DUO" &&
+                                    <>
+                                        <Button content="Action Button" primary onClick={()=>setShowChangeDR(true)}> Alterar Regente </Button>
+                                        <ChangeDR id={dpuc.id} responsavel={dpuc.responsavel} show={showCreate} setShow={setShowChangeDR}/>
                                     </>
                                     )
                                 }

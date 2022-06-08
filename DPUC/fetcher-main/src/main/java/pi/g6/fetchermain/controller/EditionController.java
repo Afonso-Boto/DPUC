@@ -34,7 +34,7 @@ public class EditionController {
         return editionService.getAllDpucs(id);
     }
 
-    @PutMapping("/inicarEdicao")
+    @PutMapping("/iniciarEdicao")
     public HttpStatus iniciarEdicao() {
         return editionService.iniciarEdicao();
     }

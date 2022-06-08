@@ -6,12 +6,14 @@ import { EntitiesContext } from "../Helper/Context";
 import useFetch from "../Helper/useFetch";
 import useGetDPUC from "../Helper/useGetDPUC";
 import ActionList from "../Actions/ActionList";
+import DPUCVersions from "../VisualComponents/DPUCVersions";
 
 const ViewDPUC = () => {
 
     const { id } = useParams();
 
     const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
+
 
     const navigate = useNavigate();
 
@@ -28,6 +30,8 @@ const ViewDPUC = () => {
     const [ detailedView, setDetailedView ] = useState(false);
     const [ estado, setEstado ] = useState(false);
     const [ responsavel, setResponsavel ] = useState(false);
+
+
 
     const changeView = () => {
         setDetailedView(!detailedView);
@@ -47,6 +51,7 @@ const ViewDPUC = () => {
             return;
         dpucSet.setResponsavel(responsavel);
     }, [dpucSet, responsavel]);
+
 
     return ( 
         <Container>
@@ -92,7 +97,7 @@ const ViewDPUC = () => {
                             Voltar
                         </Button>
                     </Col>
-                    <Col md={4} style={{paddingTop:"10px"}}>
+                    <Col md={3} style={{paddingTop:"10px"}}>
                         {detailedView && 
                         <Button primary style={{fontSize:"100%"}} onClick={changeView}>
                             Vista Normal
@@ -104,7 +109,12 @@ const ViewDPUC = () => {
                         </Button>
                         }
                     </Col>
-                    <Col style={{paddingTop:"10px"}}>
+                    <Col  style={{paddingTop:"10px"}}>
+                        {dpuc &&
+                            <DPUCVersions uc={dpuc.codigo}/>
+                        }
+                    </Col>
+                    <Col md={4} style={{paddingTop:"10px"}}>
                         <ActionList dpuc={dpuc} setEstado={setEstado} setResponsavel={setResponsavel}/>
                     </Col>
                 </Row>
@@ -285,15 +295,15 @@ const ViewDPUC = () => {
                             <Row style={{paddingTop:"10px"}}>
                                 <Col sm={"auto"}>
                                     <Text size="mediumSmall" fontWeight="500">Código</Text>
-                                    <Text as="p" size="mediumSmall" fontWeight="350"><p>{ dpuc.codigo }</p></Text>
+                                    <Text size="mediumSmall" fontWeight="350"><p>{ dpuc.codigo }</p></Text>
                                 </Col>
                                 <Col sm={"auto"}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">ECTS </Text>
-                                    <Text as="p" size="mediumSmall" fontWeight="350"><p>{dpuc.ects}</p></Text>
+                                    <Text size="mediumSmall" fontWeight="350"><p>{dpuc.ects}</p></Text>
                                 </Col>
                                 <Col sm={"auto"}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Grau </Text>
-                                    <Text as="p" size="mediumSmall" fontWeight="350"><p>{dpuc.grau.nome}</p></Text>
+                                    <Text size="mediumSmall" fontWeight="350"><p>{dpuc.grau.nome}</p></Text>
                                 </Col>
                                 <hr className="uc_details_hr"/>
                             </Row>

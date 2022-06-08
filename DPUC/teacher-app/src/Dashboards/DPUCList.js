@@ -5,12 +5,15 @@ import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton, SearchBox } f
 import Selector from "../VisualComponents/Selector";
 import CardDPUC from "../VisualComponents/CardDPUC";
 import useFetch from '../Helper/useFetch';
+import axios from 'axios';
 
-const DPUCList = ({canCreate}) => {
+const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const navigate = useNavigate();
 
     const URL_DPUC = "http://localhost:82/creation/dpucs";
+    const URL_LAUNCH = "http://localhost:82/edition/iniciarEdicao";
+
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 
@@ -58,8 +61,27 @@ const DPUCList = ({canCreate}) => {
 
     const [searchInput, setSearchInput] = useState("");
 
+    const [launchLoading, setLaunchLoading] = useState(false);
+    const [launchError, setLaunchError] = useState(false);
+
     const goToCreate = () => {
         navigate("/create");
+    }
+
+    const launchEdit = () => {
+        setLaunchLoading(true);
+        setLaunchError(false);
+        axios
+            .put(URL_LAUNCH)
+            .then((response) => {
+                window.location.reload(false);
+            })
+            .catch((error) => {
+                setLaunchError(error);
+            })
+            .finally(() => {
+                setLaunchLoading(false);
+            });
     }
 
     const filterDPUCList = (estado) => {
@@ -94,6 +116,19 @@ const DPUCList = ({canCreate}) => {
                                 <Button primary onClick={goToCreate} style={{fontSize:"100%"}}>
                                     Criar nova UC
                                 </Button>
+                            }
+                            { canLaunchEdit && 
+                                <Button primary onClick={launchEdit} style={{fontSize:"100%"}}>
+                                    {
+                                        (launchLoading && "A iniciar Processo de Edição...")
+                                        ||
+                                        "Iniciar Processo de Edição"
+                                    }
+                                </Button>
+                            }
+                            {
+                                launchError &&
+                                <Text as="i" size="large" color="red"> Não foi possível iniciar o processo de Edição de DPUCs.</Text>
                             }
                         </Col>
                     </Row>
