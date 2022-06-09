@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Home = () => {
 
-    const URL = "http://localhost:82/authenticate";
+    const URL = process.env.REACT_APP_FETCHER + "authenticate";
 
     const { setToken, setUser } = useContext(UserContext);
     

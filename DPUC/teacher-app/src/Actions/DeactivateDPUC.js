@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 const DeactivateDPUC = ({id, setEstado, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/creation/desativarDpuc?id=" + id;
+    const BASE_URL = process.env.REACT_APP_FETCHER + "creation/desativarDpuc?id=" + id;
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);

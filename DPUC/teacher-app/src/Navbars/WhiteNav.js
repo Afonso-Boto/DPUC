@@ -7,7 +7,7 @@ const WhiteNav = () => {
 
     const { user, isLogged, setToken } = useContext(UserContext);
 
-    const URL = "http://localhost:82/logout";
+    const URL = process.env.REACT_APP_FETCHER + "logout";
 
     const logout = () => {
         setToken(null);

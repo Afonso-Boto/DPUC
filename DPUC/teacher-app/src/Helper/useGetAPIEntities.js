@@ -4,11 +4,11 @@ import useFetch from "./useFetch";
 const useGetAPIEntities = () => {
 
     // Fetcher criação
-    const URL_UOS = "http://localhost:82/creation/uos";
-    const URL_CURSOS = "http://localhost:82/creation/cursos";
-    const URL_DOCENTES = "http://localhost:82/creation/docentes";
-    const URL_ESTADOS = "http://localhost:82/creation/estados";
-    const URL_AREAS = "http://localhost:82/creation/acs";
+    const URL_UOS = process.env.REACT_APP_FETCHER + "creation/uos";
+    const URL_CURSOS = process.env.REACT_APP_FETCHER + "creation/cursos";
+    const URL_DOCENTES = process.env.REACT_APP_FETCHER + "creation/docentes";
+    const URL_ESTADOS = process.env.REACT_APP_FETCHER + "creation/estados";
+    const URL_AREAS = process.env.REACT_APP_FETCHER + "creation/acs";
     
     // If this number changes, API requests will be re-done
     const [ retryFetch, setRetry ] = useState(0);

@@ -5,8 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow}) => {
-    const BASE_URL_CREATION = "http://localhost:82/creation/fecharDpuc?id=" + id;
-    const BASE_URL_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + true;
+    const BASE_URL_CREATION = process.env.REACT_APP_FETCHER + "creation/fecharDpuc?id=" + id;
+    const BASE_URL_EDITION = process.env.REACT_APP_FETCHER + "edition/emEdicao?id=" + id + "&finished=" + true;
 
     const navigate = useNavigate();
 

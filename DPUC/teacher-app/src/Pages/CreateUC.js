@@ -10,7 +10,7 @@ import SelectDocente from "../VisualComponents/SelectDocente";
 
 const CreateDPUC = () => {
 
-    const URL_DPUC = "http://localhost:82/creation/criarUC?regenteid=";
+    const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/criarUC?regenteid=";
 
     const navigate = useNavigate();
 

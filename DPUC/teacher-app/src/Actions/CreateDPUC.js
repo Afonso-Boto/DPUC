@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SelectDocente from "../VisualComponents/SelectDocente";
 
 const CreateDPUC = ({ id, show, setShow, responsavel }) => {
-    const BASE_URL = "http://localhost:82/edition/definicaoRegente?id=" + id + "&regenteid=";
+    const BASE_URL = process.env.REACT_APP_FETCHER + "edition/definicaoRegente?id=" + id + "&regenteid=";
 
     const navigate = useNavigate();
 

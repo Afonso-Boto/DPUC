@@ -5,7 +5,7 @@ import axios from "axios";
 import Input from "../VisualComponents/Input";
 
 const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/creation/emAprovacao?id=" + id + "&codigo=";
+    const BASE_URL = process.env.REACT_APP_FETCHER + "creation/emAprovacao?id=" + id + "&codigo=";
 
     const [codigoUC, setCodigo] = useState(10000);
     if(codigo)
