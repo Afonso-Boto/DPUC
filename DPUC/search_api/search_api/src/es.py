@@ -49,7 +49,7 @@ class ElasticSearchConnector:
 
     @classmethod
     def __search(cls, connector: Elasticsearch, query: Dict):
-        return connector.search(index=cls.__index, query=query)
+        return connector.search(index=cls.__index, query=query, size=50)
 
     @classmethod
     def initialize(cls):
