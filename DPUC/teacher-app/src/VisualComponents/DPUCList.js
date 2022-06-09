@@ -11,9 +11,9 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const navigate = useNavigate();
 
-    const URL_DPUC = "http://localhost:82/creation/dpucs";
+    const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = "http://localhost:82/edition/iniciarEdicao";
-    const URL_SEARCH = "http://localhost:83/edition/iniciarEdicao";
+    const URL_SEARCH = "http://localhost:83/search?keywords=";
 
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
@@ -100,10 +100,18 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             setDPUCList(dpucs);
             return;
         }
+        const keywords = searchInput.split(" ").join("+");
         axios
-            .get(URL_SEARCH)
-            .then((response) =>{
-                console.log(response);
+            .get(URL_SEARCH+keywords)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+                //setError(error);
+            })
+            .finally(() => {
+                //setLoading(false);
             });
 
     }, [searchInput]);
