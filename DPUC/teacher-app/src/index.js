@@ -1,29 +1,15 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import AppContext from './AppContext';
 import { Theme, ThemeProvider } from "@paco_ua/pacoui"
-/*
-import {
-  ThemeProvider as ThemeProviderPortal,
-  Theme as ThemePortal,
-  ConfigProvider,
-  InjectIntlContext,
-  useFormatMessage
-} from "@uaveiro/ui";
-*/
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <StrictMode>
     <ThemeProvider theme={Theme}>
-        <App/>
+        <AppContext/>
     </ThemeProvider>
   </StrictMode>
 ,document.getElementById('root'));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

@@ -11,9 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>fetcher-edicao</module>
-        <module>fetcher-criacao</module>
-        <module>fetcher-search</module>
+        <module>fetcher-main</module>
     </modules>
 
     <properties>

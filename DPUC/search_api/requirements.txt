@@ -1,0 +1,6 @@
+Django
+djangorestframework
+mysql-connector-python
+elasticsearch
+unidecode
+ftfy
