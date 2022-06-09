@@ -106,10 +106,10 @@ CREATE TABLE dpuc (
   foreign key (utilizadoresid) references utilizadores(id));
 
 #Insert estados
-insert into estado(id, nome, descricao) values (1, 'C1', 'Em criacão');
-insert into estado(id, nome, descricao) values (2, 'C2', 'Em edicao');
+insert into estado(id, nome, descricao) values (1, 'C1', 'Em criação');
+insert into estado(id, nome, descricao) values (2, 'C2', 'Em edição');
 insert into estado(id, nome, descricao) values (3, 'C3', 'Fechado');
-insert into estado(id, nome, descricao) values (4, 'C4', 'Em aprovacao');
+insert into estado(id, nome, descricao) values (4, 'C4', 'Em aprovação');
 insert into estado(id, nome, descricao) values (5, 'C5', 'Aprovado');
 insert into estado(id, nome, descricao) values (6, 'C6', 'Desativado');
 insert into estado(id, nome, descricao) values (7, 'E1', 'Definição de regente');

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton, SearchBox } from "@paco_ua/pacoui"
-import Selector from "../VisualComponents/Selector";
-import CardDPUC from "../VisualComponents/CardDPUC";
+import Selector from "./Selector";
+import CardDPUC from "./CardDPUC";
 import useFetch from '../Helper/useFetch';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 
 const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
@@ -13,6 +13,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const URL_DPUC = "http://localhost:82/creation/dpucs";
     const URL_LAUNCH = "http://localhost:82/edition/iniciarEdicao";
+    const URL_SEARCH = "http://localhost:83/edition/iniciarEdicao";
 
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
@@ -93,6 +94,19 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         setDPUCList(dpucs.filter((d) => (estado.value.includes(d.estadoid))));
         setFilterOption(estado)
     }
+
+    useEffect(() => {
+        if(!searchInput || searchInput.length === 0){
+            setDPUCList(dpucs);
+            return;
+        }
+        axios
+            .get(URL_SEARCH)
+            .then((response) =>{
+                console.log(response);
+            });
+
+    }, [searchInput]);
 
     useEffect(() => {
         if(!dpucs)

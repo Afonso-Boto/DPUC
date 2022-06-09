@@ -4,7 +4,7 @@ import { Row, Col, Container } from 'react-bootstrap';
 import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui"; 
 import Selector from "../VisualComponents/Selector";
 import axios from "axios";
-import { EntitiesContext, UserContext } from "../Helper/Context";
+import { EntitiesContext, UserContext, APIContext } from "../Helper/Context";
 import SelectDocente from "../VisualComponents/SelectDocente";
 
 
@@ -19,7 +19,7 @@ const CreateDPUC = () => {
     useEffect( () => {
         if(userType && userType !== "DUO")
             navigate("/");
-    }, userType)
+    }, [userType])
 
     const [error, setError] = useState(false);
     const [errorPOST, setErrorPOST] = useState(false);
