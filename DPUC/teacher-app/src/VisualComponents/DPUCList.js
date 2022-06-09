@@ -145,13 +145,8 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             newFilterOptions.push(newFilter);
         }
         setFilterOptions(newFilterOptions);
+        //setDPUCList(dpucs);
     }, [dpucList]);
-
-    useEffect(() =>{
-        if(!dpucs)
-            return;
-        setDPUCList(dpucs);
-    }, [dpucs])
 
     return ( 
         <Container>
