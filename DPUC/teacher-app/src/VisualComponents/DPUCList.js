@@ -63,6 +63,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const [dpucList, setDPUCList] = useState([]);
 
     const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     const [launchLoading, setLaunchLoading] = useState(false);
     const [launchError, setLaunchError] = useState(false);
@@ -87,24 +88,35 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             });
     }
 
-    const filterDPUCList = (estado) => {
-        if(estado.value[0] === 0)
-            setDPUCList(dpucs);
-        else
-        setDPUCList(dpucs.filter((d) => (estado.value.includes(d.estadoid))));
-        setFilterOption(estado)
+    const filterByFilter = (list) =>{
+        if(filterOption.value[0] === 0)
+            return list;
+        return list.filter((d) => (filterOption.value.includes(d.estadoid)))
     }
+
+    const filterBySearch = (list) =>{
+        console.log(searchInput);
+        console.log(searchResults.length);
+        if(searchResults.length === 0 && (!searchInput || searchInput === ""))
+            return list;
+        return list.filter((d) => (searchResults.includes(d.ucCodigo)));
+    }
+
+    useEffect(() => {
+        setDPUCList(filterBySearch(filterByFilter(dpucs)));
+    },[filterOption, searchResults])
 
     useEffect(() => {
         if(!searchInput || searchInput.length === 0){
             setDPUCList(dpucs);
+            setSearchResults([]);
             return;
         }
         const keywords = searchInput.split(" ").join("+");
         axios
             .get(URL_SEARCH+keywords)
             .then((response) => {
-                console.log(response)
+                setSearchResults(response.data);
             })
             .catch((error) => {
                 console.log(error)
@@ -113,7 +125,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             .finally(() => {
                 //setLoading(false);
             });
-
     }, [searchInput]);
 
     useEffect(() => {
@@ -194,7 +205,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                                     getOptionLabel={(option)=>option.text}
                                     defaultValue={filterOptions[0]}
                                     value={filterOption}
-                                    onChange={(e) => filterDPUCList(e)}
+                                    onChange={(e) => setFilterOption(e)}
                                     isClearable={false}
                                 />
                             }
