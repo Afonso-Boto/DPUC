@@ -12,7 +12,6 @@
 
     <modules>
         <module>fetcher-main</module>
-        <module>fetcher-search</module>
     </modules>
 
     <properties>
