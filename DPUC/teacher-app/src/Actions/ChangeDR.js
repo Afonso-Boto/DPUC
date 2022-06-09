@@ -6,7 +6,7 @@ import { EntitiesContext } from "../Helper/Context";
 import SelectDocente from "../VisualComponents/SelectDocente";
 
 const ChangeDR = ({id, responsavel, setResponsavel, show, setShow}) => {
-    const BASE_URL = "http://localhost:82/edition/setRegente?id=" + id + "&regenteid=";
+    const BASE_URL = process.env.REACT_APP_FETCHER + "edition/setRegente?id=" + id + "&regenteid=";
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);

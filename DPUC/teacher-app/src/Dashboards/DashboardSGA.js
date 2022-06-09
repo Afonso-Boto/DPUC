@@ -1,6 +1,6 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { Text } from "@paco_ua/pacoui"
-import DPUCList from "./DPUCList";
+import DPUCList from "../VisualComponents/DPUCList";
 import { useContext } from "react";
 import { UserContext } from "../Helper/Context";
 

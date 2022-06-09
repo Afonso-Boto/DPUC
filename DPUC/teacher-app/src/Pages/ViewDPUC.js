@@ -12,7 +12,7 @@ const ViewDPUC = () => {
 
     const { id } = useParams();
 
-    const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
+    const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs/" + id;
 
 
     const navigate = useNavigate();

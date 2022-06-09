@@ -17,10 +17,9 @@ const EditDPUC = () => {
 
     const { id } = useParams();
 
-    //const URL_DPUC = "http://localhost:8000/dpuc/" + id;
-    const URL_DPUC = "http://localhost:82/creation/dpucs/" + id;
-    const URL_DPUC_PUT_CREATION = "http://localhost:82/creation/editarDpuc?id=" + id;
-    const URL_DPUC_PUT_EDITION = "http://localhost:82/edition/emEdicao?id=" + id + "&finished=" + false;
+    const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs/" + id;
+    const URL_DPUC_PUT_CREATION = process.env.REACT_APP_FETCHER + "creation/editarDpuc?id=" + id;
+    const URL_DPUC_PUT_EDITION = process.env.REACT_APP_FETCHER + "edition/emEdicao?id=" + id + "&finished=" + false;
 
     const navigate = useNavigate();
     

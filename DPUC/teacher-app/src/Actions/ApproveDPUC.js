@@ -1,11 +1,14 @@
 import { Button, Text } from "@paco_ua/pacoui";
 import { Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { APIContext } from "../Helper/Context";
 
 const ApproveDPUC = ({ id, estadoTipo, setEstado, show, setShow }) => {
-    const BASE_URL_CREATION = "http://localhost:82/creation/aprovarDpuc?id=" + id;
-    const BASE_URL_EDITION = "http://localhost:82/edition/emAprovacao?id=" + id + "&aprovado=" + true;
+
+    const {fetcher} = useContext(APIContext); 
+    const BASE_URL_CREATION = process.env.REACT_APP_FETCHER + "creation/aprovarDpuc?id=" + id;
+    const BASE_URL_EDITION = process.env.REACT_APP_FETCHER + "edition/emAprovacao?id=" + id + "&aprovado=" + true;
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
