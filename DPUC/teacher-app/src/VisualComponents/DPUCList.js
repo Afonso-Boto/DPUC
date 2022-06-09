@@ -12,8 +12,8 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const navigate = useNavigate();
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
-    const URL_LAUNCH = "http://localhost:82/edition/iniciarEdicao";
-    const URL_SEARCH = "http://localhost:83/search?keywords=";
+    const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
+    const URL_SEARCH = process.env.REACT_APP_SEARCH + "search?keywords=";
 
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
@@ -128,22 +128,25 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }, [searchInput]);
 
     useEffect(() => {
-        if(!dpucs)
+        if(!dpucList)
             return;
         const filterCount = new Array(filterOptions.length).fill(0);
-        dpucs.map((d) => {
+        dpucList.map((d) => {
             const filter = filterOptions.find((f) => f.value.includes(d.estadoid));
             filterCount[filterOptions.indexOf(filter)] ++;
         });
         const newFilterOptions = [];
         for(let i = 0; i < filterCount.length; i++){
             const newFilter = filterOptions[i];
-            newFilter.text = newFilter.text.split("(")[0] += " (" + filterCount[i] + ")";
+            if(newFilter.value.includes(0))
+                newFilter.text = newFilter.text.split("(")[0] += " (" + dpucList.length + ")";
+            else
+                newFilter.text = newFilter.text.split("(")[0] += " (" + filterCount[i] + ")";
             newFilterOptions.push(newFilter);
         }
         setFilterOptions(newFilterOptions);
-        setDPUCList(dpucs);
-    }, [dpucs]);
+        //setDPUCList(dpucs);
+    }, [dpucList]);
 
     return ( 
         <Container>
