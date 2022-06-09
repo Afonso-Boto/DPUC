@@ -5,7 +5,7 @@ import { UserContext } from "../Helper/Context";
 
 const WhiteNav = () => {
 
-    const { user, isLogged, setToken } = useContext(UserContext);
+    const { user, userType, isLogged, setToken } = useContext(UserContext);
 
     const URL = process.env.REACT_APP_FETCHER + "logout";
 
@@ -43,7 +43,7 @@ const WhiteNav = () => {
                     <Row style={{color:"#afc751"}}>
                         <Col md="auto" style={{textAlign:"right"}}>
                             <Text size="xSmall">
-                                {user.nome}
+                                [{userType}] {user.nome}
                             </Text>
                         </Col>
                         <Col md="auto">|</Col>
