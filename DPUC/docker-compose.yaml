@@ -67,7 +67,7 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-      mysql:
+      mysqldb:
         condition: service_healthy
     container_name: ${HOST_SEARCH_API}
     platform: linux/x86_64
