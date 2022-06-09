@@ -26,10 +26,20 @@ services:
     cap_add:
       - IPC_LOCK
     mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsSL http://localhost:9200/_cat/health?h=status | grep -q 'green\\|yellow' "
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 100
 
   mysqldb:
     depends_on:
-      - es01
+      es01:
+        condition: service_healthy
     container_name: ${HOST_MYSQLDB}
     platform: linux/x86_64
     image: mysql:5.7
@@ -44,11 +54,21 @@ services:
     volumes:
       - ./volumes/mysql/db:/var/lib/mysql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [
+        "CMD",
+        "mysqladmin" ,"ping", "-h", "localhost"
+      ]
+      timeout: 5s
+      interval: 10s
+      retries: 100
 
   fetcher-search:
     depends_on:
-      - es01
-      - mysqldb
+      es01:
+        condition: service_healthy
+      mysqldb:
+        condition: service_healthy
     container_name: ${HOST_SEARCH_API}
     platform: linux/x86_64
     build: search_api
@@ -64,11 +84,22 @@ services:
       - ES_HOST=${HOST_ES01}
       - ES_PORT=${ES_PORT}
       - ES_INDEX=${INDEX_NAME}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          curl -s http://localhost:$DJANGO_DOCKER_PORT/ || exit 1
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 100
 
   fetcher-main:
     depends_on:
-      - mysqldb
-      - fetcher-search
+      mysqldb:
+        condition: service_healthy
+      fetcher-search:
+        condition: service_healthy
     build: ./fetcher-main
     env_file: ./.env
     ports:
@@ -87,8 +118,10 @@ services:
 
   kibana:
     depends_on:
-      - es01
-      - fetcher-search
+      es01:
+        condition: service_healthy
+      fetcher-search:
+        condition: service_healthy
     platform: linux/x86_64
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     container_name: kibana
@@ -103,6 +136,15 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
     mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 100
 
 #  teacher-app:
 #    depends_on:
