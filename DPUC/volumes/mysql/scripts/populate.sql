@@ -276,7 +276,7 @@ insert into curso_UC (curso_id, UCid) VALUES (18, 16);
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:3H/semana', 'I – A descoberta de Portugal na transição para o século XX
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:3H/semana', 'I – A descoberta de Portugal na transição para o século XX
 Apresentar o processo de desenvolvimento histórico da consciência nacional;
 Problematizar os discursos sobre a identidade nacional portuguesa produzidos nos séculos XIX e XX;
 Enunciar o contributo de alguns autores e movimentos intelectuais para o debate sobre a identidade nacional.
@@ -337,11 +337,11 @@ ROSMANINHO, Nuno – «As múltiplas facetas da arte nacional», in: António Pe
 ROSMANINHO, Nuno – «O desamparo de Fernando Lopes-Graça. A música no contexto das artes nacionais», Revista da Universidade de Aveiro – Letras, Aveiro, n.º 23, 2006, pp. 51-58.
 ROSMANINHO, Nuno – O Poder da Arte. O Estado Novo e a Cidade Universitária de Coimbra. Coimbra, Imprensa da Universidade, 2006.
 ROSMANINHO, Nuno – Relatório da disciplina de Património e Identidade. Universidade de Aveiro, 2009, pp. 168-246.',
-                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 1, 1, 34);
+                  'Português', 'Nenhum', 'Nos termos do Regulamento de Estudos da Universidade de Aveiro (n.º 214 /2012), a avaliação é discreta e constituída por dois testes a realizar durante o período lectivo.', 'Os alunos devem cumprir os objectivos.', 5, 1, 1, 34, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:2H/semana; PL:2H/semana', 'Pretende-se dotar os alunos da capacidade para resolver problemas de pequena e média dimensão recorrendo a uma linguagem de programação multi-paradigma (Python)',
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:2H/semana; PL:2H/semana', 'Pretende-se dotar os alunos da capacidade para resolver problemas de pequena e média dimensão recorrendo a uma linguagem de programação multi-paradigma (Python)',
                                 '- Valores e tipos de dados.
 - Variáveis, operadores e expressões
 - Funções, parâmetros e variáveis locais
@@ -365,11 +365,11 @@ Nota Final = 30% * API + 30% * ATP + 40% * EP', '- Compreender o que é um compu
 - Ser capaz de resolver problemas utilizando mecanismos correntes na programação funcional e procedimental.
 - Conhecer e saber utilizar as estruturas de dados disponíveis nas linguagens de programação modernas.
 - Ser capaz de implementar e utilizar algoritmos básicos de pesquisa e ordenação.
-- Ser capaz de desenvolver, testar e corrigir programas de pequena/média dimensão numa linguagem de programação moderna (Python).', 5, 1, 2, 35);
+- Ser capaz de desenvolver, testar e corrigir programas de pequena/média dimensão numa linguagem de programação moderna (Python).', 5, 1, 2, 35, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:4H/semana', 'OT:1H/semana', 'Aquisição de conhecimentos básicos em Álgebra Linear e em Geometria Analítica.',
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:4H/semana', 'OT:1H/semana', 'Aquisição de conhecimentos básicos em Álgebra Linear e em Geometria Analítica.',
                                 'Matrizes e sistemas de equações lineares: operações com matrizes e propriedades; método de eliminação de Gauss e de Gauss-Jordan; inversa de uma matriz.
 Determinantes: propriedades; Teorema de Laplace; inversa de uma matriz à custa da adjunta; Regra de Cramer.
 Espaços vetoriais: subespaços vetoriais; espaço gerado; independência linear, bases, dimensão; coordenadas e mudança de base.
@@ -398,11 +398,11 @@ Avaliação discreta: consta de 2 testes com as seguintes pesos na avaliação f
     50.00%  (primeiro teste)
     50.00% (segundo teste )
 Avaliação por exame final: um só exame que avalia a matéria toda e com peso de 100% na classificação final.', 'Nesta unidade curricular, lecionam-se alguns tópicos de álgebra linear e de geometria analítica que fornecem o quadro teórico conceptual e os instrumentos de cálculo necessários à compreensão e ao desenvolvimento de variadas e importantes aplicações da matemática a outras ciências e engenharias. Entre as competências fundamentais a desenvolver pelos estudantes, destacam-se a capacidade de cálculo formal algébrico, a formulação e resolução explícita de problemas algébricos, incluindo questões de geometria analítica; a capacidade de utilizar técnicas vetoriais e matriciais em diversas aplicações; a resolução de problemas, recorrendo a subespaços vetoriais, subespaços próprios e transformações lineares; a identificação e manipulação algébrica de cónicas e quádricas.',
-                                5, 1, 3, 36);
+                                5, 1, 3, 36, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (1, 'Semestral', 'T:2H/semana; PL:1H/semana', 'O objetivo geral da disciplina consiste em criar nos alunos uma perspetiva global da estrutura e função da célula, principais metodologias experimentais para o seu estudo e integração em organismos pluricelulares.
+                  UCid, utilizadoresid, data_alteracao) VALUES (1, 'Semestral', 'T:2H/semana; PL:1H/semana', 'O objetivo geral da disciplina consiste em criar nos alunos uma perspetiva global da estrutura e função da célula, principais metodologias experimentais para o seu estudo e integração em organismos pluricelulares.
 Para tal, ao frequentarem a disciplina, os alunos deverão atingir os seguintes objetivos específicos:
     descrever a estrutura e função dos diferentes componentes celulares
     identificar os organelos e estruturas celulares em microscopia (óptica e electrónica)
@@ -464,11 +464,11 @@ O aluno será aprovado caso atinja o mínimo de 9,5 valores.
 4. Exame de Recurso - rege-se pelo regulamento em vigor na UA.', '• Compreender e aplicar conceitos básicos de biologia celular
 • Capacidade de correlacionar os fenómenos a nível celular necessários à compreensão dos mecanismos moleculares subjacentes.
 • Capacidade de pesquisar informação científica com recurso às novas tecnologias da comunicação e de informação.
-• Capacidade para integrar os conhecimentos adquiridos com os de outras disciplinas.', 5, 1, 4, 37);
+• Capacidade para integrar os conhecimentos adquiridos com os de outras disciplinas.', 5, 1, 4, 37, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'T:1H/semana;TP:1H/semana;PL:2H/semana', 'OT:1H/semana', 'Com esta unidade curricular (UC) pretende-se iniciar os alunos na Engenharia dos Materiais.',
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'T:1H/semana;TP:1H/semana;PL:2H/semana', 'OT:1H/semana', 'Com esta unidade curricular (UC) pretende-se iniciar os alunos na Engenharia dos Materiais.',
                                 'I- Conceitos básicos sobre o fabrico de materiais e suas implicações sociais, ambientais e energéticas
     Contributo da engenharia de materiais para o desenvolvimento económico
     Classificação dos materiais segundo a natureza das ligações químicas e segundo a sua função
@@ -496,11 +496,11 @@ Classificação da parte 2 = 0,3 x (elemento de avaliação 3) + 0,7 x (elem. de
 - descrever os principais métodos de fabrico dos materiais;
 - distinguir as diversas classes dos materiais com base no tipo de ligações químicas;
 - interpretar a curva de tração uniaxial, identificando o regime elástico e o regime plástico e determinar o módulo de elasticidade, a tensão de cedência e a tensão de rotura;
-- interpretar diagramas unários e binários.', 5, 1, 5, 38);
+- interpretar diagramas unários e binários.', 5, 1, 5, 38, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:4H/semana', 'A Unidade Curricular de Contabilidade Geral tem como objetivo fundamental dotar os estudantes dos conhecimentos que lhes permitam reconhecer a Contabilidade enquanto sistema de informação, instrumento para a tomada de decisões a nível interno e externo. Dentro desta perspetiva sistémica, analisar-se-á o seu objeto nos planos científico-técnico.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:4H/semana', 'A Unidade Curricular de Contabilidade Geral tem como objetivo fundamental dotar os estudantes dos conhecimentos que lhes permitam reconhecer a Contabilidade enquanto sistema de informação, instrumento para a tomada de decisões a nível interno e externo. Dentro desta perspetiva sistémica, analisar-se-á o seu objeto nos planos científico-técnico.
 Do ponto de vista estritamente científico-técnico procurar-se-á dotar os estudantes de um adequado suporte teórico e teórico-prático. Pretende-se que os estudantes desenvolvam as suas competências ao nível da preparação das demonstrações financeiras, especialmente do balanço e das demonstrações dos resultados, e descrevam o processo de registo contabilístico das principais operações da atividade empresarial.'
 , ' 1. Conceitos de contabilidade e normalização contabilística
     2. Demonstrações Financeiras:
@@ -522,11 +522,11 @@ Rodrigues, João (2021) Sistema de Normalização Contabilística Explicado – 
 - Conhecer o que envolve a prestação de contas de uma entidade;
 - Relacionar uma variedade de conceitos associados à prestação de contas e à interpretação da informação financeira;
 - Apontar soluções contabilísticas para casos reais com base no normativo aplicável;
-- Perceber o impacto das soluções contabilísticas ao nível das demonstrações financeiras.', 5, 1, 6, 39);
+- Perceber o impacto das soluções contabilísticas ao nível das demonstrações financeiras.', 5, 1, 6, 39, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:6H/semana', 'Obtenção da formação matemática fundamental em cálculo diferencial e integral unidimensional.',
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:6H/semana', 'Obtenção da formação matemática fundamental em cálculo diferencial e integral unidimensional.',
 '1. Reta real e sucessões
 Axiomática dos reais, supremos e ínfimos, sucessões. Indução matemática.
 2. Séries numéricas
@@ -550,11 +550,11 @@ A OT destina-se, fundamentalmente, ao acompanhamento da evolução do estudante,
     50.00% TP Teste 1
     50.00% TP Teste 2
 Avaliação Final:
-    100.00% TP Exame final', 'Capacidade de análise qualitativa de funções reais de variável real, de análise da natureza das séries numéricas quanto à sua convergência, de primitivação e integração segundo Riemann (incluindo o seu uso justificado na resolução de problemas).', 5, 1, 7, 40);
+    100.00% TP Exame final', 'Capacidade de análise qualitativa de funções reais de variável real, de análise da natureza das séries numéricas quanto à sua convergência, de primitivação e integração segundo Riemann (incluindo o seu uso justificado na resolução de problemas).', 5, 1, 7, 40, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP: 3H/semana', 'A disciplina visa proporcionar aos alunos conhecimentos uma abordagem genérica ao direito, que possa funcionar como um enquadramento às diversas disciplinas jurídicas de conteúdo mais especifico que serão leccionadas ao longo da licenciatura.',
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP: 3H/semana', 'A disciplina visa proporcionar aos alunos conhecimentos uma abordagem genérica ao direito, que possa funcionar como um enquadramento às diversas disciplinas jurídicas de conteúdo mais especifico que serão leccionadas ao longo da licenciatura.',
                 ' I – CONSIDERAÇÕES PRÉVIAS.
 1 – Noção de direito.
 2- A ordem social e as instituições;
@@ -621,11 +621,11 @@ VI – DA RELAÇÃO JURÍDICA E DOS CONTRATOS
      2.4. Garantia.
 3- O principio de liberdade contratual.', 'A informação será ministrada sob a forma de enquadramento genérico, seguida de discussão sobre casos práticos, permitindo aos alunos adquirirem flexibilidade de raciocínio e espirito critico.',
 'Justo, Santos A. “Introdução ao Direito”, Almedina, ultima edição.Mendes, Castro, J. “Introdução ao Direito”, Coimbra, ultima edição.', null, 'Português, Inglês', 'A disciplina não contém requisitos específicos.', ' - Avaliação continua, composta por três momentos de avaliação escrita realizadas nas aulas.',
-'Pretende-se que os alunos adquiram um conjunto de conhecimentos e de metodologias que lhes permita integrar e analisar as diversas unidades curriculares juridicas que fazem parte do programa do curso.', 5, 1, 8, 41);
+'Pretende-se que os alunos adquiram um conjunto de conhecimentos e de metodologias que lhes permita integrar e analisar as diversas unidades curriculares juridicas que fazem parte do programa do curso.', 5, 1, 8, 41, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'T: 2H/semana; TP: 1H/semana; PL: 1H/semana', 'OT:1H/semana', 'Esta disciplina de Mecânica Clássica é destinada aos alunos das Licenciaturas em Física, Engenharia Física, Engenharia Biomédica, Engenharia Aeroespacial e Engenharia Computacional. A disciplina está dividida em aulas teóricas, teórico-práticas e práticas laboratoriais.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'T: 2H/semana; TP: 1H/semana; PL: 1H/semana', 'OT:1H/semana', 'Esta disciplina de Mecânica Clássica é destinada aos alunos das Licenciaturas em Física, Engenharia Física, Engenharia Biomédica, Engenharia Aeroespacial e Engenharia Computacional. A disciplina está dividida em aulas teóricas, teórico-práticas e práticas laboratoriais.
 Nas aulas teóricas a disciplina desenvolve o estudo da mecânica newtoniana. Fornece ainda aos estudantes a prática de técnicas matemáticas fundamentais.
 Nas aulas laboratoriais os alunos realizam um conjunto de actividades laboratoriais visando a compreensão de fenómenos físicos, e aprendizagem das competências práticas básicas como planear experiências, analisar dados e apresentar os mesmos de forma escrita e oral.',
 'Programa Teórico (42h TP)
@@ -752,11 +752,11 @@ Teste Individual                  40
     Conhecimento da mecânica newtoniana e sua aplicação a problemas físicos básicos como o oscilador harmónico simples, o movimento planetário, o movimento circular, etc. Compreensão das leis de conservação e suas aplicações em mecânica. Conhecimento da dinâmica do corpo rígido.
     Além da aquisição destes conhecimentos específicos pretende-se que os estudantes desenvolvam as suas competências de resolução de problemas, requerendo a aplicação de técnicas matemáticas fundamentais e princípios básicos da Física. Espera-se que aprendam a produzir e apresentar uma solução bem estruturada, expondo com clareza o raciocínio.
     Pretende-se que o aluno desenvolva a capacidade de trabalhar em laboratório, individualmente e em grupo, de planear uma experiência, de descrever, analisar e criticar os dados experimentais, e retirar a informação relevante e interpretá-la ou extrapolá-la à luz das leis e princípios básicos da Física.
-    Pretende-se também que o aluno desenvolva as suas competências de comunicação escrita e oral de modo a elaborar relatórios fluentes e bem estruturados.', 5, 1, 9, 42);
+    Pretende-se também que o aluno desenvolva as suas competências de comunicação escrita e oral de modo a elaborar relatórios fluentes e bem estruturados.', 5, 1, 9, 42, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:3H/semana; PL:1H/semana', 'OT:1H/semana', 'A unidade curricular de Fundamentos de Química tem como objetivo providenciar aos estudantes dos primeiros ciclos em ciências e em engenharias conhecimento fundamental e competências em química com aplicação noutras áreas. No final do curso, o estudante deverá ser capaz de:
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:3H/semana; PL:1H/semana', 'OT:1H/semana', 'A unidade curricular de Fundamentos de Química tem como objetivo providenciar aos estudantes dos primeiros ciclos em ciências e em engenharias conhecimento fundamental e competências em química com aplicação noutras áreas. No final do curso, o estudante deverá ser capaz de:
 Reconhecer a importância da química;
 Descrever a ligação química em moléculas com diferentes geometrias utilizando um modelo de teoria apropriado;
 Descrever e fazer cálculos de equilíbrio químico;
@@ -818,11 +818,11 @@ Nas TP, são abordados em detalhe os conceitos fundamentais de cada conteúdo pr
 Na PL os alunos executam trabalhos que ilustram os conceitos abordados nas TP.
 A UC funciona em “Avaliação Discreta”, com dois testes contando cada um 37.5% cada na nota final. A componente Laboratorial representa 25% da classificação final. Os alunos podem optar por Exame Final e têm ainda acesso a uma época de Recurso/Melhoria, mantendo-se nestes casos o peso de 25% para a componente laboratorial.',
 'O programa de Fundamentos de Química engloba alguns dos tópicos presentes em livros de texto dedicados aos conceitos e leis fundamentais da química. A seleção de tópicos foi determinada pelas necessidades de conhecimento em química dos alunos dos diversos cursos de Cie^ncias e Engenharia da Universidade de Aveiro. Os tópicos serão lecionados em maior ou menor detalhe, dependendo do nível de conhecimento adquirido pelos alunos nos 10.º, 11.º e 12.º anos do ensino secundário. Na abordagem das matérias será dada particular ênfase aos aspetos quantitativos, pelo que esta UC, com um programa extenso, requer como pré-requisito formação em matemática básica. Os tópicos I e II, sobre estrutura e propriedades da matéria, estão relacionados com os primeiros dois objetivos, enquanto que os tópicos de III a VIII, sobre química em solução, permitem alcançar os restantes objetivos de aprendizagem.
-A unidade curricular permite ainda dotar os alunos de competências laboratoriais básicas, através da execução de trabalhos laboratoriais adequadamente articulados e ilustrativos dos conteúdos programáticos abordados ao longo do semestre.', 5, 1, 10, 43);
+A unidade curricular permite ainda dotar os alunos de competências laboratoriais básicas, através da execução de trabalhos laboratoriais adequadamente articulados e ilustrativos dos conteúdos programáticos abordados ao longo do semestre.', 5, 1, 10, 43, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP: 2H/semana; PL: 2H/semana', 'Conhecer os conceitos básicos de Cristalografia.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP: 2H/semana; PL: 2H/semana', 'Conhecer os conceitos básicos de Cristalografia.
 Conhecer a simetria.
 Conhecer os sistemas cristalográficos e as classes de simetria.
 Conhecer o modo como os cristais se projectam em projecção estereográfica.
@@ -836,11 +836,11 @@ Klein, C. & Dutrow, B. (2008) - The Manual of Mineral Science (after J.D. Dana).
 Kostov, I. (1968) – Mineralogy. Oliver & Boyd. 587 pp.
 Nesse, W.D. (2011) - Introduction to Mineralogy. Oxford University Press. 496 pp.
 Nesse, W.D. (2012) - Introduction to Optical Mineralogy. Oxford University Press. 384 pp.
-Putnis, A. (1992) - An Introduction to Mineral Sciences. Cambridge University Press. 480 pp.', null, 'Português', 'Química; Geologia Geral', 'Dois testes teórico-práticos (60%) e um teste prático (40%).', 'Conhecer os conceitos básicos de cristalografia; conhecer a simetria; conhecer os sistemas cristalográficos e classes de simetria; conhecer o modo como os cristais se projectam em projecção estereográfica. Conhecer a sistemática mineralógica. Conhecer as propriedades ópticas dos minerais e o modo de funcionamento do microscópio de luz transmitida.', 5, 1, 11, 44);
+Putnis, A. (1992) - An Introduction to Mineral Sciences. Cambridge University Press. 480 pp.', null, 'Português', 'Química; Geologia Geral', 'Dois testes teórico-práticos (60%) e um teste prático (40%).', 'Conhecer os conceitos básicos de cristalografia; conhecer a simetria; conhecer os sistemas cristalográficos e classes de simetria; conhecer o modo como os cristais se projectam em projecção estereográfica. Conhecer a sistemática mineralógica. Conhecer as propriedades ópticas dos minerais e o modo de funcionamento do microscópio de luz transmitida.', 5, 1, 11, 44, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'T: 2H/semana; TP: 2H/semana', 'OT:1H/semana', '
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'T: 2H/semana; TP: 2H/semana', 'OT:1H/semana', '
     Sensibilizar os alunos para a compreensão dos fenómenos psicológicos, com particular ênfase nos aspetos biopsicossociais.
     Fornecer as competências e conhecimentos básicos relativos às principais áreas temáticas da Psicologia.
     Dotar os alunos de competências necessárias para complementar as demais unidades curriculares do 1º ciclo de Psicologia.
@@ -886,11 +886,11 @@ Nota: Será disponibilizada bibliografia adicional no final de cada aula, ao lon
 'Compreender os fenómenos psicológicos, com particular ênfase nos aspetos biopsicossociais;
 Adquirir as competências e conhecimentos básicos relativos às principais áreas temáticas da Psicologia;
 Adquirir as competências necessárias para complementar as demais unidades curriculares do 1º ciclo de Psicologia;
-Adquirir competências relacionais.', 5, 1, 12, 45);
+Adquirir competências relacionais.', 5, 1, 12, 45, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'PL: 2H/semana', 'Espera-se com esta unidade curricular desenvolver a percepção e o ouvido crítico do aluno relativamente ao objeto musical.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'PL: 2H/semana', 'Espera-se com esta unidade curricular desenvolver a percepção e o ouvido crítico do aluno relativamente ao objeto musical.
 O ritmo, melodia e harmonia, em contextos de música clássica e pop são aptidões que o estudante deverá também aprofundar.', 'Os conteúdos dividem-se em quatro áreas de saber fundamentais:
 Ritmo:
              Estruturas rímicas simples;
@@ -916,11 +916,11 @@ Repertório fundamentalmente Classicismo;
 Pop/Rock.', 'A bibliografia consiste principalmente em repertório variado do Classicismo.', null, 'Português e Inglês', 'Admissão e inscrição na Licenciatura em Música.', 'Avaliação Final:
     50.00% P Tarefas práticas;
     30.00% P Teste escrito;
-    20.00% P Participação nas aulas.', 'A unidade curricular Formação Auditiva A tem como objetivo geral oferecer uma preparação especializada do ouvido, voltada para as necessidades específicas da profissão musical, tanto no domínio da interpretação como no exercício da docência, assim como contribuir para a sensibilização diante de distintos estilos. Também, fornecer os elementos teóricos e argumentos de racionalização do discurso musical necessários para a eficiente compreensão do fenómeno musical.', 5, 1, 13, 46);
+    20.00% P Participação nas aulas.', 'A unidade curricular Formação Auditiva A tem como objetivo geral oferecer uma preparação especializada do ouvido, voltada para as necessidades específicas da profissão musical, tanto no domínio da interpretação como no exercício da docência, assim como contribuir para a sensibilização diante de distintos estilos. Também, fornecer os elementos teóricos e argumentos de racionalização do discurso musical necessários para a eficiente compreensão do fenómeno musical.', 5, 1, 13, 46, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, horas_contacto, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP: 1H/semana; PL: 3H/semana', 'OT:1H/semana', 'A UC tem dois objetivos gerais:
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP: 1H/semana; PL: 3H/semana', 'OT:1H/semana', 'A UC tem dois objetivos gerais:
     Promover a inserção dos estudantes da LEM no Departamento de Engenharia Mecânica, fomentando o contacto com os vários docentes e dando a conhecer as principais áreas de intervenção;
     Garantir que todos os estudantes consigam conhecer as áreas de atividade da Engenharia Mecânica, permitindo-lhes obter conhecimentos e sensibilidades base para promover um claro entendimento das matérias que receberão a jusante no curso, percebendo a interligação e aplicabilidade das mesmas.
 Em termos de objetivos de aprendizagem, pretende-se que os estudantes desenvolvam capacidades de:
@@ -953,11 +953,11 @@ Bibliografia adicional (facultativa):
     100.00% TP Avaliação por módulos (testes+relatórios);
 Avaliação Final:
     100.00% TP Exame final por módulos (testes+relatórios).', 'Capacidade de abordar e decidir sobre estratégias de resolução de problemas de engenharia, em particular os de engenharia mecânica, nas áreas genéricas que fazem parte do programa da disciplina. Capacidade de raciocinar autonomamente sobre questões de engenharia. Desenvolver capacidade mínima para apresentar e comunicar oralmente e por escrito.
-Conhecimento das várias áreas da Engenharia Mecânica, despertando o interesse e curiosidade.', 5, 1, 14, 47);
+Conhecimento das várias áreas da Engenharia Mecânica, despertando o interesse e curiosidade.', 5, 1, 14, 47, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'TP:1H/semana', 'A unidade curricular de Introdução à Engenharia Civil tem como objetivo fundamental que os estudantes conheçam o âmbito de aplicação desta Engenharia.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'TP:1H/semana', 'A unidade curricular de Introdução à Engenharia Civil tem como objetivo fundamental que os estudantes conheçam o âmbito de aplicação desta Engenharia.
 Tem-se assim como objetivos:
 - Identificar e analisar a importância e impactos da Engenharia Civil, a nível social, económico e ambiental;
 - Resolver, em ambiente de equipa, um problema social concreto, através de soluções de Engenharia Civil.', 'História e evolução da Engenharia Civil;
@@ -973,11 +973,11 @@ História Breve da Engenharia Civil Pilar da Civilização Ocidental. Ordem dos 
 Guerra, Franklin (2010). História da Engenharia em Portugal – 2ªEd., F. G. Editor, Porto. BPG 62 (469)(091) - G;
 Bibliografia aconselhada pelos Professores.', null, 'Português', 'N.a', 'Esta unidade curricular centra-se na realização de um trabalho baseado em situações próximas do mundo real. Os projetos têm uma componente de trabalho obrigatória em equipa que pode ser concretizada de duas formas:
  a) Os alunos formam equipas com 2 a 3 elementos;
- b) Os alunos podem trabalhar em colaboração com outros alunos de anos mais avançados do DECivil.', 'Ao pretender-se que o estudante analise e encontre, em ambiente de equipa, possíveis soluções, para um problema societal concreto, tem-se por objetivo que o façam aplicando soluções de Engenharia civil e que aprofundem o seu conhecimento quanto ao âmbito da respetiva aplicação, em ambiente colaborativo, desenvolvendo as suas capacidades de trabalho em grupo, de pesquisa e de comunicação.', 5, 1, 15, 48);
+ b) Os alunos podem trabalhar em colaboração com outros alunos de anos mais avançados do DECivil.', 'Ao pretender-se que o estudante analise e encontre, em ambiente de equipa, possíveis soluções, para um problema societal concreto, tem-se por objetivo que o façam aplicando soluções de Engenharia civil e que aprofundem o seu conhecimento quanto ao âmbito da respetiva aplicação, em ambiente colaborativo, desenvolvendo as suas capacidades de trabalho em grupo, de pesquisa e de comunicação.', 5, 1, 15, 48, '2021-09-01');
 insert into dpuc (criacao_edicao, duracao, carga_horaria, objetivos, conteudos,
                   metodologias, bibliografia, observacoes, linguas, requisitos, funcionamento,
                   aprendizagem, estadoid, periodo_letivoid,
-                  UCid, utilizadoresid) VALUES (0, 'Semestral', 'PL: 3H/semana', 'A UC Laboratórios de Biomedicina 1 tem como objetivo geral proporcionar ao estudante uma aprendizagem de diferentes ferramentas de química e bioquímica fundamentais para a formação da Licenciatura em Ciências Biomédicas e que serão basilares para a realização de trabalhos práticos dos Laboratórios de Biomedicina 2, 3, 4 e 5.
+                  UCid, utilizadoresid, data_alteracao) VALUES (0, 'Semestral', 'PL: 3H/semana', 'A UC Laboratórios de Biomedicina 1 tem como objetivo geral proporcionar ao estudante uma aprendizagem de diferentes ferramentas de química e bioquímica fundamentais para a formação da Licenciatura em Ciências Biomédicas e que serão basilares para a realização de trabalhos práticos dos Laboratórios de Biomedicina 2, 3, 4 e 5.
 No final desta UC o aluno deverá:
     1. Aplicar regras de segurança e biossegurança de acordo com o trabalho laboratorial a desenvolver.
     2. Analisar um protocolo laboratorial.
@@ -1011,7 +1011,7 @@ A avaliação ocorre em 3 momentos: recurso/melhoria, época especial e final co
 
 Existirão 10 aulas práticas que incluirão para além do procedimento prático a sua contextualização. Os estudantes terão acesso aos procedimentos antes da aula e assim podem preparar a aula convenientemente. No fim de cada aula os estudantes realizam um relatório, cujo formato será previamente acordado com os professores, onde descrevem os resultados obtidos e os discutem individualmente. Prevê-se que se realizem 10 trabalhos práticos e consequentemente 10 relatórios. Todos terão o mesmo peso e correspondem a 80% da nota final. Na última aula será realizado um teste escrito baseado nos conteúdos das aulas práticas (20% da nota final).
 
-O objetivo global da UC é que o estudante apreenda diferentes ferramentas de química e bioquímica fundamentais para as ciências da saúde. Na primeira aula serão apresentadas regras de segurança e bio-segurança e as regras para a realização dos relatórios e funcionamento da disciplina. Nos 10 trabalhos laboratoriais propostos os estudantes realizarão experiências que envolvam operações unitárias da prática laboratorial das áreas da Química e Bioquímica aplicadas às ciências da saúde e que apliquem metodologias de análise quantitativas e qualitativas de espécies químicas e biomoléculas importantes para o funcionamento do corpo humano (aminoácidos, proteínas, açúcares, vitaminas, lípidos, minerais). Os trabalhos práticos realizados e respetivos relatórios serão discutidos em dois momentos do semestre.', 5, 1, 16, 49);
+O objetivo global da UC é que o estudante apreenda diferentes ferramentas de química e bioquímica fundamentais para as ciências da saúde. Na primeira aula serão apresentadas regras de segurança e bio-segurança e as regras para a realização dos relatórios e funcionamento da disciplina. Nos 10 trabalhos laboratoriais propostos os estudantes realizarão experiências que envolvam operações unitárias da prática laboratorial das áreas da Química e Bioquímica aplicadas às ciências da saúde e que apliquem metodologias de análise quantitativas e qualitativas de espécies químicas e biomoléculas importantes para o funcionamento do corpo humano (aminoácidos, proteínas, açúcares, vitaminas, lípidos, minerais). Os trabalhos práticos realizados e respetivos relatórios serão discutidos em dois momentos do semestre.', 5, 1, 16, 49, '2021-09-01');
 
 insert into utilizadores(id, nome, nmec, email, password, tipo_utilizadorid) VALUES (0, 'Sem DUO', 0, 'duo@ua.pt', 'duo', 1);
 insert into unidade_organica(id, nome, sigla, utilizadoresid) VALUES (0, 'Sem UO', 'SUO', 50);
