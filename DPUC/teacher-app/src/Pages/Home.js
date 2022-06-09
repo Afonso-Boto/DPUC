@@ -8,7 +8,6 @@ import { UserContext } from "../Helper/Context";
 const Home = () => {
 
     const { userType } = useContext(UserContext);
-    
     return ( 
         <>
         {

@@ -1,8 +1,12 @@
 import { Row, Col, Container } from "react-bootstrap";
 import { Text } from "@paco_ua/pacoui"
 import DPUCList from "./DPUCList";
+import { useContext } from "react";
+import { UserContext } from "../Helper/Context";
 
 const DashboardDUO  = () => {
+
+    const { user } = useContext(UserContext);
 
     return ( 
         <Container padding="40px" >
@@ -16,12 +20,10 @@ const DashboardDUO  = () => {
             <Row>
                 <Col>
                     <Text as="h3" color="primary" size="large" fontWeight="medium">
-                        Olá, docente DUO x! 
+                        { user && "Olá, " + user.nome}
                     </Text>
                 </Col>
             </Row>
-            <br/>
-            
             <DPUCList canCreate={true}/>
         </Container>
      );

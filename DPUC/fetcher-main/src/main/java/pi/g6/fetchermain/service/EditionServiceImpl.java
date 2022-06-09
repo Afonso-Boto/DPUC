@@ -47,17 +47,24 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
     }
 
     @Override
-    public ResponseEntity<List<DpucUc>> getAllDpucs(int ucid) {
+    public ResponseEntity<List<DpucUc>> getAllDpucs(int ucCodigo) {
         List<DpucUc> result;
 
         try {
-            String query = "SELECT * FROM dpuc WHERE ucid = " + ucid;
+            String query = "SELECT id FROM uc WHERE codigo = " + ucCodigo;
             List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
+
+
+            int ucid = (int)(rows.get(0).get("id"));
+
+            query = "SELECT * FROM dpuc WHERE ucid = " + ucid;
+            rows = getJdbcTemplate().queryForList(query);
+
 
             result = new ArrayList<>();
 
             List<Dpuc> dpucList = new ArrayList<>();
-
+            System.out.println(rows.size());
             for (Map<String, Object> row : rows) {
                 Dpuc dpuc = new Dpuc();
                 try {

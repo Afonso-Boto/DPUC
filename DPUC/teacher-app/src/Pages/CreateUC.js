@@ -1,24 +1,31 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import { Button, Counter, Text, FormInput} from "@paco_ua/pacoui"; 
 import Selector from "../VisualComponents/Selector";
 import axios from "axios";
-import { EntitiesContext } from "../Helper/Context";
+import { EntitiesContext, UserContext } from "../Helper/Context";
+import SelectDocente from "../VisualComponents/SelectDocente";
 
 
 const CreateDPUC = () => {
 
-    //const URL_DPUC = "http://localhost:8000/dpuc";
     const URL_DPUC = "http://localhost:82/creation/criarUC?regenteid=";
 
-
     const navigate = useNavigate();
+
+    const { userType } = useContext(UserContext);
+
+    useEffect( () => {
+        if(userType && userType !== "DUO")
+            navigate("/");
+    }, userType)
+
     const [error, setError] = useState(false);
     const [errorPOST, setErrorPOST] = useState(false);
     const [loadingPOST, setLoadingPOST] = useState(false);
 
-
+    
     const { retryFetch, setRetry, uos, docentes, areas } = useContext(EntitiesContext);
 
     const [ucName, setName] = useState("");
@@ -27,6 +34,7 @@ const CreateDPUC = () => {
     const [ucECTS, setECTS] = useState(6);
     const [ectsError, setECTSError]= useState("");
     const [ucRegente, setRegente] = useState(null);
+    const [show, setShow] = useState(false);
 
     
     const handleSubmit = (e) => {
@@ -162,16 +170,27 @@ const CreateDPUC = () => {
                                 Docente Responsável (Regente)
                             </Text>
                         </h3>
-                        { docentes &&
-                            <Selector
-                                options={docentes}
-                                value={ucRegente}
-                                getOptionLabel ={(option)=>("[" + option.nmec + "] " + option.nome)}
-                                getOptionValue ={(option)=>option.id}
-                                onChange={(e) => setRegente(e)}
-                                placeholder="Selecione o docente responsável pela UC..."
-                            />
-                        }
+                        <SelectDocente show={show} setShow={setShow} docente={ucRegente} setDocente={setRegente}/>
+                        <Row>
+                            {
+                                ucRegente &&
+                                <Col>
+                                    <Text size="medium">
+                                        {ucRegente.nmec}
+                                        {" - "}
+                                        {ucRegente.nome}
+                                        {" - "}
+                                        {ucRegente.email}
+                                    </Text>
+                                </Col>
+                            }
+                            <Col>
+                                <Button primary onClick={() => setShow(true)}>
+                                    Selecionar Docente Responsável
+                                </Button>
+                            </Col>
+                        </Row>
+                        
                     </Col>
                 </Row>
                 {/* ECTS*/}

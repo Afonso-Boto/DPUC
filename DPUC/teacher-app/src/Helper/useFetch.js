@@ -14,7 +14,7 @@ const useFetch = (url, retry) => {
                 setData(response.data);
             })
             .catch((error) => {
-                setError(error)
+                setError(error);
             })
             .finally(() => {
                 setLoading(false);

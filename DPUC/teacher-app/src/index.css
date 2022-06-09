@@ -23,6 +23,12 @@ hr{
   background-color: #0EB4BD;
 }
 
+.footer-hr{
+  height: 2px;
+  color: #10B4BC;
+  background-color: #10B4BC;
+}
+
 .viewUC-row{
   padding-top: 20px;
 }
@@ -83,4 +89,20 @@ textarea div{
   outline: none !important;
   border-color: #000000;
   box-shadow: 0 0 10px #000000;
+}
+
+.no-decor-link{
+  text-decoration: "none"
+}
+.no-decor-link:link{
+  text-decoration: "none"
+}
+.no-decor-link:hover{
+  text-decoration: "none"
+}
+.no-decor-link:visited{
+  text-decoration: "none"
+}
+.no-decor-link:active{
+  text-decoration: "none"
 }
