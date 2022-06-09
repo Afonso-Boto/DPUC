@@ -6,15 +6,14 @@ from datetime import datetime
 def query_very_basic():
     return "SELECT uc.codigo as id, uc.designacao as nome, " \
            "ac.designacao as area_cientifica, dpuc.objetivos as objetivos, dpuc.conteudos as conteudos, " \
-           "dpuc.bibliografia as bibliografia, dpuc.requisitos as requisitos, " \
-           "dpuc.aprendizagem as aprendizagem FROM " \
+           "dpuc.bibliografia as bibliografia FROM " \
            "dpuc JOIN uc ON dpuc.UCid = uc.id " \
            "JOIN unidade_organica as uo ON uc.unidade_organicaid = uo.id " \
            "JOIN ac ON uc.acid = ac.id;"
 
 
 def get_fields():
-    return "id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia", "requisitos", "aprendizagem"
+    return "id", "nome", "area_cientifica", "objetivos", "conteudos", "bibliografia"
 
 
 def es_query(keywords):
