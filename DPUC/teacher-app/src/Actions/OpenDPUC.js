@@ -4,9 +4,9 @@ import { useState } from "react";
 import axios from "axios";
 
 const OpenDPUC = ({id, estadoTipo, setEstado, show, setShow}) => {
-    const BASE_URL_CREATION = "http://localhost:82/creation/aprovarDpuc?id=" + id;
-    const BASE_URL_EDITION = "http://localhost:82/edition/emAprovacao?id=" + id + "&aprovado=" + false;
 
+    const BASE_URL_CREATION = process.env.REACT_APP_FETCHER + "creation/aprovarDpuc?id=" + id;
+    const BASE_URL_EDITION = process.env.REACT_APP_FETCHER + "edition/emAprovacao?id=" + id + "&aprovado=" + false;
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);

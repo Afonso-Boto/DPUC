@@ -7,7 +7,7 @@ const DPUCVersions = ({uc, id}) => {
 
     const navigate = useNavigate();
 
-    var URL_VERSIONS = "http://localhost:82/edition/getAllDpucs?id=" + uc;
+    var URL_VERSIONS = process.env.REACT_APP_FETCHER + "edition/getAllDpucs?id=" + uc;
 
     const {data: versions, loading, error} = useFetch(URL_VERSIONS);
 
