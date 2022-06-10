@@ -1013,10 +1013,16 @@ Existirão 10 aulas práticas que incluirão para além do procedimento prático
 
 O objetivo global da UC é que o estudante apreenda diferentes ferramentas de química e bioquímica fundamentais para as ciências da saúde. Na primeira aula serão apresentadas regras de segurança e bio-segurança e as regras para a realização dos relatórios e funcionamento da disciplina. Nos 10 trabalhos laboratoriais propostos os estudantes realizarão experiências que envolvam operações unitárias da prática laboratorial das áreas da Química e Bioquímica aplicadas às ciências da saúde e que apliquem metodologias de análise quantitativas e qualitativas de espécies químicas e biomoléculas importantes para o funcionamento do corpo humano (aminoácidos, proteínas, açúcares, vitaminas, lípidos, minerais). Os trabalhos práticos realizados e respetivos relatórios serão discutidos em dois momentos do semestre.', 5, 1, 16, 49, '2021-09-01');
 
-insert into utilizadores(id, nome, nmec, email, password, tipo_utilizadorid) VALUES (0, 'Sem DUO', 0, 'duo@ua.pt', 'duo', 1);
-insert into unidade_organica(id, nome, sigla, utilizadoresid) VALUES (0, 'Sem UO', 'SUO', 50);
 insert into ac(id, designacao, sigla) VALUES (0, 'Sem AC', 'SAC');
 
+LOAD DATA LOCAL INFILE '/drs.csv'
+INTO TABLE utilizadores
+character set UTF8
+FIELDS TERMINATED BY '|'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+/*
 LOAD DATA LOCAL INFILE '/ucs.csv'
 INTO TABLE uc
 CHARACTER SET UTF8
@@ -1032,3 +1038,7 @@ FIELDS TERMINATED BY '|'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
+
+select * from utilizadores
+select * from uc
+select * from dpuc where utilizadoresid = 250*/
