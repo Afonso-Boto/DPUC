@@ -501,9 +501,9 @@ const EditDPUC = () => {
                                         onChange={(e) => {
                                             dpucSet.setObjetivos(e.target.value);
                                             e.target.style.height="1px";
-                                            e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                         }}
-                                        style={{height:"48pt"}}
+                                        style={{height:"258px"}}
                                     />
                                 ],
                                 parent: 
@@ -533,9 +533,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setRequisitos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -566,9 +566,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setConteudos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 700)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"400px"}}
                                         />
                                     ],
                                     parent: 
@@ -598,9 +598,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setCoerenciaConteudos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -631,9 +631,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setMetodologias(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -664,9 +664,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setCoerenciaMetodologias(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -696,9 +696,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setFuncionamento(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -730,9 +730,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setAprendizagem(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -762,9 +762,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setAvaliacao(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -794,9 +794,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setRegimeFaltas(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -826,9 +826,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setBibliografia(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 700)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"300px"}}
                                         />
                                     ],
                                     parent: 
@@ -843,7 +843,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
-                    { /* Ficheiros */}
+                    { /* Ficheiros
                     <div className="row row-pad">
                         <div className="col-lg-12">
                             <Accordion
@@ -874,6 +874,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
+                     */}
                     { /* Observações */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
@@ -888,9 +889,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setObservacoes(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
