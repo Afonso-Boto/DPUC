@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container, ButtonGroup } from "react-bootstrap";
 import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton, SearchBox } from "@paco_ua/pacoui"
@@ -6,10 +6,13 @@ import Selector from "./Selector";
 import CardDPUC from "./CardDPUC";
 import useFetch from '../Helper/useFetch';
 import axios, { Axios } from 'axios';
+import { EntitiesContext } from '../Helper/Context';
 
 const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const navigate = useNavigate();
+
+    const { docentes } = useContext(EntitiesContext);
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
@@ -126,10 +129,27 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         return list.filter((d) => (filterOption.value.includes(d.estadoid)))
     }
 
+    /*
     const filterBySearch = (list) =>{
         if(searchResults.length === 0 && (!searchInput || searchInput === ""))
             return list;
         return list.filter((d) => (searchResults.includes(d.ucCodigo)));
+    }
+    */
+    const filterBySearch = (list) =>{
+        if(searchResults.length === 0 && (!searchInput || searchInput === ""))
+            return list;
+        const docsId = []
+        docentes
+            .filter((d) => d.nome.toLowerCase().includes(searchResults))
+            .map((d) => docsId.push(d.id));
+        return list.filter((d) => (
+            d.designacao.toLowerCase().includes(searchResults)
+            ||
+            d.ucCodigo.toString().includes(searchResults)
+            ||
+            docsId.includes(d.regenteID)
+        ));
     }
 
     useEffect(() => {
@@ -144,6 +164,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             setSearchResults([]);
             return;
         }
+        /*
         const keywords = searchInput.split(" ").join("+");
         axios
             .get(URL_SEARCH+keywords)
@@ -157,6 +178,8 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             .finally(() => {
                 //setLoading(false);
             });
+        */
+        setSearchResults(searchInput.toLowerCase());
     }, [searchInput]);
 
     useEffect(() => {
@@ -232,7 +255,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                                 value={searchInput}
                                 iconColor=""
                                 onSearch={(e) => setSearchInput(e)}
-                                placeholder="Parâmetros de pesquisa de DPUC"
+                                placeholder="Pesquisa por nome ou código de UC"
                             />
                         </Col>
                         <Col  md="4">
@@ -261,7 +284,10 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                 ))
             }
             { (!dpucPage || dpucPage.length === 0) &&
-                <Text as="i" size="large" style={{paddingTop:"10px"}}>Não foram encontrados DPUCs</Text>
+                <>
+                    <br/>
+                    <Text as="i" size="large">Não foram encontrados DPUCs</Text>
+                </>
             }
             <Row>
                 <Col></Col>
