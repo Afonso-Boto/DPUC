@@ -62,7 +62,6 @@ const CardDPUC = ({dpuc}) => {
 
     const [ docente, setDocente ] = useState(null);
     const [ edition, setEdition ] = useState();
-
     useEffect(() => {
         if(!docentes || !dpuc)
             return;
@@ -75,7 +74,7 @@ const CardDPUC = ({dpuc}) => {
             <Col>     
                 <Card 
                     active 
-                    title={"[" + dpuc.ucCodigo + "] " + uos?.find(uo => uo.id === dpuc.unidade_organicaid).sigla + " - "  + dpuc.designacao} 
+                    title={"[" + dpuc.ucCodigo + "] " + (dpuc.unidade_organicaid > 0 ?uos?.find(uo => uo.id === dpuc.unidade_organicaid).sigla : "Sem UO") + " - "  + dpuc.designacao} 
                     to={"/dpuc/" + dpuc.id}
                     headerRight={GetData({dpuc})}
                 >
@@ -132,7 +131,7 @@ const CardDPUC = ({dpuc}) => {
                                         </RouterLink>
                                     )
                                     ||
-                                    ((dpuc.estadoid === 7) && userType === "DUO" && docente &&
+                                    ((dpuc.estadoid === 7) && userType === "DUO" &&
                                     <>
                                         <Button content="Action Button" primary onClick={()=>setShowCreate(true)}> Lançar novo DPUC </Button>
                                         <CreateDPUC id={dpuc.id} responsavel={docente} show={showCreate} setShow={setShowCreate}/>

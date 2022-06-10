@@ -44,11 +44,11 @@ const EditDPUC = () => {
         setLoadingPUT(true);
         
         const URL_DPUC_PUT = dpuc.estadoTipo === "C" ? URL_DPUC_PUT_CREATION : URL_DPUC_PUT_EDITION;
-        console.log(URL_DPUC_PUT);
+        console.log(getFormattedDPUC(dpuc));
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {
-                navigate("/");
+                //navigate("/");
             })
             .catch((error) => {
                 setErrorPUT(true);

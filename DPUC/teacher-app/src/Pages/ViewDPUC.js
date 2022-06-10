@@ -319,7 +319,7 @@ const ViewDPUC = () => {
                             </Row>
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500">Docente Responsável </Text>
-                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.responsavel.nome}</Text>
+                                <Text as="span" size="mediumSmall" fontWeight="350">{dpuc?.responsavel?.nome}</Text>
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
