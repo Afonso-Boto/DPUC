@@ -97,10 +97,14 @@ const useGetDPUC = (data) => {
                 setCodigo(data.ucCodigo);
             if(data.carga_horaria)
                 setCargaHoraria(data.carga_horaria);
-            if(data.horas_trabalho)
-                setHorasTrabalho(data.horas_trabalho);
-            if(data.ects)
+            
+            if(data.ects){
                 setEcts(data.ects);
+                if(data.horas_trabalho)
+                    setHorasTrabalho(data.horas_trabalho);
+                else
+                    setHorasTrabalho(data.ects * 27);
+            }
 
             if(data.estadoid && estados){
                 let estadoID = data.estadoid;

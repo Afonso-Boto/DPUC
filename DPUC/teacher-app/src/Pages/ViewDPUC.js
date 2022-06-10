@@ -301,10 +301,12 @@ const ViewDPUC = () => {
                                     <Text as="span" size="mediumSmall" fontWeight="500">ECTS </Text>
                                     <Text size="mediumSmall" fontWeight="350"><p>{dpuc.ects}</p></Text>
                                 </Col>
+                                {/* 
                                 <Col sm={"auto"}>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Grau </Text>
                                     <Text size="mediumSmall" fontWeight="350"><p>{dpuc.grau.nome}</p></Text>
                                 </Col>
+                                */}
                                 <hr className="uc_details_hr"/>
                             </Row>
                             <Row>
@@ -347,16 +349,18 @@ const ViewDPUC = () => {
                             <Row>
                                 <Text as="span" size="mediumSmall"fontWeight="500">Duração </Text>
                                 {dpuc.duracao && <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.duracao.nome}</Text>}
-                                <hr className="uc_details_hr"/>
+                                
                             </Row>
                             { dpuc.paginaPublica &&
                                 <Row>
+                                    <hr className="uc_details_hr"/>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Página pública da UC </Text>
                                     <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.paginaPublica}</Text>
-                                    <hr className="uc_details_hr"/>
                                 </Row>
                             }
+                            {/*
                             <Row style={{paddingBottom:"10px"}}>
+                                <hr className="uc_details_hr"/>
                                 <Text as="span" size="mediumSmall" fontWeight="500">Cursos </Text>
                                 {dpuc.cursos.length > 0 &&
                                  dpuc.cursos.map((curso, index) => (
@@ -364,6 +368,7 @@ const ViewDPUC = () => {
                                  ))   
                                 }
                             </Row>
+                            */}
                         </Container>
                         <br/>
                         { detailedView &&
@@ -376,9 +381,10 @@ const ViewDPUC = () => {
                                 <Row>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Período </Text>
                                     <Text as="span" size="mediumSmall" fontWeight="350">{dpuc.periodo.nome}</Text>
-                                    <hr className="uc_details_hr"/>
                                 </Row>
+                                {/* 
                                 <Row style={{paddingBottom:"10px"}}>
+                                    <hr className="uc_details_hr"/>
                                     <Text as="span" size="mediumSmall" fontWeight="500">Docentes </Text>
                                     {
                                         dpuc.docentes.map((docente, index) => (
@@ -386,6 +392,7 @@ const ViewDPUC = () => {
                                         ))   
                                     }
                                 </Row>
+                                */}
                             </Container>
                         }
                     </Col>
