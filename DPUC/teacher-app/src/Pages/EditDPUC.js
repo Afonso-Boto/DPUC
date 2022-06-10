@@ -214,6 +214,7 @@ const EditDPUC = () => {
                     </Row>
                     {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
                     <div className="row row-pad">
+                        {/* 
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
@@ -249,9 +250,11 @@ const EditDPUC = () => {
                                 />
                             }
                         </div>
+                        */}
                     </div>
                     {/* Área Científica e Idiomas de lecionação */}
                     <div className="row row-pad">
+                        {/* 
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
@@ -268,24 +271,8 @@ const EditDPUC = () => {
                                 />
                             }
                         </div>
-                        <div className="col-lg-6">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Idioma(s) de lecionação*
-                                </Text>
-                            </h3>
-                            { idiomas && 
-                                <Selector 
-                                    isMulti 
-                                    placeholder="Selecione o(s) idioma(s) de lecionação da UC..." 
-                                    options={idiomas}
-                                    value={dpuc.linguas}
-                                    onChange={(e) => dpucSet.setLinguas(Array.from(e, (v => v)))}
-                                    getOptionLabel ={(option)=>(option.nome)}
-                                    getOptionValue ={(option)=>option.id}
-                                />
-                            }
-                        </div>
+                        */}
+                        
                     </div>
                     {/* Carga Letiva, Duração, Semestre */}
                     <div className="row row-pad">
@@ -418,7 +405,7 @@ const EditDPUC = () => {
                         </div>
                         }
                     </div>
-                    {/* Modalidade e Página Pública*/}
+                    {/* Modalidade e Idioma*/}
                     <div className="row row-pad">
                         <div className="col-lg-6">
                             <h3>
@@ -440,6 +427,27 @@ const EditDPUC = () => {
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
+                                    Idioma(s) de lecionação*
+                                </Text>
+                            </h3>
+                            { idiomas && 
+                                <Selector 
+                                    isMulti 
+                                    placeholder="Selecione o(s) idioma(s) de lecionação da UC..." 
+                                    options={idiomas}
+                                    value={dpuc.linguas}
+                                    onChange={(e) => dpucSet.setLinguas(Array.from(e, (v => v)))}
+                                    getOptionLabel ={(option)=>(option.nome)}
+                                    getOptionValue ={(option)=>option.id}
+                                />
+                            }
+                        </div>
+                    </div>
+                    {/* Página Pública*/}
+                    <div className="row row-pad">
+                        <div className="col-lg-12">
+                            <h3>
+                                <Text as="h3" size="large" color="primary" fontWeight="400">
                                     Página Pública da UC
                                 </Text>
                             </h3>
@@ -452,7 +460,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
-                    {/* Docentes da UC */}
+                    {/* Docentes da UC 
                     <div className="row row-pad">
                         <div className="col-lg-12">
                             <h3>
@@ -485,6 +493,7 @@ const EditDPUC = () => {
                             </Button>
                         </div>
                     </div>
+                    */}
                     <hr className="custom-hr"/>
                     {/* Objetivos de aprendizagem */}
                     <div className="row row-pad">
