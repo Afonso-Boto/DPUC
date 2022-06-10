@@ -6,13 +6,14 @@ import Selector from "./Selector";
 import CardDPUC from "./CardDPUC";
 import useFetch from '../Helper/useFetch';
 import axios, { Axios } from 'axios';
-import { EntitiesContext } from '../Helper/Context';
+import { EntitiesContext, UserContext } from '../Helper/Context';
 
 const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const navigate = useNavigate();
 
-    const { docentes } = useContext(EntitiesContext);
+    const { docentes, uos } = useContext(EntitiesContext);
+    const { userType } = useContext(UserContext);
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
@@ -80,7 +81,18 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         ]
     )
 
+    const [uosOptions, setUOSOptions] = useState(
+        [
+            {
+                id: -1,
+                sigla: 'Todas',
+                nome: 'Qualquer Unidadade Orgânica'
+            }
+        ]
+    )
+
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
+    const [filterUO, setFilterUO] = useState(uosOptions[0]);
                 
     const [dpucList, setDPUCList] = useState([]);
     const [dpucSearchList, setDPUCSearchList] = useState([]);
@@ -129,6 +141,12 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         return list.filter((d) => (filterOption.value.includes(d.estadoid)))
     }
 
+    const filterByUO = (list) =>{
+        if(filterUO.id < 0)
+            return list;
+        return list.filter((d) => (d.unidade_organicaid === filterUO.id));
+    }
+
     /*
     const filterBySearch = (list) =>{
         if(searchResults.length === 0 && (!searchInput || searchInput === ""))
@@ -153,10 +171,10 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }
 
     useEffect(() => {
-        const fbs = filterBySearch(dpucs);
+        const fbs = filterByUO(filterBySearch(dpucs));
         setDPUCList(filterByFilter(fbs));
         setDPUCSearchList(fbs)
-    },[filterOption, searchResults])
+    },[filterOption, filterUO, searchResults])
 
     useEffect(() => {
         if(!searchInput || searchInput.length === 0){
@@ -207,7 +225,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             return;
         setDPUCList(dpucs);
         setDPUCSearchList(dpucs);
-    }, [dpucs])
+    }, [dpucs]);
+
+    useEffect(() => {
+        if(!uos)
+            return;
+        setUOSOptions([uosOptions, ... uos])
+    }, [uos]);
 
     return ( 
         <Container>
@@ -244,6 +268,21 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                                 <Text as="i" size="large" color="red"> Não foi possível iniciar o processo de Edição de DPUCs.</Text>
                             }
                         </Col>
+                        {   userType === "SGA" &&
+                            <Col style={{textAlign:"left", paddingBottom:"10px"}}>
+                            <br/>
+                            { uosOptions && 
+                                <Selector
+                                    options={uosOptions}
+                                    value={filterUO}
+                                    getOptionLabel ={(option)=>(option.sigla + " - " +option.nome)}
+                                    getOptionValue ={(option)=>option.id}
+                                    onChange={(e) => setFilterUO(e)}
+                                    placeholder="Indique a Unidade Orgânica em que a UC está alocada..."
+                                />
+                            }
+                            </Col>
+                        }
                     </Row>
                     <Row style={{paddingBottom:"10px"}}>
                         <Col md="8">
@@ -255,7 +294,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                                 value={searchInput}
                                 iconColor=""
                                 onSearch={(e) => setSearchInput(e)}
-                                placeholder="Pesquisa por nome ou código de UC"
+                                placeholder="Pesquisa por nome, código ou docente regente"
                             />
                         </Col>
                         <Col  md="4">
