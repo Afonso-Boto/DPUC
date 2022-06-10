@@ -126,8 +126,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }
 
     const filterBySearch = (list) =>{
-        console.log(searchInput);
-        console.log(searchResults.length);
         if(searchResults.length === 0 && (!searchInput || searchInput === ""))
             return list;
         return list.filter((d) => (searchResults.includes(d.ucCodigo)));

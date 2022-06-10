@@ -359,6 +359,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             docente.setNome((String) row.get("nome"));
             docente.setEmail((String) row.get("email"));
             docente.setTipo_utilizadorid((int) row.get("tipo_utilizadorid"));
+            docente.setNmec((int) row.get("nmec"));
 
             result.add(docente);
 
