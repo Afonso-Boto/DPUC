@@ -80,6 +80,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
                 
     const [dpucList, setDPUCList] = useState([]);
+    const [dpucSearchList, setDPUCSearchList] = useState([]);
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -132,7 +133,9 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }
 
     useEffect(() => {
-        setDPUCList(filterBySearch(filterByFilter(dpucs)));
+        const fbs = filterBySearch(dpucs);
+        setDPUCList(filterByFilter(fbs));
+        setDPUCSearchList(fbs)
     },[filterOption, searchResults])
 
     useEffect(() => {
@@ -157,10 +160,10 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }, [searchInput]);
 
     useEffect(() => {
-        if(!dpucList)
+        if(!dpucSearchList)
             return;
         const filterCount = new Array(filterOptions.length).fill(0);
-        dpucList.map((d) => {
+        dpucSearchList.map((d) => {
             const filter = filterOptions.find((f) => f.value.includes(d.estadoid));
             filterCount[filterOptions.indexOf(filter)] ++;
         });
@@ -174,12 +177,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             newFilterOptions.push(newFilter);
         }
         setFilterOptions(newFilterOptions);
-    }, [dpucList]);
+    }, [dpucSearchList]);
 
     useEffect(() =>{
         if(!dpucs)
             return;
         setDPUCList(dpucs);
+        setDPUCSearchList(dpucs);
     }, [dpucs])
 
     return ( 
