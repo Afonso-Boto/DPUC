@@ -260,6 +260,9 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                     <CardDPUC key={uc.id} dpuc={uc}/>
                 ))
             }
+            { (!dpucPage || dpucPage.length === 0) &&
+                <Text as="i" size="large" style={{paddingTop:"10px"}}>Não foram encontrados DPUCs</Text>
+            }
             <Row>
                 <Col></Col>
                 <Col>
