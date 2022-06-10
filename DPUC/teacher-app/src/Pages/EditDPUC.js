@@ -44,11 +44,11 @@ const EditDPUC = () => {
         setLoadingPUT(true);
         
         const URL_DPUC_PUT = dpuc.estadoTipo === "C" ? URL_DPUC_PUT_CREATION : URL_DPUC_PUT_EDITION;
-        console.log(URL_DPUC_PUT);
+        console.log(getFormattedDPUC(dpuc));
         axios
             .put(URL_DPUC_PUT, getFormattedDPUC(dpuc))
             .then(() => {
-                navigate("/");
+                //navigate("/");
             })
             .catch((error) => {
                 setErrorPUT(true);
@@ -214,6 +214,7 @@ const EditDPUC = () => {
                     </Row>
                     {/* Curso(s) de lecionacionação e Grau do Ciclo de Estudos*/}
                     <div className="row row-pad">
+                        {/* 
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
@@ -249,9 +250,11 @@ const EditDPUC = () => {
                                 />
                             }
                         </div>
+                        */}
                     </div>
                     {/* Área Científica e Idiomas de lecionação */}
                     <div className="row row-pad">
+                        {/* 
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
@@ -268,24 +271,8 @@ const EditDPUC = () => {
                                 />
                             }
                         </div>
-                        <div className="col-lg-6">
-                            <h3>
-                                <Text as="h3" size="large" color="primary" fontWeight="400">
-                                    Idioma(s) de lecionação*
-                                </Text>
-                            </h3>
-                            { idiomas && 
-                                <Selector 
-                                    isMulti 
-                                    placeholder="Selecione o(s) idioma(s) de lecionação da UC..." 
-                                    options={idiomas}
-                                    value={dpuc.linguas}
-                                    onChange={(e) => dpucSet.setLinguas(Array.from(e, (v => v)))}
-                                    getOptionLabel ={(option)=>(option.nome)}
-                                    getOptionValue ={(option)=>option.id}
-                                />
-                            }
-                        </div>
+                        */}
+                        
                     </div>
                     {/* Carga Letiva, Duração, Semestre */}
                     <div className="row row-pad">
@@ -418,7 +405,7 @@ const EditDPUC = () => {
                         </div>
                         }
                     </div>
-                    {/* Modalidade e Página Pública*/}
+                    {/* Modalidade e Idioma*/}
                     <div className="row row-pad">
                         <div className="col-lg-6">
                             <h3>
@@ -440,6 +427,27 @@ const EditDPUC = () => {
                         <div className="col-lg-6">
                             <h3>
                                 <Text as="h3" size="large" color="primary" fontWeight="400">
+                                    Idioma(s) de lecionação*
+                                </Text>
+                            </h3>
+                            { idiomas && 
+                                <Selector 
+                                    isMulti 
+                                    placeholder="Selecione o(s) idioma(s) de lecionação da UC..." 
+                                    options={idiomas}
+                                    value={dpuc.linguas}
+                                    onChange={(e) => dpucSet.setLinguas(Array.from(e, (v => v)))}
+                                    getOptionLabel ={(option)=>(option.nome)}
+                                    getOptionValue ={(option)=>option.id}
+                                />
+                            }
+                        </div>
+                    </div>
+                    {/* Página Pública*/}
+                    <div className="row row-pad">
+                        <div className="col-lg-12">
+                            <h3>
+                                <Text as="h3" size="large" color="primary" fontWeight="400">
                                     Página Pública da UC
                                 </Text>
                             </h3>
@@ -452,7 +460,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
-                    {/* Docentes da UC */}
+                    {/* Docentes da UC 
                     <div className="row row-pad">
                         <div className="col-lg-12">
                             <h3>
@@ -485,6 +493,7 @@ const EditDPUC = () => {
                             </Button>
                         </div>
                     </div>
+                    */}
                     <hr className="custom-hr"/>
                     {/* Objetivos de aprendizagem */}
                     <div className="row row-pad">
@@ -501,9 +510,9 @@ const EditDPUC = () => {
                                         onChange={(e) => {
                                             dpucSet.setObjetivos(e.target.value);
                                             e.target.style.height="1px";
-                                            e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                            e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                         }}
-                                        style={{height:"48pt"}}
+                                        style={{height:"258px"}}
                                     />
                                 ],
                                 parent: 
@@ -533,9 +542,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setRequisitos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -566,9 +575,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setConteudos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 700)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"400px"}}
                                         />
                                     ],
                                     parent: 
@@ -598,9 +607,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setCoerenciaConteudos(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -631,9 +640,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setMetodologias(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -664,9 +673,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setCoerenciaMetodologias(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 512)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -696,9 +705,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setFuncionamento(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -730,9 +739,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setAprendizagem(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -762,9 +771,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setAvaliacao(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -794,9 +803,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setRegimeFaltas(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 
@@ -826,9 +835,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setBibliografia(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 700)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"300px"}}
                                         />
                                     ],
                                     parent: 
@@ -843,7 +852,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
-                    { /* Ficheiros */}
+                    { /* Ficheiros
                     <div className="row row-pad">
                         <div className="col-lg-12">
                             <Accordion
@@ -874,6 +883,7 @@ const EditDPUC = () => {
                             />
                         </div>
                     </div>
+                     */}
                     { /* Observações */}
                     <div className="row row-pad">
                         <div className="col-lg-12">
@@ -888,9 +898,9 @@ const EditDPUC = () => {
                                             onChange={(e) => {
                                                 dpucSet.setObservacoes(e.target.value);
                                                 e.target.style.height="1px";
-                                                e.target.style.height=(16 + e.target.scrollHeight)+"px";
+                                                e.target.style.height=Math.min(((16 + e.target.scrollHeight)), 256)+"px";
                                             }}
-                                            style={{height:"48pt"}}
+                                            style={{height:"128px"}}
                                         />
                                     ],
                                     parent: 

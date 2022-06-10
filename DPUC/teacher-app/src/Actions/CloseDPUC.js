@@ -16,7 +16,7 @@ const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow})
     const handleClose = () => setShow(false);
 
     const BASE_URL = estadoTipo === "C" ? BASE_URL_CREATION : BASE_URL_EDITION;
-    const proxEstado = estadoTipo === "C" ? 3 : 4;
+    const proxEstado = estadoTipo === "C" ? 3 : 5;
 
     const close = () => {
         setError(false);
@@ -50,16 +50,21 @@ const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow})
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Submeter para Aprovação
+                        Submeter { (estadoTipo === "C" && " para Aprovação")}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Text as="p">
-                        Tem a certeza que pretende submeter este DPUC para <b>Aprovação</b> este DPUC?
+                        Tem a certeza que pretende submeter este DPUC  
+                        <b>{ (estadoTipo === "C" && " para Aprovação")}</b>
+                        ?
                     </Text>
                     <br/>
                     <Text as="p">
-                        O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.
+                        {
+                        (estadoTipo === "C" &&
+                            "O DPUC será revisto e aprovado pelos Serviços de Gestão Académica, não podendo fazer alterações.")
+                        }
                     </Text>
                     <br/>
                     <Text as="i" size="small">
@@ -68,7 +73,7 @@ const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow})
                         (estadoTipo === "C" &&
                             <b>Fechado(3)</b>)
                         ||
-                            <b>Em Edição(4)</b>
+                            <b>Aprovado(5)</b>
                         }
                         .
                     </Text>

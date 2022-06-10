@@ -3,6 +3,8 @@ package pi.g6.fetchermain.service;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import pi.g6.fetchermain.entity.*;
 
@@ -59,7 +61,31 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
 
     @Override
     public List<DpucUc> getDPUCs() {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
         String query = "SELECT * FROM dpuc";
+
+        String queryUsers = "SELECT * FROM utilizadores WHERE email = '" + username + "'";
+        List<Map<String, Object>> rowsOfUsers = getJdbcTemplate().queryForList(queryUsers);
+        int tipoUtilizador = -1;
+        int utilizadorId = -1;
+        for (Map<String, Object> rowOfUsers : rowsOfUsers) {
+            utilizadorId = (int) rowOfUsers.get("id");
+            tipoUtilizador = (int) rowOfUsers.get("tipo_utilizadorid");
+        }
+
+        if(tipoUtilizador == -1 || utilizadorId == -1) {
+            log.error("Erro ao obter o tipo de utilizador");
+            return new ArrayList<>();
+        }
+        else if (tipoUtilizador == 2){
+            query = "SELECT * FROM dpuc JOIN utilizadores on utilizadores.id = dpuc.utilizadoresid WHERE utilizadores.id = " + utilizadorId;
+        }
+        else if(tipoUtilizador == 1){
+            query = "SELECT * from (uc join dpuc on dpuc.UCid = uc.id join unidade_organica on uc.unidade_organicaid = unidade_organica.id) where unidade_organica.utilizadoresid = " + utilizadorId;
+        }
+
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
         List<DpucUc> result = new ArrayList<>();
@@ -121,14 +147,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
 
             dpucList.add(dpuc);
         }
-        //Check this code
-        //Check this code
-        //Check this code
-        //Check this code
-        //Check this code
-        //Check this code
-        //Check this code
-        //Check this code
+
 
         query = "SELECT * FROM UC";
         rows = getJdbcTemplate().queryForList(query);
@@ -359,6 +378,7 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
             docente.setNome((String) row.get("nome"));
             docente.setEmail((String) row.get("email"));
             docente.setTipo_utilizadorid((int) row.get("tipo_utilizadorid"));
+            docente.setNmec((int) row.get("nmec"));
 
             result.add(docente);
 

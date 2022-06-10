@@ -1022,7 +1022,7 @@ FIELDS TERMINATED BY '|'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
-/*
+
 LOAD DATA LOCAL INFILE '/ucs.csv'
 INTO TABLE uc
 CHARACTER SET UTF8
@@ -1038,7 +1038,7 @@ FIELDS TERMINATED BY '|'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
-
+/*
 select * from utilizadores
 select * from uc
-select * from dpuc where utilizadoresid = 250*/
+select * from dpuc*/

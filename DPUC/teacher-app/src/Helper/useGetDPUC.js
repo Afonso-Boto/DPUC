@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { EntitiesContext } from "./Context";
 
 const useGetDPUC = (data) => {
-        
     const [unidade_organicaid, setUoid] = useState({});
     const [ACid, setACid] = useState({});
 
@@ -54,6 +53,7 @@ const useGetDPUC = (data) => {
         setParsing(true);
         setError(false);
         if(data){
+
             if(data.criacao_edicao)
                 setEstadoTipo("E");
             else
@@ -96,10 +96,14 @@ const useGetDPUC = (data) => {
                 setCodigo(data.ucCodigo);
             if(data.carga_horaria)
                 setCargaHoraria(data.carga_horaria);
-            if(data.horas_trabalho)
-                setHorasTrabalho(data.horas_trabalho);
-            if(data.ects)
+            
+            if(data.ects){
                 setEcts(data.ects);
+                if(data.horas_trabalho)
+                    setHorasTrabalho(data.horas_trabalho);
+                else
+                    setHorasTrabalho(data.ects * 27);
+            }
 
             if(data.estadoid && estados){
                 let estadoID = data.estadoid;
@@ -127,15 +131,22 @@ const useGetDPUC = (data) => {
                 
             if(data.grau && graus)
                 setGrau(graus.find((g) => (g.nome === data.grau))); 
-            if(data.duracao && duracoes)
-                setDuracao(duracoes.find((d) => (d.nome === data.duracao)));
+
+            if(data.duracao && duracoes){
+                if(data.duracao !== "Semestral" && data.duracao !== "Anual")
+                    setDuracao(duracoes.find((d) => (d.nome === "Semestral")));
+                else
+                    setDuracao(duracoes.find((d) => (d.nome === data.duracao)));
+            }
+            else
+                setDuracao(duracoes.find((d) => (d.nome === "Semestral")));
 
             if(data.periodo_letivoid && semestre)
                 setPeriodo(semestre.find((s) => (s.id === data.periodo_letivoid)));
             if(data.modalidade && modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
 
-            if(data.unidade_organicaid && uos)
+            if(data.unidade_organicaid != null && uos)
                 setUnidadeOrganica(uos.find((uo) => (uo.id === data.unidade_organicaid)));
             if(data.data_alteracao){
                 const dataDPUC = data.data_alteracao.split("-");

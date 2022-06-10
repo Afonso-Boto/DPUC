@@ -55,55 +55,68 @@ const GetData = ({dpuc}) => {
 const CardDPUC = ({dpuc}) => {
 
     const { userType } = useContext(UserContext);
-    const { estados, docentes } = useContext(EntitiesContext);
+    const { estados, docentes, uos } = useContext(EntitiesContext);
 
     const [ showCreate, setShowCreate ] = useState(false);
     const [ showChangeDR, setShowChangeDR ] = useState(false);
 
     const [ docente, setDocente ] = useState(null);
-
+    const [ edition, setEdition ] = useState();
     useEffect(() => {
         if(!docentes || !dpuc)
             return;
         setDocente(docentes.find(d => d.id === dpuc.regenteID));
+        const baseYear = parseInt(dpuc.data_alteracao.substring(0,4));
+        setEdition(baseYear + "/" + (baseYear+1));
     }, [docentes, dpuc]);
-
     return ( 
         <Row style={{paddingTop:"5px", paddingBottom:"15px"}}>
             <Col>     
                 <Card 
                     active 
-                    title={dpuc.designacao} 
+                    title={"[" + dpuc.ucCodigo + "] " + (dpuc.unidade_organicaid > 0 ?uos?.find(uo => uo.id === dpuc.unidade_organicaid).sigla : "Sem UO") + " - "  + dpuc.designacao} 
                     to={"/dpuc/" + dpuc.id}
                     headerRight={GetData({dpuc})}
                 >
-                    <Row>
+                    <Row style={{marginTop:"-20px"}}>
+                        <Col>
+                            <Text fontWeight="400" size="medium">
+                                Regente: {docente?.nome}
+                            </Text>
+                        </Col>
+                        <Col md="auto" style={{textAlign:"right"}}>
+                            <Text fontWeight="400" size="mediumSmall">
+                                Edição de {edition}
+                            </Text>
+                        </Col>
+                    </Row>
+                    <Row style={{paddingTop:"8px"}}>
                         <Col>
                             <Row>
                                 <Text fontWeight="400" size="mediumSmall">
-                                    Ultima alteração: {dpuc.data_alteracao}
+                                Ultima alteração: {dpuc.data_alteracao}
                                 </Text>
                             </Row>
                             <Row>
                                 <Text fontWeight="400" as="i" size="medium">
                                     {
                                         ((dpuc.estadoid === 1 || dpuc.estadoid === 7) && 
-                                            "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos.")
+                                            "DPUC com regente a definir.")
                                         ||
                                         ((dpuc.estadoid === 2 || dpuc.estadoid === 8) && 
-                                            "DPUC com campos por preencher.")
+                                            "DPUC com campos preenchidos, ainda pode fazer alterações nos mesmos.")
                                         ||
                                         (dpuc.estadoid === 3 && 
-                                            "DPUC fechada, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão.")
+                                            "DPUC fechado, já não é possível fazer qualquer alteração. No entanto, pode lançar uma nova versão.")
                                         ||
                                         ((dpuc.estadoid === 4 || dpuc.estadoid === 9) && 
-                                            "DPUC necessita de aprovação para ser publicada.")
+                                            "DPUC necessita de aprovação para ser publicado.")
                                         ||
                                         ((dpuc.estadoid === 5 || dpuc.estadoid === 10) && 
-                                            "DPUC Aprovada.")
+                                            "DPUC Aprovado.")
                                         ||
                                         (dpuc.estadoid === 6 && 
-                                            "DPUC desativada. Não é possível fazer qualquer alteração.")
+                                            "DPUC desativadoa. Não é possível fazer qualquer alteração.")
                                     }
                                 </Text>
                             </Row>
@@ -118,7 +131,7 @@ const CardDPUC = ({dpuc}) => {
                                         </RouterLink>
                                     )
                                     ||
-                                    ((dpuc.estadoid === 7) && userType === "DUO" && docente &&
+                                    ((dpuc.estadoid === 7) && userType === "DUO" &&
                                     <>
                                         <Button content="Action Button" primary onClick={()=>setShowCreate(true)}> Lançar novo DPUC </Button>
                                         <CreateDPUC id={dpuc.id} responsavel={docente} show={showCreate} setShow={setShowCreate}/>
