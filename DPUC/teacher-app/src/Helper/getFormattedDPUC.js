@@ -30,17 +30,17 @@ const getFormattedDPUC = (dpuc) => {
 
     const codigoUC = dpuc.codigo ? dpuc.codigo : null;
 
-    const formattedDuracao = Array.isArray(dpuc.duracao) ? "" : dpuc.duracao.nome;
-    const formattedModalidade = Array.isArray(dpuc.modalidade) ? "" : dpuc.modalidade.nome;
-    const formattedGrau = Array.isArray(dpuc.grau) ? "" : dpuc.grau.nome;
-    const formattedPeriodo = Array.isArray(dpuc.periodo) ? "" : dpuc.periodo.id;
+    const formattedDuracao = Array.isArray(dpuc.duracao) ? "" : dpuc.duracao?.nome;
+    const formattedModalidade = Array.isArray(dpuc.modalidade) ? "" : dpuc.modalidade?.nome;
+    const formattedGrau = Array.isArray(dpuc.grau) ? "" : dpuc.grau?.nome;
+    const formattedPeriodo = Array.isArray(dpuc.periodo) ? "" : dpuc.periodo?.id;
 
     const formattedUnidadeOrganica = dpuc.unidadeOrganica ? dpuc.unidadeOrganica.id : null;
     const formattedResponsavel = dpuc.responsavel ? dpuc.responsavel.id : null;
     const formattedArea = dpuc.areaCientifica ? dpuc.areaCientifica.id : null;
 
     return { 
-        criacao_edicao: dpuc.criacaoEdicao,
+        criacao_edicao: dpuc.estadoTipo === "C" ? false : true,
         id: dpuc.id,
         designacao: dpuc.designacao, 
         sigla_ac: formattedArea, 

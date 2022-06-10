@@ -14,6 +14,7 @@ const DPUCVersions = ({uc, id}) => {
     const [versionList, setVersionList] = useState([]);
 
     const [selectedVersion, setVersion] = useState(null);
+    /*
     useEffect(() => {
         if(versions){
             versions.sort((a,b) => a.id < b.id ? 1 : -1)
@@ -24,7 +25,19 @@ const DPUCVersions = ({uc, id}) => {
             setVersionList(versions);
         }
     }, [versions]);
-    
+    */
+    useEffect(() => {
+        if(versions){
+            versions.sort((a,b) => a.id < b.id ? 1 : -1)
+            for(let i = 0; i < versions.length; i++){
+                const baseYear = parseInt(versions[i].data_alteracao.substring(0,4));
+                versions[i].versao = baseYear + "/" + (baseYear+1);
+            }
+            setVersion(versions.find((v) => v.id === id));
+            setVersionList(versions);
+        }
+    }, [versions]);
+
     return ( 
         <Selector
             placeholder="Outras versões"
@@ -33,7 +46,8 @@ const DPUCVersions = ({uc, id}) => {
             options={versionList}
             isClearable={false}
             onChange={(e) => navigate("/dpuc/" + e.id)}
-            getOptionLabel ={(option)=>"Versão " + option.versao + " [" + (option.data_alteracao ? option.data_alteracao : " ") + "]"}
+            //getOptionLabel ={(option)=>"Edição " + option.versao + " [" + (option.data_alteracao ? option.data_alteracao : " ") + "]"}
+            getOptionLabel ={(option)=>"Edição de " + option.versao}
             getOptionValue ={(option)=>option.id}
         />
      );

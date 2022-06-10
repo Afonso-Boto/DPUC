@@ -68,7 +68,7 @@ const CloseDPUC = ({id, redirect = false, estadoTipo, setEstado, show, setShow})
                         (estadoTipo === "C" &&
                             <b>Fechado(3)</b>)
                         ||
-                            <b>Em Edição(4)</b>
+                            <b>Em Aprovação(4)</b>
                         }
                         .
                     </Text>

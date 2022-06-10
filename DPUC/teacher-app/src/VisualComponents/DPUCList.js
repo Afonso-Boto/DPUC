@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, ButtonGroup } from "react-bootstrap";
 import { LoadingBackgroundWrapper, Button, Text, ScrollDownButton, SearchBox } from "@paco_ua/pacoui"
 import Selector from "./Selector";
 import CardDPUC from "./CardDPUC";
@@ -15,6 +15,25 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
     const URL_SEARCH = process.env.REACT_APP_SEARCH + "search?keywords=";
 
+    const goToCreate = () => {
+        navigate("/create");
+    }
+
+    const launchEdit = () => {
+        setLaunchLoading(true);
+        setLaunchError(false);
+        axios
+            .put(URL_LAUNCH)
+            .then(() => {
+                window.location.reload(false);
+            })
+            .catch((error) => {
+                setLaunchError(error);
+            })
+            .finally(() => {
+                setLaunchLoading(false);
+            });
+    }
 
     const { data: dpucs , loading, error } = useFetch(URL_DPUC);
 
@@ -61,6 +80,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
                 
     const [dpucList, setDPUCList] = useState([]);
+    const [dpucSearchList, setDPUCSearchList] = useState([]);
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -68,25 +88,37 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const [launchLoading, setLaunchLoading] = useState(false);
     const [launchError, setLaunchError] = useState(false);
 
-    const goToCreate = () => {
-        navigate("/create");
+    const [maxPerPage, setMaxPerPage] = useState(10);
+    const [currentPage, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(10);
+    const [dpucPage, setDPUCPage] = useState([]);
+
+    const previousPage = () => {
+        if(currentPage == 1)
+            return;
+        setPage(currentPage - 1);
+    }
+    const nextPage = () => {
+        if(currentPage == maxPage)
+            return;
+        setPage(currentPage + 1);
     }
 
-    const launchEdit = () => {
-        setLaunchLoading(true);
-        setLaunchError(false);
-        axios
-            .put(URL_LAUNCH)
-            .then(() => {
-                window.location.reload(false);
-            })
-            .catch((error) => {
-                setLaunchError(error);
-            })
-            .finally(() => {
-                setLaunchLoading(false);
-            });
-    }
+    // When DPUC List page changes
+    useEffect( () => {
+        if(currentPage < 1 || currentPage > maxPage)
+            return;
+        setDPUCPage(dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage));
+    },[currentPage]);
+
+    // When DPUC List finishes filtering
+    useEffect( () => {
+        if(!dpucList)
+            return;
+        setMaxPage(Math.floor(dpucList.length / maxPerPage) + 1);
+        setPage(1);
+        setDPUCPage(dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage));
+    },[dpucList]);
 
     const filterByFilter = (list) =>{
         if(filterOption.value[0] === 0)
@@ -95,15 +127,15 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }
 
     const filterBySearch = (list) =>{
-        console.log(searchInput);
-        console.log(searchResults.length);
         if(searchResults.length === 0 && (!searchInput || searchInput === ""))
             return list;
         return list.filter((d) => (searchResults.includes(d.ucCodigo)));
     }
 
     useEffect(() => {
-        setDPUCList(filterBySearch(filterByFilter(dpucs)));
+        const fbs = filterBySearch(dpucs);
+        setDPUCList(filterByFilter(fbs));
+        setDPUCSearchList(fbs)
     },[filterOption, searchResults])
 
     useEffect(() => {
@@ -128,10 +160,10 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     }, [searchInput]);
 
     useEffect(() => {
-        if(!dpucList)
+        if(!dpucSearchList)
             return;
         const filterCount = new Array(filterOptions.length).fill(0);
-        dpucList.map((d) => {
+        dpucSearchList.map((d) => {
             const filter = filterOptions.find((f) => f.value.includes(d.estadoid));
             filterCount[filterOptions.indexOf(filter)] ++;
         });
@@ -145,12 +177,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             newFilterOptions.push(newFilter);
         }
         setFilterOptions(newFilterOptions);
-    }, [dpucList]);
+    }, [dpucSearchList]);
 
     useEffect(() =>{
         if(!dpucs)
             return;
         setDPUCList(dpucs);
+        setDPUCSearchList(dpucs);
     }, [dpucs])
 
     return ( 
@@ -222,11 +255,40 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                     </Row>
                 </>
             }
-            { dpucList &&
-                dpucList.map((uc) => (
+            { dpucPage &&
+                dpucPage.map((uc) => (
                     <CardDPUC key={uc.id} dpuc={uc}/>
                 ))
             }
+            { (!dpucPage || dpucPage.length === 0) &&
+                <Text as="i" size="large" style={{paddingTop:"10px"}}>Não foram encontrados DPUCs</Text>
+            }
+            <Row>
+                <Col></Col>
+                <Col>
+                    <ButtonGroup>
+                        { 
+                            (currentPage > 1 && 
+                                <Button primary onClick={previousPage}>{"<"}</Button>)
+                            ||
+                            <Button primary disabled>{"<"}</Button>
+                        }
+                        <Text size="large" color="primary" 
+                                className="align-self-center"
+                                style={{paddingLeft:"15px", paddingRight:"15px"}}
+                        >
+                            {currentPage}
+                        </Text>
+                        { 
+                            (currentPage < maxPage && 
+                                <Button primary onClick={nextPage}>{">"}</Button>)
+                            ||
+                            <Button primary disabled>{">"}</Button>
+                        }
+                    </ButtonGroup>
+                </Col>
+                <Col></Col>
+            </Row>
         </Container>
      );
 }
