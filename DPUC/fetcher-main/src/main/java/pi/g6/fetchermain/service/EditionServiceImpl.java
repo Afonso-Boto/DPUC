@@ -225,7 +225,7 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
             if (finished){
                 // Update estado para E3 - Em edição (9 na tabela de estados)
                 String sql = "UPDATE dpuc SET estadoid=?, data_alteracao=? WHERE id = ?";
-                getJdbcTemplate().update(sql, 9, LocalDate.now().toString(), dpucid);
+                getJdbcTemplate().update(sql, 10, LocalDate.now().toString(), dpucid);
 
             }else{
                 creationManipulationService.editarDpuc(dpuc, dpucid);
@@ -314,7 +314,10 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
                 } catch (Exception e) {
                     continue;
                 }
-                dpucList.add(dpuc);
+
+                if (dpuc.getEstadoid() == 5 || dpuc.getEstadoid() == 10)
+                    dpucList.add(dpuc);
+
             }
         } catch (Exception e) {
             logger.warn(e.getMessage());
