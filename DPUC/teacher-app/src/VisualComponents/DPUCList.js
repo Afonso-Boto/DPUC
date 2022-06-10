@@ -81,18 +81,14 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         ]
     )
 
-    const [uosOptions, setUOSOptions] = useState(
-        [
-            {
-                id: -1,
-                sigla: 'Todas',
-                nome: 'Qualquer Unidadade Orgânica'
-            }
-        ]
-    )
+    const [uosOptions, setUOSOptions] = useState([]);
 
     const [filterOption, setFilterOption] = useState(filterOptions[0]);
-    const [filterUO, setFilterUO] = useState(uosOptions[0]);
+    const [filterUO, setFilterUO] = useState({
+        id: -1,
+        sigla: 'Todas',
+        nome: 'Qualquer Unidadade Orgânica'
+    });
                 
     const [dpucList, setDPUCList] = useState([]);
     const [dpucSearchList, setDPUCSearchList] = useState([]);
@@ -230,7 +226,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     useEffect(() => {
         if(!uos)
             return;
-        setUOSOptions([uosOptions, ... uos])
+        setUOSOptions([
+            {
+                id: -1,
+                sigla: 'Todas',
+                nome: 'Qualquer Unidadade Orgânica'
+            },
+            ... uos])
     }, [uos]);
 
     return ( 
@@ -270,8 +272,11 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                         </Col>
                         {   userType === "SGA" &&
                             <Col style={{textAlign:"left", paddingBottom:"10px"}}>
-                            <br/>
                             { uosOptions && 
+                                <>
+                                <Text>
+                                    Filtrar DPUCs por Unidade Orgânica:
+                                </Text>
                                 <Selector
                                     options={uosOptions}
                                     value={filterUO}
@@ -279,7 +284,9 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                                     getOptionValue ={(option)=>option.id}
                                     onChange={(e) => setFilterUO(e)}
                                     placeholder="Indique a Unidade Orgânica em que a UC está alocada..."
-                                />
+                                    isClearable={false}
+                                    />
+                                </>
                             }
                             </Col>
                         }
