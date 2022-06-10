@@ -53,7 +53,6 @@ const useGetDPUC = (data) => {
         setParsing(true);
         setError(false);
         if(data){
-            console.log(data);
 
             if(data.criacao_edicao)
                 setEstadoTipo("E");
@@ -147,7 +146,6 @@ const useGetDPUC = (data) => {
             if(data.modalidade && modalidades)
                 setModalidade(modalidades.find((m) => (m.nome === data.modalidade)));
 
-            console.log(uos);
             if(data.unidade_organicaid != null && uos)
                 setUnidadeOrganica(uos.find((uo) => (uo.id === data.unidade_organicaid)));
             if(data.data_alteracao){
