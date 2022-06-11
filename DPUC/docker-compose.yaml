@@ -49,7 +49,7 @@ services:
     ports:
       - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
     volumes:
-      - ./volumes/mysql/db:/var/lib/mysql
+      - ./volumes/mysql/scripts:/populate.sql
       - ./volumes/mysql/scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: [
