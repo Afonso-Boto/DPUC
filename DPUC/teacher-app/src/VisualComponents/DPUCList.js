@@ -13,7 +13,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const navigate = useNavigate();
 
     const { docentes, uos } = useContext(EntitiesContext);
-    const { userType } = useContext(UserContext);
+    const { userType, setToken } = useContext(UserContext);
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
@@ -39,7 +39,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             });
     }
 
-    const { data: dpucs , loading, error } = useFetch(URL_DPUC);
+    const { data: dpucs, loading, error } = useFetch(URL_DPUC);
+
+    useEffect(() => {
+        if(!error)
+            return;
+        setToken(null);
+    },[error]);
 
     const [filterOptions, setFilterOptions] = useState(
         [
@@ -117,7 +123,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     // When DPUC List page changes
     useEffect( () => {
-        if(currentPage < 1 || currentPage > maxPage)
+        if(currentPage < 1 || currentPage > maxPage || !dpucList)
             return;
         setDPUCPage(dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage));
     },[currentPage]);
@@ -235,6 +241,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             ... uos])
     }, [uos]);
 
+    console.log(dpucSearchList);
     return ( 
         <Container>
             <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
@@ -325,9 +332,40 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                 </>
             }
             { dpucPage &&
-                dpucPage.map((uc) => (
-                    <CardDPUC key={uc.id} dpuc={uc}/>
-                ))
+                <>
+                    {dpucPage.map((uc) => (
+                        <CardDPUC key={uc.id} dpuc={uc}/>
+                    ))}
+                    {
+                    dpucSearchList?.length > maxPerPage &&
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <ButtonGroup>
+                                { 
+                                    (currentPage > 1 && 
+                                        <Button primary onClick={previousPage}>{"<"}</Button>)
+                                    ||
+                                    <Button primary disabled>{"<"}</Button>
+                                }
+                                <Text size="large" color="primary" 
+                                        className="align-self-center"
+                                        style={{paddingLeft:"15px", paddingRight:"15px"}}
+                                >
+                                    {currentPage}
+                                </Text>
+                                { 
+                                    (currentPage < maxPage && 
+                                        <Button primary onClick={nextPage}>{">"}</Button>)
+                                    ||
+                                    <Button primary disabled>{">"}</Button>
+                                }
+                            </ButtonGroup>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                    }
+                </>
             }
             { (!dpucPage || dpucPage.length === 0) &&
                 <>
@@ -335,32 +373,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                     <Text as="i" size="large">Não foram encontrados DPUCs</Text>
                 </>
             }
-            <Row>
-                <Col></Col>
-                <Col>
-                    <ButtonGroup>
-                        { 
-                            (currentPage > 1 && 
-                                <Button primary onClick={previousPage}>{"<"}</Button>)
-                            ||
-                            <Button primary disabled>{"<"}</Button>
-                        }
-                        <Text size="large" color="primary" 
-                                className="align-self-center"
-                                style={{paddingLeft:"15px", paddingRight:"15px"}}
-                        >
-                            {currentPage}
-                        </Text>
-                        { 
-                            (currentPage < maxPage && 
-                                <Button primary onClick={nextPage}>{">"}</Button>)
-                            ||
-                            <Button primary disabled>{">"}</Button>
-                        }
-                    </ButtonGroup>
-                </Col>
-                <Col></Col>
-            </Row>
         </Container>
      );
 }
