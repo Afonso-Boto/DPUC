@@ -1017,7 +1017,7 @@ O objetivo global da UC é que o estudante apreenda diferentes ferramentas de qu
 
 insert into ac(id, designacao, sigla) VALUES (0, 'Sem AC', 'SAC');
 
-LOAD DATA LOCAL INFILE '/drs.csv'
+LOAD DATA LOCAL INFILE 'D:/drs.csv'
 INTO TABLE utilizadores
 character set UTF8
 FIELDS TERMINATED BY '|'
@@ -1025,7 +1025,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE '/ucs.csv'
+LOAD DATA LOCAL INFILE 'D:/ucs.csv'
 INTO TABLE uc
 CHARACTER SET UTF8
 FIELDS TERMINATED BY '|'
@@ -1033,7 +1033,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE '/dpucs.csv'
+LOAD DATA LOCAL INFILE 'D:/dpucs.csv'
 INTO TABLE dpuc
 CHARACTER SET UTF8
 FIELDS TERMINATED BY '|'
