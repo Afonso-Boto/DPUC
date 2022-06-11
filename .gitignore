@@ -45,4 +45,4 @@ secrets.yml
 
 # Docker volumes
 /DPUC/volumes/fetcher-main
-/DPUC/volumes/mysql/db
+#/DPUC/volumes/mysql/db
