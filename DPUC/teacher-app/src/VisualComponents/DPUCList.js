@@ -13,7 +13,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
     const navigate = useNavigate();
 
     const { docentes, uos } = useContext(EntitiesContext);
-    const { userType } = useContext(UserContext);
+    const { userType, setToken } = useContext(UserContext);
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
@@ -39,7 +39,13 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             });
     }
 
-    const { data: dpucs , loading, error } = useFetch(URL_DPUC);
+    const { data: dpucs, loading, error } = useFetch(URL_DPUC);
+
+    useEffect(() => {
+        if(!error)
+            return;
+        setToken(null);
+    },[error]);
 
     const [filterOptions, setFilterOptions] = useState(
         [
