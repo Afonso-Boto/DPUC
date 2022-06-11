@@ -17,7 +17,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     const URL_DPUC = process.env.REACT_APP_FETCHER + "creation/dpucs";
     const URL_LAUNCH = process.env.REACT_APP_FETCHER + "edition/iniciarEdicao";
-    const URL_SEARCH = process.env.REACT_APP_SEARCH + "search?keywords=";
+    //const URL_SEARCH = process.env.REACT_APP_SEARCH + "search?keywords=";
 
     const goToCreate = () => {
         navigate("/create");
@@ -241,7 +241,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
             ... uos])
     }, [uos]);
 
-    console.log(dpucSearchList);
     return ( 
         <Container>
             <div style={{ position:"fixed", bottom:"50px", right:"10px",  transform: "rotate(180deg)"}}>
