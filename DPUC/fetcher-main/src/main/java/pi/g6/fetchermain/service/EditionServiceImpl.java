@@ -265,6 +265,7 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
     @Override
     public Dpuc dpucs(int ucid) {
         List<Dpuc> dpucList;
+
         try {
             String query = "SELECT * FROM dpuc WHERE ucid = " + ucid;
             List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
