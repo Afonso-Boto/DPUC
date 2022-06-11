@@ -1,4 +1,4 @@
-drop database dpuc;
+
 create database dpuc;
 use dpuc;
 
