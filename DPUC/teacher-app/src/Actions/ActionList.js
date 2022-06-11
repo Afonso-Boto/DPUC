@@ -33,7 +33,7 @@ const ActionList = ({dpuc, setEstado, setResponsavel}) => {
         { value: "editar",      label: "Editar",            
             userType: "DR SGA", estados: [1, 2]},
         { value: "fechar",      label: "Submeter para Aprovação",            
-            userType: "DR SGA", estados: [2]},
+            userType: "DR", estados: [2]},
         { value: "reabrir",     label: "Re-abrir",          
             userType: "SGA",    estados: [3, 4]},
         { value: "comaprov",    label: "Começar Aprovação", 
