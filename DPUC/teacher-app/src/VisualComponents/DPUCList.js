@@ -117,7 +117,7 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
 
     // When DPUC List page changes
     useEffect( () => {
-        if(currentPage < 1 || currentPage > maxPage)
+        if(currentPage < 1 || currentPage > maxPage || !dpucList)
             return;
         setDPUCPage(dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage));
     },[currentPage]);
@@ -325,42 +325,48 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
                 </>
             }
             { dpucPage &&
-                dpucPage.map((uc) => (
-                    <CardDPUC key={uc.id} dpuc={uc}/>
-                ))
+                <>
+                    {dpucPage.map((uc) => (
+                        <CardDPUC key={uc.id} dpuc={uc}/>
+                    ))}
+                    {
+                    dpucPage.length > maxPerPage &&
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <ButtonGroup>
+                                { 
+                                    (currentPage > 1 && 
+                                        <Button primary onClick={previousPage}>{"<"}</Button>)
+                                    ||
+                                    <Button primary disabled>{"<"}</Button>
+                                }
+                                <Text size="large" color="primary" 
+                                        className="align-self-center"
+                                        style={{paddingLeft:"15px", paddingRight:"15px"}}
+                                >
+                                    {currentPage}
+                                </Text>
+                                { 
+                                    (currentPage < maxPage && 
+                                        <Button primary onClick={nextPage}>{">"}</Button>)
+                                    ||
+                                    <Button primary disabled>{">"}</Button>
+                                }
+                            </ButtonGroup>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                    }
+                </>
             }
-            { (!dpucPage || dpucPage.length === 0) &&
+            { (!dpucPage || dpucPage.length === 0) && !error &&
                 <>
                     <br/>
                     <Text as="i" size="large">Não foram encontrados DPUCs</Text>
                 </>
             }
-            <Row>
-                <Col></Col>
-                <Col>
-                    <ButtonGroup>
-                        { 
-                            (currentPage > 1 && 
-                                <Button primary onClick={previousPage}>{"<"}</Button>)
-                            ||
-                            <Button primary disabled>{"<"}</Button>
-                        }
-                        <Text size="large" color="primary" 
-                                className="align-self-center"
-                                style={{paddingLeft:"15px", paddingRight:"15px"}}
-                        >
-                            {currentPage}
-                        </Text>
-                        { 
-                            (currentPage < maxPage && 
-                                <Button primary onClick={nextPage}>{">"}</Button>)
-                            ||
-                            <Button primary disabled>{">"}</Button>
-                        }
-                    </ButtonGroup>
-                </Col>
-                <Col></Col>
-            </Row>
+            
         </Container>
      );
 }
