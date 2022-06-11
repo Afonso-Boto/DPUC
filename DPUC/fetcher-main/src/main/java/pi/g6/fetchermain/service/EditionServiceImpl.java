@@ -170,9 +170,12 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
 
             for(Map<String, Object> row : rows){
                 int id = (int) row.get("id");
+                logger.info("Iniciando edição da UC " + id);
 
                 // Ultima versão do dpuc
                 Dpuc dpuc = dpucs(id);
+                if(dpuc == null)
+                    continue;
 
                 // Criar novo dpuc com informação do antigo
                 final String sql = String.format("INSERT INTO dpuc(criacao_edicao, duracao, carga_horaria, horas_contacto, horas_trabalho, objetivos, conteudos, coerencia_conteudos, metodologias, coerencia_metodologia, bibliografia, observacoes, regime_faltas, linguas, modalidade, requisitos, ficheiros, data_alteracao, pagina_publica, funcionamento, aprendizagem, estadoid, periodo_letivoid, UCid, utilizadoresid) select criacao_edicao, duracao, carga_horaria, horas_contacto, horas_trabalho, objetivos, conteudos, coerencia_conteudos, metodologias, coerencia_metodologia, bibliografia, observacoes, regime_faltas, linguas, modalidade, requisitos, ficheiros, data_alteracao, pagina_publica, funcionamento, aprendizagem, estadoid, periodo_letivoid, UCid, utilizadoresid FROM dpuc WHERE id = %d", dpuc.getId());
@@ -271,8 +274,13 @@ public class EditionServiceImpl extends JdbcDaoSupport implements EditionService
             List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
             dpucList = new ArrayList<>();
+            logger.info("dpucs(), rows=" + rows.size());
+            if (rows.size() == 0) {
+                return null;
+            }
 
             for (Map<String, Object> row : rows) {
+                logger.info("dpucs(), row=" + row);
                 Dpuc dpuc = new Dpuc();
                 try {
                     dpuc.setId((int) ((row.get("id") != null) ? row.get("id") : -1));
