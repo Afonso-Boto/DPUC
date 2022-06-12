@@ -135,10 +135,6 @@ const DPUCList = ({canCreate, canLaunchEdit=false}) => {
         setMaxPage(Math.floor(dpucList.length / maxPerPage) + 1);
         setPage(1);
         setDPUCPage(dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage));
-        console.log("====")
-        dpucList.slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage).map((uc) => (
-            console.log(uc.id)
-        ))
     },[dpucList]);
 
     const filterByFilter = (list) =>{

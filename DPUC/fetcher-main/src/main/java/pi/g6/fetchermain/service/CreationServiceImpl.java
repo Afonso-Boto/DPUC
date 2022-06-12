@@ -82,9 +82,9 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         else if (tipoUtilizador == 2){
             query = "SELECT * FROM dpuc JOIN utilizadores on utilizadores.id = dpuc.utilizadoresid WHERE utilizadores.id = " + utilizadorId;
         }
-        //else if(tipoUtilizador == 1){
-        //    query = "SELECT * from (uc join dpuc on dpuc.UCid = uc.id join unidade_organica on uc.unidade_organicaid = unidade_organica.id) where unidade_organica.utilizadoresid = " + utilizadorId;
-        //}
+        else if(tipoUtilizador == 1){
+            query = "SELECT DISTINCT * from (uc join dpuc on dpuc.UCid = uc.id join unidade_organica on uc.unidade_organicaid = unidade_organica.id) where unidade_organica.utilizadoresid = " + utilizadorId;
+        }
 
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 
@@ -94,8 +94,14 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
 
         for (Map<String, Object> row : rows){
             Dpuc dpuc = new Dpuc();
+            if (dpucList.stream().anyMatch(d -> d.getId() == (int) row.get("id")))
+                continue;
             try {
-                dpuc.setId((int) ((row.get("id") != null) ?  row.get("id") : -1));
+                if (row.get("dpuc.id") != null) {
+                    dpuc.setId((int) ((row.get("dpuc.id") != null) ?  row.get("dpuc.id") : -1));
+                }else{
+                    dpuc.setId((int) ((row.get("id") != null) ?  row.get("id") : -1));
+                }
 
 
                 if (row.get("criacao_edicao") == null)
