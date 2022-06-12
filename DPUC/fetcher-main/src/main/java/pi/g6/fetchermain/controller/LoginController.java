@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/")
 @Log4j2
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class LoginController extends JdbcDaoSupport {
 
     @Autowired
