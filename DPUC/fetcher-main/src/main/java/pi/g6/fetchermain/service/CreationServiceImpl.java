@@ -82,9 +82,9 @@ public class CreationServiceImpl extends JdbcDaoSupport implements CreationServi
         else if (tipoUtilizador == 2){
             query = "SELECT * FROM dpuc JOIN utilizadores on utilizadores.id = dpuc.utilizadoresid WHERE utilizadores.id = " + utilizadorId;
         }
-        else if(tipoUtilizador == 1){
-            query = "SELECT * from (uc join dpuc on dpuc.UCid = uc.id join unidade_organica on uc.unidade_organicaid = unidade_organica.id) where unidade_organica.utilizadoresid = " + utilizadorId;
-        }
+        //else if(tipoUtilizador == 1){
+        //    query = "SELECT * from (uc join dpuc on dpuc.UCid = uc.id join unidade_organica on uc.unidade_organicaid = unidade_organica.id) where unidade_organica.utilizadoresid = " + utilizadorId;
+        //}
 
         List<Map<String, Object>> rows = getJdbcTemplate().queryForList(query);
 

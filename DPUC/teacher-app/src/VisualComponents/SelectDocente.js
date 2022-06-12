@@ -203,32 +203,35 @@ const SelectDocente = ({docente, setDocente, show, setShow, multiple=false, canR
                         &&
                         <Text as="i">Não foram encontrados docentes.</Text>
                     }
-                    <Row>
-                        <Col></Col>
-                        <Col>
-                            <ButtonGroup>
-                                { 
-                                    (currentPage > 1 && 
-                                        <Button primary onClick={previousPage}>{"<"}</Button>)
-                                    ||
-                                    <Button primary disabled>{"<"}</Button>
-                                }
-                                <Text size="large" color="primary" 
-                                        className="align-self-center"
-                                        style={{paddingLeft:"15px", paddingRight:"15px"}}
-                                >
-                                    {currentPage}
-                                </Text>
-                                { 
-                                    (currentPage < maxPage && 
-                                        <Button primary onClick={nextPage}>{">"}</Button>)
-                                    ||
-                                    <Button primary disabled>{">"}</Button>
-                                }
-                            </ButtonGroup>
-                        </Col>
-                        <Col></Col>
-                    </Row>
+                    {
+                        filteredDocentes?.length > MAX_DOCENTES_PER_PAGE &&
+                        <Row>
+                            <Col></Col>
+                            <Col>
+                                <ButtonGroup>
+                                    { 
+                                        (currentPage > 1 && 
+                                            <Button primary onClick={previousPage}>{"<"}</Button>)
+                                        ||
+                                        <Button primary disabled>{"<"}</Button>
+                                    }
+                                    <Text size="large" color="primary" 
+                                            className="align-self-center"
+                                            style={{paddingLeft:"15px", paddingRight:"15px"}}
+                                    >
+                                        {currentPage}
+                                    </Text>
+                                    { 
+                                        (currentPage < maxPage && 
+                                            <Button primary onClick={nextPage}>{">"}</Button>)
+                                        ||
+                                        <Button primary disabled>{">"}</Button>
+                                    }
+                                </ButtonGroup>
+                            </Col>
+                            <Col></Col>
+                        </Row>
+                    }
                     <Row>
                         <Col>
                             {

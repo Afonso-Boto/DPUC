@@ -49,7 +49,7 @@ const useGetDPUC = (data) => {
     const {cursos:entCursos, graus, areas, idiomas, duracoes, semestre, uos, estados, modalidades, docentes: entDocentes} = useContext(EntitiesContext);
     
     useEffect(() => {
-        
+        console.log(data);
         setParsing(true);
         setError(false);
         if(data){

@@ -7,9 +7,7 @@ import Input from "../VisualComponents/Input";
 const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
     const BASE_URL = process.env.REACT_APP_FETCHER + "creation/emAprovacao?id=" + id + "&codigo=";
 
-    const [codigoUC, setCodigo] = useState(10000);
-    if(codigo)
-        setCodigo(codigo);
+    const [codigoUC, setCodigo] = useState(codigo ? codigo : 10000);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -32,6 +30,7 @@ const InApprovalDPUC = ({id, codigo, setEstado, show, setShow}) => {
             });
         
     }
+
     return ( 
         <>
             <Modal
