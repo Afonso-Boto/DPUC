@@ -146,9 +146,7 @@ services:
 #  teacher-app:
 #    depends_on:
 #      - mysqldb
-#      - fetcher-criacao
-#      - fetcher-edicao
-#      - fetcher-search
+#      - fetcher-main
 #    build: ./teacher-app
 #    ports:
 #      - $SPRING_TEACHER_LOCAL_PORT:3000
